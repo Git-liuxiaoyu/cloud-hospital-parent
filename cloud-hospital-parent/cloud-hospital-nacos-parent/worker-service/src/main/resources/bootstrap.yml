@@ -1,3 +1,4 @@
+#日志配置
 logging:
   level:
     root: WARN
@@ -9,7 +10,6 @@ logging:
       %clr(%-40.40logger{39}){cyan} \
       %clr(:){faint} \
       %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}}"
-
 spring:
   cloud:
     nacos:

@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.registerservice.outlet.dao.mysql.RegisterMysqlDao">
+  <resultMap id="BaseResultMap" type="com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="no" jdbcType="VARCHAR" property="no" />
+    <result column="patientId" jdbcType="BIGINT" property="patientid" />
+    <result column="regType" jdbcType="CHAR" property="regtype" />
+    <result column="regTime" jdbcType="TIMESTAMP" property="regtime" />
+    <result column="rotaId" jdbcType="BIGINT" property="rotaid" />
+    <result column="departmentId" jdbcType="INTEGER" property="departmentid" />
+    <result column="roomId" jdbcType="INTEGER" property="roomid" />
+    <result column="visitTime" jdbcType="DATE" property="visittime" />
+    <result column="visitSection" jdbcType="CHAR" property="visitsection" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="status" jdbcType="CHAR" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, no, patientId, regType, regTime, rotaId, departmentId, roomId, visitTime, visitSection, 
+    price, type, status
+  </sql>
+  <select id="selectByExample" parameterType="com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from h_register
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from h_register
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from h_register
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPoExample">
+    delete from h_register
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPo">
+    insert into h_register (id, no, patientId, 
+      regType, regTime, rotaId, 
+      departmentId, roomId, visitTime, 
+      visitSection, price, type, 
+      status)
+    values (#{id,jdbcType=BIGINT}, #{no,jdbcType=VARCHAR}, #{patientid,jdbcType=BIGINT}, 
+      #{regtype,jdbcType=CHAR}, #{regtime,jdbcType=TIMESTAMP}, #{rotaid,jdbcType=BIGINT}, 
+      #{departmentid,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, #{visittime,jdbcType=DATE}, 
+      #{visitsection,jdbcType=CHAR}, #{price,jdbcType=DECIMAL}, #{type,jdbcType=CHAR}, 
+      #{status,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPo">
+    insert into h_register
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="no != null">
+        no,
+      </if>
+      <if test="patientid != null">
+        patientId,
+      </if>
+      <if test="regtype != null">
+        regType,
+      </if>
+      <if test="regtime != null">
+        regTime,
+      </if>
+      <if test="rotaid != null">
+        rotaId,
+      </if>
+      <if test="departmentid != null">
+        departmentId,
+      </if>
+      <if test="roomid != null">
+        roomId,
+      </if>
+      <if test="visittime != null">
+        visitTime,
+      </if>
+      <if test="visitsection != null">
+        visitSection,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="no != null">
+        #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="patientid != null">
+        #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="regtype != null">
+        #{regtype,jdbcType=CHAR},
+      </if>
+      <if test="regtime != null">
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rotaid != null">
+        #{rotaid,jdbcType=BIGINT},
+      </if>
+      <if test="departmentid != null">
+        #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="roomid != null">
+        #{roomid,jdbcType=INTEGER},
+      </if>
+      <if test="visittime != null">
+        #{visittime,jdbcType=DATE},
+      </if>
+      <if test="visitsection != null">
+        #{visitsection,jdbcType=CHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPoExample" resultType="java.lang.Long">
+    select count(*) from h_register
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update h_register
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.no != null">
+        no = #{record.no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patientid != null">
+        patientId = #{record.patientid,jdbcType=BIGINT},
+      </if>
+      <if test="record.regtype != null">
+        regType = #{record.regtype,jdbcType=CHAR},
+      </if>
+      <if test="record.regtime != null">
+        regTime = #{record.regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rotaid != null">
+        rotaId = #{record.rotaid,jdbcType=BIGINT},
+      </if>
+      <if test="record.departmentid != null">
+        departmentId = #{record.departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.roomid != null">
+        roomId = #{record.roomid,jdbcType=INTEGER},
+      </if>
+      <if test="record.visittime != null">
+        visitTime = #{record.visittime,jdbcType=DATE},
+      </if>
+      <if test="record.visitsection != null">
+        visitSection = #{record.visitsection,jdbcType=CHAR},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=CHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update h_register
+    set id = #{record.id,jdbcType=BIGINT},
+      no = #{record.no,jdbcType=VARCHAR},
+      patientId = #{record.patientid,jdbcType=BIGINT},
+      regType = #{record.regtype,jdbcType=CHAR},
+      regTime = #{record.regtime,jdbcType=TIMESTAMP},
+      rotaId = #{record.rotaid,jdbcType=BIGINT},
+      departmentId = #{record.departmentid,jdbcType=INTEGER},
+      roomId = #{record.roomid,jdbcType=INTEGER},
+      visitTime = #{record.visittime,jdbcType=DATE},
+      visitSection = #{record.visitsection,jdbcType=CHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      type = #{record.type,jdbcType=CHAR},
+      status = #{record.status,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPo">
+    update h_register
+    <set>
+      <if test="no != null">
+        no = #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="patientid != null">
+        patientId = #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="regtype != null">
+        regType = #{regtype,jdbcType=CHAR},
+      </if>
+      <if test="regtime != null">
+        regTime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rotaid != null">
+        rotaId = #{rotaid,jdbcType=BIGINT},
+      </if>
+      <if test="departmentid != null">
+        departmentId = #{departmentid,jdbcType=INTEGER},
+      </if>
+      <if test="roomid != null">
+        roomId = #{roomid,jdbcType=INTEGER},
+      </if>
+      <if test="visittime != null">
+        visitTime = #{visittime,jdbcType=DATE},
+      </if>
+      <if test="visitsection != null">
+        visitSection = #{visitsection,jdbcType=CHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPo">
+    update h_register
+    set no = #{no,jdbcType=VARCHAR},
+      patientId = #{patientid,jdbcType=BIGINT},
+      regType = #{regtype,jdbcType=CHAR},
+      regTime = #{regtime,jdbcType=TIMESTAMP},
+      rotaId = #{rotaid,jdbcType=BIGINT},
+      departmentId = #{departmentid,jdbcType=INTEGER},
+      roomId = #{roomid,jdbcType=INTEGER},
+      visitTime = #{visittime,jdbcType=DATE},
+      visitSection = #{visitsection,jdbcType=CHAR},
+      price = #{price,jdbcType=DECIMAL},
+      type = #{type,jdbcType=CHAR},
+      status = #{status,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
