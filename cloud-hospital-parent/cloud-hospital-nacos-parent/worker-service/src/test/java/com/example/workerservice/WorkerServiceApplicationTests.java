@@ -15,15 +15,13 @@ class WorkerServiceApplicationTests {
     @Test
     void contextLoads() {
 
+        for (int i = 0; i < 100; i++) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+            String format = simpleDateFormat.format(new Date());
 
-
-        String format = simpleDateFormat.format(new Date());
-
-
-        System.out.println(format+ (long) (Math.random() * 1000000));
-
+            System.out.println(format+ (long) (Math.random() * 1000000));
+        }
 
     }
 

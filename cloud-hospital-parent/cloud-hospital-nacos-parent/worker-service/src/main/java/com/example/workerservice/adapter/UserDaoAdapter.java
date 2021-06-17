@@ -52,7 +52,7 @@ public class UserDaoAdapter {
      */
     public Boolean checkVerifyCode(String verifyCode, String phone) {
         /* 获得 k-v 对象 */
-        String correctVerifyCode = redisTemplate.boundValueOps("PWDUPDATE:" + phone).get();
+        String correctVerifyCode = redisTemplate.boundValueOps("PWDUPDATE-" + phone).get();
         /* 判断该字符串是否为空 */
         if (StringUtils.isEmpty(correctVerifyCode)) {
             /* 假如为空,说明不存在该验证码 */

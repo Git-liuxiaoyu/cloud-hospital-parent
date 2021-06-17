@@ -18,4 +18,3 @@ spring:
         password: nacos
         server-addr: 1.117.97.60:8848
         username: nacos
-        group: group3
