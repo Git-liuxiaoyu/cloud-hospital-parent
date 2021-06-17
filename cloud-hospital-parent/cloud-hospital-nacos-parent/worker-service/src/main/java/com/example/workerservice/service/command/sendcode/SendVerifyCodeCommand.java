@@ -17,7 +17,7 @@ public class SendVerifyCodeCommand {
 
     @NotBlank
     @NotNull
-    private String phone;
+    private String workerNo;
 
     private ISendVerifyCodeCommandHandler sendVerifyCodeCommandHandler;
 
@@ -25,9 +25,8 @@ public class SendVerifyCodeCommand {
         this.sendVerifyCodeCommandHandler = ApplicationContextHolder.getApplicationContext().getBean(ISendVerifyCodeCommandHandler.class);
     }
 
-    public SendVerifyCodeCommand(String phone) {
-        this();
-        this.phone = phone;
+    public SendVerifyCodeCommand(String workerNo) {
+        this.workerNo = workerNo;
     }
 
     public void execute() {

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.workerservice.outlet.dao.mysql.WorkerInfoPoDao">
+  <!-- 自己写的 -->
+  <select id="queryByWorkerNo" parameterType="java.lang.String" resultType="com.example.workerservice.outlet.dao.mysql.po.WorkerInfoPo" >
+    select * from  h_worker_info where `no`=#{no}
+  </select>
+
+
+  <!-- 自动生成的 -->
   <resultMap id="BaseResultMap" type="com.example.workerservice.outlet.dao.mysql.po.WorkerInfoPo">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="no" jdbcType="VARCHAR" property="no" />
@@ -16,7 +23,7 @@
     <result column="resignTime" jdbcType="TIMESTAMP" property="resigntime" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="status" jdbcType="CHAR" property="status" />
-    <result column="param1" jdbcType="VARCHAR" property="param1" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="param2" jdbcType="VARCHAR" property="param2" />
     <result column="param3" jdbcType="BIGINT" property="param3" />
     <result column="param4" jdbcType="TIMESTAMP" property="param4" />
@@ -81,7 +88,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, no, name, birthday, gender, identityNo, topEducation, career, departmentId, positionId, 
-    signTime, resignTime, avatar, status, param1, param2, param3, param4
+    signTime, resignTime, avatar, status, phone, param2, param3, param4
   </sql>
   <select id="selectByExample" parameterType="com.example.workerservice.outlet.dao.mysql.po.WorkerInfoPoExample" resultMap="BaseResultMap">
     select
@@ -118,14 +125,14 @@
       birthday, gender, identityNo, 
       topEducation, career, departmentId, 
       positionId, signTime, resignTime, 
-      avatar, status, param1, 
+      avatar, status, phone, 
       param2, param3, param4
       )
     values (#{id,jdbcType=INTEGER}, #{no,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{birthday,jdbcType=DATE}, #{gender,jdbcType=CHAR}, #{identityno,jdbcType=VARCHAR}, 
       #{topeducation,jdbcType=VARCHAR}, #{career,jdbcType=VARCHAR}, #{departmentid,jdbcType=INTEGER}, 
       #{positionid,jdbcType=INTEGER}, #{signtime,jdbcType=TIMESTAMP}, #{resigntime,jdbcType=TIMESTAMP}, 
-      #{avatar,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{param1,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{phone,jdbcType=VARCHAR}, 
       #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=BIGINT}, #{param4,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -174,8 +181,8 @@
       <if test="status != null">
         status,
       </if>
-      <if test="param1 != null">
-        param1,
+      <if test="phone != null">
+        phone,
       </if>
       <if test="param2 != null">
         param2,
@@ -230,8 +237,8 @@
       <if test="status != null">
         #{status,jdbcType=CHAR},
       </if>
-      <if test="param1 != null">
-        #{param1,jdbcType=VARCHAR},
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
       </if>
       <if test="param2 != null">
         #{param2,jdbcType=VARCHAR},
@@ -295,8 +302,8 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=CHAR},
       </if>
-      <if test="record.param1 != null">
-        param1 = #{record.param1,jdbcType=VARCHAR},
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
       </if>
       <if test="record.param2 != null">
         param2 = #{record.param2,jdbcType=VARCHAR},
@@ -328,7 +335,7 @@
       resignTime = #{record.resigntime,jdbcType=TIMESTAMP},
       avatar = #{record.avatar,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=CHAR},
-      param1 = #{record.param1,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
       param2 = #{record.param2,jdbcType=VARCHAR},
       param3 = #{record.param3,jdbcType=BIGINT},
       param4 = #{record.param4,jdbcType=TIMESTAMP}
@@ -378,8 +385,8 @@
       <if test="status != null">
         status = #{status,jdbcType=CHAR},
       </if>
-      <if test="param1 != null">
-        param1 = #{param1,jdbcType=VARCHAR},
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
       </if>
       <if test="param2 != null">
         param2 = #{param2,jdbcType=VARCHAR},
@@ -408,7 +415,7 @@
       resignTime = #{resigntime,jdbcType=TIMESTAMP},
       avatar = #{avatar,jdbcType=VARCHAR},
       status = #{status,jdbcType=CHAR},
-      param1 = #{param1,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
       param2 = #{param2,jdbcType=VARCHAR},
       param3 = #{param3,jdbcType=BIGINT},
       param4 = #{param4,jdbcType=TIMESTAMP}

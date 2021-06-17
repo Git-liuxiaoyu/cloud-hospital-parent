@@ -31,7 +31,7 @@ public class WorkerInfoPo {
 
     private String status;
 
-    private String param1;
+    private String phone;
 
     private String param2;
 
@@ -151,12 +151,12 @@ public class WorkerInfoPo {
         this.status = status == null ? null : status.trim();
     }
 
-    public String getParam1() {
-        return param1;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setParam1(String param1) {
-        this.param1 = param1 == null ? null : param1.trim();
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public String getParam2() {

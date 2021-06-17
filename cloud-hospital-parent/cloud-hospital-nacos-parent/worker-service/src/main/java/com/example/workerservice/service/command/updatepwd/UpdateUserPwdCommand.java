@@ -21,7 +21,7 @@ public class UpdateUserPwdCommand {
 
     @NotBlank
     @NotNull
-    private String phone;
+    private String workerNo;
 
     @NotNull
     @NotBlank
@@ -33,10 +33,10 @@ public class UpdateUserPwdCommand {
         this.updateUserPwdCommandHandler = ApplicationContextHolder.getApplicationContext().getBean(IUpdateUserPwdCommandHandler.class);
     }
 
-    public UpdateUserPwdCommand(String verifyCode, String phone, String password) {
+    public UpdateUserPwdCommand(String verifyCode, String workerNo, String password) {
         this();
         this.verifyCode = verifyCode;
-        this.phone = phone;
+        this.workerNo = workerNo;
         this.password = password;
     }
 

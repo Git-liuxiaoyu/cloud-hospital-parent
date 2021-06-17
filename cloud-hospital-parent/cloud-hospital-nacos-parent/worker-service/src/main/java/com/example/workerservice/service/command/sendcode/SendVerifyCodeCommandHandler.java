@@ -1,6 +1,8 @@
 package com.example.workerservice.service.command.sendcode;
 
 import com.example.workerservice.adapter.UserDaoAdapter;
+import com.example.workerservice.adapter.WorkerInfoDaoAdapter;
+import com.example.workerservice.inlet.web.vo.WorkerInfoVo;
 import com.example.workerservice.outlet.publisher.api.IUserMqEventPublisher;
 import com.example.workerservice.service.api.ISendVerifyCodeCommandHandler;
 import com.example.workerservice.util.ApplicationContextHolder;
@@ -17,14 +19,20 @@ public class SendVerifyCodeCommandHandler implements ISendVerifyCodeCommandHandl
     /* 构造注入 - 开始 */
     private final UserDaoAdapter userDaoAdapter;
 
-    public SendVerifyCodeCommandHandler(UserDaoAdapter userDaoAdapter) {
+    private final WorkerInfoDaoAdapter workerInfoDaoAdapter;
+
+    public SendVerifyCodeCommandHandler(UserDaoAdapter userDaoAdapter, WorkerInfoDaoAdapter workerInfoDaoAdapter) {
         this.userDaoAdapter = userDaoAdapter;
+        this.workerInfoDaoAdapter = workerInfoDaoAdapter;
     }
     /* 构造注入 - 结束 */
 
     @Override
     public void action(SendVerifyCodeCommand command) {
+        /* 通过workerNo获得phone */
+        WorkerInfoVo workerInfoVo = workerInfoDaoAdapter.queryByWorkerNo(command.getWorkerNo());
+
         /* 推送 Event */
-        ApplicationContextHolder.getApplicationContext().publishEvent(new IUserMqEventPublisher.SendVerifyCodeMqEvent(command.getPhone()));
+        ApplicationContextHolder.getApplicationContext().publishEvent(new IUserMqEventPublisher.SendVerifyCodeMqEvent(workerInfoVo.getPhone()));
     }
 }

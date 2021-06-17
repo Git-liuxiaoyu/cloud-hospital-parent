@@ -28,4 +28,13 @@ public interface IUpdateUserPwdCommandHandler {
         }
     }
 
+    /**
+     * 自定义业务异常 - 用户未发现
+     **/
+    class UserNotFoundException extends RuntimeException {
+        public UserNotFoundException() {
+            super("账号或密码错误");
+        }
+    }
+
 }

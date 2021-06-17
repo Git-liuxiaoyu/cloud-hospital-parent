@@ -1052,73 +1052,73 @@ public class WorkerInfoPoExample {
             return (Criteria) this;
         }
 
-        public Criteria andParam1IsNull() {
-            addCriterion("param1 is null");
+        public Criteria andPhoneIsNull() {
+            addCriterion("phone is null");
             return (Criteria) this;
         }
 
-        public Criteria andParam1IsNotNull() {
-            addCriterion("param1 is not null");
+        public Criteria andPhoneIsNotNull() {
+            addCriterion("phone is not null");
             return (Criteria) this;
         }
 
-        public Criteria andParam1EqualTo(String value) {
-            addCriterion("param1 =", value, "param1");
+        public Criteria andPhoneEqualTo(String value) {
+            addCriterion("phone =", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andParam1NotEqualTo(String value) {
-            addCriterion("param1 <>", value, "param1");
+        public Criteria andPhoneNotEqualTo(String value) {
+            addCriterion("phone <>", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andParam1GreaterThan(String value) {
-            addCriterion("param1 >", value, "param1");
+        public Criteria andPhoneGreaterThan(String value) {
+            addCriterion("phone >", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andParam1GreaterThanOrEqualTo(String value) {
-            addCriterion("param1 >=", value, "param1");
+        public Criteria andPhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("phone >=", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andParam1LessThan(String value) {
-            addCriterion("param1 <", value, "param1");
+        public Criteria andPhoneLessThan(String value) {
+            addCriterion("phone <", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andParam1LessThanOrEqualTo(String value) {
-            addCriterion("param1 <=", value, "param1");
+        public Criteria andPhoneLessThanOrEqualTo(String value) {
+            addCriterion("phone <=", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andParam1Like(String value) {
-            addCriterion("param1 like", value, "param1");
+        public Criteria andPhoneLike(String value) {
+            addCriterion("phone like", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andParam1NotLike(String value) {
-            addCriterion("param1 not like", value, "param1");
+        public Criteria andPhoneNotLike(String value) {
+            addCriterion("phone not like", value, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andParam1In(List<String> values) {
-            addCriterion("param1 in", values, "param1");
+        public Criteria andPhoneIn(List<String> values) {
+            addCriterion("phone in", values, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andParam1NotIn(List<String> values) {
-            addCriterion("param1 not in", values, "param1");
+        public Criteria andPhoneNotIn(List<String> values) {
+            addCriterion("phone not in", values, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andParam1Between(String value1, String value2) {
-            addCriterion("param1 between", value1, value2, "param1");
+        public Criteria andPhoneBetween(String value1, String value2) {
+            addCriterion("phone between", value1, value2, "phone");
             return (Criteria) this;
         }
 
-        public Criteria andParam1NotBetween(String value1, String value2) {
-            addCriterion("param1 not between", value1, value2, "param1");
+        public Criteria andPhoneNotBetween(String value1, String value2) {
+            addCriterion("phone not between", value1, value2, "phone");
             return (Criteria) this;
         }
 

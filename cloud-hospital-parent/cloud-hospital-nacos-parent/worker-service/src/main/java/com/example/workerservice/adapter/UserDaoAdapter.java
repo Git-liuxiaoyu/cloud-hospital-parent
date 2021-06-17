@@ -2,10 +2,13 @@ package com.example.workerservice.adapter;
 
 import com.example.workerservice.outlet.dao.mysql.UserPoDao;
 import com.example.workerservice.outlet.dao.mysql.po.UserPo;
+import com.example.workerservice.outlet.dao.mysql.po.UserPoExample;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * 适配器类 - User适配器
@@ -64,4 +67,26 @@ public class UserDaoAdapter {
         return true;
     }
 
+    /**
+     * 修改密码
+     *
+     * @param workerNo
+     * @param password
+     */
+    public void updatePwd(String workerNo, String password) {
+        /* 实例化UserPoExample */
+        UserPoExample userPoExample = new UserPoExample();
+        userPoExample.createCriteria().andWorkernoEqualTo(workerNo);
+        /* 查询 */
+        List<UserPo> userPoList = userPoDao.selectByExample(userPoExample);
+        /* 判断是否唯一 */
+        if (userPoList.size() != 1) {
+            throw new NullPointerException();
+        }
+        /* 获得唯一对象 */
+        UserPo userPo = userPoList.get(0);
+        /* 修改密码 */
+        userPo.setPassword(password);
+        userPoDao.updateByPrimaryKey(userPo);
+    }
 }

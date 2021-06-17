@@ -12,8 +12,8 @@ public interface ILoginUserCommandHandler {
    /**
     * 自定义业务异常 - 用户未发现
     **/
-   class UserNotFountException extends RuntimeException {
-      public UserNotFountException() {
+   class UserNotFoundException extends RuntimeException {
+      public UserNotFoundException() {
          super("账号或密码错误");
       }
    }

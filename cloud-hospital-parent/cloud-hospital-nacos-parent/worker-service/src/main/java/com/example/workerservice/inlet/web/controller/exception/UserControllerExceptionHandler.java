@@ -30,8 +30,8 @@ public class UserControllerExceptionHandler {
      * @param e
      * @return
      */
-    @ExceptionHandler(value = ILoginUserCommandHandler.UserNotFountException.class)
-    public ResponseResult<Void> handleUserNotFountException(ILoginUserCommandHandler.UserNotFountException e) {
+    @ExceptionHandler(value = ILoginUserCommandHandler.UserNotFoundException.class)
+    public ResponseResult<Void> handleUserNotFountException(ILoginUserCommandHandler.UserNotFoundException e) {
         return new ResponseResult<>(444, e.getMessage());
     }
 

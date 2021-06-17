@@ -26,7 +26,7 @@ public class LoginUserCommandHandler implements ILoginUserCommandHandler {
             /* 执行方法,捕获异常则抛自定义异常 */
             return userDaoAdapter.login(command.getAccount(), command.getPassword());
         } catch (NullPointerException e) {
-            throw new UserNotFountException();
+            throw new UserNotFoundException();
         }
     }
 }

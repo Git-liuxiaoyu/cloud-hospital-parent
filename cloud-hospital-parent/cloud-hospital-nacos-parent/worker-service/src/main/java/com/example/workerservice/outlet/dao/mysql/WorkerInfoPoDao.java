@@ -2,9 +2,13 @@ package com.example.workerservice.outlet.dao.mysql;
 
 import com.example.workerservice.outlet.dao.mysql.po.WorkerInfoPo;
 import com.example.workerservice.outlet.dao.mysql.po.WorkerInfoPoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
+@Repository
 public interface WorkerInfoPoDao {
     long countByExample(WorkerInfoPoExample example);
 
@@ -27,4 +31,6 @@ public interface WorkerInfoPoDao {
     int updateByPrimaryKeySelective(WorkerInfoPo record);
 
     int updateByPrimaryKey(WorkerInfoPo record);
+
+    Optional<WorkerInfoPo> queryByWorkerNo(String workerNo);
 }
