@@ -17,6 +17,7 @@
         <module>pay-service</module>
         <module>worker-service</module>
         <module>verification-code-service</module>
+        <module>register-service</module>
     </modules>
 
     <dependencies>
