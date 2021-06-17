@@ -11,6 +11,7 @@ public class HttpUtil {
 
     /**
      * 获得真实请求IP
+     *
      * @param request
      * @return
      */
@@ -47,5 +48,17 @@ public class HttpUtil {
         }
         return XFor;
     }
+
+    /**
+     * 获得真实携带请求头中的Token中的workerNo
+     *
+     * @param tokenKey token k-v键值对的key
+     * @return
+     */
+    public static String getWorkerNoFromRequest(HttpServletRequest request, String tokenKey) {
+        /* 直接返回 */
+        return JwtUtil.getAccount(request.getHeader(tokenKey));
+    }
+
 
 }

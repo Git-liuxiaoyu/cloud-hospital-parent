@@ -32,7 +32,7 @@
             <artifactId>spring-rabbit-test</artifactId>
             <scope>test</scope>
         </dependency>
-    
+
         <!--druid数据源-->
         <dependency>
             <groupId>com.alibaba</groupId>

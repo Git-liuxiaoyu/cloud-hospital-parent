@@ -22,6 +22,11 @@ public class LoginUserCommandHandler implements ILoginUserCommandHandler {
 
     @Override
     public String action(LoginUserCommand command) {
-        return userDaoAdapter.login(command.getAccount(),command.getPassword());
+        try {
+            /* 执行方法,捕获异常则抛自定义异常 */
+            return userDaoAdapter.login(command.getAccount(), command.getPassword());
+        } catch (NullPointerException e) {
+            throw new UserNotFountException();
+        }
     }
 }
