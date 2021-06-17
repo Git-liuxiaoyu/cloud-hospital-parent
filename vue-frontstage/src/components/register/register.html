@@ -1,0 +1,137 @@
+<div>
+
+  <el-row>
+    <el-col :span="6">
+      <el-form ref="form" :model="form" label-width="100px">
+
+        <el-form-item label="挂号时间">
+          <el-select v-model="value" placeholder="请选择">
+            <el-option v-for="item in time" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="科目">
+          <el-select v-model="value" placeholder="请选择">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="科室">
+          <el-select v-model="value" placeholder="请选择">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="医生">
+          <el-select v-model="value" placeholder="请选择">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <br/>
+        <div style="text-align: center">
+          <el-button type="primary" @click="doPatient()">确 定 挂 号</el-button>
+        </div>
+      </el-form>
+    </el-col>
+
+    <el-col :span="18">
+      <div class="main-right">
+        <el-row :gutter="20">
+
+
+          <el-col :span="4" :push="1">
+            <br/>
+            <el-image style="width: 100px; height: 100px" :src="url" fit="contain">
+            </el-image>
+          </el-col>
+
+          <el-col :span="19">
+            <br/>
+            <span style="color: orange;font-size: 30px">王宏羽</span>&nbsp;&nbsp;&nbsp;
+            <span style="font-size: 20px">主任医师</span>
+            <p style="font-size: 20px;margin-top: 20px">中国医学科学院肿瘤医院 肿瘤内科</p>
+          </el-col>
+
+
+          <el-col :span="24">
+            <br/>
+            <div class="main-right2">
+              <br/>
+              <br/> <br/>
+              <br/>
+              <span style="color: blue;font-size: 25px">擅长</span>
+              <hr/>
+              <p style="line-height: 200%">肺癌的内科治疗，肺癌术后的辅助化疗，ⅢA，N2淋巴结阳性非鳞癌NSCLC术后的靶向治疗，
+                小细胞肺癌的综合治疗，驱动基因阳性晚期非鳞癌NSCLC的靶向治疗，驱动基因阴性非鳞癌NSCLC的化疗，
+                晚期肺癌（鳞癌，驱动基因阴性非鳞癌NSCLC ）的免疫治疗等有更深入的研究。
+              </p>
+              <br/>
+              <br/>
+              <span style="color: blue;font-size: 25px">简介</span>
+              <hr/>
+              <p style="line-height: 200%">
+                王宏羽，男，主任医师，1987年7月大学毕业分配到肿瘤医院工作。
+                从事肿瘤内科工作30余年，积累了丰富的临床经验，特别是对肺癌的内科治疗有较深的造诣，尤
+                其对肺癌术后辅助化疗及术后靶向治疗，小细胞肺癌的综合治疗，驱动基因阳性晚期非鳞癌NSCLC的
+                靶向治疗，驱动基因阴性非鳞癌NSCLC的化疗，晚期肺癌的免疫治疗有更深入的研究。负责GCP中心的多项新
+                药临床试验。发表论文30余篇，参加《实用肿瘤内科学》，《肺癌诊断治疗学》，《临床肿瘤内科手册》等书的
+                编写，出版个人专著《癌症疼痛缓解及姑息性治疗》。
+              </p>
+              <br/>
+              <br/>
+              <p style="text-align: center">*基本信息来自医院官网或医院内公示信息或医生本人提供</p>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+    </el-col>
+  </el-row>
+
+  <el-dialog title="填写个人信息" :visible.sync="patientBox" center width="30%" :before-close="handleClose">
+    <el-form :model="patient" :rules="rules" ref="rules" label-width="70px">
+
+      <el-row>
+
+        <el-col :span="24">
+          <el-form-item prop="phone" label="姓名">
+            <el-input v-model="patient.name" placeholder="请输入姓名"></el-input>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="24">
+          <el-form-item label="性别">
+            <el-radio-group v-model="patient.gender">
+              <el-radio label="男" value="0"></el-radio>
+              <el-radio label="女" value="1"></el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="24" >
+          <el-form-item prop="code"  label="电话">
+            <el-input v-model="patient.phone" placeholder="请输入电话"></el-input>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="24">
+          <el-form-item prop="code"  label="身份证号">
+            <el-input v-model="patient.identityId" placeholder="请输入身份证"></el-input>
+          </el-form-item>
+        </el-col>
+
+      </el-row>
+
+    </el-form>
+
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="cancel()">取 消</el-button>
+      <el-button type="primary" @click="addPatient()">确 定</el-button>
+    </div>
+
+  </el-dialog>
+
+</div>

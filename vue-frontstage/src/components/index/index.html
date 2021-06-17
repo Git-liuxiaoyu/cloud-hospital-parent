@@ -1,0 +1,17 @@
+<div class="index">
+  <el-container>
+
+    <el-header class="Header">
+      <el-button type="primary" @click="before()">预约挂号</el-button>
+      <el-button type="success" @click="registerRecord()">挂号记录</el-button>
+      <hr/>
+    </el-header>
+
+    <br/>
+
+    <el-main class="Main">
+      <router-view/>
+    </el-main>
+
+  </el-container>
+</div>

@@ -1,0 +1,51 @@
+<div class="index">
+
+  <div class="Header">
+    <el-row>
+      <el-col :span="1">
+        <img src="@/assets/img/logo.png" width="100%">
+      </el-col>
+      <el-col :span="21">
+        <span class="Header-span1" width="100%">小蜗牛医院</span>
+      </el-col>
+      <el-col :span="2">
+        <el-button type="primary" class="Header-btn1" @click="showLogin">去挂号</el-button>
+      </el-col>
+    </el-row>
+  </div>
+
+  <div class="main">
+    <img src="@/assets/img/index.jpg" width="100%">
+  </div>
+
+  <el-dialog title="预约挂号" :visible.sync="login" center width="20%" :before-close="handleClose">
+    <el-form :model="parameter" :rules="rules" ref="rules">
+
+      <el-row>
+
+        <el-col :span="24">
+          <el-form-item prop="phone">
+            <el-input v-model="parameter.phone" placeholder="请输入手机号">
+              <el-button slot="append" v-text="msg" @click="getCode" :disabled="disabled"></el-button>
+            </el-input>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="24">
+          <el-form-item prop="code">
+            <el-input v-model="parameter.code" placeholder="请输入验证码"></el-input>
+          </el-form-item>
+        </el-col>
+
+      </el-row>
+
+    </el-form>
+
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="cancel('rules')">取 消</el-button>
+      <el-button type="primary" @click="doLogin('rules')">确 定</el-button>
+    </div>
+
+  </el-dialog>
+
+</div>
