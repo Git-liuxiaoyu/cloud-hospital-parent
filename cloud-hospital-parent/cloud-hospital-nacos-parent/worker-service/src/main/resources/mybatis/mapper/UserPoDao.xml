@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.workerservice.outlet.dao.mysql.UserPoDao">
+
+  <select id="login" resultType="com.example.workerservice.outlet.dao.mysql.po.UserPo" >
+    select * from h_user where account=#{account} and password=#{password}
+  </select>
+
+  <!-- 自动生成 -->
   <resultMap id="BaseResultMap" type="com.example.workerservice.outlet.dao.mysql.po.UserPo">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="workerId" jdbcType="INTEGER" property="workerid" />
+    <result column="workerNo" jdbcType="VARCHAR" property="workerno" />
     <result column="lastLoginTime" jdbcType="TIMESTAMP" property="lastlogintime" />
     <result column="status" jdbcType="CHAR" property="status" />
   </resultMap>
@@ -68,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, password, workerId, lastLoginTime, status
+    id, account, password, workerNo, lastLoginTime, status
   </sql>
   <select id="selectByExample" parameterType="com.example.workerservice.outlet.dao.mysql.po.UserPoExample" resultMap="BaseResultMap">
     select
@@ -102,10 +108,10 @@
   </delete>
   <insert id="insert" parameterType="com.example.workerservice.outlet.dao.mysql.po.UserPo">
     insert into h_user (id, account, password, 
-      workerId, lastLoginTime, status
+      workerNo, lastLoginTime, status
       )
     values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{workerid,jdbcType=INTEGER}, #{lastlogintime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}
+      #{workerno,jdbcType=VARCHAR}, #{lastlogintime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.example.workerservice.outlet.dao.mysql.po.UserPo">
@@ -120,8 +126,8 @@
       <if test="password != null">
         password,
       </if>
-      <if test="workerid != null">
-        workerId,
+      <if test="workerno != null">
+        workerNo,
       </if>
       <if test="lastlogintime != null">
         lastLoginTime,
@@ -140,8 +146,8 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="workerid != null">
-        #{workerid,jdbcType=INTEGER},
+      <if test="workerno != null">
+        #{workerno,jdbcType=VARCHAR},
       </if>
       <if test="lastlogintime != null">
         #{lastlogintime,jdbcType=TIMESTAMP},
@@ -169,8 +175,8 @@
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="record.workerid != null">
-        workerId = #{record.workerid,jdbcType=INTEGER},
+      <if test="record.workerno != null">
+        workerNo = #{record.workerno,jdbcType=VARCHAR},
       </if>
       <if test="record.lastlogintime != null">
         lastLoginTime = #{record.lastlogintime,jdbcType=TIMESTAMP},
@@ -188,7 +194,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       account = #{record.account,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
-      workerId = #{record.workerid,jdbcType=INTEGER},
+      workerNo = #{record.workerno,jdbcType=VARCHAR},
       lastLoginTime = #{record.lastlogintime,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=CHAR}
     <if test="_parameter != null">
@@ -204,8 +210,8 @@
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="workerid != null">
-        workerId = #{workerid,jdbcType=INTEGER},
+      <if test="workerno != null">
+        workerNo = #{workerno,jdbcType=VARCHAR},
       </if>
       <if test="lastlogintime != null">
         lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
@@ -220,7 +226,7 @@
     update h_user
     set account = #{account,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      workerId = #{workerid,jdbcType=INTEGER},
+      workerNo = #{workerno,jdbcType=VARCHAR},
       lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}

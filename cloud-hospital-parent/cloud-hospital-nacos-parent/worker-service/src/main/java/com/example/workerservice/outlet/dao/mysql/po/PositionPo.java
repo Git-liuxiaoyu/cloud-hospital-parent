@@ -7,8 +7,6 @@ public class PositionPo {
 
     private String level;
 
-    private String name;
-
     private String isout;
 
     private String isin;
@@ -39,14 +37,6 @@ public class PositionPo {
 
     public void setLevel(String level) {
         this.level = level == null ? null : level.trim();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
     }
 
     public String getIsout() {

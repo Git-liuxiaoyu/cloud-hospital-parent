@@ -2,9 +2,13 @@ package com.example.workerservice.outlet.dao.mysql;
 
 import com.example.workerservice.outlet.dao.mysql.po.UserPo;
 import com.example.workerservice.outlet.dao.mysql.po.UserPoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
+@Repository
 public interface UserPoDao {
     long countByExample(UserPoExample example);
 
@@ -15,6 +19,8 @@ public interface UserPoDao {
     int insert(UserPo record);
 
     int insertSelective(UserPo record);
+
+    Optional<UserPo> login(@Param("account") String account,@Param("password") String password);
 
     List<UserPo> selectByExample(UserPoExample example);
 

@@ -18,7 +18,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("XXX 项目接口文挡")
                 .description("XXX Project Swagger2 UserService Interface")
-                .termsOfServiceUrl("http://localhost:9002/swagger-ui.html")
+                .termsOfServiceUrl("http://localhost:9001/swagger-ui.html")
                 .version("1.0")
                 .build();
     }

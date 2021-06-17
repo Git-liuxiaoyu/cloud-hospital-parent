@@ -305,63 +305,73 @@ public class UserPoExample {
             return (Criteria) this;
         }
 
-        public Criteria andWorkeridIsNull() {
-            addCriterion("workerId is null");
+        public Criteria andWorkernoIsNull() {
+            addCriterion("workerNo is null");
             return (Criteria) this;
         }
 
-        public Criteria andWorkeridIsNotNull() {
-            addCriterion("workerId is not null");
+        public Criteria andWorkernoIsNotNull() {
+            addCriterion("workerNo is not null");
             return (Criteria) this;
         }
 
-        public Criteria andWorkeridEqualTo(Integer value) {
-            addCriterion("workerId =", value, "workerid");
+        public Criteria andWorkernoEqualTo(String value) {
+            addCriterion("workerNo =", value, "workerno");
             return (Criteria) this;
         }
 
-        public Criteria andWorkeridNotEqualTo(Integer value) {
-            addCriterion("workerId <>", value, "workerid");
+        public Criteria andWorkernoNotEqualTo(String value) {
+            addCriterion("workerNo <>", value, "workerno");
             return (Criteria) this;
         }
 
-        public Criteria andWorkeridGreaterThan(Integer value) {
-            addCriterion("workerId >", value, "workerid");
+        public Criteria andWorkernoGreaterThan(String value) {
+            addCriterion("workerNo >", value, "workerno");
             return (Criteria) this;
         }
 
-        public Criteria andWorkeridGreaterThanOrEqualTo(Integer value) {
-            addCriterion("workerId >=", value, "workerid");
+        public Criteria andWorkernoGreaterThanOrEqualTo(String value) {
+            addCriterion("workerNo >=", value, "workerno");
             return (Criteria) this;
         }
 
-        public Criteria andWorkeridLessThan(Integer value) {
-            addCriterion("workerId <", value, "workerid");
+        public Criteria andWorkernoLessThan(String value) {
+            addCriterion("workerNo <", value, "workerno");
             return (Criteria) this;
         }
 
-        public Criteria andWorkeridLessThanOrEqualTo(Integer value) {
-            addCriterion("workerId <=", value, "workerid");
+        public Criteria andWorkernoLessThanOrEqualTo(String value) {
+            addCriterion("workerNo <=", value, "workerno");
             return (Criteria) this;
         }
 
-        public Criteria andWorkeridIn(List<Integer> values) {
-            addCriterion("workerId in", values, "workerid");
+        public Criteria andWorkernoLike(String value) {
+            addCriterion("workerNo like", value, "workerno");
             return (Criteria) this;
         }
 
-        public Criteria andWorkeridNotIn(List<Integer> values) {
-            addCriterion("workerId not in", values, "workerid");
+        public Criteria andWorkernoNotLike(String value) {
+            addCriterion("workerNo not like", value, "workerno");
             return (Criteria) this;
         }
 
-        public Criteria andWorkeridBetween(Integer value1, Integer value2) {
-            addCriterion("workerId between", value1, value2, "workerid");
+        public Criteria andWorkernoIn(List<String> values) {
+            addCriterion("workerNo in", values, "workerno");
             return (Criteria) this;
         }
 
-        public Criteria andWorkeridNotBetween(Integer value1, Integer value2) {
-            addCriterion("workerId not between", value1, value2, "workerid");
+        public Criteria andWorkernoNotIn(List<String> values) {
+            addCriterion("workerNo not in", values, "workerno");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkernoBetween(String value1, String value2) {
+            addCriterion("workerNo between", value1, value2, "workerno");
+            return (Criteria) this;
+        }
+
+        public Criteria andWorkernoNotBetween(String value1, String value2) {
+            addCriterion("workerNo not between", value1, value2, "workerno");
             return (Criteria) this;
         }
 

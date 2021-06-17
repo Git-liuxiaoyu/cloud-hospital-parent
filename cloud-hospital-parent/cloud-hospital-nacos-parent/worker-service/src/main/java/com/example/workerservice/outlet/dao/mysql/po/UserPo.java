@@ -1,7 +1,10 @@
 package com.example.workerservice.outlet.dao.mysql.po;
 
+import lombok.ToString;
+
 import java.util.Date;
 
+@ToString
 public class UserPo {
     private Integer id;
 
@@ -9,7 +12,7 @@ public class UserPo {
 
     private String password;
 
-    private Integer workerid;
+    private String workerno;
 
     private Date lastlogintime;
 
@@ -39,12 +42,12 @@ public class UserPo {
         this.password = password == null ? null : password.trim();
     }
 
-    public Integer getWorkerid() {
-        return workerid;
+    public String getWorkerno() {
+        return workerno;
     }
 
-    public void setWorkerid(Integer workerid) {
-        this.workerid = workerid;
+    public void setWorkerno(String workerno) {
+        this.workerno = workerno == null ? null : workerno.trim();
     }
 
     public Date getLastlogintime() {

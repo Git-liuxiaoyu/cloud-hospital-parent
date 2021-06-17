@@ -5,7 +5,6 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="type" jdbcType="CHAR" property="type" />
     <result column="level" jdbcType="CHAR" property="level" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="isOut" jdbcType="CHAR" property="isout" />
     <result column="isIn" jdbcType="CHAR" property="isin" />
     <result column="isMdc" jdbcType="CHAR" property="ismdc" />
@@ -70,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, type, level, name, isOut, isIn, isMdc, status
+    id, type, level, isOut, isIn, isMdc, status
   </sql>
   <select id="selectByExample" parameterType="com.example.workerservice.outlet.dao.mysql.po.PositionPoExample" resultMap="BaseResultMap">
     select
@@ -103,12 +102,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.workerservice.outlet.dao.mysql.po.PositionPo">
-    insert into h_position (id, type, level, name, 
-      isOut, isIn, isMdc, status
-      )
-    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=CHAR}, #{level,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, 
-      #{isout,jdbcType=CHAR}, #{isin,jdbcType=CHAR}, #{ismdc,jdbcType=CHAR}, #{status,jdbcType=CHAR}
-      )
+    insert into h_position (id, type, level, isOut, 
+      isIn, isMdc, status)
+    values (#{id,jdbcType=INTEGER}, #{type,jdbcType=CHAR}, #{level,jdbcType=CHAR}, #{isout,jdbcType=CHAR}, 
+      #{isin,jdbcType=CHAR}, #{ismdc,jdbcType=CHAR}, #{status,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.workerservice.outlet.dao.mysql.po.PositionPo">
     insert into h_position
@@ -121,9 +118,6 @@
       </if>
       <if test="level != null">
         level,
-      </if>
-      <if test="name != null">
-        name,
       </if>
       <if test="isout != null">
         isOut,
@@ -147,9 +141,6 @@
       </if>
       <if test="level != null">
         #{level,jdbcType=CHAR},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
       </if>
       <if test="isout != null">
         #{isout,jdbcType=CHAR},
@@ -183,9 +174,6 @@
       <if test="record.level != null">
         level = #{record.level,jdbcType=CHAR},
       </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
-      </if>
       <if test="record.isout != null">
         isOut = #{record.isout,jdbcType=CHAR},
       </if>
@@ -208,7 +196,6 @@
     set id = #{record.id,jdbcType=INTEGER},
       type = #{record.type,jdbcType=CHAR},
       level = #{record.level,jdbcType=CHAR},
-      name = #{record.name,jdbcType=VARCHAR},
       isOut = #{record.isout,jdbcType=CHAR},
       isIn = #{record.isin,jdbcType=CHAR},
       isMdc = #{record.ismdc,jdbcType=CHAR},
@@ -225,9 +212,6 @@
       </if>
       <if test="level != null">
         level = #{level,jdbcType=CHAR},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="isout != null">
         isOut = #{isout,jdbcType=CHAR},
@@ -248,7 +232,6 @@
     update h_position
     set type = #{type,jdbcType=CHAR},
       level = #{level,jdbcType=CHAR},
-      name = #{name,jdbcType=VARCHAR},
       isOut = #{isout,jdbcType=CHAR},
       isIn = #{isin,jdbcType=CHAR},
       isMdc = #{ismdc,jdbcType=CHAR},
