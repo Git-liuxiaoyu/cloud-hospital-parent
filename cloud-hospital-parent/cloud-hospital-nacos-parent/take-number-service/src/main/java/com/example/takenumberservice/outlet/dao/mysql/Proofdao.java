@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 
 public interface Proofdao {
-    int findorderNum();//根据挂号id查询取票信息
+    int findorderNum();//查询最大排队数
 
 }
