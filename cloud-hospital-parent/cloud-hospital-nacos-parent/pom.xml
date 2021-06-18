@@ -19,6 +19,7 @@
         <module>verification-code-service</module>
         <module>register-service</module>
         <module>take-number-service</module>
+        <module>drug-service</module>
     </modules>
 
     <dependencies>

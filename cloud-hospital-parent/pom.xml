@@ -20,6 +20,7 @@
 
     <modules>
         <module>cloud-hospital-nacos-parent</module>
+
     </modules>
 
     <dependencies>
