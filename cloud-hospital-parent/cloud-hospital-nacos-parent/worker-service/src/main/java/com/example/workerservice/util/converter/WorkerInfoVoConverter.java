@@ -22,6 +22,7 @@ public class WorkerInfoVoConverter {
         WorkerInfoVo workerInfoVo = new WorkerInfoVo();
         /* 赋值 */
         workerInfoVo.setPhone(workerInfoPo.getPhone());
+        workerInfoVo.setName(workerInfoPo.getName());
         /* 返回 */
         return workerInfoVo;
     }

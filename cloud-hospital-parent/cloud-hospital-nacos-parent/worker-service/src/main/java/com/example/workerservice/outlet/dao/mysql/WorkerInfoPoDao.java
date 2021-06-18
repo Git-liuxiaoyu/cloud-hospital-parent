@@ -22,7 +22,7 @@ public interface WorkerInfoPoDao {
 
     List<WorkerInfoPo> selectByExample(WorkerInfoPoExample example);
 
-    WorkerInfoPo selectByPrimaryKey(Integer id);
+    Optional<WorkerInfoPo> selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") WorkerInfoPo record, @Param("example") WorkerInfoPoExample example);
 

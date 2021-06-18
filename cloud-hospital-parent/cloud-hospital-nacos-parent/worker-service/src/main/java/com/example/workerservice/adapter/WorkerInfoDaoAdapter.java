@@ -37,4 +37,16 @@ public class WorkerInfoDaoAdapter {
         /* 转换并返回 */
         return workerInfoVoConverter.convert(workerInfoPo);
     }
+
+    /**
+     * 根据主键查询
+     * @param id
+     * @return
+     */
+    public WorkerInfoVo queryById(Integer id) {
+        /* 查询 */
+        WorkerInfoPo workerInfoPo = workerInfoPoDao.selectByPrimaryKey(id).orElseThrow(NullPointerException::new);
+        /* 转换并返回 */
+        return workerInfoVoConverter.convert(workerInfoPo);
+    }
 }

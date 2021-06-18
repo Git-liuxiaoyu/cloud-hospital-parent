@@ -16,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WorkerInfoVo {
 
+    private String name;
+
     private String phone;
 
 }
