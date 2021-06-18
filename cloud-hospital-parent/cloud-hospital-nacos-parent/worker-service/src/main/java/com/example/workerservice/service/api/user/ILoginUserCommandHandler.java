@@ -1,6 +1,6 @@
-package com.example.workerservice.service.api;
+package com.example.workerservice.service.api.user;
 
-import com.example.workerservice.service.command.login.LoginUserCommand;
+import com.example.workerservice.service.command.user.login.LoginUserCommand;
 
 /**
  * 接口 - 用户登录命令

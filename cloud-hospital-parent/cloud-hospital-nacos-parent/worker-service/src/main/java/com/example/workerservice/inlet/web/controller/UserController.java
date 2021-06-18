@@ -1,9 +1,9 @@
 package com.example.workerservice.inlet.web.controller;
 
 import com.example.workerservice.inlet.web.vo.ResponseResult;
-import com.example.workerservice.service.command.login.LoginUserCommand;
-import com.example.workerservice.service.command.sendcode.SendVerifyCodeCommand;
-import com.example.workerservice.service.command.updatepwd.UpdateUserPwdCommand;
+import com.example.workerservice.service.command.user.login.LoginUserCommand;
+import com.example.workerservice.service.command.user.sendcode.SendVerifyCodeCommand;
+import com.example.workerservice.service.command.user.updatepwd.UpdateUserPwdCommand;
 import com.example.workerservice.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;

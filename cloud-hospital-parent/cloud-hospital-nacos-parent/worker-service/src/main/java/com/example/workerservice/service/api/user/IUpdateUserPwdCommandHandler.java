@@ -1,6 +1,6 @@
-package com.example.workerservice.service.api;
+package com.example.workerservice.service.api.user;
 
-import com.example.workerservice.service.command.updatepwd.UpdateUserPwdCommand;
+import com.example.workerservice.service.command.user.updatepwd.UpdateUserPwdCommand;
 
 /**
  * 接口 - 修改用户密码

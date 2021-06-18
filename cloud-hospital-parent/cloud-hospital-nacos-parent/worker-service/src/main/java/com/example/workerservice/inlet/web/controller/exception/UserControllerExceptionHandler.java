@@ -2,8 +2,8 @@ package com.example.workerservice.inlet.web.controller.exception;
 
 import com.example.workerservice.inlet.web.controller.UserController;
 import com.example.workerservice.inlet.web.vo.ResponseResult;
-import com.example.workerservice.service.api.ILoginUserCommandHandler;
-import com.example.workerservice.service.api.IUpdateUserPwdCommandHandler;
+import com.example.workerservice.service.api.user.ILoginUserCommandHandler;
+import com.example.workerservice.service.api.user.IUpdateUserPwdCommandHandler;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

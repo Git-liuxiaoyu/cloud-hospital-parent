@@ -1,6 +1,6 @@
-package com.example.workerservice.service.command.sendcode;
+package com.example.workerservice.service.command.user.sendcode;
 
-import com.example.workerservice.service.api.ISendVerifyCodeCommandHandler;
+import com.example.workerservice.service.api.user.ISendVerifyCodeCommandHandler;
 import com.example.workerservice.util.ApplicationContextHolder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

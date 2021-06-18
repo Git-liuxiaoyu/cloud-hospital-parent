@@ -1,6 +1,6 @@
-package com.example.workerservice.service.command.updatepwd;
+package com.example.workerservice.service.command.user.updatepwd;
 
-import com.example.workerservice.service.api.IUpdateUserPwdCommandHandler;
+import com.example.workerservice.service.api.user.IUpdateUserPwdCommandHandler;
 import com.example.workerservice.util.ApplicationContextHolder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

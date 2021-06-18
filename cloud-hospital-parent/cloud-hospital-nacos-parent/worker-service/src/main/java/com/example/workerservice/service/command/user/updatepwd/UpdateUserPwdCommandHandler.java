@@ -1,9 +1,9 @@
-package com.example.workerservice.service.command.updatepwd;
+package com.example.workerservice.service.command.user.updatepwd;
 
 import com.example.workerservice.adapter.UserDaoAdapter;
 import com.example.workerservice.adapter.WorkerInfoDaoAdapter;
 import com.example.workerservice.inlet.web.vo.WorkerInfoVo;
-import com.example.workerservice.service.api.IUpdateUserPwdCommandHandler;
+import com.example.workerservice.service.api.user.IUpdateUserPwdCommandHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
