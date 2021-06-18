@@ -1,0 +1,61 @@
+version: '3'
+services:
+  nacos:
+    image: nacos/nacos-server:1.4.1
+    container_name: nacos-standalone-8848
+    ports:
+      - "8848:8848"
+    environment:
+      - "PREFER_HOST_MODE=hostname"
+      - "MODE=standalone"
+      - "JVM_XMS=512m"
+      - "JVM_MMS=512m"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "~/docker/8848/logs/:/home/nacos/logs"
+      - "./docker/8848/init.d/custom.properties:/home/nacos/init.d/custom.properties"
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-3306
+    #network_mode: "bridge"
+    #restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "./docker/3306/conf.d:/etc/mysql/conf.d"
+      - "./docker/3306/mysql.conf.d:/etc/mysql/mysql.conf.d"
+      - "~/docker/3306/data:/var/lib/mysql"
+    ports:
+      - "3306:3306"
+  redis:
+    image: redis:5.0
+    container_name: redis-6379
+    ports:
+      - 6379:6379
+    volumes:
+      - "./docker/6379/redis.conf:/usr/local/etc/redis/redis.conf"
+      - "~/docker/6379/data:/data"
+    command:
+      redis-server /usr/local/etc/redis/redis.conf --appendonly yes
+  rabbitmq:
+    image: rabbitmq:3.8.14-management
+    container_name: rabbitmq-5672
+    hostname: rabbitmq
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ~/docker/rabbitmq/5672/data:/var/lib/rabbitmq/mnesia/rabbit@rabbitmq-5672
+    ports:
+      - 5672:5672
+      - 15672:15672
+#  maven:
+#    image: maven:3.8-jdk-8
+#    container_name: maven-build
+#    volumes:
+#      - "$PWD:/app"
+#      - "$HOME/.m2:/root/.m2"
+#    working_dir: /app
+#    command: /bin/bash -c "mvn clean package -Dmaven.test.skip=true"
+
