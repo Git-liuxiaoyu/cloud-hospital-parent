@@ -1,7 +1,7 @@
 import VueRouter from "vue-router";
 import Vue from "vue";
 
-import home from "../components/home/Home";
+
 import registration from "../components/registration/registration.vue"
 import index from "../components/index/index.vue"
 import pharmacy from "../components/pharmacy/pharmacy.vue"
@@ -13,7 +13,7 @@ const router = new VueRouter({
 
     routes:[
         {path:"/",redirect:"/index"},
-        {path:"/home",component:home},
+
         {path:"/goregistration",component:registration},
         {path:"/index",component:index},
         {path:"/gopharmacy",component:pharmacy},

@@ -21,7 +21,7 @@
                 <el-input
                     type="text"
                     placeholder="请输入4位取票码"
-                    v-model="text"
+                    v-model="num"
                     maxlength="4"
                     show-word-limit style="width:50%">
                  <template slot="prepend">GH</template>
@@ -45,7 +45,7 @@ import axios from 'axios';
 export default { 
        data(){
             return {
-                text:"",
+                num:"",
                 profile:{
                   
                 },
@@ -53,8 +53,16 @@ export default {
         },
         methods:{
             getnumber(){//取票
-                var num = "GH"+this.text;
-                alert("号码："+num);
+                var no = "GH"+this.num;
+               axios.get("http://localhost:6001/proof/findbyno/"+no).then(r => {  
+
+                   console.log(r)
+                   if(r.data.code != 200){
+                       alert("取票失败");
+                   }
+                    
+                       
+                });
             },
 
             returnindex(){//返回
