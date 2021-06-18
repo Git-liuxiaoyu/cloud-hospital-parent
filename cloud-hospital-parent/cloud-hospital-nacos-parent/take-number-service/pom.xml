@@ -6,9 +6,10 @@
     <artifactId>take-number-service</artifactId>
     <name>take-number-service</name>
     
+    
     <parent>
-        <artifactId>cloud-hospital-nacos-parent</artifactId>
         <groupId>com.example</groupId>
+        <artifactId>cloud-hospital-nacos-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     
@@ -21,17 +22,6 @@
     </properties>
     
     <dependencies>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.3.2</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.springframework.amqp</groupId>
-            <artifactId>spring-rabbit-test</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <!--druid数据源-->
         <dependency>
@@ -39,6 +29,8 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.10</version>
         </dependency>
+        
+
 
     </dependencies>
     

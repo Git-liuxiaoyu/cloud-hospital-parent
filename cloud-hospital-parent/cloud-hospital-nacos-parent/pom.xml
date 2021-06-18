@@ -18,6 +18,7 @@
         <module>worker-service</module>
         <module>verification-code-service</module>
         <module>register-service</module>
+        <module>take-number-service</module>
     </modules>
 
     <dependencies>

@@ -2,7 +2,8 @@ package com.example.takenumberservice.inlet.web.controller;
 
 import com.example.takenumberservice.inlet.web.ResponseResult;
 import com.example.takenumberservice.inlet.web.vo.ProofControllerVo;
-import com.example.takenumberservice.service.command.ProofCommand;
+import com.example.takenumberservice.service.command.addProof.ProofCommand;
+import com.example.takenumberservice.service.command.findregister.RegisterCommand;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,12 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/proof/")
 public class ProofController {
 
-    @GetMapping("findbyregid/{regId}")
-    public ResponseResult<ProofControllerVo> findbyregId(@PathVariable("regId") Integer proof){
-        ProofCommand proofCommand = new ProofCommand();
-        proofCommand.setId(1);
-        ProofControllerVo execute = proofCommand.execute();
-        return new ResponseResult<ProofControllerVo>(200,"ok",execute);
+    @GetMapping("findbyno/{no}")
+    public ResponseResult<ProofCommand> findbyregId(@PathVariable("no") String no){
+        RegisterCommand rc = new RegisterCommand();
+        rc.setNo(no);
+        return rc.execute();
     }
 
 }

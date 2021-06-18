@@ -1,6 +1,7 @@
-package com.example.takenumberservice.service.command;
+package com.example.takenumberservice.service.command.addProof;
 
-import com.example.takenumberservice.inlet.web.vo.ProofControllerVo;
+import com.example.takenumberservice.inlet.web.ResponseResult;
+import com.example.takenumberservice.service.command.findregister.RegisterCommand;
 import com.example.takenumberservice.util.ApplicationContextHolder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,12 +19,14 @@ public class ProofCommand {
     private String createTime;//取票时间
     private char status;//取票状态
 
-    private ProofCommandHandler handler;
+    private String no;//取票码
+
+    private ProofCommandHandle handler;
 
     public ProofCommand(){
         handler = ApplicationContextHolder
                 .getApplicationContext()
-                .getBean(ProofCommandHandler.class);
+                .getBean(ProofCommandHandle.class);
     }
 
     public ProofCommand(Integer id, Integer regId, Integer departmentId, String roomName, Integer orderNum, String createTime, char status) {
@@ -37,9 +40,11 @@ public class ProofCommand {
         this.status = status;
     }
 
-    public ProofControllerVo execute(){
-        log.info("执行查询取号信息功能");
-        ProofControllerVo ProofControllerVo = handler.findbyregId(this.id);
-        return ProofControllerVo;
+    /**
+     * 添加进取号表
+     * @return
+     */
+    public ResponseResult<ProofCommand> execute(RegisterCommand findbyno){
+        return handler.add(findbyno);
     }
 }
