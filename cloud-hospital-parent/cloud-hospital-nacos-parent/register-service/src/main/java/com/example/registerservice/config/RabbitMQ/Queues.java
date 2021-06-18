@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class Queues {
 
     @Bean("phone_code_queue")
-    public Queue getDlxQueue(){
+    public Queue getDlxQueue() {
         return QueueBuilder.durable("phone_code_queue").build();
     }
 }
