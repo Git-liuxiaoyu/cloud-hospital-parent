@@ -1,7 +1,6 @@
-package com.example.registerservice.service.query.GetPhoneAndCode;
+package com.example.registerservice.service.query.queryphoneandcode;
 
-import com.example.registerservice.service.api.IAddPhoneGoRedisCommandHandler;
-import com.example.registerservice.service.api.IQueuePhoneAndCodeCommandHandler;
+import com.example.registerservice.service.api.IQueryPhoneAndCodeCommandHandler;
 import com.example.registerservice.util.ApplicationContextHolder;
 import lombok.Data;
 
@@ -15,17 +14,17 @@ import java.io.Serializable;
  * @Description:
  */
 @Data
-public class QueuePhoneAndCodeCommand implements Serializable {
-    private String phone;
-    private String code;
+public class QueryPhoneAndCodeCommand implements Serializable {
+    private String phone;//电话
+    private String code;//验证码
 
-    private IQueuePhoneAndCodeCommandHandler handler;
+    private IQueryPhoneAndCodeCommandHandler handler;
 
-    public QueuePhoneAndCodeCommand() {
+    public QueryPhoneAndCodeCommand() {
         //命令模式代理对象注入
         handler = ApplicationContextHolder
                 .getApplicationContext()
-                .getBean(IQueuePhoneAndCodeCommandHandler.class);
+                .getBean(IQueryPhoneAndCodeCommandHandler.class);
     }
 
     public boolean execute() {

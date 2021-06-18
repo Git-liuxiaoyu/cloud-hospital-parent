@@ -1,7 +1,7 @@
-package com.example.registerservice.service.query.GetPhoneAndCode;
+package com.example.registerservice.service.query.queryphoneandcode;
 
-import com.example.registerservice.adapter.RegisterDaoAdapter;
-import com.example.registerservice.service.api.IQueuePhoneAndCodeCommandHandler;
+import com.example.registerservice.adapter.RegisterAdapter;
+import com.example.registerservice.service.api.IQueryPhoneAndCodeCommandHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,13 +15,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class QueuePhoneAndCodeCommandHandler implements IQueuePhoneAndCodeCommandHandler {
+public class QueryPhoneAndCodeCommandHandler implements IQueryPhoneAndCodeCommandHandler {
 
     @Autowired
-    private RegisterDaoAdapter daoAdapter;
+    private RegisterAdapter daoAdapter;
 
     @Override
-    public boolean action(QueuePhoneAndCodeCommand command) {
+    public boolean action(QueryPhoneAndCodeCommand command) {
         try {
             String code = daoAdapter.select(command);
             log.debug("验证码{}",code);
