@@ -5,32 +5,40 @@
       <el-form ref="form" :model="form" label-width="100px">
 
         <el-form-item label="挂号时间">
-          <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="form.timeValue" placeholder="请选择">
             <el-option v-for="item in time" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-form-item>
 
         <el-form-item label="科目">
-          <el-select v-model="value" placeholder="请选择">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+          <el-select v-model="form.subjectValue" @change="getSubject">
+            <el-option v-for="item in subject" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="科室">
-          <el-select v-model="value" placeholder="请选择">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+        <el-form-item label="科目类型">
+          <el-select v-model="form.subjectTypeValue" placeholder="请选择">
+            <el-option v-for="item in subjectType" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item label="医生">
-          <el-select v-model="value" placeholder="请选择">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
+        <!--        <el-form-item label="科室">-->
+        <!--          <el-select v-model="value" placeholder="请选择">-->
+        <!--            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">-->
+        <!--            </el-option>-->
+        <!--          </el-select>-->
+        <!--        </el-form-item>-->
+
+        <!--        <el-form-item label="医生">-->
+        <!--          <el-select v-model="value" placeholder="请选择">-->
+        <!--            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">-->
+        <!--            </el-option>-->
+        <!--          </el-select>-->
+        <!--        </el-form-item>-->
+
         <br/>
         <div style="text-align: center">
           <el-button type="primary" @click="doPatient()">确 定 挂 号</el-button>
@@ -91,8 +99,8 @@
     </el-col>
   </el-row>
 
-  <el-dialog title="填写个人信息" :visible.sync="patientBox" center width="30%" :before-close="handleClose">
-    <el-form :model="patient" :rules="rules" ref="rules" label-width="70px">
+  <el-dialog title="填写个人信息" :visible.sync="patientBox" center width="30%">
+    <el-form :model="patient" label-width="70px">
 
       <el-row>
 
@@ -111,14 +119,14 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="24" >
-          <el-form-item prop="code"  label="电话">
+        <el-col :span="24">
+          <el-form-item prop="code" label="电话">
             <el-input v-model="patient.phone" placeholder="请输入电话"></el-input>
           </el-form-item>
         </el-col>
 
         <el-col :span="24">
-          <el-form-item prop="code"  label="身份证号">
+          <el-form-item prop="code" label="身份证号">
             <el-input v-model="patient.identityId" placeholder="请输入身份证"></el-input>
           </el-form-item>
         </el-col>

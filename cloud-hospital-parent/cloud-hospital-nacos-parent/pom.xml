@@ -19,6 +19,7 @@
         <module>verification-code-service</module>
         <module>register-service</module>
         <module>take-number-service</module>
+        <module>drug-service</module>
     </modules>
 
     <dependencies>
@@ -99,6 +100,7 @@
     </dependencies>
 
     <build>
+        <finalName>${artifactId}</finalName>
         <plugins>
             <plugin> <!-- mybatis.generator 插件 begin-->
                 <groupId>org.mybatis.generator</groupId>

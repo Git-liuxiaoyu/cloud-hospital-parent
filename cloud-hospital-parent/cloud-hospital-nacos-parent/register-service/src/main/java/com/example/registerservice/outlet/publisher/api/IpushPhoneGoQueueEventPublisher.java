@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationEvent;
  *
  * @Auther: 小刘
  * @Date: 2021/06/17/10:39
- * @Description:
+ * @Description: 给队列发送消息的Publisher接口
  */
 public interface IpushPhoneGoQueueEventPublisher {
 

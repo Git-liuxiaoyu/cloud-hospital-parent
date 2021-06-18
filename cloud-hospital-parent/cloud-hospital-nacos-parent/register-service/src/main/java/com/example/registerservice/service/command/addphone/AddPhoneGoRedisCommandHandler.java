@@ -1,6 +1,6 @@
 package com.example.registerservice.service.command.addphone;
 
-import com.example.registerservice.adapter.RegisterDaoAdapter;
+import com.example.registerservice.adapter.RegisterAdapter;
 import com.example.registerservice.service.api.IAddPhoneGoRedisCommandHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class AddPhoneGoRedisCommandHandler implements IAddPhoneGoRedisCommandHandler {
 
     @Autowired
-    private RegisterDaoAdapter daoAdapter;
+    private RegisterAdapter daoAdapter;
 
     @Override
     public boolean action(PushPhoneGoQueueCommand command) {

@@ -50,7 +50,7 @@ spring:
         # 连接池中的最小空闲连接
         min-idle: 0
     # Redis服务器连接密码（默认为空）
-    password: ''
+    password: 'xiaoyu'
     # Redis服务器连接端口
     port: 6379
     # 连接超时时间（毫秒）
@@ -62,7 +62,7 @@ spring:
       discovery:
         namespace: public
         password: nacos
-        server-addr: 192.172.0.160:8848
+        server-addr: 1.117.97.60:8848
         username: nacos
         group: group3
 
