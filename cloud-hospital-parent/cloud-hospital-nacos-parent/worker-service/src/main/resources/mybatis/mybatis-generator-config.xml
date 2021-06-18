@@ -88,19 +88,29 @@
 <!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
 <!--        </table>-->
 
-        <table tableName="h_division" catalog="h_worker"
-               domainObjectName="DivisionPo"
-               mapperName="DivisionPoDao"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true">
-            <property name="ignoreQualifiersAtRuntime" value="true"/>
-        </table>
+<!--        <table tableName="h_division" catalog="h_worker"-->
+<!--               domainObjectName="DivisionPo"-->
+<!--               mapperName="DivisionPoDao"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true">-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--        </table>-->
 
-        <table tableName="h_department" catalog="h_worker"
-               domainObjectName="DepartmentPo"
-               mapperName="DepartmentPoDao"
+<!--        <table tableName="h_department" catalog="h_worker"-->
+<!--               domainObjectName="DepartmentPo"-->
+<!--               mapperName="DepartmentPoDao"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true">-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--        </table>-->
+
+        <table tableName="h_out_room" catalog="h_worker"
+               domainObjectName="OutRoomPo"
+               mapperName="OutRoomPoDao"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
