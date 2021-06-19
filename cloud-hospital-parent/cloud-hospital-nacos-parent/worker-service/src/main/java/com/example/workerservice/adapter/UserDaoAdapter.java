@@ -105,11 +105,12 @@ public class UserDaoAdapter {
      * @param ip
      */
     public boolean checkIfLoginTokenExistedByIp(String ip,String loginToken) {
+        System.out.println(ip+"========="+loginToken);
         /* 是否存在该LoginToken */
         String redisLoginToken = redisTemplate.boundValueOps("LOGINTOKEN-" + ip).get();
-        /* LOG */
-        log.debug("IP [{}] 是否有 loginToken 存在 Redis : [{}]",ip,StringUtils.isEmpty(redisLoginToken));
-        if (StringUtils.isEmpty(redisLoginToken)) {
+        if (StringUtils.isEmpty(redisLoginToken) || StringUtils.isEmpty(loginToken)) {
+            /* LOG */
+            log.info("IP [{}] 无 loginToken 存在 Redis");
             return false;
         }else{
             /* Redis 存在 loginToken 再判断loginToken是否相等 */

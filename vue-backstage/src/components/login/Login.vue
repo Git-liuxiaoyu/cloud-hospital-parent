@@ -177,7 +177,7 @@ export default {
       userLogin: {
         account: "",
         password: "",
-        loginToken: "",
+        loginToken: ""
       },
       checked: false,
       loginRules: {
@@ -207,7 +207,7 @@ export default {
     getLoginToken() {
       /** 发送请求 */
       this.$axios
-        .get("worker-service/login/token")
+        .get("worker-service/user/login/token")
         .then((res) => {
           if (res.data.code === 200) {
             /** 赋值 localStorage */
@@ -216,14 +216,14 @@ export default {
             /** 提醒 */
             this.$notify({
               title: "警告",
-              message: res.code.msg,
+              message: res.data.msg,
               type: "warning",
             });
           } else {
             /** 提醒 */
             this.$notify({
               title: "错误",
-              message: res.code.msg,
+              message: res.data.msg,
               type: "error",
             });
           }
@@ -232,13 +232,14 @@ export default {
           /** 提醒 */
           this.$notify({
             title: "错误",
-            message: res.code.msg,
+            message: res.data.msg,
             type: "error",
           });
         });
     },
     /** 用户登录方法 */
     login(refName) {
+      console.log(this.userLogin.loginToken);
       /** 验证表单 */
       this.$refs[refName].validate((valid) => {
         /** 判断表单是否满足条件 */
@@ -262,14 +263,14 @@ export default {
                 /** 提醒 */
                 this.$notify({
                   title: "警告",
-                  message: res.code.msg,
+                  message: res.data.msg,
                   type: "warning",
                 });
               } else {
                 /** 提醒 */
                 this.$notify({
                   title: "错误",
-                  message: res.code.msg,
+                  message: res.data.msg,
                   type: "error",
                 });
               }
@@ -278,7 +279,7 @@ export default {
               /** 提醒 */
               this.$notify({
                 title: "错误",
-                message: res.code.msg,
+                message: res.data.msg,
                 type: "error",
               });
             });
