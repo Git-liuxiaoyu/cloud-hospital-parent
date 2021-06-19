@@ -3,9 +3,14 @@ package com.example.takenumberservice.adapter;
 
 import com.example.takenumberservice.inlet.web.ResponseResult;
 import com.example.takenumberservice.outlet.client.room.RoomServiceClient;
+import com.example.takenumberservice.outlet.client.room.pojo.OutRoomVo;
 import com.example.takenumberservice.outlet.dao.mysql.Proofdao;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.xml.crypto.Data;
 
 
 @Repository
@@ -22,17 +27,21 @@ public class ProofDaoAdapter {
      * 根据房间id查询房间名字
      * @return
      */
-    public String findbyroomid(Integer id){
+    public ResponseResult<OutRoomVo> findbyroomid(Integer id){
 
         try {
 
-            ResponseResult<String> findbyid = roomServiceClient.findbyid(id);
+            ResponseResult<OutRoomVo> findbyid = roomServiceClient.findbyid(id);
 
-            return findbyid.getData();
+            if(findbyid.getCode() != 200){
+                return new ResponseResult<OutRoomVo>(400,"未查询到房间名",null);
+            }else{
+                return new ResponseResult<OutRoomVo>(200,"ok",findbyid.getData());
+            }
             //return "就诊室";
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return new ResponseResult<OutRoomVo>(400,"未查询到房间名",null);
         }
 
     }

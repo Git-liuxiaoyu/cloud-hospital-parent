@@ -4,6 +4,7 @@ import com.example.takenumberservice.adapter.ProofDaoAdapter;
 import com.example.takenumberservice.adapter.RegisterAdapter;
 import com.example.takenumberservice.inlet.web.ResponseResult;
 import com.example.takenumberservice.inlet.web.vo.ProofControllerVo;
+import com.example.takenumberservice.outlet.client.room.pojo.OutRoomVo;
 import com.example.takenumberservice.service.command.findregister.RegisterCommand;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
 
     @Override
     public ResponseResult<ProofCommand> add(RegisterCommand findbyno) {
+
         //判断时间是否正确
         //定义时间格式
         SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");//设置日期格式
@@ -33,7 +35,7 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
 
         Date date = new Date();//当前系统时间
         String thistime = df.format(date);// thistime为当前时间
-        if(findbyno.getVisitSection() == '1'){//如果就诊时间段为上午
+        if(findbyno.getVisitSection().equals("1")){//如果就诊时间段为上午
             String amend = "12:00:00";
             String amstart = "09:00:00";
             Integer i=thistime.compareTo(amend);//如果是正数则代表当前系统时间大于上午12点,不让取票
@@ -45,7 +47,7 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
             }
         }else{//反之，就诊时间段为下午
             String pmstart = "14:00:00";
-            String pmend = "18:00:00";
+            String pmend = "20:00:00";
             Integer i=thistime.compareTo(pmend);//如果是正数则代表当前系统时间大于下午12点,不让取票
             Integer k=pmstart.compareTo(thistime);//如果是正数则代表当前系统时间小于下午14点，不让取票
             if(i>0){
@@ -58,12 +60,13 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
 
         //往取票表里存数据,service 调service
         ProofCommand proofCommand = new ProofCommand();
-        String findbyroomid = proofDaoAdapter.findbyroomid(findbyno.getRoomId());//根据房间id查询房间名
+        ResponseResult<OutRoomVo> findbyroomid = proofDaoAdapter.findbyroomid(findbyno.getRoomId());//根据房间id查询房间名
+        String roomName = findbyroomid.getData().getRoomname();
 
         proofCommand.setNo(findbyno.getNo());//挂号码
         proofCommand.setRegId(findbyno.getId());//挂号id
         proofCommand.setDepartmentId(findbyno.getDepartmentId());//科室id
-        proofCommand.setRoomName(findbyroomid);//房间名
+        proofCommand.setRoomName(roomName);//房间名
         Integer orderNum = proofDaoAdapter.findorderNum();//最新的排队序号
         //Integer orderNum = null;
         if(orderNum == null){
@@ -71,13 +74,14 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
         }
         proofCommand.setOrderNum(orderNum+1);
         proofCommand.setCreateTime(thistime);
-        if(findbyno.getStatus() == 3 || findbyno.getStatus() == 5){
-            proofCommand.setStatus('1');//设置取票状态为初诊票
+        if(findbyno.getStatus().equals("3") || findbyno.getStatus().equals("5")){
+            proofCommand.setStatus("1");//设置取票状态为初诊票
             //修改挂号状态为待初诊
             registerAdapter.updatebyid(findbyno.getId(),4);
-        }else if(findbyno.getStatus() == 6 || findbyno.getStatus() == 7){
-            proofCommand.setStatus('2');//设置取票状态为复诊票
+        }else if(findbyno.getStatus().equals("6") || findbyno.getStatus().equals("7")){
+            proofCommand.setStatus("2");//设置取票状态为复诊票
         }
+        System.out.println("房间名："+roomName);
 
         return new ResponseResult<ProofCommand>(200,"取票成功",proofCommand);
     }

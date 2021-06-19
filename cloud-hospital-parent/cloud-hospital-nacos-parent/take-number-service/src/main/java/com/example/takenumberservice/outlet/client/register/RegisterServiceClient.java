@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient("register-service")
 public interface RegisterServiceClient {
 
+
+
     //接收挂号信息
-    @GetMapping("/register/findbyno/{no}")
+    @GetMapping("Register/queryRegister/getByNo/{no}")
     ResponseResult<Register>findbyno(@PathVariable("no") String no);
 
 

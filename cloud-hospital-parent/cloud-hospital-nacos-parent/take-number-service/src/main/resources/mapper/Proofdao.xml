@@ -4,7 +4,7 @@
 
     
     <!--获取最新的排队序号-->
-  <select id="findorderNum" resultType="ProofPo" >
+  <select id="findorderNum" resultType="java.lang.Integer" >
       SELECT orderNum FROM h_call_proof ORDER BY orderNum DESC LIMIT 1;
   </select>
   
