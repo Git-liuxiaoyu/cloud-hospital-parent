@@ -75,11 +75,23 @@ public class RegisterAdapter {
         }
     }
 
-    public RegisterVo getByNo(String no){
-        RegisterMysqlPoExample example=new RegisterMysqlPoExample();
+    /**
+     * 根据挂号编号查询该号码的信息
+     *
+     * @param no
+     * @return
+     */
+    public RegisterVo getByNo(String no) {
+        RegisterVo convert = null;
+        RegisterMysqlPoExample example = new RegisterMysqlPoExample();
         example.createCriteria().andNoEqualTo(no);
         List<RegisterMysqlPo> mysqlPoList = mysqlDao.selectByExample(example);
-        RegisterVo convert = converter.convert(mysqlPoList.get(0));
+        //如果是null会抛异常，这里判断一下
+        if (!mysqlPoList.isEmpty()) {
+            convert = converter.convert(mysqlPoList.get(0));
+        }else {
+            throw new NullPointerException();
+        }
         return convert;
     }
 }

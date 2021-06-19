@@ -60,7 +60,12 @@ public class RegisterController {
     @GetMapping("Register/queryRegister/getByNo/{no}")
     public ResponseResult<SubjectVo> queryRegisterGetByNo(@PathVariable("no") String no) {
         QueryRegisterGetByNoCommand command = new QueryRegisterGetByNoCommand(no);
-        RegisterVo execute = command.execute();
+        RegisterVo execute = null;
+        try {
+            execute = command.execute();
+        } catch (Exception e) {
+            return new ResponseResult<>(444,"");
+        }
         return new ResponseResult(execute);
     }
 }
