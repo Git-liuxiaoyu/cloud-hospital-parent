@@ -3,6 +3,7 @@ package com.example.drugservice.inlet.web.controller;
 import com.example.drugservice.adapt.DrugOddAdapt;
 import com.example.drugservice.inlet.web.vo.DrugOddVo;
 import com.example.drugservice.inlet.web.vo.DrugVo;
+import com.example.drugservice.service.add.AddDrugOddCommand;
 import com.example.drugservice.service.query.ExampleQueryDrugOddCommand;
 import com.example.drugservice.service.update.UpdateDrugOddCommand;
 import com.example.drugservice.util.PageUtils;
@@ -37,6 +38,13 @@ public class DrugOddController {
     public ResponseResult<String> updateStatusById(@RequestBody UpdateDrugOddCommand command){
         command.execute();
         return new ResponseResult<>(200,"success","成功哦");
+    }
+
+    //添加药品单
+    @RequestMapping("/drugodd/add")
+    public ResponseResult<String> addDrugOdd(@RequestBody AddDrugOddCommand command){
+        command.execute();
+        return  new ResponseResult<>(200,"success","添加成功");
     }
 
 }

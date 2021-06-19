@@ -9,16 +9,19 @@ import com.example.drugservice.outlet.dao.mysql.DrugOddDao;
 import com.example.drugservice.outlet.dao.mysql.DrugTypeDao;
 import com.example.drugservice.outlet.dao.mysql.po.DrugOddPo;
 import com.example.drugservice.outlet.dao.mysql.po.DrugPo;
+import com.example.drugservice.service.add.AddDrugOddCommand;
 import com.example.drugservice.service.instock.InStockDrugCommand;
 import com.example.drugservice.service.query.ExampleQueryDrugCommand;
 import com.example.drugservice.service.query.ExampleQueryDrugOddCommand;
 import com.example.drugservice.service.update.UpdateDrugOddCommand;
+import com.example.drugservice.util.NoUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -58,6 +61,21 @@ public class DrugOddAdapt {
         //drugOddDao.updateByPrimaryKey(po);
         //上面是普通修改   下面是动态修改
         drugOddDao.updateByPrimaryKeySelective(po);
+    }
+
+    //添加药品表单
+    public Long addDrugOdd(AddDrugOddCommand command){
+        DrugOddPo po  = new DrugOddPo();
+        po.setNo(NoUtils.getNoUtils());
+        po.setCreatetime(new Date());
+        po.setDoctorid(command.getDoctorid());
+        po.setPatientid(command.getDoctorid());
+        //未支付状态
+        po.setStatus("0");
+        drugOddDao.insert(po);
+        //主键回填id
+        Long id = po.getId();
+        return id;
     }
 
 
