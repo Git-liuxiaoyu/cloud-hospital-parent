@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.takenumberservice.outlet.dao.mysql.Proofdao">
+<mapper namespace="com.example.takenumberservice.outlet.dao.mysql.ProofDao">
 
     
     <!--获取最新的排队序号-->
   <select id="findorderNum" resultType="java.lang.Integer" >
       SELECT orderNum FROM h_call_proof ORDER BY orderNum DESC LIMIT 1;
   </select>
-  
+    
+    <!--添加取号凭证-->
+    <insert id="addproof" parameterType="ProofPo">
+        insert into h_call_proof(regId,departmentId,roomName,orderNum,createTime,status)
+        values(#{regId},#{departmentId},#{roomName},#{orderNum},#{createTime},#{status})
+    </insert>
   
 </mapper>

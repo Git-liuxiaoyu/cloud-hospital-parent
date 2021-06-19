@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient("worker-service")
+@FeignClient("worker-service-test")
 public interface RoomServiceClient {
 
     //根据房间id查询房间名字

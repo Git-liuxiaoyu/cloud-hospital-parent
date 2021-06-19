@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/proof/")
 public class ProofController {
 
+
     @GetMapping("findbyno/{no}")
     public ResponseResult<ProofCommand> findbyregId(@PathVariable("no") String no){
         RegisterCommand rc = new RegisterCommand();

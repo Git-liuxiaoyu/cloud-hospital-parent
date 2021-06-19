@@ -70,6 +70,11 @@ export default {
                axios.get("http://localhost:6001/proof/findbyno/"+no).then(r => {  
                     var msg = r.data.msg;
                    console.log(r)
+                   var num1 = this.num;
+                   if(num1 == null){
+                       num1 = "null";
+                   }
+                   
 
                    if(r.data.code != 200){//取票失败
                       this.$alert('<font>'+msg+'</font><br/><font>取票号：'+this.num+'，请认真核对号码，或寻求工作人员帮助</font>', '取票失败', {
@@ -89,8 +94,8 @@ export default {
                        this.$notify({
                             title: '取票成功',
                             dangerouslyUseHTMLString: true,
-                            duration:0,
-                            message: '<font>房间名称：'+this.takeNumber.roomName+'</font><br/><br/><font>取票号码：'+this.takeNumber.no+'</font><br/><br/><font>排队序号：'+this.takeNumber.orderNum+'</font><br/><br/><font>取票时间：'+this.takeNumber.createTime+'</font><br/><br/><font>就诊状态：'+this.takeNumber.status+'</font><br/>'
+                            duration:20000,
+                            message: '<font>房间名称：'+this.takeNumber.roomName+'</font><br/><br/><font>排队序号：'+this.takeNumber.orderNum+'</font><br/><br/><font>取票号码：'+this.takeNumber.no+'</font><br/><br/><font>取票时间：'+this.takeNumber.createTime+'</font><br/><br/><font>就诊状态：'+this.takeNumber.status+'</font><br/>'
                             });
                    }
                     
@@ -162,9 +167,11 @@ export default {
   }
 
   /*=============取票成功右侧弹出框开始===================*/
+
+  
   /*内容*/
   .el-notification__content{
-      text-align: center;
+      text-align: left;
       color: aquamarine;
       font-size: 20px;
   }
