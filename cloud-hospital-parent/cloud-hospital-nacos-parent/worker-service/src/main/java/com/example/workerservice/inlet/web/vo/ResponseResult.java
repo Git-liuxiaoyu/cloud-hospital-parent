@@ -23,6 +23,7 @@ public class ResponseResult<T> {
     public static final ResponseResult<Void> NOTLOGINED = new ResponseResult<>(401, "未登录");
     public static final ResponseResult<Void> FORBIDDEN = new ResponseResult<>(403, "无权限");
     public static final ResponseResult<Void> FAIL = new ResponseResult<>(500, "操作失败");
+    public static final ResponseResult<Void> REPEAT = new ResponseResult<>(444, "页面失效,请刷新页面后再试");
 
     public int getCode() {
         return code;

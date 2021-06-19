@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.workerservice.outlet.dao.mysql.DoctorRotaPoDao">
+
+    <!-- 自己写的 -->
+    <resultMap id="DoctorResultMap1" type="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
+        <id column="id" property="id"/>
+        <result column="departmentId" property="departmentid"/>
+        <result column="date" property="date"/>
+        <result column="rotaType" property="rotatype"/>
+        <result column="shiftType" property="shifttype"/>
+        <result column="doctorId" property="doctorid"/>
+        <result column="leftPatient" property="leftpatient"/>
+        <result column="roomId" property="roomid"/>
+        <result column="createId" property="createid"/>
+        <result column="createTime" property="createtime"/>
+        <result column="status" property="status"/>
+        <result column="name" property="workerInfoPo.name"/>
+        <result column="avatar" property="workerInfoPo.avatar"/>
+        <result column="level" property="workerInfoPo.positionPo.level"/>
+    </resultMap>
+
+    <select id="findAllByStatusEqualsAndDepartmentidEqualsAndDateEquals" resultMap="DoctorResultMap1">
+        SELECT dr.*, wi.name, wi.avatar, p.`level`
+        FROM h_doctor_rota dr
+                 LEFT JOIN h_worker_info wi ON dr.doctorId = wi.id
+                 LEFT JOIN h_position p ON wi.positionId = p.id
+        WHERE dr.status = #{status}
+          AND dr.departmentId = #{departmentId}
+          AND dr.`date` = #{date}
+    </select>
+
+    <!-- 自动生成 -->
+    <resultMap id="BaseResultMap" type="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="departmentId" jdbcType="INTEGER" property="departmentid"/>
+        <result column="date" jdbcType="DATE" property="date"/>
+        <result column="rotaType" jdbcType="VARCHAR" property="rotatype"/>
+        <result column="shiftType" jdbcType="CHAR" property="shifttype"/>
+        <result column="doctorId" jdbcType="INTEGER" property="doctorid"/>
+        <result column="leftPatient" jdbcType="INTEGER" property="leftpatient"/>
+        <result column="roomId" jdbcType="INTEGER" property="roomid"/>
+        <result column="createId" jdbcType="INTEGER" property="createid"/>
+        <result column="createTime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="status" jdbcType="CHAR" property="status"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id
+        , departmentId, date, rotaType, shiftType, doctorId, leftPatient, roomId, createId,
+    createTime, status
+    </sql>
+    <select id="selectByExample" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPoExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from h_doctor_rota
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from h_doctor_rota
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from h_doctor_rota
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPoExample">
+        delete from h_doctor_rota
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
+        insert into h_doctor_rota (id, departmentId, date,
+                                   rotaType, shiftType, doctorId,
+                                   leftPatient, roomId, createId,
+                                   createTime, status)
+        values (#{id,jdbcType=BIGINT}, #{departmentid,jdbcType=INTEGER}, #{date,jdbcType=DATE},
+                #{rotatype,jdbcType=VARCHAR}, #{shifttype,jdbcType=CHAR}, #{doctorid,jdbcType=INTEGER},
+                #{leftpatient,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER},
+                #{createtime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
+        insert into h_doctor_rota
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="departmentid != null">
+                departmentId,
+            </if>
+            <if test="date != null">
+                date,
+            </if>
+            <if test="rotatype != null">
+                rotaType,
+            </if>
+            <if test="shifttype != null">
+                shiftType,
+            </if>
+            <if test="doctorid != null">
+                doctorId,
+            </if>
+            <if test="leftpatient != null">
+                leftPatient,
+            </if>
+            <if test="roomid != null">
+                roomId,
+            </if>
+            <if test="createid != null">
+                createId,
+            </if>
+            <if test="createtime != null">
+                createTime,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="departmentid != null">
+                #{departmentid,jdbcType=INTEGER},
+            </if>
+            <if test="date != null">
+                #{date,jdbcType=DATE},
+            </if>
+            <if test="rotatype != null">
+                #{rotatype,jdbcType=VARCHAR},
+            </if>
+            <if test="shifttype != null">
+                #{shifttype,jdbcType=CHAR},
+            </if>
+            <if test="doctorid != null">
+                #{doctorid,jdbcType=INTEGER},
+            </if>
+            <if test="leftpatient != null">
+                #{leftpatient,jdbcType=INTEGER},
+            </if>
+            <if test="roomid != null">
+                #{roomid,jdbcType=INTEGER},
+            </if>
+            <if test="createid != null">
+                #{createid,jdbcType=INTEGER},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPoExample"
+            resultType="java.lang.Long">
+        select count(*) from h_doctor_rota
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update h_doctor_rota
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.departmentid != null">
+                departmentId = #{record.departmentid,jdbcType=INTEGER},
+            </if>
+            <if test="record.date != null">
+                date = #{record.date,jdbcType=DATE},
+            </if>
+            <if test="record.rotatype != null">
+                rotaType = #{record.rotatype,jdbcType=VARCHAR},
+            </if>
+            <if test="record.shifttype != null">
+                shiftType = #{record.shifttype,jdbcType=CHAR},
+            </if>
+            <if test="record.doctorid != null">
+                doctorId = #{record.doctorid,jdbcType=INTEGER},
+            </if>
+            <if test="record.leftpatient != null">
+                leftPatient = #{record.leftpatient,jdbcType=INTEGER},
+            </if>
+            <if test="record.roomid != null">
+                roomId = #{record.roomid,jdbcType=INTEGER},
+            </if>
+            <if test="record.createid != null">
+                createId = #{record.createid,jdbcType=INTEGER},
+            </if>
+            <if test="record.createtime != null">
+                createTime = #{record.createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=CHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update h_doctor_rota
+        set id = #{record.id,jdbcType=BIGINT},
+        departmentId = #{record.departmentid,jdbcType=INTEGER},
+        date = #{record.date,jdbcType=DATE},
+        rotaType = #{record.rotatype,jdbcType=VARCHAR},
+        shiftType = #{record.shifttype,jdbcType=CHAR},
+        doctorId = #{record.doctorid,jdbcType=INTEGER},
+        leftPatient = #{record.leftpatient,jdbcType=INTEGER},
+        roomId = #{record.roomid,jdbcType=INTEGER},
+        createId = #{record.createid,jdbcType=INTEGER},
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+        status = #{record.status,jdbcType=CHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
+        update h_doctor_rota
+        <set>
+            <if test="departmentid != null">
+                departmentId = #{departmentid,jdbcType=INTEGER},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=DATE},
+            </if>
+            <if test="rotatype != null">
+                rotaType = #{rotatype,jdbcType=VARCHAR},
+            </if>
+            <if test="shifttype != null">
+                shiftType = #{shifttype,jdbcType=CHAR},
+            </if>
+            <if test="doctorid != null">
+                doctorId = #{doctorid,jdbcType=INTEGER},
+            </if>
+            <if test="leftpatient != null">
+                leftPatient = #{leftpatient,jdbcType=INTEGER},
+            </if>
+            <if test="roomid != null">
+                roomId = #{roomid,jdbcType=INTEGER},
+            </if>
+            <if test="createid != null">
+                createId = #{createid,jdbcType=INTEGER},
+            </if>
+            <if test="createtime != null">
+                createTime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
+        update h_doctor_rota
+        set departmentId = #{departmentid,jdbcType=INTEGER},
+            date         = #{date,jdbcType=DATE},
+            rotaType     = #{rotatype,jdbcType=VARCHAR},
+            shiftType    = #{shifttype,jdbcType=CHAR},
+            doctorId     = #{doctorid,jdbcType=INTEGER},
+            leftPatient  = #{leftpatient,jdbcType=INTEGER},
+            roomId       = #{roomid,jdbcType=INTEGER},
+            createId     = #{createid,jdbcType=INTEGER},
+            createTime   = #{createtime,jdbcType=TIMESTAMP},
+            status       = #{status,jdbcType=CHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

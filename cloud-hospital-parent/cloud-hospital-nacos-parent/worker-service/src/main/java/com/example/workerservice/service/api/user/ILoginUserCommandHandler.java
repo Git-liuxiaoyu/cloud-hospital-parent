@@ -9,6 +9,8 @@ public interface ILoginUserCommandHandler {
 
    String action(LoginUserCommand command);
 
+   boolean check(LoginUserCommand command);
+
    /**
     * 自定义业务异常 - 用户未发现
     **/

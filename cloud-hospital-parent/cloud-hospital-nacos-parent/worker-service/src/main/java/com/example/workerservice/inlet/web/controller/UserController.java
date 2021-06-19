@@ -2,8 +2,10 @@ package com.example.workerservice.inlet.web.controller;
 
 import com.example.workerservice.inlet.web.vo.ResponseResult;
 import com.example.workerservice.service.command.user.login.LoginUserCommand;
+import com.example.workerservice.service.command.user.savelogintoken.SaveLoginTokenByIPCommand;
 import com.example.workerservice.service.command.user.sendcode.SendVerifyCodeCommand;
 import com.example.workerservice.service.command.user.updatepwd.UpdateUserPwdCommand;
+import com.example.workerservice.util.HttpUtil;
 import com.example.workerservice.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
@@ -28,13 +30,23 @@ public class UserController {
      * @return
      */
     @PostMapping("doLogin")
-    public ResponseResult<String> doLogin(@Valid @RequestBody LoginUserCommand command, BindingResult bindingResult) {
+    public ResponseResult doLogin(@Valid @RequestBody LoginUserCommand command, BindingResult bindingResult,HttpServletRequest request) {
         /* 判断是否有绑定错误 */
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("登录失败 | 参数异常");
         }
-        /* 执行命令,返回返回值 */
-        return new ResponseResult<>(JwtUtil.creatSign(command.execute()));
+        /* 获得 IP 地址 */
+        String realRequestIP = HttpUtil.getRealRequestIP(request);
+        /* 存入IP */
+        command.setIp(realRequestIP);
+        /* 判断是否存在该IP再Redis中是否存在该Token,存在则继续下去 */
+        if (command.check()) {
+            /* 执行命令,返回返回值 */
+            return new ResponseResult<>(JwtUtil.creatSign(command.execute()));
+        }else{
+            /* 不存再该Token,说明重复请求.不进行处理 */
+            return ResponseResult.REPEAT;
+        }
     }
 
     /**
@@ -74,15 +86,17 @@ public class UserController {
     }
 
 
-//    /**
-//     * 获得登录IP
-//     *
-//     * @return
-//     */
-//    @GetMapping("login/token")
-//    public String getLoginToken(HttpServletRequest request) {
-//
-//
-//    }
+    /**
+     * 获得登录页码 Token
+     *
+     * @return
+     */
+    @GetMapping("login/token")
+    public ResponseResult<String> getLoginToken(HttpServletRequest request) {
+        /* 获得请求的真实IP地址 */
+        String realRequestIP = HttpUtil.getRealRequestIP(request);
+        /* 实例化命令,执行命令,返回 */
+        return new ResponseResult<>(new SaveLoginTokenByIPCommand(realRequestIP).execute());
+    }
 
 }

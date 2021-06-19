@@ -100,12 +100,14 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo">
+
+  <insert id="insert" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo" useGeneratedKeys="true" keyProperty="id">
     insert into h_drugodd (id, no, createtime, 
-      doctorid, totalmoney, patientid
+      doctorid, totalmoney, patientid,status
       )
     values (#{id,jdbcType=BIGINT}, #{no,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{doctorid,jdbcType=INTEGER}, #{totalmoney,jdbcType=DECIMAL}, #{patientid,jdbcType=INTEGER}
+      #{doctorid,jdbcType=INTEGER}, #{totalmoney,jdbcType=DECIMAL}, #{patientid,jdbcType=INTEGER},
+            #{status,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo">

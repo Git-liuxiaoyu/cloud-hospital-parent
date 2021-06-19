@@ -38,7 +38,6 @@ public class UserDaoAdapter {
     public String login(String account, String password) {
         /* 执行方法 */
         UserPo userPo = userPoDao.login(account, password).orElseThrow(NullPointerException::new);
-
         /* 返回返回值 */
         return userPo.getWorkerno();
     }
@@ -88,5 +87,43 @@ public class UserDaoAdapter {
         /* 修改密码 */
         userPo.setPassword(password);
         userPoDao.updateByPrimaryKey(userPo);
+    }
+
+    /**
+     * 存贮LoginToken到Redis
+     * @param ip
+     * @param randomLoginToken
+     */
+    public void saveLoginToken(String ip, String randomLoginToken) {
+        /* 存入Redis */
+        redisTemplate.boundValueOps("LOGINTOKEN-" + ip).set(randomLoginToken);
+    }
+
+    /**
+     * 核查该IP的LoginToken是否存在
+     *
+     * @param ip
+     */
+    public boolean checkIfLoginTokenExistedByIp(String ip,String loginToken) {
+        System.out.println(ip+"========="+loginToken);
+        /* 是否存在该LoginToken */
+        String redisLoginToken = redisTemplate.boundValueOps("LOGINTOKEN-" + ip).get();
+        if (StringUtils.isEmpty(redisLoginToken) || StringUtils.isEmpty(loginToken)) {
+            /* LOG */
+            log.info("IP [{}] 无 loginToken 存在 Redis");
+            return false;
+        }else{
+            /* Redis 存在 loginToken 再判断loginToken是否相等 */
+            return redisLoginToken.equals(loginToken);
+        }
+    }
+
+    /**
+     * 根据IP删除LoginToken
+     * @param ip
+     */
+    public void deleteLoginTokenByIP(String ip) {
+        /* Redis删除 */
+        redisTemplate.delete("LOGINTOKEN-" + ip);
     }
 }
