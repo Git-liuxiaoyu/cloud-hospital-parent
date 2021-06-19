@@ -6,12 +6,23 @@ package com.example.workerservice.util;
 public class CreateRandomUtil {
 
     /**
-     * 创建随机验证码
-     * @param isNumber 是否是纯数字
-     * @param length 验证码长度
+     * 创建随机登录 Token
+     *
+     * @param length
      * @return
      */
-    public static String createRandomVerifyCode(boolean isNumber, int length){
+    public static String createRandomLoginToken(int length) {
+        return createRandomVerifyCode(false, length);
+    }
+
+    /**
+     * 创建随机验证码
+     *
+     * @param isNumber 是否是纯数字
+     * @param length   验证码长度
+     * @return
+     */
+    public static String createRandomVerifyCode(boolean isNumber, int length) {
         String resultStr = "";
         /* 判断是否是纯数字 */
         String codeContent = isNumber ? "1234567890" : "1234567890abcdefghijkmnpqrstuvwxyz";

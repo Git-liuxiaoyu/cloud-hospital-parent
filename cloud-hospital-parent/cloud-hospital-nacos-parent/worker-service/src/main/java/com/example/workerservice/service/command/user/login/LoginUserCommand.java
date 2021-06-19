@@ -23,16 +23,26 @@ public class LoginUserCommand {
     @NotBlank
     private String password;
 
+    private String loginToken;
+
+    private String ip;
+
     private ILoginUserCommandHandler loginUserCommandHandler;
 
     public LoginUserCommand() {
         this.loginUserCommandHandler = ApplicationContextHolder.getApplicationContext().getBean(ILoginUserCommandHandler.class);
     }
 
-    public LoginUserCommand(String account, String password) {
+    public LoginUserCommand(String account, String password, String loginToken) {
         this();
         this.account = account;
         this.password = password;
+        this.loginToken = loginToken;
+    }
+
+    public boolean check() {
+        /* 执行方法 */
+        return loginUserCommandHandler.check(this);
     }
 
     public String execute() {

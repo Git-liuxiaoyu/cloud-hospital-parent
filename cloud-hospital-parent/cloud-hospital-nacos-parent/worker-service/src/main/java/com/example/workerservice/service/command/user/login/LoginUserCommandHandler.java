@@ -24,9 +24,25 @@ public class LoginUserCommandHandler implements ILoginUserCommandHandler {
     public String action(LoginUserCommand command) {
         try {
             /* 执行方法,捕获异常则抛自定义异常 */
-            return userDaoAdapter.login(command.getAccount(), command.getPassword());
+            String workerNo = userDaoAdapter.login(command.getAccount(), command.getPassword());
+            /* 删除该IP的Token */
+            userDaoAdapter.deleteLoginTokenByIP(command.getIp());
+            /* 返回workerNo */
+            return workerNo;
         } catch (NullPointerException e) {
+            /* 捕获到异常 NullPointerException , 捕获 UserNotFoundException */
             throw new UserNotFoundException();
         }
+    }
+
+    /**
+     * 检查是否存在该 Token
+     *
+     * @param command
+     * @return
+     */
+    @Override
+    public boolean check(LoginUserCommand command) {
+        return userDaoAdapter.checkIfLoginTokenExistedByIp(command.getIp(),command.getLoginToken());
     }
 }

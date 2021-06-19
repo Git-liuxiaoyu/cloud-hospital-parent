@@ -6,158 +6,163 @@
         <span></span>
         <span></span>
       </div>
-      <div class="Before" :style="flag ? 'transform: rotateY(180deg)':''">
-      <div class="content">
-        <el-container>
-          <div class="login-page"  @mouseenter="mouseIn" @mouseleave="mouseOut">
-            <el-form
-              :model="userLogin"
-              :rules="rules"
-              status-icon
-              ref="userLogin"
-              label-position="left"
-              label-width="0px"
-              class="demo-ruleForm"
+      <div class="Before" :style="flag ? 'transform: rotateY(180deg)' : ''">
+        <div class="content">
+          <el-container>
+            <div
+              class="login-page"
+              @mouseenter="mouseIn"
+              @mouseleave="mouseOut"
             >
-              <img src="./images/wyq-blue.png" style="width: 300px" />
-              <br />
-              <br />
-              <h3
-                class="title"
-                style="
-                  maragn-left: -50px;
-                  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC',
-                    'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial,
-                    sans-serif;
-                  color: #409eff;
-                "
+              <el-form
+                :model="userLogin"
+                :rules="loginRules"
+                status-icon
+                ref="userLogin"
+                label-position="left"
+                label-width="0px"
+                class="demo-ruleForm"
               >
-                用户登录
-              </h3>
-              <br />
-              <el-form-item prop="info">
-                <el-input
-                  type="text"
-                  v-model.trim="userLogin.info"
-                  auto-complete="off"
-                  placeholder="请输入账号"
-                  clearable
-                ></el-input>
-              </el-form-item>
-              <el-form-item prop="password">
-                <el-input
-                  type="password"
-                  v-model.trim="userLogin.password"
-                  auto-complete="off"
-                  placeholder="请输入密码"
-                  clearable
-                  @keyup.native="
-                    $event.target.value = $event.target.value.replace(
-                      /^\s+|\s+$/gm,
-                      ''
-                    )
+                <img src="./images/wyq-blue.png" style="width: 300px" />
+                <br />
+                <br />
+                <h3
+                  class="title"
+                  style="
+                    maragn-left: -50px;
+                    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC',
+                      'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial,
+                      sans-serif;
+                    color: #409eff;
                   "
-                ></el-input>
-              </el-form-item>
-              <el-checkbox v-model="checked" class="rememberme"
-                >记住密码</el-checkbox
-              >
-              <el-form-item style="width: 100%">
-                <el-button
-                  type="primary"
-                  round
-                  style="width: 60%; font-weight: bold; font-size: 15px"
-                  @click="login('userLogin')"
-                  @mouseenter="mouseIn(index)"
-                  >登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</el-button
                 >
-              </el-form-item>
-              <el-form-item style="width: 100%">
-                <a class="register" @click="changeFuc">忘记密码</a><br />
-              </el-form-item>
-            </el-form>
-          </div>
-          
-        </el-container>
-      </div>
+                  用户登录
+                </h3>
+                <br />
+                <el-form-item prop="account">
+                  <el-input
+                    type="text"
+                    v-model.trim="userLogin.account"
+                    auto-complete="off"
+                    placeholder="请输入账号"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                  <el-input
+                    type="password"
+                    v-model.trim="userLogin.password"
+                    auto-complete="off"
+                    placeholder="请输入密码"
+                    clearable
+                    @keyup.native="
+                      $event.target.value = $event.target.value.replace(
+                        /^\s+|\s+$/gm,
+                        ''
+                      )
+                    "
+                  ></el-input>
+                </el-form-item>
+                <el-checkbox v-model="checked" class="rememberme"
+                  >记住密码</el-checkbox
+                >
+                <el-form-item style="width: 100%">
+                  <el-button
+                    type="primary"
+                    round
+                    style="width: 60%; font-weight: bold; font-size: 15px"
+                    @click="login('userLogin')"
+                    @mouseenter="mouseIn(index)"
+                    >登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</el-button
+                  >
+                </el-form-item>
+                <el-form-item style="width: 100%">
+                  <a class="register" @click="flag = !flag">忘记密码</a><br />
+                </el-form-item>
+              </el-form>
+            </div>
+          </el-container>
+        </div>
       </div>
 
-            <div class="After" :style=" flag ? 'transform: rotateY(0deg)' :''">
-      <div class="content">
-        <el-container>
-          <div class="login-page"  @mouseenter="mouseIn" @mouseleave="mouseOut">
-            <el-form
-              :model="userLogin"
-              :rules="rules"
-              status-icon
-              ref="userLogin"
-              label-position="left"
-              label-width="0px"
-              class="demo-ruleForm"
+      <div class="After" :style="flag ? 'transform: rotateY(0deg)' : ''">
+        <div class="content">
+          <el-container>
+            <div
+              class="login-page"
+              @mouseenter="mouseIn"
+              @mouseleave="mouseOut"
             >
-              <img src="./images/wyq-blue.png" style="width: 300px" />
-              <br />
-              <br />
-              <h3
-                class="title"
-                style="
-                  maragn-left: -50px;
-                  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC',
-                    'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial,
-                    sans-serif;
-                  color: #409eff;
-                "
+              <el-form
+                :model="userLogin"
+                :rules="rules"
+                status-icon
+                ref="userLogin"
+                label-position="left"
+                label-width="0px"
+                class="demo-ruleForm"
               >
-                修改密码
-              </h3>
-              <br />
-              <el-form-item prop="info">
-                <el-input
-                  type="text"
-                  v-model.trim="userLogin.info"
-                  auto-complete="off"
-                  placeholder="请输入账号"
-                  clearable
-                ></el-input>
-              </el-form-item>
-              <el-form-item prop="password">
-                <el-input
-                  type="password"
-                  v-model.trim="userLogin.password"
-                  auto-complete="off"
-                  placeholder="请输入密码"
-                  clearable
-                  @keyup.native="
-                    $event.target.value = $event.target.value.replace(
-                      /^\s+|\s+$/gm,
-                      ''
-                    )
+                <img src="./images/wyq-blue.png" style="width: 300px" />
+                <br />
+                <br />
+                <h3
+                  class="title"
+                  style="
+                    maragn-left: -50px;
+                    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC',
+                      'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial,
+                      sans-serif;
+                    color: #409eff;
                   "
-                ></el-input>
-              </el-form-item>
-              <el-checkbox v-model="checked" class="rememberme"
-                >记住密码</el-checkbox
-              >
-              <el-form-item style="width: 100%">
-                <el-button
-                  type="primary"
-                  round
-                  style="width: 60%; font-weight: bold; font-size: 15px"
-                  @click="login('userLogin')"
-                  @mouseenter="mouseIn(index)"
-                  >登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</el-button
                 >
-              </el-form-item>
-              <el-form-item style="width: 100%">
-                <a class="register" @click="changeFuc">回到登录</a><br />
-              </el-form-item>
-            </el-form>
-          </div>
-          
-        </el-container>
+                  忘记密码
+                </h3>
+                <br />
+                <el-form-item prop="info">
+                  <el-input
+                    type="text"
+                    v-model.trim="userLogin.info"
+                    auto-complete="off"
+                    placeholder="请输入账号"
+                    clearable
+                  ></el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                  <el-input
+                    type="password"
+                    v-model.trim="userLogin.password"
+                    auto-complete="off"
+                    placeholder="请输入密码"
+                    clearable
+                    @keyup.native="
+                      $event.target.value = $event.target.value.replace(
+                        /^\s+|\s+$/gm,
+                        ''
+                      )
+                    "
+                  ></el-input>
+                </el-form-item>
+                <el-checkbox v-model="checked" class="rememberme"
+                  >记住密码</el-checkbox
+                >
+                <el-form-item style="width: 100%">
+                  <el-button
+                    type="primary"
+                    round
+                    style="width: 60%; font-weight: bold; font-size: 15px"
+                    @click="login('userLogin')"
+                    @mouseenter="mouseIn(index)"
+                    >登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</el-button
+                  >
+                </el-form-item>
+                <el-form-item style="width: 100%">
+                  <a class="register" @click="flag = !flag">回到登录</a><br />
+                </el-form-item>
+              </el-form>
+            </div>
+          </el-container>
+        </div>
       </div>
-      </div>
-
     </section>
   </div>
 </template>
@@ -166,19 +171,24 @@
 export default {
   data() {
     return {
-      flag:false,
+      /* 用于改变【用户登录】和【找回密码】两块div，即旋转div */
+      flag: false,
+      /* 用户登录data */
       userLogin: {
-        info: "",
-        email: "",
-        username: "",
-        phone: "",
+        account: "",
         password: "",
+        loginToken: "",
       },
       checked: false,
-      rules: {
+      loginRules: {
+        account: [
+          { required: true, message: "请输入您的账号", trigger: "blur" },
+          /* 校验长度 */
+          { min: 3, max: 10, message: "长度在 3 到 5 个字符", trigger: "blur" },
+        ],
         password: [
           { required: true, message: "请输入您的密码", trigger: "blur" },
-          // 校验格式
+          /* 校验长度 */
           { min: 3, max: 10, message: "长度在 3 到 5 个字符", trigger: "blur" },
         ],
       },
@@ -188,54 +198,95 @@ export default {
       con: document.querySelector(".container"),
     };
   },
+  created(){
+    /** 调用 获得 loginToken 方法 */
+    this.getLoginToken();
+  },
   methods: {
-      func(){
-            this.flag=!this.flag
-        },
-    login(userLogin) {
-      this.$refs[userLogin].validate((valid) => {
-        if (valid) {
-          var regMobile = /^1(3|4|5|6|7|8|9)\d{9}$/;
-          var regEmail =
-            /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-          if (regMobile.test(this.userLogin.info)) {
-            this.userLogin.phone = this.userLogin.info;
-          } else if (regEmail.test(this.userLogin.info)) {
-            this.userLogin.email = this.userLogin.info;
+    /** 获取 loginToken */
+    getLoginToken() {
+      /** 发送请求 */
+      this.$axios
+        .get("worker-service/login/token")
+        .then((res) => {
+          if (res.data.code === 200) {
+            /** 赋值 localStorage */
+            this.userLogin.loginToken = res.data.data
+          } else if (res.data.code === 444) {
+            /** 提醒 */
+            this.$notify({
+              title: "警告",
+              message: res.code.msg,
+              type: "warning",
+            });
           } else {
-            this.userLogin.username = this.userLogin.info;
+            /** 提醒 */
+            this.$notify({
+              title: "错误",
+              message: res.code.msg,
+              type: "error",
+            });
           }
-          console.log(this.userLogin);
-          this.$axios.post("front/user/doLogin", this.userLogin).then((res) => {
-            if (res.data.code === 200) {
-              Authorization: sessionStorage.setItem("token", res.data.data[1]);
-              localStorage.setItem("account", res.data.data[0].username);
-              this.$message({
-                message: "登录成功，欢迎您",
-                type: "success",
-                duration: 2000,
-              });
-              this.$router.push("/index");
-            } else {
-              this.$message({
-                message: res.data.msg,
-                type: "error",
-                duration: 2000,
-              });
-              return false;
-            }
-            console.log(res.data.data);
+        })
+        .catch(() => {
+          /** 提醒 */
+          this.$notify({
+            title: "错误",
+            message: res.code.msg,
+            type: "error",
           });
-        } else {
-          return false;
+        });
+    },
+    /** 用户登录方法 */
+    login(refName) {
+      /** 验证表单 */
+      this.$refs[refName].validate((valid) => {
+        /** 判断表单是否满足条件 */
+        if (valid) {
+          /** 满足 */
+          this.$axios
+            .post("worker-service/user/doLogin", this.userLogin)
+            .then((res) => {
+              if (res.data.code === 200) {
+                /** 存入 localStorage */
+                localStorage.setItem("BackLoginedToken", res.data.data);
+                /** 提醒 */
+                this.$notify({
+                  title: "成功",
+                  message: "登录成功，欢迎您！",
+                  type: "success",
+                });
+                /** 转发到主页 */
+                this.$router.push("/index");
+              } else if (res.data.code === 444) {
+                /** 提醒 */
+                this.$notify({
+                  title: "警告",
+                  message: res.code.msg,
+                  type: "warning",
+                });
+              } else {
+                /** 提醒 */
+                this.$notify({
+                  title: "错误",
+                  message: res.code.msg,
+                  type: "error",
+                });
+              }
+            })
+            .catch(() => {
+              /** 提醒 */
+              this.$notify({
+                title: "错误",
+                message: res.code.msg,
+                type: "error",
+              });
+            });
         }
       });
     },
     plogin() {
       this.$router.push("/login");
-    },
-    changeFuc() {
-      this.flag=!this.flag;
     },
     goindex() {
       this.$router.push("/home");
@@ -379,18 +430,15 @@ section .content {
 }
 
 /* 卡片翻转特效 */
-.Before{
-    position: absolute;
-    backface-visibility: hidden;
-    transition: 3s;
-
- 
+.Before {
+  position: absolute;
+  backface-visibility: hidden;
+  transition: 3s;
 }
-.After{
-    position: absolute;
-    transform: rotateY(-180deg);
-    backface-visibility: hidden;
-    transition: 3s;
-
+.After {
+  position: absolute;
+  transform: rotateY(-180deg);
+  backface-visibility: hidden;
+  transition: 3s;
 }
 </style>
