@@ -100,33 +100,39 @@
   </el-row>
 
   <el-dialog title="填写个人信息" :visible.sync="patientBox" center width="30%">
-    <el-form :model="patient" label-width="70px">
+    <el-form :model="patient" label-width="80px" :rules="rules" ref="rules">
 
       <el-row>
 
         <el-col :span="24">
-          <el-form-item prop="phone" label="姓名">
+          <el-form-item prop="name" label="姓名">
             <el-input v-model="patient.name" placeholder="请输入姓名"></el-input>
           </el-form-item>
         </el-col>
 
         <el-col :span="24">
-          <el-form-item label="性别">
+          <el-form-item prop="age" label="年龄">
+            <el-input v-model="patient.age" placeholder="请输入年龄"></el-input>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="24">
+          <el-form-item prop="gender" label="性别">
             <el-radio-group v-model="patient.gender">
-              <el-radio label="男" value="0"></el-radio>
-              <el-radio label="女" value="1"></el-radio>
+              <el-radio label="0">男</el-radio>
+              <el-radio label="1">女</el-radio>
             </el-radio-group>
           </el-form-item>
         </el-col>
 
         <el-col :span="24">
-          <el-form-item prop="code" label="电话">
+          <el-form-item prop="phone" label="电话">
             <el-input v-model="patient.phone" placeholder="请输入电话"></el-input>
           </el-form-item>
         </el-col>
 
         <el-col :span="24">
-          <el-form-item prop="code" label="身份证号">
+          <el-form-item prop="identityId" label="身份证号">
             <el-input v-model="patient.identityId" placeholder="请输入身份证"></el-input>
           </el-form-item>
         </el-col>
@@ -137,7 +143,7 @@
 
     <div slot="footer" class="dialog-footer">
       <el-button @click="cancel()">取 消</el-button>
-      <el-button type="primary" @click="addPatient()">确 定</el-button>
+      <el-button type="primary" @click="addPatient('rules')">确 定</el-button>
     </div>
 
   </el-dialog>
