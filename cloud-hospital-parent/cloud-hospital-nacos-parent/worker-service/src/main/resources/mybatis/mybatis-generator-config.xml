@@ -108,9 +108,19 @@
 <!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
 <!--        </table>-->
 
-        <table tableName="h_out_room" catalog="h_worker"
-               domainObjectName="OutRoomPo"
-               mapperName="OutRoomPoDao"
+<!--        <table tableName="h_out_room" catalog="h_worker"-->
+<!--               domainObjectName="OutRoomPo"-->
+<!--               mapperName="OutRoomPoDao"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true">-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--        </table>-->
+
+        <table tableName="h_doctor_rota" catalog="h_worker"
+               domainObjectName="DoctorRotaPo"
+               mapperName="DoctorRotaPoDao"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
