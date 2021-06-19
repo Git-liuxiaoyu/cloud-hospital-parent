@@ -18,6 +18,14 @@ export default new Router({
       path: '/xxx',
       name: 'xxx',
       component: xxx
+    },
+//home的路由
+    {
+      path: '/home',
+      component: () => import('@/components/home/home.vue'),
+      children: [
+
+      ]
     }
   ]
 })
