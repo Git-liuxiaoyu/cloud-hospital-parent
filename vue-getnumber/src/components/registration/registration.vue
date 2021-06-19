@@ -68,21 +68,15 @@ export default {
             getnumber(){//取票
                 var no = "GH"+this.num;
                axios.get("http://localhost:6001/proof/findbyno/"+no).then(r => {  
-                    var msg = r.data.message;
+                    var msg = r.data.msg;
                    console.log(r)
-                   if(r.data.code != 200){
+
+                   if(r.data.code != 200){//取票失败
                       this.$alert('<font>'+msg+'</font><br/><font>取票号：'+this.num+'，请认真核对号码，或寻求工作人员帮助</font>', '取票失败', {
                         dangerouslyUseHTMLString: true
                         });
-
-                        this.$notify({
-                            title: '取票成功',
-                            dangerouslyUseHTMLString: true,
-                            duration:0,
-                            position:top-left,
-                            message: '<font>房间名称：123</font><br/><br/><font>排队序号：123</font><br/><br/><font>取票时间：123</font><br/><br/><font>就诊状态：123</font><br/><br/>'
-                            });
-                   }else if(r.data.code == 200){
+                   }else if(r.data.code == 200){//取票成功
+                    this.takeNumber.no = r.data.data.no;//取号码
                     this.takeNumber.roomName = r.data.data.roomName;//房间名
                     this.takeNumber.orderNum = r.data.data.orderNum;//排队序号
                     this.takeNumber.createTime = r.data.data.createTime;//取票时间
@@ -96,7 +90,7 @@ export default {
                             title: '取票成功',
                             dangerouslyUseHTMLString: true,
                             duration:0,
-                            message: '<font>房间名：'+roomName+'</font><br/><br/><font>排队序号：'+orderNum+'</font><br/><br/><font>取票时间：'+createTime+'</font><br/><br/><font>就诊状态：'+status+'</font><br/>'
+                            message: '<font>房间名称：'+this.takeNumber.roomName+'</font><br/><br/><font>取票号码：'+this.takeNumber.no+'</font><br/><br/><font>排队序号：'+this.takeNumber.orderNum+'</font><br/><br/><font>取票时间：'+this.takeNumber.createTime+'</font><br/><br/><font>就诊状态：'+this.takeNumber.status+'</font><br/>'
                             });
                    }
                     

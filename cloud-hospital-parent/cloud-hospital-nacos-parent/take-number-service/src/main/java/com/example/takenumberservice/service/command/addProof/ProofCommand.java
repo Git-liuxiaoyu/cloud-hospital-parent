@@ -11,13 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @AllArgsConstructor
 public class ProofCommand {
-    private Integer id;//id
-    private Integer regId;//挂号id
+    private Long id;//id
+    private Long regId;//挂号id
     private Integer departmentId;//可是id
     private String roomName;//房间名
     private Integer orderNum;//排队序号
     private String createTime;//取票时间
-    private char status;//取票状态
+    private String status;//取票状态
 
     private String no;//取票码
 
@@ -29,7 +29,7 @@ public class ProofCommand {
                 .getBean(ProofCommandHandle.class);
     }
 
-    public ProofCommand(Integer id, Integer regId, Integer departmentId, String roomName, Integer orderNum, String createTime, char status) {
+    public ProofCommand(Long id, Long regId, Integer departmentId, String roomName, Integer orderNum, String createTime, String status) {
         this();
         this.id = id;
         this.regId = regId;
