@@ -5,7 +5,7 @@ import com.example.takenumberservice.adapter.converter.ProofConverter;
 import com.example.takenumberservice.inlet.web.ResponseResult;
 import com.example.takenumberservice.outlet.client.room.RoomServiceClient;
 import com.example.takenumberservice.outlet.client.room.pojo.OutRoomVo;
-import com.example.takenumberservice.outlet.dao.mysql.ProofDao;
+import com.example.takenumberservice.outlet.dao.mysql.Proofdao;
 import com.example.takenumberservice.outlet.dao.mysql.pojo.ProofPo;
 import com.example.takenumberservice.outlet.mq.SendMsg;
 import com.example.takenumberservice.outlet.mq.pojo.MqPo;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 public class ProofDaoAdapter {
 
     @Autowired
-    private ProofDao proofdao;
+    private Proofdao proofdao;
 
     //openfeign接口
     @Autowired
