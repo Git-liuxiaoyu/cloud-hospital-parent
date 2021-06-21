@@ -1,0 +1,67 @@
+version: '3'
+services:
+  drug-service:
+    build:
+      context: $PWD/cloud-hospital-nacos-parent/drug-service
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: drug-service.jar
+    image: drug-service
+    container_name: drug-service-8080
+    network_mode: "host"
+    command: "--server.port=8080 --spring.profiles.active=pro"
+
+  pay-service:
+    build:
+      context: $PWD/cloud-hospital-nacos-parent/pay-service
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: pay-service.jar
+    image: pay-service
+    container_name: pay-service-8081
+    network_mode: "host"
+    command: "--server.port=8081 --spring.profiles.active=pro"
+
+  register-service:
+    build:
+      context: $PWD/cloud-hospital-nacos-parent/register-service
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: register-service.jar
+    image: register-service
+    container_name: register-service-8082
+    network_mode: "host"
+    command: "--server.port=8082 --spring.profiles.active=pro"
+
+  take-number-service:
+    build:
+      context: $PWD/cloud-hospital-nacos-parent/take-number-service
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: take-number-service.jar
+    image: take-number-service
+    container_name: take-number-service-8083
+    network_mode: "host"
+    command: "--server.port=8083 --spring.profiles.active=pro"
+
+  verification-code-service:
+    build:
+      context: $PWD/cloud-hospital-nacos-parent/verification-code-service
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: verification-code-service.jar
+    image: verification-code-service
+    container_name: verification-code-service-8084
+    network_mode: "host"
+    command: "--server.port=8084 --spring.profiles.active=pro"
+
+  worker-service:
+    build:
+      context: $PWD/cloud-hospital-nacos-parent/worker-service
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: worker-service.jar
+    image: worker-service
+    container_name: worker-service-8085
+    network_mode: "host"
+    command: "--server.port=8085 --spring.profiles.active=pro"
