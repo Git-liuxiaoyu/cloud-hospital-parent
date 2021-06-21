@@ -46,7 +46,7 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ~/docker/rabbitmq/5672/data:/var/lib/rabbitmq/mnesia/rabbit@rabbitmq-5672
+      - ~/docker/5672/data:/var/lib/rabbitmq/mnesia/rabbit@rabbitmq-5672
     ports:
       - 5672:5672
       - 15672:15672
