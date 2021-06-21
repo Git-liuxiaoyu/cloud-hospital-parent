@@ -1,9 +1,21 @@
-.main-right {
+.main-right{
+  width: 100%;
+  height: 100%;
+  border: 1px solid black;
+  background-color: blanchedalmond;
+}
+.main-right1{
+  padding: 10px;
+  margin: 10px;
+  background-color: azure;
+}
+
+.main-right2-1 {
   width: 100%;
   background-color: gainsboro;
 }
 
-.main-right2 {
+.main-right2-2 {
   width: 100%;
   background-color: white;
 }

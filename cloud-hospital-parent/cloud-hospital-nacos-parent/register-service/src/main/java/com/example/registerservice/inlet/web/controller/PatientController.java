@@ -21,12 +21,12 @@ public class PatientController {
 
     @PostMapping("Patient/add")
     public ResponseResult addPatient(@RequestBody PatientVo vo) {
-        AddPatientCommand command=new AddPatientCommand(vo);
+        AddPatientCommand command = new AddPatientCommand(vo);
         try {
-            command.execute();
+            Long patientId = command.execute();
+            return new ResponseResult(patientId);
         } catch (Exception e) {
-            return new ResponseResult(404,"添加失败");
+            return new ResponseResult(404, "添加失败");
         }
-        return ResponseResult.SUCCESS;
     }
 }

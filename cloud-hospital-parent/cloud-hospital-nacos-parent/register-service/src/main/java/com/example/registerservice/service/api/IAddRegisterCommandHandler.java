@@ -1,7 +1,7 @@
 package com.example.registerservice.service.api;
 
 
-import com.example.registerservice.service.command.addpatient.AddPatientCommand;
+import com.example.registerservice.service.command.addRegister.AddRegisterCommand;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,6 +10,6 @@ import com.example.registerservice.service.command.addpatient.AddPatientCommand;
  * @Date: 2021/06/19/10:13
  * @Description: 新增病人接口
  */
-public interface IAddPatientCommandHandler {
-    Long action(AddPatientCommand command);
+public interface IAddRegisterCommandHandler {
+    void action(AddRegisterCommand command);
 }

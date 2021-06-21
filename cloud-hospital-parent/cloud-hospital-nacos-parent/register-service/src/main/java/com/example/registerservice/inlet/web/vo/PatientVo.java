@@ -11,6 +11,7 @@ import lombok.Data;
  */
 @Data
 public class PatientVo {
+    private Long id;//添加成功返回患者的Id
     private String name;//患者姓名
     private Integer age;//患者年龄
     private String gender;//患者性别

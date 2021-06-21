@@ -25,11 +25,12 @@ public class PatientAdepter {
     private PatientServicePoConverter converter;
 
 
-    public void insert(AddPatientCommand command){
+    public Long insert(AddPatientCommand command){
         PatientMysqlPo converter = this.converter.converter(command);
         int insert = mysqlDao.insert(converter);
         if(insert==0){
             throw new AdapterException();//sql添加失败抛出异常
         }
+        return converter.getId();
     }
 }

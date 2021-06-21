@@ -104,7 +104,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.example.registerservice.outlet.dao.mysql.po.PatientMysqlPo">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.registerservice.outlet.dao.mysql.po.PatientMysqlPo">
     insert into h_patient (id, no, name, 
       age, gender, phone, identityId, 
       status, createTime, mediCard

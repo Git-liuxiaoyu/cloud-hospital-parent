@@ -25,7 +25,8 @@ public class AddPatientCommandHandler implements IAddPatientCommandHandler {
      * @param command
      */
     @Override
-    public void action(AddPatientCommand command) {
-        adepter.insert(command);
+    public Long action(AddPatientCommand command) {
+        Long patientId = adepter.insert(command);
+        return patientId;
     }
 }

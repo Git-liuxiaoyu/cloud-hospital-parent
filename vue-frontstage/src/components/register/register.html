@@ -1,14 +1,13 @@
-<div>
+<div class="main">
 
   <el-row>
     <el-col :span="6">
       <el-form ref="form" :model="form" label-width="100px">
 
         <el-form-item label="挂号时间">
-          <el-select v-model="form.timeValue" placeholder="请选择">
-            <el-option v-for="item in time" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
+          <el-date-picker v-model="form.itemValue" type="date" @blur="checkItem" value-format="yyyy-MM-dd"
+                          placeholder="选择日期时间" default-time="12:00:00">
+          </el-date-picker>
         </el-form-item>
 
         <el-form-item label="科目">
@@ -17,40 +16,56 @@
             </el-option>
           </el-select>
         </el-form-item>
-
-        <el-form-item label="科目类型">
-          <el-select v-model="form.subjectTypeValue" placeholder="请选择">
-            <el-option v-for="item in subjectType" :key="item.id" :label="item.name" :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
-
-        <!--        <el-form-item label="科室">-->
-        <!--          <el-select v-model="value" placeholder="请选择">-->
-        <!--            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">-->
-        <!--            </el-option>-->
-        <!--          </el-select>-->
-        <!--        </el-form-item>-->
-
-        <!--        <el-form-item label="医生">-->
-        <!--          <el-select v-model="value" placeholder="请选择">-->
-        <!--            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">-->
-        <!--            </el-option>-->
-        <!--          </el-select>-->
-        <!--        </el-form-item>-->
-
-        <br/>
-        <div style="text-align: center">
-          <el-button type="primary" @click="doPatient()">确 定 挂 号</el-button>
-        </div>
       </el-form>
     </el-col>
 
     <el-col :span="18">
-      <div class="main-right">
+
+      <el-row :gutter="20" v-if="switchShow">
+        <el-col :span="8" v-for="item in doctor" key="item.id">
+          <a href="#" @click.prevent="getDoctorInfo(item)">
+            <div class="main-right">
+              <div class="main-right1">
+                <el-row :gutter="20">
+                  <!--图片-->
+                  <el-col :span="10" :push="1">
+                    <el-image style="width: 80px; " :src="url" fit="contain">
+                    </el-image>
+                  </el-col>
+
+                  <el-col :span="13">
+                    <br/>
+                    <el-row :gutter="20">
+
+                      <el-col :span="12">
+                        <p style="color: orange;font-size: 20px;margin-bottom: 10px">{{ item.doctorName }}</p>
+                      </el-col>
+                      <el-col :span="6">
+                        <el-tag v-if="item.doctorLevel==0">普通</el-tag>
+                        <el-tag type="danger" v-else>专家</el-tag>
+                      </el-col>
+
+                      <el-col :span="6">
+                        <el-tag v-if="item.shifttype==1">上午班</el-tag>
+                        <el-tag v-if="item.shifttype==2">下午班</el-tag>
+                        <el-tag v-else>晚班</el-tag>
+                      </el-col>
+
+                    </el-row>
+                    <p style="font-size: 15px">主任医师</p>
+                  </el-col>
+                </el-row>
+                <p style="margin-top: 20px">中国医学科学院肿瘤医院 肿瘤...</p>
+              </div>
+            </div>
+          </a>
+          <br/>
+          <br/>
+        </el-col>
+      </el-row>
+
+      <div class="main-right2-1" v-else>
         <el-row :gutter="20">
-
-
           <el-col :span="4" :push="1">
             <br/>
             <el-image style="width: 100px; height: 100px" :src="url" fit="contain">
@@ -67,7 +82,7 @@
 
           <el-col :span="24">
             <br/>
-            <div class="main-right2">
+            <div class="main-right2-2">
               <br/>
               <br/> <br/>
               <br/>
@@ -91,12 +106,76 @@
               </p>
               <br/>
               <br/>
+
+
               <p style="text-align: center">*基本信息来自医院官网或医院内公示信息或医生本人提供</p>
+              <br/>
+              <br/>
+
+              <div style="text-align: center">
+                <el-button type="danger" @click="choiceDoctor()">选 择 医 生</el-button>
+                <el-button type="primary" @click="doPatient()">确 定 挂 号</el-button>
+              </div>
             </div>
+
           </el-col>
+
         </el-row>
       </div>
+
+      <el-dialog title="填写个人信息" :visible.sync="patientBox" center width="30%">
+        <el-form :model="patient" label-width="80px" :rules="rules" ref="rules">
+
+          <el-row>
+
+            <el-col :span="24">
+              <el-form-item prop="name" label="姓名">
+                <el-input v-model="patient.name" placeholder="请输入姓名"></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="24">
+              <el-form-item prop="age" label="年龄">
+                <el-input v-model="patient.age" placeholder="请输入年龄"></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="24">
+              <el-form-item prop="gender" label="性别">
+                <el-radio-group v-model="patient.gender">
+                  <el-radio label="0">男</el-radio>
+                  <el-radio label="1">女</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="24">
+              <el-form-item prop="phone" label="电话">
+                <el-input v-model="patient.phone" placeholder="请输入电话"></el-input>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="24">
+              <el-form-item prop="identityId" label="身份证号">
+                <el-input v-model="patient.identityId" placeholder="请输入身份证"></el-input>
+              </el-form-item>
+            </el-col>
+
+          </el-row>
+
+        </el-form>
+
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="cancel()">取 消</el-button>
+          <el-button type="primary" @click="addPatient('rules')">确 定</el-button>
+        </div>
+
+      </el-dialog>
+      <br/><br/><br/>
+
+
     </el-col>
+
   </el-row>
 
   <el-dialog title="填写个人信息" :visible.sync="patientBox" center width="30%">

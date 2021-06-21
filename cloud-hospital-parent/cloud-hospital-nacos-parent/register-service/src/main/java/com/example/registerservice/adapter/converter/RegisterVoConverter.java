@@ -34,17 +34,18 @@ public class RegisterVoConverter {
     /**
      * 科目的ClientPo对象转换科目的vo对象
      *
-     * @param clientPo
+     * @param mysqlPo
      * @return
      */
-    public RegisterVo convert(RegisterMysqlPo clientPo) {
+    public RegisterVo convert(RegisterMysqlPo mysqlPo) {
         RegisterVo vo=new RegisterVo();
-        vo.setId(clientPo.getId());
-        vo.setNo(clientPo.getNo());
-        vo.setDepartmentId(clientPo.getDepartmentid());
-        vo.setRoomId(clientPo.getRoomid());
-        vo.setVisitSection(clientPo.getVisitsection());
-        vo.setStatus(clientPo.getStatus());
+        vo.setId(mysqlPo.getId());
+        vo.setPatientId(mysqlPo.getPatientid());
+        vo.setNo(mysqlPo.getNo());
+        vo.setDepartmentId(mysqlPo.getDepartmentid());
+        vo.setRotaId(mysqlPo.getRotaid());
+        vo.setVisitSection(mysqlPo.getVisitsection());
+        vo.setStatus(mysqlPo.getStatus());
         return vo;
     }
 }
