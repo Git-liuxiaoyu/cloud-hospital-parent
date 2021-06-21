@@ -1,3 +1,6 @@
+spring:
+  profiles:
+    active: dev
 #日志配置
 logging:
   level:
@@ -10,12 +13,3 @@ logging:
       %clr(%-40.40logger{39}){cyan} \
       %clr(:){faint} \
       %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}}"
-spring:
-  cloud:
-    nacos:
-      discovery:
-        namespace: public
-        password: nacos
-        server-addr: 1.117.97.60:8848
-        username: nacos
-        group: group3
