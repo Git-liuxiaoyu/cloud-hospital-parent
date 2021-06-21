@@ -39,6 +39,7 @@ public class RegisterCommandHandle implements com.example.takenumberservice.serv
             }else{
                 ProofCommand proofCommand = new ProofCommand();
 
+
                 return proofCommand.execute(findbyno.getData());
             }
     }

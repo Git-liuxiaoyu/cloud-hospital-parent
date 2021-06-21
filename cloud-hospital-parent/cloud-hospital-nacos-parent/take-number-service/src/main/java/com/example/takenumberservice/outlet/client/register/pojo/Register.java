@@ -18,7 +18,7 @@ public class Register {
     private Integer roomId;//房间id
     private String type;//挂号类型
     private String regTime;//挂号时间（病人挂号的时间）
-    private Integer rotaId;//选择排班的医生排班Id
+    private Long rotaId;//选择排班的医生排班Id
     private String visitTime;//挂号的就诊时间
     private String visitSection;//就诊时间段（1、上午，2、下午）
     private BigDecimal price;//挂号费

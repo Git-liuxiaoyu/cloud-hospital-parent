@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProofDao {
 
+
     int findorderNum();//查询最大排队数
 
     int addproof(ProofPo po);//将取票凭证存入数据库
