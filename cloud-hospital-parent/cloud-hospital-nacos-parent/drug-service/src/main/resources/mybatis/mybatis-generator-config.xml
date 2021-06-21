@@ -53,11 +53,20 @@
         </javaClientGenerator>
 
         <!--生成对应表及类名-->
+        <table tableName="h_drug_instockodd" catalog="hospital_four"
+               domainObjectName="DrugInstockOddPo"
+               mapperName="DrugInstockOddDao"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true">
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
 
 
-        <table tableName="h_drugodd_detail" catalog="hospital_four"
-               domainObjectName="DrugOddDetailPo"
-               mapperName="DrugOddDetailDao"
+        <table tableName="h_drug_instockodd_detail" catalog="hospital_four"
+               domainObjectName="DrugInstockoddDetailPo"
+               mapperName="DrugInstockoddDetailDao"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
