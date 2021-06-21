@@ -1,4 +1,4 @@
-package com.example.takenumberservice.inlet.web.vo;
+package com.example.takenumberservice.inlet.web.controller.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

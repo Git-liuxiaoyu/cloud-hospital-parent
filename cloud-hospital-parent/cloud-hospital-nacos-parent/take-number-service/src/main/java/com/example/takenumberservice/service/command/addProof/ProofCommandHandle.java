@@ -3,11 +3,10 @@ package com.example.takenumberservice.service.command.addProof;
 import com.example.takenumberservice.adapter.ProofDaoAdapter;
 import com.example.takenumberservice.adapter.RegisterAdapter;
 import com.example.takenumberservice.inlet.web.ResponseResult;
-import com.example.takenumberservice.inlet.web.vo.ProofControllerVo;
 import com.example.takenumberservice.outlet.client.room.pojo.OutRoomVo;
 import com.example.takenumberservice.service.command.findregister.RegisterCommand;
+
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

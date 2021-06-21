@@ -1,14 +1,11 @@
 package com.example.takenumberservice.service.command.findregister;
 
 import com.example.takenumberservice.inlet.web.ResponseResult;
-import com.example.takenumberservice.inlet.web.vo.ProofControllerVo;
 import com.example.takenumberservice.service.command.addProof.ProofCommand;
 import com.example.takenumberservice.util.ApplicationContextHolder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-
-import java.math.BigDecimal;
 
 /**
  * 挂号表实体类
