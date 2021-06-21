@@ -35,7 +35,7 @@ public class UpdateUserPwdCommandHandler implements IUpdateUserPwdCommandHandler
         WorkerInfoVo workerInfoVo = workerInfoDaoAdapter.queryByWorkerNo(workerNo);
         /* 获得手机号 */
         String phone = workerInfoVo.getPhone();
-        /* 去userDaoAdapter查是否有该数据 */
+        /* 去 userDaoAdapter 查是否有符合要求的 VerifyCode 数据 */
         Boolean flag = null;
         try {
             flag = userDaoAdapter.checkVerifyCode(command.getVerifyCode(), phone);

@@ -57,12 +57,20 @@ public class UserController {
      */
     @PostMapping("update/pwd")
     public ResponseResult<Void> updatePwd(@Valid @RequestBody UpdateUserPwdCommand command, BindingResult bindingResult, HttpServletRequest request) {
+
+        log.debug("收到命令 [{}]",command);
+        /* 判断 rePassword 和 password 值是否相等 */
+        if (!command.getRePassword().equals(command.getPassword())){
+            throw new IllegalArgumentException("修改密码失败 | 两次密码输入的不一致");
+        }
+
         /* 判断是否有绑定错误 */
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("修改密码失败 | 参数异常");
         }
         /* 执行命令 */
         command.execute();
+        /* 返回 */
         return ResponseResult.SUCCESS;
     }
 

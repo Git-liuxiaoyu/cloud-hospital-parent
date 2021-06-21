@@ -30,6 +30,8 @@ public class WorkerInfoPo {
 
     private Integer departmentid;
 
+    private DepartmentPo departmentPo;
+
     private Integer positionid;
 
     private PositionPo positionPo;

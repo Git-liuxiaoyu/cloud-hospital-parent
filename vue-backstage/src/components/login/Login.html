@@ -1,0 +1,238 @@
+<div class="login">
+  <section>
+    <div class="wave">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <!--   登录 Div   -->
+    <div class="Before" :style="flag ? 'transform: rotateY(180deg)' : ''">
+      <div class="content">
+        <el-container>
+          <div
+            class="login-page"
+            @mouseenter="mouseIn"
+            @mouseleave="mouseOut"
+          >
+            <el-form
+              v-loading="LoginLoading"
+              :model="userLogin"
+              :rules="loginRules"
+              status-icon
+              ref="userLogin"
+              label-position="left"
+              label-width="0px"
+              class="demo-ruleForm"
+            >
+              <img src="./images/wyq-blue.png" style="width: 300px"/>
+              <br/>
+              <br/>
+              <h3
+                class="title"
+                style="
+                    maragn-left: -50px;
+                    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC',
+                      'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial,
+                      sans-serif;
+                    color: #409eff;
+                  "
+              >
+                用户登录
+              </h3>
+              <br/>
+              <el-form-item prop="account">
+                <el-input
+                  type="text"
+                  v-model.trim="userLogin.account"
+                  auto-complete="off"
+                  placeholder="请输入账号"
+                  clearable
+                ></el-input>
+              </el-form-item>
+              <el-form-item prop="password">
+                <el-input
+                  type="password"
+                  v-model.trim="userLogin.password"
+                  auto-complete="off"
+                  placeholder="请输入密码"
+                  clearable
+                  @keyup.native="
+                      $event.target.value = $event.target.value.replace(
+                        /^\s+|\s+$/gm,
+                        ''
+                      )
+                    "
+                ></el-input>
+              </el-form-item>
+              <!--              <el-checkbox v-model="checked" class="rememberme"-->
+              <!--              >记住密码-->
+              <!--              </el-checkbox-->
+              <!--              >-->
+
+              <!--              验证模块-->
+              <el-form-item style="width: 100%" prop="flagLoginVerify">
+                <vue-simple-verify ref="verify1" width="330" tips="滑动模块进行人机验证" @success="userLogin.flagLoginVerify = true" />
+              </el-form-item>
+
+              <!--              按钮组-->
+              <br/>
+              <el-form-item style="width: 100%">
+                <el-button-group>
+                  <el-button
+                    type="primary"
+                    style="font-weight: bold; font-size: 15px"
+                    @click="login('userLogin')"
+                    @mouseenter="mouseIn(index)"
+                  >登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录
+                  </el-button
+                  >
+                  <el-button
+                    type="primary"
+                    style="font-weight: bold; font-size: 15px"
+                    @click="flag = !flag;$refs.verify2.reset();"
+                    @mouseenter="mouseIn(index)"
+                  >忘记密码
+                  </el-button
+                  >
+                </el-button-group>
+              </el-form-item>
+            </el-form>
+          </div>
+        </el-container>
+      </div>
+    </div>
+
+    <!--   忘记密码 Div   -->
+    <div class="After" :style="flag ? 'transform: rotateY(0deg)' : ''">
+      <div class="content">
+        <el-container>
+          <div
+            class="login-page"
+            @mouseenter="mouseIn"
+            @mouseleave="mouseOut"
+          >
+            <el-form
+              v-loading="pwdUpdateLoading"
+              :model="pwdUpdate"
+              :rules="pwdUpdateRules"
+              status-icon
+              ref="pwdUpdateRef"
+              label-position="left"
+              label-width="0px"
+              class="demo-ruleForm"
+            >
+              <img src="./images/wyq-blue.png" style="width: 300px"/>
+              <br/>
+              <br/>
+              <h3
+                class="title"
+                style="
+                    maragn-left: -50px;
+                    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC',
+                      'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial,
+                      sans-serif;
+                    color: #409eff;
+                  "
+              >
+                忘记密码
+              </h3>
+              <br/>
+              <el-form-item prop="workerNo">
+                <el-input
+                  type="text"
+                  v-model.trim="pwdUpdate.workerNo"
+                  auto-complete="off"
+                  placeholder="请输入工号"
+                  clearable
+                ></el-input>
+              </el-form-item>
+              <el-form-item prop="verifyCode">
+                <el-input
+                  type="password"
+                  v-model.trim="pwdUpdate.verifyCode"
+                  auto-complete="off"
+                  placeholder="请输入收到的验证码"
+                  clearable
+                  @keyup.native="
+                      $event.target.value = $event.target.value.replace(
+                        /^\s+|\s+$/gm,
+                        ''
+                      )
+                    "
+                >
+                  <el-button v-if="flagShowGetCodeBtn" slot="append" :loading="getCodeBtnLoading"
+                             @click="sendVerifyCode">获取验证码<i
+                    class="el-icon-message el-icon--right"></i>
+                  </el-button>
+                  <template v-if="!flagShowGetCodeBtn" slot="append"> {{ leftTime }} 秒</template>
+                </el-input>
+
+              </el-form-item>
+
+              <!--                输入密码框-->
+              <el-form-item prop="password">
+                <el-input
+                  type="password"
+                  v-model.trim="pwdUpdate.password"
+                  auto-complete="off"
+                  placeholder="请输入新的密码"
+                  clearable
+                  @keyup.native="
+                      $event.target.value = $event.target.value.replace(
+                        /^\s+|\s+$/gm,
+                        ''
+                      )
+                    "
+                >
+                </el-input>
+              </el-form-item>
+
+              <!--                重复输入密码框-->
+              <el-form-item prop="rePassword">
+                <el-input
+                  type="password"
+                  v-model.trim="pwdUpdate.rePassword"
+                  auto-complete="off"
+                  placeholder="请再次输入密码"
+                  clearable
+                  @keyup.native="
+                      $event.target.value = $event.target.value.replace(
+                        /^\s+|\s+$/gm,
+                        ''
+                      )
+                    "
+                >
+                </el-input>
+              </el-form-item>
+              <!--              验证模块-->
+              <el-form-item style="width: 100%" prop="flagLoginVerify">
+                <vue-simple-verify ref="verify2" width="330" tips="滑动模块进行人机验证" @success="pwdUpdate.flagLoginVerify = true" />
+              </el-form-item>
+
+              <br/>
+              <el-form-item style="width: 100%">
+                <el-button-group>
+                  <el-button
+                    type="primary"
+                    style="font-weight: bold; font-size: 15px"
+                    @click="reqUpdatePwdFunc('pwdUpdateRef')"
+                  >修&nbsp;&nbsp;&nbsp;改&nbsp;&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp;码
+                  </el-button
+                  >
+                  <el-button
+                    type="primary"
+                    style="font-weight: bold; font-size: 15px"
+                    @click="flag=!flag;$refs.verify1.reset();"
+                  >回到登录
+                  </el-button
+                  >
+                </el-button-group>
+              </el-form-item>
+            </el-form>
+          </div>
+        </el-container>
+      </div>
+    </div>
+  </section>
+
+</div>

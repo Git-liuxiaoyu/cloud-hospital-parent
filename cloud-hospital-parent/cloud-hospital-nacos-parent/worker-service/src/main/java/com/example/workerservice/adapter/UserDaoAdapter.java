@@ -57,13 +57,8 @@ public class UserDaoAdapter {
             /* 假如为空,说明不存在该验证码 */
             throw new NullPointerException();
         }
-        /* 不为空则判断两验证码是否一致 */
-        if (!correctVerifyCode.equals(verifyCode)) {
-            /* 不相等则返回false */
-            return false;
-        }
-        /* 正常则返回true */
-        return true;
+        /* 不为空则判断两验证码是否一致,直接返回 */
+        return correctVerifyCode.equals(verifyCode);
     }
 
     /**
@@ -86,11 +81,15 @@ public class UserDaoAdapter {
         UserPo userPo = userPoList.get(0);
         /* 修改密码 */
         userPo.setPassword(password);
+        /* 调用 Update 方法 */
         userPoDao.updateByPrimaryKey(userPo);
+        /* LOG */
+        log.info("工号 [{}] 修改密码 [{}] 成功", workerNo, password);
     }
 
     /**
      * 存贮LoginToken到Redis
+     *
      * @param ip
      * @param randomLoginToken
      */
@@ -104,15 +103,15 @@ public class UserDaoAdapter {
      *
      * @param ip
      */
-    public boolean checkIfLoginTokenExistedByIp(String ip,String loginToken) {
-        System.out.println(ip+"========="+loginToken);
+    public boolean checkIfLoginTokenExistedByIp(String ip, String loginToken) {
+        System.out.println(ip + "=========" + loginToken);
         /* 是否存在该LoginToken */
         String redisLoginToken = redisTemplate.boundValueOps("LOGINTOKEN-" + ip).get();
         if (StringUtils.isEmpty(redisLoginToken) || StringUtils.isEmpty(loginToken)) {
             /* LOG */
             log.info("IP [{}] 无 loginToken 存在 Redis");
             return false;
-        }else{
+        } else {
             /* Redis 存在 loginToken 再判断loginToken是否相等 */
             return redisLoginToken.equals(loginToken);
         }
@@ -120,6 +119,7 @@ public class UserDaoAdapter {
 
     /**
      * 根据IP删除LoginToken
+     *
      * @param ip
      */
     public void deleteLoginTokenByIP(String ip) {
