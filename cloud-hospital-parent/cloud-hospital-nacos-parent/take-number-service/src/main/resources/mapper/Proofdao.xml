@@ -13,5 +13,11 @@
         insert into h_call_proof(regId,departmentId,roomName,orderNum,createTime,status)
         values(#{regId},#{departmentId},#{roomName},#{orderNum},#{createTime},#{status})
     </insert>
-  
+    
+    <!--每晚12点清空整张表的数据-->
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete
+        from h_call_proof
+    </delete>
+    
 </mapper>

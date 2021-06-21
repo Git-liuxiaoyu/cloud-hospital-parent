@@ -1,0 +1,19 @@
+HELP.md
+**/target/
+*.class
+*.jar
+!**/docker/9200/plugins/ik/*.jar
+**/mvnw
+**/mvnw.cmd
+**/.mvn
+**/target/
+
+
+### IntelliJ IDEA ###
+**/.idea/
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/

@@ -46,10 +46,24 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ~/docker/rabbitmq/5672/data:/var/lib/rabbitmq/mnesia/rabbit@rabbitmq-5672
+      - ~/docker/5672/data:/var/lib/rabbitmq/mnesia/rabbit@rabbitmq-5672
     ports:
       - 5672:5672
       - 15672:15672
+  es:
+    image: elasticsearch:7.10.1
+    container_name: es-9200
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+    volumes:
+      - ~/docker/9200/data:/usr/share/elasticsearch/data # chmod 777 ~/docker/9200/data
+      - ~/docker/9200/logs:/usr/share/elasticsearch/logs # chmod 777 ~/docker/9200/logs
+      - ./docker/9200/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./docker/9200/plugins:/usr/share/elasticsearch/plugins
+    ports:
+      - "9200:9200"
+      - "9300:9300"
 #  maven:
 #    image: maven:3.8-jdk-8
 #    container_name: maven-build
