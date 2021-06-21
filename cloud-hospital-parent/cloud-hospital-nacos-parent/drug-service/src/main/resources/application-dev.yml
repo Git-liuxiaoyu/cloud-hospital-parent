@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: drug-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: defaultDataSource
+    password: root
+    url: jdbc:mysql://1.117.97.60:3307/hospital_four?serverTimezone=UTC
+    username: root
+  cloud:
+    nacos:
+      discovery:
+        group: group3
+        namespace: public
+        password: nacos
+        #                server-addr: 192.172.0.160:8848
+        server-addr: 127.0.0.1:8848
+        username: nacos
+server:
+  port: 8080
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/*.xml

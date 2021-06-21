@@ -1,7 +1,7 @@
 package com.example.takenumberservice.inlet.web.scheduler;
 
 
-import com.example.takenumberservice.outlet.dao.mysql.ProofDao;
+import com.example.takenumberservice.outlet.dao.mysql.Proofdao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class SchedulerProof {
 
     @Autowired
-    private ProofDao proofDao;
+    private Proofdao proofDao;
 
     /**
      * 定时删除整张取票凭证表

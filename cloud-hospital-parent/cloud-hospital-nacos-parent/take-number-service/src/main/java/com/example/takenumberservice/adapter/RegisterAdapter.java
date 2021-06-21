@@ -48,6 +48,8 @@ public class RegisterAdapter {
                     RegisterCommand rc = new RegisterCommand();
                     rc.setId(findbyno.getData().getId());//获得挂号id
                     rc.setNo(findbyno.getData().getNo());//获得挂号编码
+                    rc.setPatientId(findbyno.getData().getPatientId());//获得患者id
+                    rc.setRotaId(findbyno.getData().getRotaId());//获得排班id
                     rc.setDepartmentId(findbyno.getData().getDepartmentId());//科室id
                     rc.setRoomId(findbyno.getData().getRoomId());//房间id
                     rc.setVisitSection(findbyno.getData().getVisitSection());//就诊时间段

@@ -4,7 +4,8 @@ import com.example.takenumberservice.outlet.dao.mysql.pojo.ProofPo;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProofDao {
+public interface Proofdao {
+
 
     int findorderNum();//查询最大排队数
 

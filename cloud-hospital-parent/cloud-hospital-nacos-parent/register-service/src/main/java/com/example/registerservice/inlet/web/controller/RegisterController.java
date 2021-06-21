@@ -3,12 +3,12 @@ package com.example.registerservice.inlet.web.controller;
 
 import com.example.registerservice.inlet.web.vo.RegisterVo;
 import com.example.registerservice.inlet.web.vo.SubjectVo;
+import com.example.registerservice.service.command.addRegister.AddRegisterCommand;
+import com.example.registerservice.service.command.addphone.PushPhoneGoQueueCommand;
+import com.example.registerservice.service.command.updateregister.UpdateRegisterCommand;
 import com.example.registerservice.service.query.queryphoneandcode.QueryPhoneAndCodeCommand;
 import com.example.registerservice.service.query.queryregister.QueryRegisterGetByNoCommand;
 import com.example.registerservice.util.ResponseResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import com.example.registerservice.service.command.addphone.PushPhoneGoQueueCommand;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @Auther: 小刘
  * @Date: 2021/06/03/19:20
- * @Description:
+ * @Description: 挂号controller
  */
 @CrossOrigin
 @RestController
@@ -64,8 +64,39 @@ public class RegisterController {
         try {
             execute = command.execute();
         } catch (Exception e) {
-            return new ResponseResult<>(444,"");
+            return new ResponseResult<>(444, "");
         }
         return new ResponseResult(execute);
+    }
+
+    /**
+     * 根据id修改挂号的状态
+     *
+     * @param id
+     * @param status
+     * @return
+     */
+    @PostMapping("/Register/update/status/{id}/{status}")
+    public ResponseResult updateStatus(@PathVariable("id") Long id, @PathVariable("status") String status) {
+        UpdateRegisterCommand command = new UpdateRegisterCommand(id, status);
+        try {
+            command.execute();
+        } catch (Exception e) {
+            return new ResponseResult(444, "");
+        }
+        return ResponseResult.SUCCESS;
+    }
+
+    @PostMapping("/Register/add")
+    public ResponseResult registerAdd(@RequestBody RegisterVo.AddRegisterVo vo){
+
+        System.out.println(vo);
+        AddRegisterCommand command=new AddRegisterCommand(vo);
+        try {
+            command.execute();
+        }catch (Exception e){
+            return new ResponseResult(444, "");
+        }
+        return ResponseResult.SUCCESS;
     }
 }

@@ -1,0 +1,40 @@
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.example.workerservice.outlet.dao.mysql.po
+server:
+  port: 9100
+spring:
+  application:
+    name: worker-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 1.117.97.60:8848
+        namespace: public
+        username: nacos
+        password: nacos
+        group: group3
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: defaultDataSource
+    password: root
+    url: jdbc:mysql://1.117.97.60:3307/h_worker?serverTimezone=UTC
+    username: root
+  rabbitmq:
+    host: 1.117.97.60
+    password: xiaoyu
+    port: 5672
+    username: xiaoyu
+    virtual-host: /xiaoyu
+  redis:
+    database: 0
+    host: 1.117.97.60
+    jedis:
+      pool:
+        max-active: 20
+        max-idle: 10
+        max-wait: -1
+        min-idle: 0
+    password: xiaoyu
+    port: 6379
+    timeout: 1000

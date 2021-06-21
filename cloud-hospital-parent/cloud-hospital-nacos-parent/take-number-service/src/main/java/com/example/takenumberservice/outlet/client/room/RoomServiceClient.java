@@ -14,4 +14,7 @@ public interface RoomServiceClient {
     @GetMapping("/room/out/view/{id}")
     ResponseResult<OutRoomVo> findbyid(@PathVariable("id") Integer id);
 
+
+
+
 }

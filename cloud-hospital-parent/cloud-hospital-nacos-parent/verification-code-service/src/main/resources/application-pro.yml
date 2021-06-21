@@ -1,0 +1,50 @@
+server:
+  port: 9010
+spring:
+  application:
+    name: verification-code-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: public
+        username: nacos
+        password: nacos
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/h_worker?serverTimezone=UTC
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 1000
+    jedis:
+      pool:
+        max-active: 20
+        max-idle: 10
+        max-wait: -1
+        min-idle: 0
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      direct:
+        acknowledge-mode: manual
+      simple:
+        acknowledge-mode: manual
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    password: evqkusxpybymdjhf
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+    username: 2592590720@qq.com

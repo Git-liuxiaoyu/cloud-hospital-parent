@@ -5,22 +5,30 @@ import com.example.takenumberservice.adapter.converter.ProofConverter;
 import com.example.takenumberservice.inlet.web.ResponseResult;
 import com.example.takenumberservice.outlet.client.room.RoomServiceClient;
 import com.example.takenumberservice.outlet.client.room.pojo.OutRoomVo;
-import com.example.takenumberservice.outlet.dao.mysql.ProofDao;
+import com.example.takenumberservice.outlet.dao.mysql.Proofdao;
 import com.example.takenumberservice.outlet.dao.mysql.pojo.ProofPo;
+import com.example.takenumberservice.outlet.mq.SendMsg;
+import com.example.takenumberservice.outlet.mq.pojo.MqPo;
 import com.example.takenumberservice.service.command.addProof.ProofCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
+
 public class ProofDaoAdapter {
 
     @Autowired
-    private ProofDao proofdao;
+    private Proofdao proofdao;
 
     //openfeign接口
     @Autowired
     private RoomServiceClient roomServiceClient;
+
+    @Autowired
+    private SendMsg sendMsg;
+
+
 
 
     /**
@@ -56,6 +64,14 @@ public class ProofDaoAdapter {
             return new ResponseResult<OutRoomVo>(400,"未查询到房间名",null);
         }
 
+    }
+
+    /**
+     * 给队列发送消息，叫号微服务接受
+     */
+    public void send(MqPo po){
+
+        sendMsg.SendPatient(po);
     }
 
     /**

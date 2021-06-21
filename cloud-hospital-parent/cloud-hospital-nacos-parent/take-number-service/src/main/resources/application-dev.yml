@@ -30,3 +30,31 @@ spring:
   application:
     # 应用名称
     name: take-number-service
+
+  rabbitmq:
+    host: 1.117.97.60
+    password: xiaoyu
+    port: 5672
+    username: xiaoyu
+    virtual-host: /xiaoyu
+  redis:
+    database: 0
+    host: 1.117.97.60
+    jedis:
+      pool:
+        max-active: 20
+        max-idle: 10
+        max-wait: -1
+        min-idle: 0
+    password: xiaoyu
+    port: 6379
+    timeout: 1000
+
+
+
+
+
+
+
+
+

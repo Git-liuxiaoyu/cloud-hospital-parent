@@ -18,6 +18,7 @@ import java.util.Date;
  */
 @Data
 public class AddPatientCommand implements Serializable {
+    private Long id;//添加成功返回患者的Id
 
     private String no;//病人编号
     private String status;//病人状态(0、待就诊 1、已就诊)
@@ -56,7 +57,8 @@ public class AddPatientCommand implements Serializable {
                 .getBean(IAddPatientCommandHandler.class);
     }
 
-    public void execute(){
-        handler.action(this);
+    public Long execute(){
+        Long patientId = handler.action(this);
+        return patientId;
     }
 }

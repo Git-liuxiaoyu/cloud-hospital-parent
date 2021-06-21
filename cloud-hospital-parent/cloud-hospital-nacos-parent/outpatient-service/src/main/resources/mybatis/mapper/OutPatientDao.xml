@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.outpatientservice.outlet.dao.mysql.OutPatientDao">
+  <resultMap id="BaseResultMap" type="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="registerId" jdbcType="BIGINT" property="registerid" />
+    <result column="patientId" jdbcType="BIGINT" property="patientid" />
+    <result column="doctorId" jdbcType="BIGINT" property="doctorid" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="orderNo" jdbcType="BIGINT" property="orderno" />
+    <result column="endTime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="param1" jdbcType="VARCHAR" property="param1" />
+    <result column="param2" jdbcType="BIGINT" property="param2" />
+    <result column="param3" jdbcType="BIGINT" property="param3" />
+    <result column="param4" jdbcType="VARCHAR" property="param4" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, registerId, patientId, doctorId, status, orderNo, endTime, param1, param2, param3, 
+    param4
+  </sql>
+  <select id="selectByExample" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from h_out_patient
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from h_out_patient
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from h_out_patient
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPoExample">
+    delete from h_out_patient
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo">
+    insert into h_out_patient (id, registerId, patientId, 
+      doctorId, status, orderNo, 
+      endTime, param1, param2, 
+      param3, param4)
+    values (#{id,jdbcType=BIGINT}, #{registerid,jdbcType=BIGINT}, #{patientid,jdbcType=BIGINT}, 
+      #{doctorid,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, #{orderno,jdbcType=BIGINT}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{param1,jdbcType=VARCHAR}, #{param2,jdbcType=BIGINT}, 
+      #{param3,jdbcType=BIGINT}, #{param4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo">
+    insert into h_out_patient
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="registerid != null">
+        registerId,
+      </if>
+      <if test="patientid != null">
+        patientId,
+      </if>
+      <if test="doctorid != null">
+        doctorId,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="orderno != null">
+        orderNo,
+      </if>
+      <if test="endtime != null">
+        endTime,
+      </if>
+      <if test="param1 != null">
+        param1,
+      </if>
+      <if test="param2 != null">
+        param2,
+      </if>
+      <if test="param3 != null">
+        param3,
+      </if>
+      <if test="param4 != null">
+        param4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="registerid != null">
+        #{registerid,jdbcType=BIGINT},
+      </if>
+      <if test="patientid != null">
+        #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="doctorid != null">
+        #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        #{orderno,jdbcType=BIGINT},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="param1 != null">
+        #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        #{param2,jdbcType=BIGINT},
+      </if>
+      <if test="param3 != null">
+        #{param3,jdbcType=BIGINT},
+      </if>
+      <if test="param4 != null">
+        #{param4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPoExample" resultType="java.lang.Long">
+    select count(*) from h_out_patient
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update h_out_patient
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.registerid != null">
+        registerId = #{record.registerid,jdbcType=BIGINT},
+      </if>
+      <if test="record.patientid != null">
+        patientId = #{record.patientid,jdbcType=BIGINT},
+      </if>
+      <if test="record.doctorid != null">
+        doctorId = #{record.doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderno != null">
+        orderNo = #{record.orderno,jdbcType=BIGINT},
+      </if>
+      <if test="record.endtime != null">
+        endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.param1 != null">
+        param1 = #{record.param1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.param2 != null">
+        param2 = #{record.param2,jdbcType=BIGINT},
+      </if>
+      <if test="record.param3 != null">
+        param3 = #{record.param3,jdbcType=BIGINT},
+      </if>
+      <if test="record.param4 != null">
+        param4 = #{record.param4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update h_out_patient
+    set id = #{record.id,jdbcType=BIGINT},
+      registerId = #{record.registerid,jdbcType=BIGINT},
+      patientId = #{record.patientid,jdbcType=BIGINT},
+      doctorId = #{record.doctorid,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=VARCHAR},
+      orderNo = #{record.orderno,jdbcType=BIGINT},
+      endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      param1 = #{record.param1,jdbcType=VARCHAR},
+      param2 = #{record.param2,jdbcType=BIGINT},
+      param3 = #{record.param3,jdbcType=BIGINT},
+      param4 = #{record.param4,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo">
+    update h_out_patient
+    <set>
+      <if test="registerid != null">
+        registerId = #{registerid,jdbcType=BIGINT},
+      </if>
+      <if test="patientid != null">
+        patientId = #{patientid,jdbcType=BIGINT},
+      </if>
+      <if test="doctorid != null">
+        doctorId = #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="orderno != null">
+        orderNo = #{orderno,jdbcType=BIGINT},
+      </if>
+      <if test="endtime != null">
+        endTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="param1 != null">
+        param1 = #{param1,jdbcType=VARCHAR},
+      </if>
+      <if test="param2 != null">
+        param2 = #{param2,jdbcType=BIGINT},
+      </if>
+      <if test="param3 != null">
+        param3 = #{param3,jdbcType=BIGINT},
+      </if>
+      <if test="param4 != null">
+        param4 = #{param4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo">
+    update h_out_patient
+    set registerId = #{registerid,jdbcType=BIGINT},
+      patientId = #{patientid,jdbcType=BIGINT},
+      doctorId = #{doctorid,jdbcType=BIGINT},
+      status = #{status,jdbcType=VARCHAR},
+      orderNo = #{orderno,jdbcType=BIGINT},
+      endTime = #{endtime,jdbcType=TIMESTAMP},
+      param1 = #{param1,jdbcType=VARCHAR},
+      param2 = #{param2,jdbcType=BIGINT},
+      param3 = #{param3,jdbcType=BIGINT},
+      param4 = #{param4,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByCon" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo"
+          resultType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo">
+  select
+  *
+  from h_out_patient
+    where status=0
+<!--  <where>-->
+<!--    <if test="no!=null and no!=''" >-->
+<!--      and no=#{no}-->
+<!--    </if>-->
+<!--    and status =0-->
+<!--  </where>-->
+  </select>
+</mapper>

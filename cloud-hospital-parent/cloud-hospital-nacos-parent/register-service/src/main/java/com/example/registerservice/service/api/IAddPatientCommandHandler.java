@@ -11,5 +11,5 @@ import com.example.registerservice.service.command.addpatient.AddPatientCommand;
  * @Description: 新增病人接口
  */
 public interface IAddPatientCommandHandler {
-    void action(AddPatientCommand command);
+    Long action(AddPatientCommand command);
 }

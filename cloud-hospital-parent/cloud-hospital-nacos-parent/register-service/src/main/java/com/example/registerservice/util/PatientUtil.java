@@ -23,10 +23,4 @@ public class PatientUtil {
         String no = "WONIU" + format + (long) (Math.random() * 1000000);
         return no;
     }
-
-    public static void main(String[] args) {
-        System.out.println(getPatientNo());
-        System.out.println(getPatientNo().length());
-    }
-
 }

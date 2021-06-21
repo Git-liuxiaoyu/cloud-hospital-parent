@@ -17,6 +17,8 @@ public class RegisterCommand {
 
     private Long id;//挂号id
     private String no;//挂号编码
+    private Long patientId;//病人id
+    private Long rotaId;//排班id
     private Integer departmentId;//科室id
     private Integer roomId;//房间id
     private String visitSection;//就诊时间段（1、上午，2、下午）
@@ -30,10 +32,11 @@ public class RegisterCommand {
         .getBean(RegisterCommandHandle.class);
     }
 
-    public RegisterCommand(Long id, String no, Integer departmentId, Integer roomId,String visitSection,String status) {
+    public RegisterCommand(Long id, String no, Integer departmentId, Integer roomId,String visitSection,String status,Long patientId) {
         this();
         this.id = id;
         this.no = no;
+        this.patientId = patientId;
         this.departmentId = departmentId;
         this.roomId = roomId;
         this.visitSection = visitSection;

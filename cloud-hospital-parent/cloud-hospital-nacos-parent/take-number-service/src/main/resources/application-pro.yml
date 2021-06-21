@@ -1,0 +1,20 @@
+server:
+  port: 6001
+spring:
+  application:
+    name: take-number-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 1.117.97.60:8848
+        namespace: public
+        username: nacos
+        password: nacos
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/h_takenumber?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: root
+    username: root
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.takenumberservice.outlet.dao.mysql.pojo

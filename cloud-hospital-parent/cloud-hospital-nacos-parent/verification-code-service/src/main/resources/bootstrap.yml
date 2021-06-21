@@ -1,3 +1,7 @@
+spring:
+  profiles:
+    active: dev
+
 logging:
   level:
     root: WARN
@@ -9,12 +13,3 @@ logging:
       %clr(%-40.40logger{39}){cyan} \
       %clr(:){faint} \
       %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}}"
-
-spring:
-  cloud:
-    nacos:
-      discovery:
-        namespace: public
-        password: nacos
-        server-addr: 1.117.97.60:8848
-        username: nacos

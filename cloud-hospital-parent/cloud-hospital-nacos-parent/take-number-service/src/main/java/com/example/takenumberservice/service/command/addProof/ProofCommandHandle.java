@@ -4,6 +4,7 @@ import com.example.takenumberservice.adapter.ProofDaoAdapter;
 import com.example.takenumberservice.adapter.RegisterAdapter;
 import com.example.takenumberservice.inlet.web.ResponseResult;
 import com.example.takenumberservice.outlet.client.room.pojo.OutRoomVo;
+import com.example.takenumberservice.outlet.mq.pojo.MqPo;
 import com.example.takenumberservice.service.command.findregister.RegisterCommand;
 
 import lombok.extern.slf4j.Slf4j;
@@ -99,6 +100,12 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
 
 
         if(i>0){
+            //发送消息
+            MqPo po = new MqPo();
+            po.setOrderNum(orderNum+1);
+            po.setRegId(proofCommand.getRegId());
+            po.setPatientId(findbyno.getPatientId());
+            proofDaoAdapter.send(po);
             return new ResponseResult<ProofCommand>(200,"取票成功",proofCommand);
         }else{
             return new ResponseResult<ProofCommand>(400,"取票失败，请稍后再试",proofCommand);
