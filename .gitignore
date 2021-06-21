@@ -1,0 +1,18 @@
+HELP.md
+**/target/
+*.class
+*.jar
+**/mvnw
+**/mvnw.cmd
+**/.mvn
+**/target/
+
+
+### IntelliJ IDEA ###
+**/.idea/
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
