@@ -48,15 +48,15 @@ export default {
               type: "error",
             });
           }
-        })
-        .catch(() => {
-          /** 提醒 */
-          this.$notify({
-            title: "错误",
-            message: res.data.msg,
-            type: "error",
-          });
+        }).catch(() => {
+        /** 提醒 */
+        this.$notify({
+          title: "错误",
+          message: "网络错误",
+          type: "error",
         });
+      });
     }
   }
 }
+
