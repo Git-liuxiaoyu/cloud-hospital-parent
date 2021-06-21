@@ -6,6 +6,16 @@
     select * from  h_worker_info where `no`=#{no}
   </select>
 
+  <!-- queryLoginedWorkerInfoByWorkerNo 的 ResultMap -->
+  <resultMap id="workerInfoResultMap1" type="com.example.workerservice.outlet.dao.mysql.po.WorkerInfoPo" autoMapping="true" >
+    <association property="departmentPo" column="departmentid" javaType="com.example.workerservice.outlet.dao.mysql.po.DepartmentPo" select="com.example.workerservice.outlet.dao.mysql.DepartmentPoDao.selectByPrimaryKey" fetchType="eager" />
+    <association property="positionPo" column="positionid" javaType="com.example.workerservice.outlet.dao.mysql.po.PositionPo" select="com.example.workerservice.outlet.dao.mysql.PositionPoDao.selectByPrimaryKey" fetchType="eager" />
+  </resultMap>
+
+  <select id="queryLoginedWorkerInfoByWorkerNo" parameterType="java.lang.String" resultMap="workerInfoResultMap1" >
+    select * from  h_worker_info where `no`=#{no}
+  </select>
+
 
   <!-- 自动生成的 -->
   <resultMap id="BaseResultMap" type="com.example.workerservice.outlet.dao.mysql.po.WorkerInfoPo">

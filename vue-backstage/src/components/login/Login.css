@@ -1,0 +1,99 @@
+.login-page {
+    -webkit-border-radius: 5px;
+    text-align: center;
+    border-radius: 15px;
+    /* margin: 100px 0 0 350px; */
+    width: 330px;
+    padding: 35px 35px 15px;
+    background: #fff;
+    border: 2px solid #eaeaea;
+  }
+  label.el-checkbox.rememberme {
+    margin: 0px 0px 15px;
+    text-align: left;
+  }
+  .register {
+    color: indigo;
+  }
+  .register:hover {
+    color: chocolate;
+    cursor: pointer;
+  }
+  .bjimg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    object-fit: cover;
+  }
+  
+  section {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  section .wave {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #4973ff;
+  }
+  
+  section .wave span {
+    position: absolute;
+    width: 325vh;
+    height: 325vh;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -75%);
+    background: white;
+  }
+  section .wave span:nth-child(1) {
+    animation: animate 5s linear infinite;
+    border-radius: 45%;
+    background: rgba(20, 20, 20, 0.8);
+  }
+  section .wave span:nth-child(2) {
+    animation: animate 10s linear infinite;
+    border-radius: 40%;
+    background: rgba(20, 20, 20, 0.5);
+  }
+  section .wave span:nth-child(3) {
+    animation: animate 15s linear infinite;
+    border-radius: 42.5%;
+    background: rgba(20 20, 20, 0.5);
+  }
+  
+  @keyframes animate {
+    0% {
+      transform: translate(-50%, -75%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -75%) rotate(360deg);
+    }
+  }
+  
+  section .content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* 卡片翻转特效 */
+  .Before {
+    position: absolute;
+    backface-visibility: hidden;
+    transition: 3s;
+  }
+  .After {
+    position: absolute;
+    transform: rotateY(-180deg);
+    backface-visibility: hidden;
+    transition: 3s;
+  }

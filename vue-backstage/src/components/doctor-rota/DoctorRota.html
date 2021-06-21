@@ -1,0 +1,62 @@
+<el-row>
+  <!--  日历日期选择器卡片-->
+  <el-card>
+    <el-row type="flex" justify="center" align="middle">
+      <span style="font-size: 18px;font-weight: bold;">请选择需要排班的时间</span>
+    </el-row>
+    <br />
+    <el-row type="flex" justify="center" align="middle">
+      <el-date-picker
+        size="large"
+        :picker-options="{'firstDayOfWeek': 1}"
+        v-model="calendarDateRange"
+        format="yyyy 年 MM 月 dd 日"
+        placeholder="选择周"
+        type="week">
+      </el-date-picker>
+      &nbsp;&nbsp;&nbsp;至&nbsp;&nbsp;&nbsp;
+      <el-date-picker
+        disabled=""
+        size="large"
+        :picker-options="{'firstDayOfWeek': 1}"
+        v-model="calendarDateEndRange"
+        format="yyyy 年 MM 月 dd 日"
+        type="week">
+      </el-date-picker>
+    </el-row>
+  </el-card>
+  <el-divider></el-divider>
+  <!--  日历卡片-->
+  <el-card>
+        <el-calendar :range="calendarDateFinalRange">
+<!--    <el-calendar>-->
+      <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
+      <template
+        slot="dateCell"
+        slot-scope="{date, data}">
+        <el-row :class="data.isSelected ? 'is-selected' : ''" type="flex" align="middle" style="height: 100%;">
+          <el-col :span="12">
+            <!--      显示日期-->
+            <el-button type="text" @click="showAddDoctorRotaDialogFunc(data.isSelected)">
+              {{ data.day.split('-').slice(1)[0] + '月' + data.day.split('-').slice(1)[1] + '日' }}
+            </el-button>
+          </el-col>
+
+          <el-col :span="12">
+            aaa
+          </el-col>
+        </el-row>
+      </template>
+    </el-calendar>
+  </el-card>
+
+  <!--      弹出对话框-->
+  <el-dialog title="收货地址" :visible.sync="flagAddDoctorRota">
+    aaa
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="flagAddDoctorRota=false">取 消</el-button>
+      <el-button type="primary" @click="flagAddDoctorRota=false">确 定</el-button>
+    </div>
+  </el-dialog>
+
+</el-row>

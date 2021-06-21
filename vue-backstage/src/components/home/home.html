@@ -1,0 +1,60 @@
+<div class="wrapper">
+  <el-row v-loading.fullscreen.lock="fullscreenLoading">
+    <!-- 头部 -->
+    <el-row class="l-head" align="middle">
+      <el-col :span="12" class="l-head-zj">
+        <!--         <i class="glyphicon glyphicon-leaf"></i>-->
+        <span style="line-height: 60px;">武汉市第一人民医院</span>
+      </el-col>
+      <el-col :span="12" :pull="1" style="height: 10vh;">
+        <el-row type="flex" justify="end" align="middle" style="height: 100%;">
+          <el-button type="success">
+            {{ loginUserInfo.departmentName }} {{ loginUserInfo.name }}
+            {{ loginUserInfo.positionType == 1 ? "医生" : "护士" }} {{ loginUserInfo.positionLevel == 3 ? "主任" : "" }} 欢迎您！
+          </el-button>
+          <el-button type="danger" icon="el-icon-switch-button" @click="logoutFuc()">安全退出</el-button>
+        </el-row>
+      </el-col>
+    </el-row>
+
+    <el-container>
+      <!-- 中左 -->
+      <!-- default-active默认显示高亮 -->
+      <el-aside width="200px" class="main-left">
+        <el-menu class="el-menu-vertical-demo" :router="true" background-color="#F5F5F5"
+                 :unique-opened="true" default-active="index">
+
+          <el-menu-item index="/home">
+            <i class="glyphicon glyphicon-home"></i>
+            <span slot="title">系统首页</span>
+          </el-menu-item>
+
+          <el-menu-item index="/doctor/rota">
+            <i class="glyphicon glyphicon-home"></i>
+            <span slot="title">排班系统</span>
+          </el-menu-item>
+
+          <el-submenu :index="item.id + ''" v-for="item in menu" :key="item.id">
+            <template slot="title">
+              <i class="glyphicon glyphicon-list"></i>
+              <span>{{ item.name }}</span>
+            </template>
+
+            <el-menu-item-group>
+              <el-menu-item :index="son.href" v-for="son in item.children" :key="son.id">
+                <i class="glyphicon glyphicon-align-left"></i>
+                <span>{{ son.name }}</span>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
+
+      <!-- 中右 -->
+      <el-main class="main-right">
+        <router-view/>
+      </el-main>
+
+    </el-container>
+  </el-row>
+</div>

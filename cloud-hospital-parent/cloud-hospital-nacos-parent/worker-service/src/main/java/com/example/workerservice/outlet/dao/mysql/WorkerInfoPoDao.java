@@ -33,4 +33,6 @@ public interface WorkerInfoPoDao {
     int updateByPrimaryKey(WorkerInfoPo record);
 
     Optional<WorkerInfoPo> queryByWorkerNo(String workerNo);
+
+    Optional<WorkerInfoPo> queryLoginedWorkerInfoByWorkerNo(String workerNo);
 }

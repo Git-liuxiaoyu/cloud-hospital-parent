@@ -1,30 +1,26 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-/* 后台登录 Vue */
-import Login from '@/components/login/Login.vue'
-
-import xxx from '@/components/login/xxx.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    /** 组件 - 登录  - 张方松 */
     {
       path: '/',
       name: 'login',
-      component: Login
+      component: () => import('@/components/login/Login.vue')
     },
-    {
-      path: '/xxx',
-      name: 'xxx',
-      component: xxx
-    },
-//home的路由
+    /** 组件 - 首页 */
     {
       path: '/home',
       component: () => import('@/components/home/home.vue'),
       children: [
-
+        {
+          path: '/doctor/rota',
+          name: 'doctor-rota',
+          component: () => import('@/components/doctor-rota/DoctorRota.vue')
+        }
       ]
     }
   ]

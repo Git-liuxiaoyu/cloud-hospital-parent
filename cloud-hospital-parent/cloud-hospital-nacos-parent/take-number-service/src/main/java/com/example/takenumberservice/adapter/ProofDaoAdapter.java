@@ -1,27 +1,39 @@
 package com.example.takenumberservice.adapter;
 
 
+import com.example.takenumberservice.adapter.converter.ProofConverter;
 import com.example.takenumberservice.inlet.web.ResponseResult;
 import com.example.takenumberservice.outlet.client.room.RoomServiceClient;
 import com.example.takenumberservice.outlet.client.room.pojo.OutRoomVo;
-import com.example.takenumberservice.outlet.dao.mysql.Proofdao;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.takenumberservice.outlet.dao.mysql.ProofDao;
+import com.example.takenumberservice.outlet.dao.mysql.pojo.ProofPo;
+import com.example.takenumberservice.service.command.addProof.ProofCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import javax.xml.crypto.Data;
 
 
 @Repository
 public class ProofDaoAdapter {
 
     @Autowired
-    private Proofdao proofdao;
+    private ProofDao proofdao;
 
     //openfeign接口
     @Autowired
     private RoomServiceClient roomServiceClient;
+
+
+    /**
+     * 添加进mysql
+     * @return
+     */
+    public int addProof(ProofCommand proofCommand){
+        ProofConverter pc = new ProofConverter();
+        ProofPo proofPo = pc.CoToPo(proofCommand);
+
+        int addproof = proofdao.addproof(proofPo);
+        return addproof;
+    }
 
     /**
      * 根据房间id查询房间名字
@@ -50,9 +62,14 @@ public class ProofDaoAdapter {
      * 排序查询获得第最大排队序号
      * @return
      */
-    public Integer findorderNum(){
-
-        return proofdao.findorderNum();
+    public Integer findorderNum() {
+        Integer i = 0;
+        try {
+            i = proofdao.findorderNum();
+        }catch (Exception e){
+          return 0;
+        }
+        return i;
     }
 
 

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.drugservice.outlet.dao.mysql.DrugInstockoddDetailDao">
+  <resultMap id="BaseResultMap" type="com.example.drugservice.outlet.dao.mysql.po.DrugInstockoddDetailPo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="drugNo" jdbcType="VARCHAR" property="drugno" />
+    <result column="drugNum" jdbcType="INTEGER" property="drugnum" />
+    <result column="drugName" jdbcType="VARCHAR" property="drugname" />
+    <result column="drugTypeId" jdbcType="INTEGER" property="drugtypeid" />
+    <result column="drugCostPrice" jdbcType="DECIMAL" property="drugcostprice" />
+    <result column="drugSalePrice" jdbcType="DECIMAL" property="drugsaleprice" />
+    <result column="drugLocation" jdbcType="VARCHAR" property="druglocation" />
+    <result column="drugProductionTime" jdbcType="TIMESTAMP" property="drugproductiontime" />
+    <result column="drugExpirationTime" jdbcType="TIMESTAMP" property="drugexpirationtime" />
+    <result column="param" jdbcType="VARCHAR" property="param" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, drugNo, drugNum, drugName, drugTypeId, drugCostPrice, drugSalePrice, drugLocation, 
+    drugProductionTime, drugExpirationTime, param
+  </sql>
+  <select id="selectByExample" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugInstockoddDetailPoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from h_drug_instockodd_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from h_drug_instockodd_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from h_drug_instockodd_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugInstockoddDetailPoExample">
+    delete from h_drug_instockodd_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugInstockoddDetailPo">
+    insert into h_drug_instockodd_detail (id, drugNo, drugNum, 
+      drugName, drugTypeId, drugCostPrice, 
+      drugSalePrice, drugLocation, drugProductionTime, 
+      drugExpirationTime, instockOddId)
+    values (#{id,jdbcType=BIGINT}, #{drugno,jdbcType=VARCHAR}, #{drugnum,jdbcType=INTEGER}, 
+      #{drugname,jdbcType=VARCHAR}, #{drugtypeid,jdbcType=INTEGER}, #{drugcostprice,jdbcType=DECIMAL}, 
+      #{drugsaleprice,jdbcType=DECIMAL}, #{druglocation,jdbcType=VARCHAR}, #{drugproductiontime,jdbcType=TIMESTAMP}, 
+      #{drugexpirationtime,jdbcType=TIMESTAMP}, #{instockoddid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugInstockoddDetailPo">
+    insert into h_drug_instockodd_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="drugno != null">
+        drugNo,
+      </if>
+      <if test="drugnum != null">
+        drugNum,
+      </if>
+      <if test="drugname != null">
+        drugName,
+      </if>
+      <if test="drugtypeid != null">
+        drugTypeId,
+      </if>
+      <if test="drugcostprice != null">
+        drugCostPrice,
+      </if>
+      <if test="drugsaleprice != null">
+        drugSalePrice,
+      </if>
+      <if test="druglocation != null">
+        drugLocation,
+      </if>
+      <if test="drugproductiontime != null">
+        drugProductionTime,
+      </if>
+      <if test="drugexpirationtime != null">
+        drugExpirationTime,
+      </if>
+      <if test="param != null">
+        param,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="drugno != null">
+        #{drugno,jdbcType=VARCHAR},
+      </if>
+      <if test="drugnum != null">
+        #{drugnum,jdbcType=INTEGER},
+      </if>
+      <if test="drugname != null">
+        #{drugname,jdbcType=VARCHAR},
+      </if>
+      <if test="drugtypeid != null">
+        #{drugtypeid,jdbcType=INTEGER},
+      </if>
+      <if test="drugcostprice != null">
+        #{drugcostprice,jdbcType=DECIMAL},
+      </if>
+      <if test="drugsaleprice != null">
+        #{drugsaleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="druglocation != null">
+        #{druglocation,jdbcType=VARCHAR},
+      </if>
+      <if test="drugproductiontime != null">
+        #{drugproductiontime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drugexpirationtime != null">
+        #{drugexpirationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="param != null">
+        #{param,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugInstockoddDetailPoExample" resultType="java.lang.Long">
+    select count(*) from h_drug_instockodd_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update h_drug_instockodd_detail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.drugno != null">
+        drugNo = #{record.drugno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugnum != null">
+        drugNum = #{record.drugnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.drugname != null">
+        drugName = #{record.drugname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugtypeid != null">
+        drugTypeId = #{record.drugtypeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.drugcostprice != null">
+        drugCostPrice = #{record.drugcostprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.drugsaleprice != null">
+        drugSalePrice = #{record.drugsaleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.druglocation != null">
+        drugLocation = #{record.druglocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugproductiontime != null">
+        drugProductionTime = #{record.drugproductiontime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.drugexpirationtime != null">
+        drugExpirationTime = #{record.drugexpirationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.param != null">
+        param = #{record.param,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update h_drug_instockodd_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      drugNo = #{record.drugno,jdbcType=VARCHAR},
+      drugNum = #{record.drugnum,jdbcType=INTEGER},
+      drugName = #{record.drugname,jdbcType=VARCHAR},
+      drugTypeId = #{record.drugtypeid,jdbcType=INTEGER},
+      drugCostPrice = #{record.drugcostprice,jdbcType=DECIMAL},
+      drugSalePrice = #{record.drugsaleprice,jdbcType=DECIMAL},
+      drugLocation = #{record.druglocation,jdbcType=VARCHAR},
+      drugProductionTime = #{record.drugproductiontime,jdbcType=TIMESTAMP},
+      drugExpirationTime = #{record.drugexpirationtime,jdbcType=TIMESTAMP},
+      param = #{record.param,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugInstockoddDetailPo">
+    update h_drug_instockodd_detail
+    <set>
+      <if test="drugno != null">
+        drugNo = #{drugno,jdbcType=VARCHAR},
+      </if>
+      <if test="drugnum != null">
+        drugNum = #{drugnum,jdbcType=INTEGER},
+      </if>
+      <if test="drugname != null">
+        drugName = #{drugname,jdbcType=VARCHAR},
+      </if>
+      <if test="drugtypeid != null">
+        drugTypeId = #{drugtypeid,jdbcType=INTEGER},
+      </if>
+      <if test="drugcostprice != null">
+        drugCostPrice = #{drugcostprice,jdbcType=DECIMAL},
+      </if>
+      <if test="drugsaleprice != null">
+        drugSalePrice = #{drugsaleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="druglocation != null">
+        drugLocation = #{druglocation,jdbcType=VARCHAR},
+      </if>
+      <if test="drugproductiontime != null">
+        drugProductionTime = #{drugproductiontime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drugexpirationtime != null">
+        drugExpirationTime = #{drugexpirationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="param != null">
+        param = #{param,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugInstockoddDetailPo">
+    update h_drug_instockodd_detail
+    set drugNo = #{drugno,jdbcType=VARCHAR},
+      drugNum = #{drugnum,jdbcType=INTEGER},
+      drugName = #{drugname,jdbcType=VARCHAR},
+      drugTypeId = #{drugtypeid,jdbcType=INTEGER},
+      drugCostPrice = #{drugcostprice,jdbcType=DECIMAL},
+      drugSalePrice = #{drugsaleprice,jdbcType=DECIMAL},
+      drugLocation = #{druglocation,jdbcType=VARCHAR},
+      drugProductionTime = #{drugproductiontime,jdbcType=TIMESTAMP},
+      drugExpirationTime = #{drugexpirationtime,jdbcType=TIMESTAMP},
+      param = #{param,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <resultMap id="DrugTypeResultMap" type="com.example.drugservice.outlet.dao.mysql.po.DrugInstockoddDetailPo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="drugtype" jdbcType="VARCHAR" property="drugType.drugtype" />
+  </resultMap>
+
+  <select id="selectByInstockOddId" resultMap="DrugTypeResultMap" parameterType="java.lang.Long">
+    select de.*,dt.drugtype
+    from h_drug_instockodd_detail de,h_drugtype dt
+    where  de.drugTypeId=dt.id and instockOddId=#{instockoddid}
+  </select>
+</mapper>
