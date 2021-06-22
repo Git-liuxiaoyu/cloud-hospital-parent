@@ -3,12 +3,19 @@
 <mapper namespace="com.example.outpatientservice.outlet.dao.mysql.OutPatientDao">
   <resultMap id="BaseResultMap" type="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="patientNo" jdbcType="VARCHAR" property="patientno" />
+    <result column="patientName" jdbcType="VARCHAR" property="patientname" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="idCard" jdbcType="VARCHAR" property="idcard" />
+    <result column="patientAge" jdbcType="VARCHAR" property="patientage" />
     <result column="registerId" jdbcType="BIGINT" property="registerid" />
     <result column="patientId" jdbcType="BIGINT" property="patientid" />
+    <result column="departmentId" jdbcType="BIGINT" property="departmentid" />
     <result column="doctorId" jdbcType="BIGINT" property="doctorid" />
+    <result column="rotaId" jdbcType="BIGINT" property="rotaid" />
     <result column="status" jdbcType="VARCHAR" property="status" />
-    <result column="orderNo" jdbcType="BIGINT" property="orderno" />
-    <result column="endTime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="queueNo" jdbcType="BIGINT" property="queueno" />
+    <result column="mediCard" jdbcType="VARCHAR" property="medicard" />
     <result column="param1" jdbcType="VARCHAR" property="param1" />
     <result column="param2" jdbcType="BIGINT" property="param2" />
     <result column="param3" jdbcType="BIGINT" property="param3" />
@@ -73,8 +80,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, registerId, patientId, doctorId, status, orderNo, endTime, param1, param2, param3, 
-    param4
+    id, patientNo, patientName, gender, idCard, patientAge, registerId, patientId, departmentId, 
+    doctorId, rotaId, status, queueNo, mediCard, param1, param2, param3, param4
   </sql>
   <select id="selectByExample" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPoExample" resultMap="BaseResultMap">
     select
@@ -107,14 +114,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo">
-    insert into h_out_patient (id, registerId, patientId, 
-      doctorId, status, orderNo, 
-      endTime, param1, param2, 
-      param3, param4)
-    values (#{id,jdbcType=BIGINT}, #{registerid,jdbcType=BIGINT}, #{patientid,jdbcType=BIGINT}, 
-      #{doctorid,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, #{orderno,jdbcType=BIGINT}, 
-      #{endtime,jdbcType=TIMESTAMP}, #{param1,jdbcType=VARCHAR}, #{param2,jdbcType=BIGINT}, 
-      #{param3,jdbcType=BIGINT}, #{param4,jdbcType=VARCHAR})
+    insert into h_out_patient (id, patientNo, patientName, 
+      gender, idCard, patientAge, 
+      registerId, patientId, departmentId, 
+      doctorId, rotaId, status, 
+      queueNo, mediCard, param1, 
+      param2, param3, param4
+      )
+    values (#{id,jdbcType=BIGINT}, #{patientno,jdbcType=VARCHAR}, #{patientname,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, #{patientage,jdbcType=VARCHAR}, 
+      #{registerid,jdbcType=BIGINT}, #{patientid,jdbcType=BIGINT}, #{departmentid,jdbcType=BIGINT}, 
+      #{doctorid,jdbcType=BIGINT}, #{rotaid,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, 
+      #{queueno,jdbcType=BIGINT}, #{medicard,jdbcType=VARCHAR}, #{param1,jdbcType=VARCHAR}, 
+      #{param2,jdbcType=BIGINT}, #{param3,jdbcType=BIGINT}, #{param4,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo">
     insert into h_out_patient
@@ -122,23 +135,44 @@
       <if test="id != null">
         id,
       </if>
+      <if test="patientno != null">
+        patientNo,
+      </if>
+      <if test="patientname != null">
+        patientName,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="idcard != null">
+        idCard,
+      </if>
+      <if test="patientage != null">
+        patientAge,
+      </if>
       <if test="registerid != null">
         registerId,
       </if>
       <if test="patientid != null">
         patientId,
       </if>
+      <if test="departmentid != null">
+        departmentId,
+      </if>
       <if test="doctorid != null">
         doctorId,
+      </if>
+      <if test="rotaid != null">
+        rotaId,
       </if>
       <if test="status != null">
         status,
       </if>
-      <if test="orderno != null">
-        orderNo,
+      <if test="queueno != null">
+        queueNo,
       </if>
-      <if test="endtime != null">
-        endTime,
+      <if test="medicard != null">
+        mediCard,
       </if>
       <if test="param1 != null">
         param1,
@@ -157,23 +191,44 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="patientno != null">
+        #{patientno,jdbcType=VARCHAR},
+      </if>
+      <if test="patientname != null">
+        #{patientname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="patientage != null">
+        #{patientage,jdbcType=VARCHAR},
+      </if>
       <if test="registerid != null">
         #{registerid,jdbcType=BIGINT},
       </if>
       <if test="patientid != null">
         #{patientid,jdbcType=BIGINT},
       </if>
+      <if test="departmentid != null">
+        #{departmentid,jdbcType=BIGINT},
+      </if>
       <if test="doctorid != null">
         #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="rotaid != null">
+        #{rotaid,jdbcType=BIGINT},
       </if>
       <if test="status != null">
         #{status,jdbcType=VARCHAR},
       </if>
-      <if test="orderno != null">
-        #{orderno,jdbcType=BIGINT},
+      <if test="queueno != null">
+        #{queueno,jdbcType=BIGINT},
       </if>
-      <if test="endtime != null">
-        #{endtime,jdbcType=TIMESTAMP},
+      <if test="medicard != null">
+        #{medicard,jdbcType=VARCHAR},
       </if>
       <if test="param1 != null">
         #{param1,jdbcType=VARCHAR},
@@ -201,23 +256,44 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
+      <if test="record.patientno != null">
+        patientNo = #{record.patientno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patientname != null">
+        patientName = #{record.patientname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcard != null">
+        idCard = #{record.idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patientage != null">
+        patientAge = #{record.patientage,jdbcType=VARCHAR},
+      </if>
       <if test="record.registerid != null">
         registerId = #{record.registerid,jdbcType=BIGINT},
       </if>
       <if test="record.patientid != null">
         patientId = #{record.patientid,jdbcType=BIGINT},
       </if>
+      <if test="record.departmentid != null">
+        departmentId = #{record.departmentid,jdbcType=BIGINT},
+      </if>
       <if test="record.doctorid != null">
         doctorId = #{record.doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="record.rotaid != null">
+        rotaId = #{record.rotaid,jdbcType=BIGINT},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=VARCHAR},
       </if>
-      <if test="record.orderno != null">
-        orderNo = #{record.orderno,jdbcType=BIGINT},
+      <if test="record.queueno != null">
+        queueNo = #{record.queueno,jdbcType=BIGINT},
       </if>
-      <if test="record.endtime != null">
-        endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      <if test="record.medicard != null">
+        mediCard = #{record.medicard,jdbcType=VARCHAR},
       </if>
       <if test="record.param1 != null">
         param1 = #{record.param1,jdbcType=VARCHAR},
@@ -239,12 +315,19 @@
   <update id="updateByExample" parameterType="map">
     update h_out_patient
     set id = #{record.id,jdbcType=BIGINT},
+      patientNo = #{record.patientno,jdbcType=VARCHAR},
+      patientName = #{record.patientname,jdbcType=VARCHAR},
+      gender = #{record.gender,jdbcType=VARCHAR},
+      idCard = #{record.idcard,jdbcType=VARCHAR},
+      patientAge = #{record.patientage,jdbcType=VARCHAR},
       registerId = #{record.registerid,jdbcType=BIGINT},
       patientId = #{record.patientid,jdbcType=BIGINT},
+      departmentId = #{record.departmentid,jdbcType=BIGINT},
       doctorId = #{record.doctorid,jdbcType=BIGINT},
+      rotaId = #{record.rotaid,jdbcType=BIGINT},
       status = #{record.status,jdbcType=VARCHAR},
-      orderNo = #{record.orderno,jdbcType=BIGINT},
-      endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      queueNo = #{record.queueno,jdbcType=BIGINT},
+      mediCard = #{record.medicard,jdbcType=VARCHAR},
       param1 = #{record.param1,jdbcType=VARCHAR},
       param2 = #{record.param2,jdbcType=BIGINT},
       param3 = #{record.param3,jdbcType=BIGINT},
@@ -256,23 +339,44 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo">
     update h_out_patient
     <set>
+      <if test="patientno != null">
+        patientNo = #{patientno,jdbcType=VARCHAR},
+      </if>
+      <if test="patientname != null">
+        patientName = #{patientname,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        idCard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="patientage != null">
+        patientAge = #{patientage,jdbcType=VARCHAR},
+      </if>
       <if test="registerid != null">
         registerId = #{registerid,jdbcType=BIGINT},
       </if>
       <if test="patientid != null">
         patientId = #{patientid,jdbcType=BIGINT},
       </if>
+      <if test="departmentid != null">
+        departmentId = #{departmentid,jdbcType=BIGINT},
+      </if>
       <if test="doctorid != null">
         doctorId = #{doctorid,jdbcType=BIGINT},
+      </if>
+      <if test="rotaid != null">
+        rotaId = #{rotaid,jdbcType=BIGINT},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=VARCHAR},
       </if>
-      <if test="orderno != null">
-        orderNo = #{orderno,jdbcType=BIGINT},
+      <if test="queueno != null">
+        queueNo = #{queueno,jdbcType=BIGINT},
       </if>
-      <if test="endtime != null">
-        endTime = #{endtime,jdbcType=TIMESTAMP},
+      <if test="medicard != null">
+        mediCard = #{medicard,jdbcType=VARCHAR},
       </if>
       <if test="param1 != null">
         param1 = #{param1,jdbcType=VARCHAR},
@@ -291,12 +395,19 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo">
     update h_out_patient
-    set registerId = #{registerid,jdbcType=BIGINT},
+    set patientNo = #{patientno,jdbcType=VARCHAR},
+      patientName = #{patientname,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      idCard = #{idcard,jdbcType=VARCHAR},
+      patientAge = #{patientage,jdbcType=VARCHAR},
+      registerId = #{registerid,jdbcType=BIGINT},
       patientId = #{patientid,jdbcType=BIGINT},
+      departmentId = #{departmentid,jdbcType=BIGINT},
       doctorId = #{doctorid,jdbcType=BIGINT},
+      rotaId = #{rotaid,jdbcType=BIGINT},
       status = #{status,jdbcType=VARCHAR},
-      orderNo = #{orderno,jdbcType=BIGINT},
-      endTime = #{endtime,jdbcType=TIMESTAMP},
+      queueNo = #{queueno,jdbcType=BIGINT},
+      mediCard = #{medicard,jdbcType=VARCHAR},
       param1 = #{param1,jdbcType=VARCHAR},
       param2 = #{param2,jdbcType=BIGINT},
       param3 = #{param3,jdbcType=BIGINT},
@@ -306,15 +417,14 @@
 
   <select id="selectByCon" parameterType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo"
           resultType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo">
-  select
-  *
-  from h_out_patient
-    where status=0
-<!--  <where>-->
-<!--    <if test="no!=null and no!=''" >-->
-<!--      and no=#{no}-->
-<!--    </if>-->
-<!--    and status =0-->
-<!--  </where>-->
+    select
+    *
+    from h_out_patient
+      <where>
+        <if test="patientno!=null and patientno!=''" >
+          and patientno=#{patientno}
+        </if>
+        and status =0
+      </where>
   </select>
 </mapper>

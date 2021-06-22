@@ -18,4 +18,9 @@ public class ExampleQueryDrugOddCommandHandle implements IExampleQueryDrugOddCom
     public List<DrugOddVo> findList(ExampleQueryDrugOddCommand command) {
         return adapt.findDrugListByExample(command);
     }
+
+    @Override
+    public DrugOddVo getByNo(String no) {
+        return adapt.getByNo(no);
+    }
 }

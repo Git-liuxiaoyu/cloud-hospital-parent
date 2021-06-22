@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IExampleQueryDrugOddCommandHandle {
     public List<DrugOddVo> findList(ExampleQueryDrugOddCommand command);
+
+    public DrugOddVo getByNo(String no);
 }

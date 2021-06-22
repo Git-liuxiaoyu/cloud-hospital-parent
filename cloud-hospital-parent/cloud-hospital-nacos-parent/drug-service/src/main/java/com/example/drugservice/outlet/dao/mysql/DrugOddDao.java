@@ -34,4 +34,6 @@ public interface DrugOddDao {
     int updateByPrimaryKey(DrugOddPo record);
 
     List<DrugOddPo> selectByCon(DrugOddPo po) ;
+
+    DrugOddPo selectByNo(String no);
 }
