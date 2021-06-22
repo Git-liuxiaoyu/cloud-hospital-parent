@@ -39,8 +39,8 @@ public class Queues {
         Map<String, Object> args = new HashMap<>();
         args.put("x-dead-letter-exchange", "register_order_dl_exchange");   // 指定时期后消息投递给哪个交换器。
         args.put("x-dead-letter-routing-key", "dl.order.add");  // 指定到期后投递消息时以哪个路由键进行投递。
-        args.put("x-message-ttl", 30000);                            // 指定到期时间。5 秒
-        return new Queue("register_order_queue", true, false, false, args);                           // 指定到期时间。5 秒
+        args.put("x-message-ttl", 1000 * 60 * 15);                            // 指定到期时间。15 秒
+        return new Queue("register_order_queue", true, false, false, args);
     }
 
     /**

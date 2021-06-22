@@ -159,7 +159,7 @@ public class RegisterAdapter {
         List<String> rotaIdList = new ArrayList<>();
         //根据排班rotaIdList查询医生和科目的名称
         converter.forEach(item -> rotaIdList.add(item.getRotaId()));
-        ResponseResult<List<DoctorRotaClientPo>> doctorRotaByRotaIdList = client.getDoctorRotaByRotaIdList(rotaIdList);
+        ResponseResult<List<DoctorRotaClientPo>> doctorRotaByRotaIdList = client.findDoctorRotaListByIdList(rotaIdList);
         List<DoctorRotaClientPo> data = doctorRotaByRotaIdList.getData();
 
         for (int i = 0; i < converter.size(); i++) {
