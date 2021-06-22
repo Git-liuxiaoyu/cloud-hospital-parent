@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationEvent;
  * @Date: 2021/06/17/10:39
  * @Description: 给队列发送消息的Publisher接口
  */
-public interface IpushPhoneGoQueueEventPublisher {
+public interface IPushPhoneGoQueueEventPublisher {
 
     public void publish(PushPhoneGoQueueCommandCompletedEvent event);
 
@@ -19,14 +19,7 @@ public interface IpushPhoneGoQueueEventPublisher {
 
         public PushPhoneGoQueueCommandCompletedEvent(String phone) {
             super(phone);
-            this.phone=phone;
-        }
-
-        @Override
-        public String toString() {
-            return "PushPhoneGoQueueCommandCompletedEvent{" +
-                    "phone='" + phone + '\'' +
-                    '}';
+            this.phone = phone;
         }
     }
 }

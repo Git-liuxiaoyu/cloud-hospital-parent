@@ -1,7 +1,6 @@
 package com.example.registerservice.service.command.addphone;
 
-import com.example.registerservice.outlet.publisher.api.IpushPhoneGoQueueEventPublisher;
-import com.example.registerservice.outlet.publisher.api.IpushPhoneGoQueueEventPublisher.*;
+import com.example.registerservice.outlet.publisher.api.IPushPhoneGoQueueEventPublisher.*;
 import com.example.registerservice.service.api.IAddPhoneGoRedisCommandHandler;
 import com.example.registerservice.util.ApplicationContextHolder;
 import lombok.Data;
@@ -20,7 +19,7 @@ public class PushPhoneGoQueueCommand implements Serializable {
 
     private String phone;
 
-//    private IpushPhoneGoQueueEventPublisher handler;
+//    private IPushPhoneGoQueueEventPublisher handler;
 
     private IAddPhoneGoRedisCommandHandler handler;
 

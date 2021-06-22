@@ -241,4 +241,27 @@ public class DoctorRotaDaoAdapter {
         /* 调用方法 */
         doctorRotaPoDao.updateByPrimaryKeySelective(doctorRotaPo);
     }
+
+    /**
+     * 根据ID搜索
+     *
+     * @param id
+     * @return
+     */
+    public DoctorRotaVo query(Long id) {
+        /* 调用方法,转换返回 */
+        return doctorRotaVoConverter.convert(doctorRotaPoDao.getById(id));
+    }
+
+    /**
+     *
+     * @param idList
+     * @return
+     */
+    public List<DoctorRotaVo> query(List<Long> idList) {
+        /* 调用方法 */
+        List<DoctorRotaPo> doctorRotaPoList = doctorRotaPoDao.findByIdList(idList);
+        /* 转换返回 */
+        return doctorRotaVoConverter.convert(doctorRotaPoList);
+    }
 }

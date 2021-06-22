@@ -15,6 +15,7 @@
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="type" jdbcType="CHAR" property="type" />
     <result column="status" jdbcType="CHAR" property="status" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, no, patientId, regType, regTime, rotaId, departmentId, roomId, visitTime, visitSection, 
-    price, type, status
+    price, type, status, phone
   </sql>
   <select id="selectByExample" parameterType="com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPoExample" resultMap="BaseResultMap">
     select
@@ -113,12 +114,12 @@
       regType, regTime, rotaId, 
       departmentId, roomId, visitTime, 
       visitSection, price, type, 
-      status)
+      status, phone)
     values (#{id,jdbcType=BIGINT}, #{no,jdbcType=VARCHAR}, #{patientid,jdbcType=BIGINT}, 
       #{regtype,jdbcType=CHAR}, #{regtime,jdbcType=TIMESTAMP}, #{rotaid,jdbcType=BIGINT}, 
       #{departmentid,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, #{visittime,jdbcType=DATE}, 
       #{visitsection,jdbcType=CHAR}, #{price,jdbcType=DECIMAL}, #{type,jdbcType=CHAR}, 
-      #{status,jdbcType=CHAR})
+      #{status,jdbcType=CHAR}, #{phone,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPo">
     insert into h_register
@@ -162,6 +163,9 @@
       <if test="status != null">
         status,
       </if>
+      <if test="phone != null">
+        phone,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -202,6 +206,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -253,6 +260,9 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=CHAR},
       </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -272,7 +282,8 @@
       visitSection = #{record.visitsection,jdbcType=CHAR},
       price = #{record.price,jdbcType=DECIMAL},
       type = #{record.type,jdbcType=CHAR},
-      status = #{record.status,jdbcType=CHAR}
+      status = #{record.status,jdbcType=CHAR},
+      phone = #{record.phone,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -316,6 +327,9 @@
       <if test="status != null">
         status = #{status,jdbcType=CHAR},
       </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -332,7 +346,8 @@
       visitSection = #{visitsection,jdbcType=CHAR},
       price = #{price,jdbcType=DECIMAL},
       type = #{type,jdbcType=CHAR},
-      status = #{status,jdbcType=CHAR}
+      status = #{status,jdbcType=CHAR},
+      phone = #{phone,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -33,4 +33,5 @@ public class RegisterMysqlPo {
 
     private String status;
 
+    private String phone;
 }

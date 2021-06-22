@@ -5,6 +5,8 @@ import com.example.workerservice.inlet.web.vo.DoctorRotaVo;
 import com.example.workerservice.inlet.web.vo.ResponseResult;
 import com.example.workerservice.service.command.doctorrota.add.AddDoctorRotaCommand;
 import com.example.workerservice.service.command.doctorrota.cancel.CancelDoctorRotaCommand;
+import com.example.workerservice.service.command.doctorrota.querybyid.QueryDoctorRotaByIdCommand;
+import com.example.workerservice.service.command.doctorrota.querylistbyidlist.QueryDoctorRotaListByIdListCommand;
 import com.example.workerservice.service.command.doctorrota.regquery.RegQueryDoctorRotaCommand;
 import com.example.workerservice.service.command.doctorrota.rotaquery.RotaQueryDoctorRotaCommand;
 import com.example.workerservice.service.command.doctorrota.update.UpdateDoctorRotaCommand;
@@ -131,6 +133,30 @@ public class DoctorRotaController {
         }
         /* 执行命令并返回 */
         return new ResponseResult<>(command.execute());
+    }
+
+    /**
+     * 根据rotaIdList查DoctorRota信息
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("view/list/reg/{idList}")
+    public ResponseResult<List<DoctorRotaVo>> findDoctorRotaListByIdList(@PathVariable("idList") List<Long> rotaIdList) {
+        /* 实例化命令实体类,执行命令并返回 */
+        return new ResponseResult<>(new QueryDoctorRotaListByIdListCommand(rotaIdList).execute());
+    }
+
+    /**
+     * 根据rotaId查DoctorRota信息
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("view/reg/{id}")
+    public ResponseResult<DoctorRotaVo> getDoctorRotaById(@PathVariable("id") Long id) {
+        /* 实例化命令实体类,执行命令并返回 */
+        return new ResponseResult<>(new QueryDoctorRotaByIdCommand(id).execute());
     }
 
 }

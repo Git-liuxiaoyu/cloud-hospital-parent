@@ -26,6 +26,8 @@ public class DoctorRotaPo {
 
     private WorkerInfoPo workerInfoPo;
 
+    private DepartmentPo departmentPo;
+
     private Integer leftpatient;
 
     private Integer maxpatient;

@@ -7,9 +7,13 @@ import com.example.registerservice.service.command.addRegister.AddRegisterComman
 import com.example.registerservice.service.command.addphone.PushPhoneGoQueueCommand;
 import com.example.registerservice.service.command.updateregister.UpdateRegisterCommand;
 import com.example.registerservice.service.query.queryphoneandcode.QueryPhoneAndCodeCommand;
+import com.example.registerservice.service.query.queryregister.QueryRegisterByPhoneCommand;
 import com.example.registerservice.service.query.queryregister.QueryRegisterGetByNoCommand;
+import com.example.registerservice.service.query.queryregister.po.RegisterServicePo;
 import com.example.registerservice.util.ResponseResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -87,16 +91,27 @@ public class RegisterController {
         return ResponseResult.SUCCESS;
     }
 
+    /**
+     * 添加挂号订单
+     *
+     * @param vo
+     * @return
+     */
     @PostMapping("/Register/add")
-    public ResponseResult registerAdd(@RequestBody RegisterVo.AddRegisterVo vo){
-
-        System.out.println(vo);
-        AddRegisterCommand command=new AddRegisterCommand(vo);
+    public ResponseResult registerAdd(@RequestBody RegisterVo.AddRegisterVo vo) {
+        AddRegisterCommand command = new AddRegisterCommand(vo);
         try {
             command.execute();
-        }catch (Exception e){
+        } catch (Exception e) {
             return new ResponseResult(444, "");
         }
         return ResponseResult.SUCCESS;
+    }
+
+    @GetMapping("/Register/query/phone/{phone}")
+    public ResponseResult<RegisterServicePo> findAll(@PathVariable("phone") String phone) {
+        QueryRegisterByPhoneCommand command = new QueryRegisterByPhoneCommand(phone);
+        List<RegisterServicePo> execute = command.execute();
+        return new ResponseResult(execute);
     }
 }

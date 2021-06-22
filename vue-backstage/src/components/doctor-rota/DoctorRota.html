@@ -76,7 +76,7 @@
             <el-row type="flex" justify="center" align="middle">
               <el-select v-model="selectDoctor[index]" clearable placeholder="请选择就诊医生">
                 <el-option
-                  :disabled=" new Date(addDoctorRotaDate) < (new Date()/1000 + 86400)*1000"
+                  :disabled=" new Date(addDoctorRotaDate) < new Date()"
                   v-for="item in departmentDoctorList"
                   :key="item.id"
                   :label="item.name"
@@ -88,23 +88,23 @@
             <el-row type="flex" justify="center" align="middle">
               <!--              输入可以接纳的人数-->
               <el-input-number controls-position="right" v-model="maxPatient[index]" :min="50" :max="150"
-                               :disabled="new Date(addDoctorRotaDate) < (new Date()/1000 + 86400)*1000"
+                               :disabled="new Date(addDoctorRotaDate) < new Date()"
                                placeholder="请输入最大接诊人数"></el-input-number>
             </el-row>
             <el-row>&nbsp;</el-row>
             <el-row type="flex" justify="center">
               <el-button type="primary"
-                         v-if="idArr[index] === undefined && new Date(addDoctorRotaDate) > (new Date()/1000 + 86400)*1000"
+                         v-if="idArr[index] === undefined && new Date(addDoctorRotaDate) > new Date()"
                          size="small"
                          @click="addDoctorRotaFunc(index,items.id)">添 加
               </el-button>
               <el-button type="warning"
-                         v-if="idArr[index]!==undefined && maxPatient[index] !== undefined && new Date(addDoctorRotaDate) >(new Date()/1000 + 86400)*1000"
+                         v-if="idArr[index]!==undefined && maxPatient[index] !== undefined && new Date(addDoctorRotaDate) >new Date()"
                          size="small"
                          @click="updateDoctorRotaFunc(index,items.id)">修 改
               </el-button>
               <el-button type="danger"
-                         v-if="idArr[index]!==undefined && maxPatient[index] !== undefined && new Date(addDoctorRotaDate) > (new Date()/1000 + 86400)*1000"
+                         v-if="idArr[index]!==undefined && maxPatient[index] !== undefined && new Date(addDoctorRotaDate) > new Date()"
                          size="small"
                          @click="cancelTargetDoctorRotaFunc(index)">撤 销
               </el-button>

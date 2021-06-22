@@ -5,6 +5,7 @@ import com.example.registerservice.outlet.dao.mysql.PatientMysqlDao;
 import com.example.registerservice.service.api.IAddPatientCommandHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
  * @Description:
  */
 @Service
+@Transactional
 public class AddPatientCommandHandler implements IAddPatientCommandHandler {
 
     @Autowired

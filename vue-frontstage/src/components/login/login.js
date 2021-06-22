@@ -71,6 +71,7 @@ export default {
         if (valid) {
           this.$axios.post("Register/doLogin/",this.parameter).then(r => {
             if(r.data.code==200){
+              window.localStorage.setItem("phone",this.parameter.phone)//存入手机号
               this.$message.success("登入成功");
               this.$router.push("/index");
             }else {

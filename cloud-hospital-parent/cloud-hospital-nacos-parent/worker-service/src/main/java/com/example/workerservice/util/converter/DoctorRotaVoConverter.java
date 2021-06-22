@@ -44,7 +44,11 @@ public class DoctorRotaVoConverter {
     public DoctorRotaVo convert(DoctorRotaPo doctorRotaPo) {
         /* 实例化 */
         DoctorRotaVo doctorRotaVo = new DoctorRotaVo();
+        /* 如果Po为null,直接返回 */
+        if (doctorRotaPo == null)
+            return doctorRotaVo;
         /* 赋值 */
+        doctorRotaVo.setDepartmentname(doctorRotaPo.getDepartmentPo().getName());
         doctorRotaVo.setMaxpatient(doctorRotaPo.getMaxpatient());
         doctorRotaVo.setId(doctorRotaPo.getId());
         doctorRotaVo.setDepartmentid(doctorRotaPo.getDepartmentid());

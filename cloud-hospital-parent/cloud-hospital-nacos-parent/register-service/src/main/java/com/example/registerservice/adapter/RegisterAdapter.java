@@ -4,20 +4,29 @@ import com.example.registerservice.adapter.converter.RegisterServiceConverter;
 import com.example.registerservice.adapter.converter.RegisterVoConverter;
 import com.example.registerservice.adapter.exception.AdapterException;
 import com.example.registerservice.inlet.web.vo.RegisterVo;
+import com.example.registerservice.outlet.client.po.DoctorRotaClientPo;
+import com.example.registerservice.outlet.client.worker.IWorkerServiceClient;
 import com.example.registerservice.outlet.dao.mysql.RegisterMysqlDao;
 import com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPo;
 import com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPoExample;
+import com.example.registerservice.outlet.dao.mysql.po.RegisterOrderMysqlPo;
 import com.example.registerservice.outlet.dao.redis.PatientRedisDao;
 import com.example.registerservice.outlet.dao.redis.po.PatientRedisPo;
 import com.example.registerservice.service.command.addRegister.AddRegisterCommand;
 import com.example.registerservice.service.command.addphone.PushPhoneGoQueueCommand;
 import com.example.registerservice.service.command.updateregister.UpdateRegisterCommand;
 import com.example.registerservice.service.query.queryphoneandcode.QueryPhoneAndCodeCommand;
+import com.example.registerservice.service.query.queryregister.QueryRegisterByPhoneCommand;
+import com.example.registerservice.service.query.queryregister.po.RegisterServicePo;
+import com.example.registerservice.util.ResponseResult;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +38,7 @@ import java.util.Optional;
  * @Description:
  */
 @Component
+@Slf4j
 public class RegisterAdapter {
 
     @Autowired
@@ -43,8 +53,12 @@ public class RegisterAdapter {
     @Autowired
     private RegisterVoConverter converter;
 
+
     @Autowired
     private RegisterServiceConverter serviceConverter;
+
+    @Autowired
+    private IWorkerServiceClient client;
 
 
     /**
@@ -119,11 +133,44 @@ public class RegisterAdapter {
         }
     }
 
-    public void insert(AddRegisterCommand command){
+    /**
+     * 添加挂号信息
+     *
+     * @param command
+     */
+    public void insert(AddRegisterCommand command) {
         int i = mysqlDao.insertSelective(serviceConverter.converter(command));
         //如果修改不成功抛异常
         if (i == 0) {
             throw new AdapterException();
         }
+        log.info("{}号新增一条挂号记录成功", command.getPhone());
+    }
+
+    /**
+     * 根据手机号查询挂号列表
+     *
+     * @param command
+     */
+    public List<RegisterServicePo> select(QueryRegisterByPhoneCommand command) {
+        List<RegisterOrderMysqlPo> all = mysqlDao.findAll(command.getPhone());
+        List<RegisterServicePo> converter = serviceConverter.converter(all);
+        //所有挂号订单所有的排班id
+        List<String> rotaIdList = new ArrayList<>();
+        //根据排班rotaIdList查询医生和科目的名称
+        converter.forEach(item -> rotaIdList.add(item.getRotaId()));
+        ResponseResult<List<DoctorRotaClientPo>> doctorRotaByRotaIdList = client.getDoctorRotaByRotaIdList(rotaIdList);
+        List<DoctorRotaClientPo> data = doctorRotaByRotaIdList.getData();
+
+        for (int i = 0; i < converter.size(); i++) {
+            for (int j = 0; j < data.size(); j++) {
+                if (converter.get(i).getRotaId().equals(""+data.get(i).getId())) {
+                    converter.get(i).setDepartmentName(data.get(i).getDepartmentname());
+                    converter.get(i).setDoctorName(data.get(i).getDoctorName());
+                    break;
+                }
+            }
+        }
+        return converter;
     }
 }
