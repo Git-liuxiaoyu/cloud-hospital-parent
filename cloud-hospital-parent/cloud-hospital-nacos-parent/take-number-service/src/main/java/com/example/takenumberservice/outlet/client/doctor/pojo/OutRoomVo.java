@@ -1,4 +1,4 @@
-package com.example.takenumberservice.outlet.client.room.pojo;
+package com.example.takenumberservice.outlet.client.doctor.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

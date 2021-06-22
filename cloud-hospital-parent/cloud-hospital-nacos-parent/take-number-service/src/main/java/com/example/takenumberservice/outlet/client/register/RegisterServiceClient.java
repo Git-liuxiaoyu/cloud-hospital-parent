@@ -5,12 +5,13 @@ import com.example.takenumberservice.outlet.client.register.pojo.Register;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 /**
  * 向挂号微服务发送请求，获得挂号no对应的数据
  */
-@FeignClient("register-service")
+@FeignClient("regtest")
 public interface RegisterServiceClient {
 
 
@@ -20,8 +21,13 @@ public interface RegisterServiceClient {
     ResponseResult<Register>findbyno(@PathVariable("no") String no);
 
 
-    @GetMapping("/Register/update/status/{id}/{status}")
-    void updatestatus(@PathVariable("id") Long id ,Integer status);
+    /**
+     * 根据id修改状态
+     * @param id
+     * @param status
+     */
+    @PostMapping("/Register/update/status/{id}/{status}")
+    void updatestatus(@PathVariable("id") Long id ,@PathVariable("status")String status);
 
 
 

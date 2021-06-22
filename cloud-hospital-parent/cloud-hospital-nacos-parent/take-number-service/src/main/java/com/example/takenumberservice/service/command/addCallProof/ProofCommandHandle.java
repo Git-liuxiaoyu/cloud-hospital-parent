@@ -3,7 +3,9 @@ package com.example.takenumberservice.service.command.addCallProof;
 import com.example.takenumberservice.adapter.ProofDaoAdapter;
 import com.example.takenumberservice.adapter.RegisterAdapter;
 import com.example.takenumberservice.inlet.web.ResponseResult;
-import com.example.takenumberservice.outlet.client.room.pojo.OutRoomVo;
+import com.example.takenumberservice.outlet.client.doctor.pojo.DoctorRotaVo;
+import com.example.takenumberservice.outlet.client.doctor.pojo.OutRoomVo;
+import com.example.takenumberservice.outlet.mq.SendMsg;
 import com.example.takenumberservice.outlet.mq.pojo.MqPo;
 import com.example.takenumberservice.service.command.findregister.RegisterCommand;
 
@@ -27,6 +29,8 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
     private RegisterAdapter registerAdapter;
 
 
+
+
     @Override
     public ResponseResult<ProofCommand> add(RegisterCommand findbyno) {
 
@@ -45,7 +49,7 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
             if(i>0){
                 return new ResponseResult<>(400,"上午取票时间已过，请重新挂号",null);
             }else if(k>0){
-                return new ResponseResult<>(400,"上午还未到取票时间，请稍后重试",null);
+                return new ResponseResult<>(400,"还未到上午取票时间，请稍后重试",null);
             }
         }else{//反之，就诊时间段为下午
             String pmstart = "14:00:00";
@@ -55,12 +59,12 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
             if(i>0){
                 return new ResponseResult<>(400,"下午取票时间已过，请重新挂号",null);
             }else if(k>0){
-                return new ResponseResult<>(400,"下午还未到取票时间，请稍后重试",null);
+                return new ResponseResult<>(400,"还未到下午取票时间，请稍后重试",null);
             }
         }
         //往取票表里存数据,service 调service
         ProofCommand proofCommand = new ProofCommand();
-        ResponseResult<OutRoomVo> findbyroomid = proofDaoAdapter.findbyroomid(findbyno.getRoomId());//根据房间id查询房间名
+        ResponseResult<OutRoomVo> findbyroomid = proofDaoAdapter.findbyroomid(1l);//根据房间id查询房间名
         String roomName = findbyroomid.getData().getRoomname();
 
         proofCommand.setNo(findbyno.getNo());//挂号码
@@ -83,16 +87,12 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
         if(findbyno.getStatus().equals("3") || findbyno.getStatus().equals("5")){
             proofCommand.setStatus("1");//设置取票状态为初诊票
             //修改挂号状态为已取初诊票
-            registerAdapter.updatebyid(findbyno.getId(),4);
-            //存入redis,挂号取票码加上挂号状态
-            registerAdapter.addNoRedis(findbyno.getNo());
+            registerAdapter.updatebyid(findbyno.getId(),"4");
 
         }else if(findbyno.getStatus().equals("6") || findbyno.getStatus().equals("8")){
             proofCommand.setStatus("2");//设置取票状态为复诊票
             //修改挂号状态为已取复诊票
-            registerAdapter.updatebyid(findbyno.getId(),7);
-            //存入redis,挂号取票码加上挂号状态
-            registerAdapter.addNoRedis(findbyno.getNo());
+            registerAdapter.updatebyid(findbyno.getId(),"7");
         }
         proofCommand.setNo(findbyno.getNo());
         //存入取票凭证表
@@ -101,12 +101,28 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
 
 
         if(i>0){
+        //通过排班id获取医生信息
+            ResponseResult<DoctorRotaVo> doctorRotaById = proofDaoAdapter.getDoctorRotaById(findbyno.getRotaId());
+            if(doctorRotaById.getCode() != 200){
+                return new ResponseResult<>(400,"获取医生信息错误，请稍后重试",null);
+            }
+            /**
+             * 1：排队序号
+             * 2：患者id
+             * 3：挂号id
+             * 4：医生id
+             * 5：医生姓名
+             */
             //发送消息
             MqPo po = new MqPo();
             po.setOrderNum(orderNum+1);
-            po.setRegId(proofCommand.getRegId());
             po.setPatientId(findbyno.getPatientId());
-            proofDaoAdapter.send(po);
+            po.setRegId(proofCommand.getRegId());
+            po.setDoctorId(doctorRotaById.getData().getDoctorid());//医生id
+            po.setDoctorName(doctorRotaById.getData().getDoctorName());//医生姓名
+            proofDaoAdapter.send(po);//发送给叫号微服务
+            //存入redis,挂号取票码加上挂号状态
+            registerAdapter.addNoRedis(findbyno.getNo());
             return new ResponseResult<ProofCommand>(200,"取票成功",proofCommand);
         }else{
             return new ResponseResult<ProofCommand>(400,"取票失败，请稍后再试",proofCommand);
