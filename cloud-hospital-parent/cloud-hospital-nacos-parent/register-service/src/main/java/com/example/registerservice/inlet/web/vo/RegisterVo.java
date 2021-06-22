@@ -35,5 +35,22 @@ public class RegisterVo {
         private Integer departmentId;//科室Id
         private String visitSection;//就诊时间段（1、上午，2、下午）
         private String type;//挂号类型（1、线上，2、线下）
+        private String phone;//登入的手机号
+    }
+
+    /**
+     * 查询挂号的vo对象
+     */
+    @Data
+    public static class QueryRegisterVo {
+        private Long id;//挂号的id
+        private String no;//挂号的编号
+        private Date regTime;//挂号的时间
+        private String departmentName;//科目名字
+        private BigDecimal price;//挂号费用
+        private String doctorName;//医生名字
+        private String type;//挂号类型 （1、线上，2、线下）
+        private String status;//挂号状态
+        private String name;//患者名字
     }
 }

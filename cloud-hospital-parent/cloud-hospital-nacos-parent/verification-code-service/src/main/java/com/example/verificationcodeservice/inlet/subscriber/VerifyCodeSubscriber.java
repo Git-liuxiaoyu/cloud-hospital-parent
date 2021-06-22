@@ -42,9 +42,9 @@ public class VerifyCodeSubscriber {
             if (SendPhoneMsgUtil.sendSMS(phone, code)) {
                 log.debug("发送短信到手机号 [{}] 成功", phone);
             } else {
-                log.debug("发送短信到手机号 [{}] 失败 , 重新进入队列", phone);
+                log.debug("发送短信到手机号 [{}] 失败 , 不重新进入队列", phone);
                 /* 拒绝应答 */
-                channel.basicReject(tag, true);
+//                channel.basicReject(tag, true);
             }
         } catch (HTTPException | IOException e) {
             log.error("发送短信功能出现错误");

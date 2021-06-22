@@ -129,6 +129,7 @@ export default {
       this.Register.visitTime = item.date;//挂号的就诊时间
       this.Register.visitSection = item.shifttype;//就诊时间段（1、上午，2、下午）
       this.Register.type = '1';//挂号类型（1、线上，2、线下）
+      this.Register.phone=window.localStorage.getItem("phone");//手机号
       console.log('Register',this.Register)
     }
     ,

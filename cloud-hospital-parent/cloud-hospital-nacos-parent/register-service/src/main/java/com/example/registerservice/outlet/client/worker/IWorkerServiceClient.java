@@ -2,11 +2,13 @@ package com.example.registerservice.outlet.client.worker;
 
 import com.example.registerservice.outlet.client.po.DepartmentClientPo;
 import com.example.registerservice.outlet.client.po.DivisionClientPo;
+import com.example.registerservice.outlet.client.po.DoctorRotaClientPo;
 import com.example.registerservice.util.ResponseResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -25,4 +27,13 @@ public interface IWorkerServiceClient {
 
     @GetMapping("/depart/all/{divisionId}")
     ResponseResult<List<DepartmentClientPo>> getDepartmentListByDivisionId(@PathVariable("divisionId") Long id);
+
+    /**
+     * 根据rotaIdList查DoctorRota信息
+     *
+     * @param rotaIdList
+     */
+    @PostMapping("view/list/reg")
+    public ResponseResult<List<DoctorRotaClientPo>> getDoctorRotaByRotaIdList(@RequestBody List<String> rotaIdList);
+
 }

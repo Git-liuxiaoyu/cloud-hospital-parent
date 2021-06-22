@@ -1,6 +1,6 @@
 package com.example.registerservice.outlet.publisher;
 
-import com.example.registerservice.outlet.publisher.api.IpushPhoneGoQueueEventPublisher;
+import com.example.registerservice.outlet.publisher.api.IPushPhoneGoQueueEventPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class pushPhoneGoQueueEventPublisher implements IpushPhoneGoQueueEventPublisher {
+public class PushPhoneGoQueueEventPublisher implements IPushPhoneGoQueueEventPublisher {
 
     @Autowired
     private RabbitTemplate template;

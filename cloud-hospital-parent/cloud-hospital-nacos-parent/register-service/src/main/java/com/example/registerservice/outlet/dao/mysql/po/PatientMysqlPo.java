@@ -7,7 +7,6 @@ import java.util.Date;
 
 @Data
 public class PatientMysqlPo {
-
     private Long id;
 
     private String no;
@@ -27,5 +26,4 @@ public class PatientMysqlPo {
     private Date createtime;
 
     private String medicard;
-
 }

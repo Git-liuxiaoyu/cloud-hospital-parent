@@ -47,7 +47,7 @@
 
                       <el-col :span="6">
                         <el-tag v-if="item.shifttype==1">上午班</el-tag>
-                        <el-tag v-if="item.shifttype==2">下午班</el-tag>
+                        <el-tag v-else-if="item.shifttype==2">下午班</el-tag>
                         <el-tag v-else>晚班</el-tag>
                       </el-col>
 

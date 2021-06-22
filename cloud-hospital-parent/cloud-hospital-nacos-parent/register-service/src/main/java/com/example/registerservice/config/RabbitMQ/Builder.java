@@ -18,10 +18,46 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Builder {
 
+
+    /**
+     * 验证码的交换机和队列绑定
+     *
+     * @param exchange
+     * @param queue
+     * @return
+     */
     @Bean
     public Binding itemQueueExchange(
             @Qualifier("code_exchange") Exchange exchange,
             @Qualifier("phone_code_queue") Queue queue) {
         return BindingBuilder.bind(queue).to(exchange).with("phone.add").noargs();
+    }
+
+    /**
+     * 挂号的交换机和队列绑定
+     *
+     * @param exchange
+     * @param queue
+     * @return
+     */
+    @Bean
+    public Binding registerOrderQueueExchange(
+            @Qualifier("register_order_exchange") Exchange exchange,
+            @Qualifier("register_order_queue") Queue queue) {
+        return BindingBuilder.bind(queue).to(exchange).with("order.add").noargs();
+    }
+
+    /**
+     * 挂号死信的交换机和队列绑定
+     *
+     * @param exchange
+     * @param queue
+     * @return
+     */
+    @Bean
+    public Binding registerOrderDle(
+            @Qualifier("register_order_dl_exchange") Exchange exchange,
+            @Qualifier("register_order_dlq") Queue queue) {
+        return BindingBuilder.bind(queue).to(exchange).with("dl.order.add").noargs();
     }
 }
