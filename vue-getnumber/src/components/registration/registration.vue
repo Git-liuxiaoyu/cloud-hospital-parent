@@ -67,7 +67,7 @@ export default {
         methods:{
             getnumber(){//取票
                 var no = "GH"+this.num;
-               axios.get("http://localhost:6001/proof/findbyno/"+no).then(r => {  
+               axios.get("http://localhost:6001/GHproof/findbyno/"+no).then(r => {  
                     var msg = r.data.msg;
                    console.log(r)
                    var num1 = this.num;

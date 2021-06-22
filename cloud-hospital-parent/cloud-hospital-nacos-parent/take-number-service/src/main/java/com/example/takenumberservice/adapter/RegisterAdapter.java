@@ -94,7 +94,7 @@ public class RegisterAdapter {
      * @param status
      */
 
-    public void updatebyid(Long id ,Integer status){
+    public void updatebyid(Long id ,String status){
         System.out.println("修改挂号状态");
         registerServiceClient.updatestatus(id,status);
     }

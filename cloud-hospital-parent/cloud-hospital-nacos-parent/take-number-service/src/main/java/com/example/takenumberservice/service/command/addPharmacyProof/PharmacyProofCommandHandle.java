@@ -2,6 +2,8 @@ package com.example.takenumberservice.service.command.addPharmacyProof;
 
 import com.example.takenumberservice.adapter.PharmacyProofDaoAdapter;
 import com.example.takenumberservice.inlet.web.ResponseResult;
+import com.example.takenumberservice.outlet.mq.SendMsg;
+import com.example.takenumberservice.outlet.mq.pojo.MqPo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ public class PharmacyProofCommandHandle implements com.example.takenumberservice
 
     @Autowired
     private PharmacyProofDaoAdapter proofDaoAdapter;
+
+
 
 
     /**
@@ -36,6 +40,8 @@ public class PharmacyProofCommandHandle implements com.example.takenumberservice
             addProof.setCreateTime(thistime);
             int i = proofDaoAdapter.addProof(addProof);
             if(i>0){
+                proofDaoAdapter.sendPharmacy(integer+1, addProof.getNo());//发送消息
+
                 return new ResponseResult<PharmacyProofCommand>(200,"ok",addProof);
             }else{
                 return new ResponseResult<PharmacyProofCommand>(500,"取票失败，请稍后再试",null);

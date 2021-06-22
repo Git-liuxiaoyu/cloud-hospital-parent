@@ -3,8 +3,9 @@ package com.example.takenumberservice.adapter;
 
 import com.example.takenumberservice.adapter.converter.ProofConverter;
 import com.example.takenumberservice.inlet.web.ResponseResult;
-import com.example.takenumberservice.outlet.client.room.RoomServiceClient;
-import com.example.takenumberservice.outlet.client.room.pojo.OutRoomVo;
+import com.example.takenumberservice.outlet.client.doctor.WorkerServiceClient;
+import com.example.takenumberservice.outlet.client.doctor.pojo.DoctorRotaVo;
+import com.example.takenumberservice.outlet.client.doctor.pojo.OutRoomVo;
 import com.example.takenumberservice.outlet.dao.mysql.Proofdao;
 import com.example.takenumberservice.outlet.dao.mysql.pojo.ProofPo;
 import com.example.takenumberservice.outlet.mq.SendMsg;
@@ -12,6 +13,8 @@ import com.example.takenumberservice.outlet.mq.pojo.MqPo;
 import com.example.takenumberservice.service.command.addCallProof.ProofCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @Repository
@@ -23,7 +26,7 @@ public class ProofDaoAdapter {
 
     //openfeign接口
     @Autowired
-    private RoomServiceClient roomServiceClient;
+    private WorkerServiceClient workerServiceClient;
 
     @Autowired
     private SendMsg sendMsg;
@@ -47,11 +50,11 @@ public class ProofDaoAdapter {
      * 根据房间id查询房间名字
      * @return
      */
-    public ResponseResult<OutRoomVo> findbyroomid(Integer id){
+    public ResponseResult<OutRoomVo> findbyroomid(Long id){
 
         try {
 
-            ResponseResult<OutRoomVo> findbyid = roomServiceClient.findbyid(id);
+            ResponseResult<OutRoomVo> findbyid = workerServiceClient.findbyid(id);
 
             if(findbyid.getCode() != 200){
                 return new ResponseResult<OutRoomVo>(400,"未查询到房间名",null);
@@ -86,6 +89,23 @@ public class ProofDaoAdapter {
           return 0;
         }
         return i;
+    }
+
+
+    /**
+     * 调用openfeign通过排班id获得医生信息
+     * @param id
+     * @return
+     */
+    public ResponseResult<DoctorRotaVo>getDoctorRotaById(Long id){
+
+        //ResponseResult<DoctorRotaVo> doctorRotaById = workerServiceClient.getDoctorRotaById(id);
+        /*========================测试======================================*/
+        DoctorRotaVo dvo = new DoctorRotaVo();
+        dvo.setDoctorid(1);
+        dvo.setDoctorName("小黑");
+        return new ResponseResult<DoctorRotaVo>(200,"ok",dvo);
+        //=======================测试=====================================//
     }
 
 

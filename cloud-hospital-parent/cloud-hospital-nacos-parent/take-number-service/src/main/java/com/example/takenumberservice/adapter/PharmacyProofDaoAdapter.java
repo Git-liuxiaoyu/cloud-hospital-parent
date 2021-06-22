@@ -7,6 +7,7 @@ import com.example.takenumberservice.outlet.client.drugodd.DrugoddClient;
 import com.example.takenumberservice.outlet.dao.mysql.PharmacyProofDao;
 import com.example.takenumberservice.outlet.dao.mysql.pojo.PharmacyProofPo;
 import com.example.takenumberservice.outlet.dao.mysql.pojo.ProofPo;
+import com.example.takenumberservice.outlet.mq.SendMsg;
 import com.example.takenumberservice.service.command.addCallProof.ProofCommand;
 import com.example.takenumberservice.service.command.addPharmacyProof.PharmacyProofCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class PharmacyProofDaoAdapter {
 
     @Autowired
     private DrugoddClient drugoddClient;
+
+    @Autowired
+    private SendMsg sendMsg;
 
 
     /**
@@ -63,6 +67,16 @@ public class PharmacyProofDaoAdapter {
         //ResponseResult<Void> byYFNo = drugoddClient.findByYFNo(no);
         ResponseResult<Void> byYFNo = new ResponseResult<>(200,"无",null);
             return byYFNo;
+
+    }
+
+
+    /**
+     * 给药房微服务发消息
+     * 序号加no
+     */
+    public void sendPharmacy(Integer orderNo,String No){
+        sendMsg.Sendpharmacy(orderNo,No);
 
     }
 }
