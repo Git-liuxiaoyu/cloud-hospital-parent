@@ -254,7 +254,6 @@ public class DoctorRotaDaoAdapter {
     }
 
     /**
-     * 根据ID List查找
      *
      * @param idList
      * @return

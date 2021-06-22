@@ -1,7 +1,7 @@
 package com.example.workerservice.service.api.doctorrota;
 
 import com.example.workerservice.inlet.web.vo.DoctorRotaVo;
-import com.example.workerservice.service.command.doctorrota.querybyid.QueryDoctorRotaByIdListCommand;
+import com.example.workerservice.service.command.doctorrota.querylistbyidlist.QueryDoctorRotaListByIdListCommand;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import java.util.List;
  * @author Alnwick11AtoZ 松
  * @date 2021/6/22
  */
-public interface IQueryDoctorRotaByIdListCommandHandler {
+public interface IQueryDoctorRotaListByIdListCommandHandler {
 
-    List<DoctorRotaVo> action(QueryDoctorRotaByIdListCommand command);
+    List<DoctorRotaVo> action(QueryDoctorRotaListByIdListCommand command);
 
 }
