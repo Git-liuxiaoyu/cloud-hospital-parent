@@ -18,17 +18,42 @@
         <result column="name" property="workerInfoPo.name"/>
         <result column="avatar" property="workerInfoPo.avatar"/>
         <result column="level" property="workerInfoPo.positionPo.level"/>
-        <result column="maxPatient" property="maxpatient" />
+        <result column="maxPatient" property="maxpatient"/>
+        <result column="departmentName" property="departmentPo.name"/>
     </resultMap>
 
     <select id="findAllByStatusEqualsAndDepartmentidEqualsAndDateEquals" resultMap="DoctorResultMap1">
-        SELECT dr.*, wi.name, wi.avatar, p.`level`
+        SELECT dr.*, wi.name, wi.avatar, p.`level`, d.`name` departmentName
         FROM h_doctor_rota dr
                  LEFT JOIN h_worker_info wi ON dr.doctorId = wi.id
                  LEFT JOIN h_position p ON wi.positionId = p.id
+                 LEFT JOIN h_department d ON d.id = dr.departmentId
         WHERE dr.status = #{status}
           AND dr.departmentId = #{departmentId}
           AND dr.`date` = #{date}
+    </select>
+
+    <select id="getById" resultMap="DoctorResultMap1">
+        SELECT dr.*, wi.name, wi.avatar, p.`level`, d.`name` departmentName
+        FROM h_doctor_rota dr
+                 LEFT JOIN h_worker_info wi ON dr.doctorId = wi.id
+                 LEFT JOIN h_position p ON wi.positionId = p.id
+                 LEFT JOIN h_department d ON d.id = dr.departmentId
+        WHERE dr.id = #{id}
+    </select>
+
+    <select id="findByIdList" resultMap="DoctorResultMap1" parameterType="list">
+        SELECT dr.*, wi.name, wi.avatar, p.`level`, d.`name` departmentName
+        FROM h_doctor_rota dr
+        LEFT JOIN h_worker_info wi ON dr.doctorId = wi.id
+        LEFT JOIN h_position p ON wi.positionId = p.id
+        LEFT JOIN h_department d ON d.id = dr.departmentId
+        WHERE dr.id IN
+
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+
     </select>
 
     <!-- 系统生成的 -->

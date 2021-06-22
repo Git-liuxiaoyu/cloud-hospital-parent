@@ -5,6 +5,8 @@ import com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPoExample;
 
 import java.util.Date;
 import java.util.List;
+
+import com.example.workerservice.outlet.dao.redis.po.DoctorRotaRedisPo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -33,4 +35,8 @@ public interface DoctorRotaPoDao {
     int updateByPrimaryKeySelective(DoctorRotaPo record);
 
     int updateByPrimaryKey(DoctorRotaPo record);
+
+    DoctorRotaPo getById(Long id);
+
+    List<DoctorRotaPo> findByIdList(List<Long> idList);
 }

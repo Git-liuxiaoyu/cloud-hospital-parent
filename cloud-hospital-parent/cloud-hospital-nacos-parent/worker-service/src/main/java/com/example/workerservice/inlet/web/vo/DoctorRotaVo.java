@@ -24,6 +24,8 @@ public class DoctorRotaVo {
 
     private Integer departmentid;
 
+    private String departmentname;
+
     private Date date;
 
     private String shifttype;

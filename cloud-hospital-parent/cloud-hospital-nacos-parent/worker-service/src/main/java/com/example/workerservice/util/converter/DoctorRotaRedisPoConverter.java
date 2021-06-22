@@ -44,6 +44,7 @@ public class DoctorRotaRedisPoConverter {
         /* 实例化 */
         DoctorRotaRedisPo doctorRotaRedisPo = new DoctorRotaRedisPo();
         /* 赋值 */
+        doctorRotaRedisPo.setDepartmentname(doctorRotaPo.getDepartmentPo().getName());
         doctorRotaRedisPo.setMaxpatient(doctorRotaPo.getMaxpatient());
         doctorRotaRedisPo.setDoctorid(doctorRotaPo.getDoctorid());
         doctorRotaRedisPo.setRotatype(doctorRotaPo.getRotatype());

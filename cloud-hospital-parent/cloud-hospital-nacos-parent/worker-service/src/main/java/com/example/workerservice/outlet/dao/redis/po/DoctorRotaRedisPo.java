@@ -27,6 +27,8 @@ public class DoctorRotaRedisPo {
     @Indexed
     private Integer departmentid;
 
+    private String departmentname;
+
     @Indexed
     private Date date;
 

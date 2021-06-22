@@ -5,6 +5,7 @@ import com.example.workerservice.inlet.web.vo.DoctorRotaVo;
 import com.example.workerservice.inlet.web.vo.ResponseResult;
 import com.example.workerservice.service.command.doctorrota.add.AddDoctorRotaCommand;
 import com.example.workerservice.service.command.doctorrota.cancel.CancelDoctorRotaCommand;
+import com.example.workerservice.service.command.doctorrota.querybyid.QueryDoctorRotaByIdListCommand;
 import com.example.workerservice.service.command.doctorrota.regquery.RegQueryDoctorRotaCommand;
 import com.example.workerservice.service.command.doctorrota.rotaquery.RotaQueryDoctorRotaCommand;
 import com.example.workerservice.service.command.doctorrota.update.UpdateDoctorRotaCommand;
@@ -133,4 +134,15 @@ public class DoctorRotaController {
         return new ResponseResult<>(command.execute());
     }
 
+    /**
+     * 根据rotaId查DoctorRota信息
+     *
+     * @param
+     * @return
+     */
+    @PostMapping("view/list/reg")
+    public ResponseResult<List<DoctorRotaVo>> getDoctorRotaById(@RequestBody List<Long> rotaIdList) {
+        /* 实例化命令实体类,执行命令并返回 */
+        return new ResponseResult<>(new QueryDoctorRotaByIdListCommand(rotaIdList).execute());
+    }
 }
