@@ -8,18 +8,18 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
-import java.util.Date;
-
 /**
+ * 实体类 - RedisPo - OutRoom
+ *
  * @author Alnwick11AtoZ 松
- * @date 2021/6/19
+ * @date 2021/6/21
  */
 @Data
+@RedisHash
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@RedisHash
-public class DoctorRotaRedisPo {
+public class OutRoomRedisPo {
 
     @Id
     private Long id;
@@ -27,27 +27,10 @@ public class DoctorRotaRedisPo {
     @Indexed
     private Integer departmentid;
 
-    @Indexed
-    private Date date;
-
-    private String rotatype;
-
-    private String shifttype;
-
-    private Integer doctorid;
-
-    private String doctorName;
-
-    private String doctorAvatar;
-
-    private String doctorLevel;
-
-    private Integer leftpatient;
-
-    private Integer maxpatient;
-
-    private Integer roomid;
+    private String roomname;
 
     @Indexed
     private String status;
+
+
 }

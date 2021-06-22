@@ -1,10 +1,9 @@
-package com.example.workerservice.service.command.doctorrota;
+package com.example.workerservice.service.command.doctorrota.regquery;
 
 import com.example.workerservice.adapter.DoctorRotaDaoAdapter;
 import com.example.workerservice.inlet.web.vo.DoctorRotaVo;
 import com.example.workerservice.service.api.doctorrota.IRegQueryDoctorRotaCommandHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

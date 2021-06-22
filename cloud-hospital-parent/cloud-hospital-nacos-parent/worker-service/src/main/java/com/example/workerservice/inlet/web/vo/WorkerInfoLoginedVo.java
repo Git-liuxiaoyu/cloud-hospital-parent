@@ -20,6 +20,8 @@ public class WorkerInfoLoginedVo {
 
     private String name;
 
+    private Integer departmentId;
+
     private String departmentName;
 
     private String positionType;

@@ -6,25 +6,29 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * 实体类 - Vo - OutRoom
+ * 实体类 - Vo - DoctorRota - Set(设置时反显用)
  *
  * @author Alnwick11AtoZ 松
- * @date 2021/6/18
+ * @date 2021/6/21
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class OutRoomVo {
+public class DoctorRotaSetVo {
 
     private Long id;
 
-    private Integer departmentid;
+    private Integer roomid;
 
-    private String roomname;
+    private Integer doctorid;
+
+    private Integer maxpatient;
 
     private String status;
 
     public static final String STATUS_NORMAL = "1";
+
+    public static final String STATUS_CANCEL = "0";
 
 }

@@ -3,6 +3,7 @@ package com.example.workerservice.inlet.web.controller;
 import com.example.workerservice.inlet.web.vo.ResponseResult;
 import com.example.workerservice.inlet.web.vo.WorkerInfoLoginedVo;
 import com.example.workerservice.inlet.web.vo.WorkerInfoVo;
+import com.example.workerservice.service.command.workerinfo.queryallbydepartid.QueryWorkerInfoListByDepartIdCommand;
 import com.example.workerservice.service.command.workerinfo.querybyid.QueryWorkerByIdCommand;
 import com.example.workerservice.service.command.workerinfo.querybyno.QueryWorkerByNoCommand;
 import com.example.workerservice.service.command.workerinfo.queryloginedbyno.QueryLoginedUserWorkerInfoCommand;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 转换器类 - WorkerInfo
@@ -64,5 +66,16 @@ public class WorkerInfoController {
         return new ResponseResult<>(new QueryLoginedUserWorkerInfoCommand(workerNo).execute());
     }
 
+
+    /**
+     * 后台登陆后,获得其信息
+     *
+     * @return
+     */
+    @GetMapping("view/all/department/{departmentId}")
+    public ResponseResult<List<WorkerInfoVo>> getAllDoctorInfoByDepartmentId(@PathVariable Integer departmentId) {
+        /* 有参构造传送该工号信息,执行命令,返回返回值 */
+        return new ResponseResult<>(new QueryWorkerInfoListByDepartIdCommand(departmentId).execute());
+    }
 
 }

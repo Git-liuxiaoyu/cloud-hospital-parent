@@ -28,6 +28,8 @@ public class DoctorRotaPo {
 
     private Integer leftpatient;
 
+    private Integer maxpatient;
+
     private Integer roomid;
 
     private Integer createid;
@@ -35,5 +37,5 @@ public class DoctorRotaPo {
     private Date createtime;
 
     private String status;
-
+    
 }

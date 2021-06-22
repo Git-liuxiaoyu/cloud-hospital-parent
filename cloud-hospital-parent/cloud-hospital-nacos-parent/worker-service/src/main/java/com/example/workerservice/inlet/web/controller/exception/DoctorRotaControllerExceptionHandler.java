@@ -2,6 +2,8 @@ package com.example.workerservice.inlet.web.controller.exception;
 
 import com.example.workerservice.inlet.web.controller.DoctorRotaController;
 import com.example.workerservice.inlet.web.vo.ResponseResult;
+import com.example.workerservice.service.api.doctorrota.IAddDoctorRotaCommandHandler;
+import com.example.workerservice.service.api.doctorrota.IUpdateDoctorRotaCommandHandler;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -22,6 +24,28 @@ public class DoctorRotaControllerExceptionHandler {
      */
     @ExceptionHandler(value = IllegalArgumentException.class)
     public ResponseResult<Void> handleIllegalArgumentException(IllegalArgumentException e) {
+        return new ResponseResult<>(444, e.getMessage());
+    }
+
+    /**
+     * 异常处理 - 医生不能重复诊室同一时间段
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = IAddDoctorRotaCommandHandler.DoctorIsRotedInOtherRoomException.class)
+    public ResponseResult<Void> handleDoctorIsRotedInOtherRoomException(IAddDoctorRotaCommandHandler.DoctorIsRotedInOtherRoomException e) {
+        return new ResponseResult<>(444, e.getMessage());
+    }
+
+    /**
+     * 异常处理 - 医生不能重复诊室同一时间段
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = IUpdateDoctorRotaCommandHandler.DoctorIsRotedInOtherRoomException.class)
+    public ResponseResult<Void> handleDoctorIsRotedInOtherRoomException(IUpdateDoctorRotaCommandHandler.DoctorIsRotedInOtherRoomException e) {
         return new ResponseResult<>(444, e.getMessage());
     }
 

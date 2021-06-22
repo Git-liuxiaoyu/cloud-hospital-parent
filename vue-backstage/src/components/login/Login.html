@@ -165,7 +165,7 @@
                              @click="sendVerifyCode">获取验证码<i
                     class="el-icon-message el-icon--right"></i>
                   </el-button>
-                  <template v-if="!flagShowGetCodeBtn" slot="append"> {{ leftTime }} 秒</template>
+                  <template v-if="!flagShowGetCodeBtn" slot="append"> {{ leftTime }} 秒后重试</template>
                 </el-input>
 
               </el-form-item>

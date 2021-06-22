@@ -16,8 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WorkerInfoVo {
 
+    private Integer id;
+
     private String name;
 
     private String phone;
+
+    public static final String STATUS_NORMAL = "1";
 
 }
