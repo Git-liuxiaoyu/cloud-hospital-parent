@@ -17,11 +17,10 @@
             </font>
         </el-header>
             <el-main>
-
                 <el-input
                     type="text"
                     placeholder="请输入4位取票码"
-                    v-model="text"
+                    v-model="num"
                     maxlength="4"
                     show-word-limit style="width:50%" >
                  <template slot="prepend">YF</template>
@@ -29,13 +28,19 @@
 
                 <br/>
                 <br/>
-                <el-button type="success" plain @click="getnumber()">取&nbsp;&nbsp;票</el-button>
+                <el-button type="success" plain @click="getnumber()" id="button1">取&nbsp;&nbsp;票</el-button>
             </el-main>
             <el-footer><font class="font1">版权所有&copy; XXX医院</font></el-footer>
         </el-container>
 
+
+        <!-- 取票成功显示票务信息 -->
+
+
         
     </div>
+
+    
 
 
 </template>
@@ -45,18 +50,58 @@ import axios from 'axios';
 export default { 
        data(){
             return {
-                text:"",
-                profile:{
-                  
-                },
+                num:"",
+                getNumberOk: true,
+                takeNumber:[{
+                    id:"",
+                    regId:"",
+                    departmentId:"",
+                    roomName:"",
+                    orderNum:"",
+                    createTime:"",
+                    status:"",
+                }]
             }
+           
         },
         methods:{
             getnumber(){//取票
-                var num = "YF"+this.text;
-                alert("号码："+num);
+                var no = "YF"+this.num;
+
+               axios.get("http://localhost:6001/YFproof/findbyno/"+no).then(r => {  
+                    var msg = r.data.msg;
+                   console.log(r)
+                   var num1 = this.num;
+                   if(num1 == null){
+                       num1 = "null";
+                   }
+                   
+
+                   if(r.data.code != 200){//取票失败
+                      this.$alert('<font>'+msg+'</font><br/><font>取票号：'+this.num+'，请认真核对号码，或寻求工作人员帮助</font>', '取票失败', {
+                        dangerouslyUseHTMLString: true
+                        });
+                   }else if(r.data.code == 200){//取票成功
+                    this.takeNumber.no = r.data.data.no;//取号码
+                    this.takeNumber.roomName = "药房";
+                    this.takeNumber.orderNum = r.data.data.orderNum;//排队序号
+                    this.takeNumber.createTime = r.data.data.createTime;//取票时间
+                    this.takeNumber.status = "就诊结束";
+
+
+                       this.$notify({
+                            title: '取票成功',
+                            dangerouslyUseHTMLString: true,
+                            duration:20000,
+                            message: '<font>房间名称：'+this.takeNumber.roomName+'</font><br/><br/><font>排队序号：'+this.takeNumber.orderNum+'</font><br/><br/><font>取票号码：'+this.takeNumber.no+'</font><br/><br/><font>取票时间：'+this.takeNumber.createTime+'</font><br/><br/><font>就诊状态：'+this.takeNumber.status+'</font><br/>'
+                            });
+                   }
+                    
+                       
+                });
             },
-            returnindex(){
+
+            returnindex(){//返回
                 this.$router.push("/");
             }
             
@@ -112,10 +157,33 @@ export default {
       margin-top: 200px;
   }
 
-  .el-button{
+  #button1{
       font-family: "楷体";
       font-size: 25px;
       width: 200px;
       height: 60px;
   }
+
+  /*=============取票成功右侧弹出框开始===================*/
+
+  
+  /*内容*/
+  .el-notification__content{
+      text-align: left;
+      color: aquamarine;
+      font-size: 20px;
+  }
+
+/*标题*/
+  .el-notification__title{
+        text-align: center;
+        font-size: 25px;
+        color: aquamarine;
+  }
+  /*div*/
+  .el-notification__group{
+        width: 100%;
+  }
+   /*=============取票成功右侧弹出框结束===================*/
+
 </style>

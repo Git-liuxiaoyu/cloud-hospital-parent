@@ -39,6 +39,8 @@ public class DoctorRotaVo {
 
     private Integer leftpatient;
 
+    private Integer maxpatient;
+
     private String status;
 
     public static final String STATUS_NORMAL="1";

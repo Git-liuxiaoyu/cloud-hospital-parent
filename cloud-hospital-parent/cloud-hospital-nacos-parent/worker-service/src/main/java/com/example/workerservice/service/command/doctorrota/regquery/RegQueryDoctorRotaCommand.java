@@ -1,9 +1,10 @@
-package com.example.workerservice.service.command.doctorrota;
+package com.example.workerservice.service.command.doctorrota.regquery;
 
 import com.example.workerservice.inlet.web.vo.DoctorRotaVo;
 import com.example.workerservice.service.api.doctorrota.IRegQueryDoctorRotaCommandHandler;
 import com.example.workerservice.util.ApplicationContextHolder;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ import java.util.List;
  * @date 2021/6/19
  */
 @Data
+@ToString
 public class RegQueryDoctorRotaCommand {
 
     @NotNull

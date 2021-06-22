@@ -1,4 +1,4 @@
-package com.example.takenumberservice.service.command.addProof;
+package com.example.takenumberservice.service.command.addCallProof;
 
 import com.example.takenumberservice.adapter.ProofDaoAdapter;
 import com.example.takenumberservice.adapter.RegisterAdapter;
@@ -94,6 +94,7 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
             //存入redis,挂号取票码加上挂号状态
             registerAdapter.addNoRedis(findbyno.getNo());
         }
+        proofCommand.setNo(findbyno.getNo());
         //存入取票凭证表
         int i = proofDaoAdapter.addProof(proofCommand);
         log.info("存入取票凭证");

@@ -1,13 +1,13 @@
 package com.example.takenumberservice.inlet.web.controller;
 
 import com.example.takenumberservice.inlet.web.ResponseResult;
-import com.example.takenumberservice.service.command.addProof.ProofCommand;
+import com.example.takenumberservice.service.command.addCallProof.ProofCommand;
 import com.example.takenumberservice.service.command.findregister.RegisterCommand;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/proof/")
+@RequestMapping("/GHproof/")
 public class ProofController {
 
 

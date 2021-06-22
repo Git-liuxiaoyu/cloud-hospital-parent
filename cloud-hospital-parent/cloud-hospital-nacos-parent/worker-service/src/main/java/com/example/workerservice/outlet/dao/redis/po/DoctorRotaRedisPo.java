@@ -44,6 +44,8 @@ public class DoctorRotaRedisPo {
 
     private Integer leftpatient;
 
+    private Integer maxpatient;
+
     private Integer roomid;
 
     @Indexed

@@ -45,6 +45,7 @@ public class DoctorRotaVoConverter {
         /* 实例化 */
         DoctorRotaVo doctorRotaVo = new DoctorRotaVo();
         /* 赋值 */
+        doctorRotaVo.setMaxpatient(doctorRotaPo.getMaxpatient());
         doctorRotaVo.setId(doctorRotaPo.getId());
         doctorRotaVo.setDepartmentid(doctorRotaPo.getDepartmentid());
         doctorRotaVo.setShifttype(doctorRotaPo.getShifttype());

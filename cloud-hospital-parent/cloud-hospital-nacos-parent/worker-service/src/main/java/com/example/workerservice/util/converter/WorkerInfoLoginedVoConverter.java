@@ -26,6 +26,7 @@ public class WorkerInfoLoginedVoConverter {
         WorkerInfoLoginedVo workerInfoLoginedVo = new WorkerInfoLoginedVo();
         /* 赋值 */
         workerInfoLoginedVo.setId(workerInfoPo.getId());
+        workerInfoLoginedVo.setDepartmentId(workerInfoPo.getDepartmentPo().getId());
         workerInfoLoginedVo.setName(workerInfoPo.getName());
         workerInfoLoginedVo.setAvatar(workerInfoPo.getAvatar());
         workerInfoLoginedVo.setNo(workerInfoPo.getNo());

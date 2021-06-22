@@ -1,8 +1,7 @@
 package com.example.takenumberservice.service.api;
 
 import com.example.takenumberservice.inlet.web.ResponseResult;
-import com.example.takenumberservice.service.command.addProof.ProofCommand;
-import com.example.takenumberservice.service.command.findregister.RegisterCommand;
+import com.example.takenumberservice.service.command.addCallProof.ProofCommand;
 
 /**
  * 调用挂号微服务方法的接口

@@ -10,9 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DoctorRotaPoDao {
-
-    List<DoctorRotaPo> findAllByStatusEqualsAndDepartmentidEqualsAndDateEquals(@Param("status") String status, @Param("departmentId") Integer departmentId , @Param("date") Date date);
-
     long countByExample(DoctorRotaPoExample example);
 
     int deleteByExample(DoctorRotaPoExample example);
@@ -26,6 +23,8 @@ public interface DoctorRotaPoDao {
     List<DoctorRotaPo> selectByExample(DoctorRotaPoExample example);
 
     DoctorRotaPo selectByPrimaryKey(Long id);
+
+    List<DoctorRotaPo> findAllByStatusEqualsAndDepartmentidEqualsAndDateEquals(@Param("status") String status, @Param("departmentId") Integer departmentId , @Param("date") Date date);
 
     int updateByExampleSelective(@Param("record") DoctorRotaPo record, @Param("example") DoctorRotaPoExample example);
 

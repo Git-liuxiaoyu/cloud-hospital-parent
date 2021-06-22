@@ -1,21 +1,10 @@
 package com.example.takenumberservice.service.command.findregister;
 
-import com.alibaba.druid.sql.visitor.functions.Char;
-import com.example.takenumberservice.adapter.ProofDaoAdapter;
 import com.example.takenumberservice.adapter.RegisterAdapter;
 import com.example.takenumberservice.inlet.web.ResponseResult;
-import com.example.takenumberservice.outlet.client.register.pojo.Register;
-import com.example.takenumberservice.outlet.dao.redis.pojo.ProofRedisPo;
-import com.example.takenumberservice.service.command.addProof.ProofCommand;
+import com.example.takenumberservice.service.command.addCallProof.ProofCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Optional;
 
 @Service
 public class RegisterCommandHandle implements com.example.takenumberservice.service.api.RegisterCommandHandle {

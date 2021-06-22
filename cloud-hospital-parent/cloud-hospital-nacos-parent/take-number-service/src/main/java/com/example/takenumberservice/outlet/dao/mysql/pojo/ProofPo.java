@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class ProofPo {
     private Long id;//id
     private Long regId;//挂号id
+    private String no;//取票no
     private Integer departmentId;//科室id
     private String roomName;//房间名
     private Integer orderNum;//排队序号
@@ -19,9 +20,10 @@ public class ProofPo {
     public ProofPo() {
     }
 
-    public ProofPo(Long id, Long regId, Integer departmentId, String roomName, Integer orderNum, String createTime, String status) {
+    public ProofPo(Long id, Long regId, Integer departmentId, String roomName, Integer orderNum, String createTime, String status,String no) {
         this.id = id;
         this.regId = regId;
+        this.no = no;
         this.departmentId = departmentId;
         this.roomName = roomName;
         this.orderNum = orderNum;
@@ -85,16 +87,13 @@ public class ProofPo {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "ProofPo{" +
-                "id=" + id +
-                ", regId=" + regId +
-                ", departmentId=" + departmentId +
-                ", roomName='" + roomName + '\'' +
-                ", orderNum=" + orderNum +
-                ", createTime='" + createTime + '\'' +
-                ", status=" + status +
-                '}';
+    public String getNo() {
+        return no;
     }
+
+    public void setNo(String no) {
+        this.no = no;
+    }
+
+
 }

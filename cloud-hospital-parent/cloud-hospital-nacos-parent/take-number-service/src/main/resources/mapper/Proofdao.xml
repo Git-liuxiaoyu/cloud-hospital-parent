@@ -10,8 +10,8 @@
     
     <!--添加取号凭证-->
     <insert id="addproof" parameterType="ProofPo">
-        insert into h_call_proof(regId,departmentId,roomName,orderNum,createTime,status)
-        values(#{regId},#{departmentId},#{roomName},#{orderNum},#{createTime},#{status})
+        insert into h_call_proof(regId,`no`,departmentId,roomName,orderNum,createTime,status)
+        values(#{regId},#{no},#{departmentId},#{roomName},#{orderNum},#{createTime},#{status})
     </insert>
     
     <!--每晚12点清空整张表的数据-->

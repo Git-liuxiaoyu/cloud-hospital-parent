@@ -1,7 +1,7 @@
 package com.example.workerservice.service.api.doctorrota;
 
 import com.example.workerservice.inlet.web.vo.DoctorRotaVo;
-import com.example.workerservice.service.command.doctorrota.RegQueryDoctorRotaCommand;
+import com.example.workerservice.service.command.doctorrota.regquery.RegQueryDoctorRotaCommand;
 
 import java.util.List;
 

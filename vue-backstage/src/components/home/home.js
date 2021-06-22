@@ -55,6 +55,8 @@ export default {
           message: "网络错误",
           type: "error",
         });
+        /** 转发到主页 */
+        this.$router.push("/");
       });
     }
   }

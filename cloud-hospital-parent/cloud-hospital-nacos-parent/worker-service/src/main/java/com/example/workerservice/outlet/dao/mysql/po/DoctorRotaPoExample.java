@@ -572,6 +572,66 @@ public class DoctorRotaPoExample {
             return (Criteria) this;
         }
 
+        public Criteria andMaxpatientIsNull() {
+            addCriterion("maxPatient is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxpatientIsNotNull() {
+            addCriterion("maxPatient is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxpatientEqualTo(Integer value) {
+            addCriterion("maxPatient =", value, "maxpatient");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxpatientNotEqualTo(Integer value) {
+            addCriterion("maxPatient <>", value, "maxpatient");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxpatientGreaterThan(Integer value) {
+            addCriterion("maxPatient >", value, "maxpatient");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxpatientGreaterThanOrEqualTo(Integer value) {
+            addCriterion("maxPatient >=", value, "maxpatient");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxpatientLessThan(Integer value) {
+            addCriterion("maxPatient <", value, "maxpatient");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxpatientLessThanOrEqualTo(Integer value) {
+            addCriterion("maxPatient <=", value, "maxpatient");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxpatientIn(List<Integer> values) {
+            addCriterion("maxPatient in", values, "maxpatient");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxpatientNotIn(List<Integer> values) {
+            addCriterion("maxPatient not in", values, "maxpatient");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxpatientBetween(Integer value1, Integer value2) {
+            addCriterion("maxPatient between", value1, value2, "maxpatient");
+            return (Criteria) this;
+        }
+
+        public Criteria andMaxpatientNotBetween(Integer value1, Integer value2) {
+            addCriterion("maxPatient not between", value1, value2, "maxpatient");
+            return (Criteria) this;
+        }
+
         public Criteria andRoomidIsNull() {
             addCriterion("roomId is null");
             return (Criteria) this;

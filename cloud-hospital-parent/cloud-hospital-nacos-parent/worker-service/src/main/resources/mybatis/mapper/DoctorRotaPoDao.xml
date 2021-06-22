@@ -18,6 +18,7 @@
         <result column="name" property="workerInfoPo.name"/>
         <result column="avatar" property="workerInfoPo.avatar"/>
         <result column="level" property="workerInfoPo.positionPo.level"/>
+        <result column="maxPatient" property="maxpatient" />
     </resultMap>
 
     <select id="findAllByStatusEqualsAndDepartmentidEqualsAndDateEquals" resultMap="DoctorResultMap1">
@@ -30,7 +31,8 @@
           AND dr.`date` = #{date}
     </select>
 
-    <!-- 自动生成 -->
+    <!-- 系统生成的 -->
+
     <resultMap id="BaseResultMap" type="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="departmentId" jdbcType="INTEGER" property="departmentid"/>
@@ -39,6 +41,7 @@
         <result column="shiftType" jdbcType="CHAR" property="shifttype"/>
         <result column="doctorId" jdbcType="INTEGER" property="doctorid"/>
         <result column="leftPatient" jdbcType="INTEGER" property="leftpatient"/>
+        <result column="maxPatient" jdbcType="INTEGER" property="maxpatient"/>
         <result column="roomId" jdbcType="INTEGER" property="roomid"/>
         <result column="createId" jdbcType="INTEGER" property="createid"/>
         <result column="createTime" jdbcType="TIMESTAMP" property="createtime"/>
@@ -106,8 +109,8 @@
     </sql>
     <sql id="Base_Column_List">
         id
-        , departmentId, date, rotaType, shiftType, doctorId, leftPatient, roomId, createId,
-    createTime, status
+        , departmentId, date, rotaType, shiftType, doctorId, leftPatient, maxPatient, roomId,
+    createId, createTime, status
     </sql>
     <select id="selectByExample" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPoExample"
             resultMap="BaseResultMap">
@@ -144,12 +147,12 @@
     <insert id="insert" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
         insert into h_doctor_rota (id, departmentId, date,
                                    rotaType, shiftType, doctorId,
-                                   leftPatient, roomId, createId,
-                                   createTime, status)
+                                   leftPatient, maxPatient, roomId,
+                                   createId, createTime, status)
         values (#{id,jdbcType=BIGINT}, #{departmentid,jdbcType=INTEGER}, #{date,jdbcType=DATE},
                 #{rotatype,jdbcType=VARCHAR}, #{shifttype,jdbcType=CHAR}, #{doctorid,jdbcType=INTEGER},
-                #{leftpatient,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER}, #{createid,jdbcType=INTEGER},
-                #{createtime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR})
+                #{leftpatient,jdbcType=INTEGER}, #{maxpatient,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER},
+                #{createid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
         insert into h_doctor_rota
@@ -174,6 +177,9 @@
             </if>
             <if test="leftpatient != null">
                 leftPatient,
+            </if>
+            <if test="maxpatient != null">
+                maxPatient,
             </if>
             <if test="roomid != null">
                 roomId,
@@ -209,6 +215,9 @@
             </if>
             <if test="leftpatient != null">
                 #{leftpatient,jdbcType=INTEGER},
+            </if>
+            <if test="maxpatient != null">
+                #{maxpatient,jdbcType=INTEGER},
             </if>
             <if test="roomid != null">
                 #{roomid,jdbcType=INTEGER},
@@ -255,6 +264,9 @@
             <if test="record.leftpatient != null">
                 leftPatient = #{record.leftpatient,jdbcType=INTEGER},
             </if>
+            <if test="record.maxpatient != null">
+                maxPatient = #{record.maxpatient,jdbcType=INTEGER},
+            </if>
             <if test="record.roomid != null">
                 roomId = #{record.roomid,jdbcType=INTEGER},
             </if>
@@ -281,6 +293,7 @@
         shiftType = #{record.shifttype,jdbcType=CHAR},
         doctorId = #{record.doctorid,jdbcType=INTEGER},
         leftPatient = #{record.leftpatient,jdbcType=INTEGER},
+        maxPatient = #{record.maxpatient,jdbcType=INTEGER},
         roomId = #{record.roomid,jdbcType=INTEGER},
         createId = #{record.createid,jdbcType=INTEGER},
         createTime = #{record.createtime,jdbcType=TIMESTAMP},
@@ -310,6 +323,9 @@
             <if test="leftpatient != null">
                 leftPatient = #{leftpatient,jdbcType=INTEGER},
             </if>
+            <if test="maxpatient != null">
+                maxPatient = #{maxpatient,jdbcType=INTEGER},
+            </if>
             <if test="roomid != null">
                 roomId = #{roomid,jdbcType=INTEGER},
             </if>
@@ -333,6 +349,7 @@
             shiftType    = #{shifttype,jdbcType=CHAR},
             doctorId     = #{doctorid,jdbcType=INTEGER},
             leftPatient  = #{leftpatient,jdbcType=INTEGER},
+            maxPatient   = #{maxpatient,jdbcType=INTEGER},
             roomId       = #{roomid,jdbcType=INTEGER},
             createId     = #{createid,jdbcType=INTEGER},
             createTime   = #{createtime,jdbcType=TIMESTAMP},

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class ProofControllerVo {
     private Integer id;//id
     private Integer regId;//挂号id
+    private String no;//取票码
     private Integer departmentId;//可是id
     private String roomName;//房间名
     private Integer orderNum;//排队序号

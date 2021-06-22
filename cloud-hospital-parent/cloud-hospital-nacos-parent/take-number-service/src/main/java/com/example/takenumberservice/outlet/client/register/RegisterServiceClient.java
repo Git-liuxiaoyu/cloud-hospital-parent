@@ -20,8 +20,8 @@ public interface RegisterServiceClient {
     ResponseResult<Register>findbyno(@PathVariable("no") String no);
 
 
-    @GetMapping("/register/updatebyid/{id}/{status}")
-    void updatestatus(@PathVariable("id") Integer id ,Integer status);
+    @GetMapping("/Register/update/status/{id}/{status}")
+    void updatestatus(@PathVariable("id") Long id ,Integer status);
 
 
 

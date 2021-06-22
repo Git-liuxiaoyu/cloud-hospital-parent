@@ -4,7 +4,7 @@
     <el-row type="flex" justify="center" align="middle">
       <span style="font-size: 18px;font-weight: bold;">请选择需要排班的时间</span>
     </el-row>
-    <br />
+    <br/>
     <el-row type="flex" justify="center" align="middle">
       <el-date-picker
         size="large"
@@ -28,34 +28,93 @@
   <el-divider></el-divider>
   <!--  日历卡片-->
   <el-card>
-        <el-calendar :range="calendarDateFinalRange">
-<!--    <el-calendar>-->
-      <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
-      <template
-        slot="dateCell"
-        slot-scope="{date, data}">
-        <el-row :class="data.isSelected ? 'is-selected' : ''" type="flex" align="middle" style="height: 100%;">
-          <el-col :span="12">
-            <!--      显示日期-->
-            <el-button type="text" @click="showAddDoctorRotaDialogFunc(data.isSelected)">
-              {{ data.day.split('-').slice(1)[0] + '月' + data.day.split('-').slice(1)[1] + '日' }}
-            </el-button>
-          </el-col>
-
-          <el-col :span="12">
-            aaa
-          </el-col>
-        </el-row>
-      </template>
-    </el-calendar>
+    <el-row type="flex" justify="center" align="middle">
+      <span style="font-size: 23px;font-weight: bold;">排班日历</span>
+    </el-row>
+    <el-row>
+      <el-calendar :range="calendarDateFinalRange">
+        <!--    <el-calendar>-->
+        <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
+        <template
+          slot="dateCell"
+          slot-scope="{date, data}">
+          <el-row :class="data.isSelected ? 'is-selected' : ''">
+            <el-row type="flex" justify="center" align="middle" style="height: 100%;">
+              <!--      显示日期-->
+              <el-button type="text" @click.prevent="showAddDoctorRotaDialogFunc(data.isSelected,data.day,'1')">
+                {{ data.day.split('-').slice(1)[0] + '月' + data.day.split('-').slice(1)[1] + '日 上午' }}
+              </el-button>
+            </el-row>
+            <el-row type="flex" justify="center" align="middle" style="height: 100%;">
+              <!--      显示日期-->
+              <el-button type="text" @click.prevent="showAddDoctorRotaDialogFunc(data.isSelected,data.day,'2')">
+                {{ data.day.split('-').slice(1)[0] + '月' + data.day.split('-').slice(1)[1] + '日 下午' }}
+              </el-button>
+            </el-row>
+          </el-row>
+        </template>
+      </el-calendar>
+    </el-row>
   </el-card>
 
   <!--      弹出对话框-->
-  <el-dialog title="收货地址" :visible.sync="flagAddDoctorRota">
-    aaa
+  <el-dialog :title="addDoctorRotaDate + ' ' + (addDoctorRotaType==='1'?'上午':'下午')+'排班'"
+             :visible.sync="flagAddDoctorRotaDialog">
+    <el-row type="flex" justify="center" align="middle">
+      <span style="font-size: 18px;font-weight: bold;">请选择排班医生和最大看诊人数</span>
+    </el-row>
+    <el-row>&nbsp;</el-row>
+    <el-row v-loading="addDoctorRotaLoading || flagAddAndUpdateDoctorRotaDialog">
+      <el-col :span="12" v-for="(items,index) in departmentOutRoomArr" :key="index">
+        <el-card>
+          <el-row>
+            <el-row type="flex" justify="center" align="middle">
+              <span style="color: #409eff;font-size: 16px;">{{ items.roomname }}</span>
+            </el-row>
+            <el-row>&nbsp;</el-row>
+            <!--            选择医生-->
+            <el-row type="flex" justify="center" align="middle">
+              <el-select v-model="selectDoctor[index]" clearable placeholder="请选择就诊医生">
+                <el-option
+                  :disabled=" new Date(addDoctorRotaDate) < (new Date()/1000 + 86400)*1000"
+                  v-for="item in departmentDoctorList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </el-row>
+            <el-row>&nbsp;</el-row>
+            <el-row type="flex" justify="center" align="middle">
+              <!--              输入可以接纳的人数-->
+              <el-input-number controls-position="right" v-model="maxPatient[index]" :min="50" :max="150"
+                               :disabled="new Date(addDoctorRotaDate) < (new Date()/1000 + 86400)*1000"
+                               placeholder="请输入最大接诊人数"></el-input-number>
+            </el-row>
+            <el-row>&nbsp;</el-row>
+            <el-row type="flex" justify="center">
+              <el-button type="primary"
+                         v-if="idArr[index] === undefined && new Date(addDoctorRotaDate) > (new Date()/1000 + 86400)*1000"
+                         size="small"
+                         @click="addDoctorRotaFunc(index,items.id)">添 加
+              </el-button>
+              <el-button type="warning"
+                         v-if="idArr[index]!==undefined && maxPatient[index] !== undefined && new Date(addDoctorRotaDate) >(new Date()/1000 + 86400)*1000"
+                         size="small"
+                         @click="updateDoctorRotaFunc(index,items.id)">修 改
+              </el-button>
+              <el-button type="danger"
+                         v-if="idArr[index]!==undefined && maxPatient[index] !== undefined && new Date(addDoctorRotaDate) > (new Date()/1000 + 86400)*1000"
+                         size="small"
+                         @click="cancelTargetDoctorRotaFunc(index)">撤 销
+              </el-button>
+            </el-row>
+          </el-row>
+        </el-card>
+      </el-col>
+    </el-row>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="flagAddDoctorRota=false">取 消</el-button>
-      <el-button type="primary" @click="flagAddDoctorRota=false">确 定</el-button>
+      <el-button type="primary" @click="flagAddDoctorRotaDialog=false">确 定</el-button>
     </div>
   </el-dialog>
 

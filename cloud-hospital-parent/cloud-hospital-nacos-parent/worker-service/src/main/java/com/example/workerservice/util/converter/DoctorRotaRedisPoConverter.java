@@ -5,7 +5,6 @@ import com.example.workerservice.outlet.dao.redis.po.DoctorRotaRedisPo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +44,7 @@ public class DoctorRotaRedisPoConverter {
         /* 实例化 */
         DoctorRotaRedisPo doctorRotaRedisPo = new DoctorRotaRedisPo();
         /* 赋值 */
+        doctorRotaRedisPo.setMaxpatient(doctorRotaPo.getMaxpatient());
         doctorRotaRedisPo.setDoctorid(doctorRotaPo.getDoctorid());
         doctorRotaRedisPo.setRotatype(doctorRotaPo.getRotatype());
         doctorRotaRedisPo.setDoctorAvatar(doctorRotaPo.getWorkerInfoPo().getAvatar());

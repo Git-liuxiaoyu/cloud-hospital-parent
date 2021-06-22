@@ -9,7 +9,7 @@ import com.example.takenumberservice.outlet.dao.mysql.Proofdao;
 import com.example.takenumberservice.outlet.dao.mysql.pojo.ProofPo;
 import com.example.takenumberservice.outlet.mq.SendMsg;
 import com.example.takenumberservice.outlet.mq.pojo.MqPo;
-import com.example.takenumberservice.service.command.addProof.ProofCommand;
+import com.example.takenumberservice.service.command.addCallProof.ProofCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

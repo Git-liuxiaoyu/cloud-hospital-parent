@@ -25,4 +25,6 @@ public class OutRoomVo {
 
     private String status;
 
+    public static final String STATUS_NORMAL = "1";
+
 }

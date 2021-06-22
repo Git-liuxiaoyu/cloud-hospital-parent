@@ -19,9 +19,13 @@ public class DistributedLock {
     private final static long default_try_interval_millis = 100L;       // 默认 100ms 尝试一次获得锁
     private final static long default_lock_expire_millis = 3 * 1000L;   // 单个业务持有锁的时间3秒
 
+    /*　k-v 中的 key　*/
     private String name;
+    /* k-v 中的 value */
     private String value;
+    /* 过期时间 */
     private long lockExpireTime;
+    /* 过期时间单位 */
     private TimeUnit timeUnit;
 
     private StringRedisTemplate redisTemplate;
