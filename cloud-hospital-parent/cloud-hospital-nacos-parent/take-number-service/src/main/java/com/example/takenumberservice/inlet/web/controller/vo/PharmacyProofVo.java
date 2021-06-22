@@ -1,20 +1,21 @@
 package com.example.takenumberservice.inlet.web.controller.vo;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 药房取票凭证表Vo
+ */
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class ProofControllerVo {
+public class PharmacyProofVo {
+
     private Integer id;//id
-    private Integer regId;//挂号id
-    private String no;//取票码
-    private Integer departmentId;//可是id
-    private String roomName;//房间名
+    private String no;//取票no
     private Integer orderNum;//排队序号
     private String createTime;//取票时间
-    private char status;//取票状态
 
 }

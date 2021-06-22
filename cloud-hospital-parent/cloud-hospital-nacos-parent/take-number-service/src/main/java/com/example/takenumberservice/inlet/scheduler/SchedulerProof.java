@@ -1,6 +1,7 @@
-package com.example.takenumberservice.inlet.web.scheduler;
+package com.example.takenumberservice.inlet.scheduler;
 
 
+import com.example.takenumberservice.outlet.dao.mysql.PharmacyProofDao;
 import com.example.takenumberservice.outlet.dao.mysql.Proofdao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,16 @@ public class SchedulerProof {
     @Autowired
     private Proofdao proofDao;
 
+    @Autowired
+    private PharmacyProofDao pharmacyProofDao;
+
     /**
      * 定时删除整张取票凭证表
      */
     @Scheduled(cron="0 0 0 * * ?")//每天0点执行一次
     public void deleTable(){
         proofDao.delete();
+        pharmacyProofDao.delete();
         log.info("24点，删除整表");
     }
 

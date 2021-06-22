@@ -1,7 +1,7 @@
 package com.example.takenumberservice.service.command.findregister;
 
 import com.example.takenumberservice.inlet.web.ResponseResult;
-import com.example.takenumberservice.service.command.addProof.ProofCommand;
+import com.example.takenumberservice.service.command.addCallProof.ProofCommand;
 import com.example.takenumberservice.util.ApplicationContextHolder;
 import lombok.AllArgsConstructor;
 import lombok.Data;

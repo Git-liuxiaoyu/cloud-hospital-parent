@@ -3,19 +3,13 @@ package com.example.takenumberservice.adapter;
 import com.example.takenumberservice.inlet.web.ResponseResult;
 import com.example.takenumberservice.outlet.client.register.RegisterServiceClient;
 import com.example.takenumberservice.outlet.client.register.pojo.Register;
-import com.example.takenumberservice.outlet.client.room.pojo.OutRoomVo;
 import com.example.takenumberservice.outlet.dao.redis.ProofRedisDao;
 import com.example.takenumberservice.outlet.dao.redis.pojo.ProofRedisPo;
-import com.example.takenumberservice.service.command.addProof.ProofCommand;
 import com.example.takenumberservice.service.command.findregister.RegisterCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -102,6 +96,6 @@ public class RegisterAdapter {
 
     public void updatebyid(Long id ,Integer status){
         System.out.println("修改挂号状态");
-        //registerServiceClient.updatestatus(id,status);
+        registerServiceClient.updatestatus(id,status);
     }
 }
