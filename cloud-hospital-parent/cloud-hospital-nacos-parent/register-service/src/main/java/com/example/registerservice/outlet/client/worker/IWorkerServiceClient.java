@@ -19,7 +19,7 @@ import java.util.List;
  * @Date: 2021/06/18/14:11
  * @Description: 调用门诊微服务的Client
  */
-@FeignClient("worker-service")
+@FeignClient("cs")
 public interface IWorkerServiceClient {
 
     @PostMapping("/division/all")
@@ -33,7 +33,6 @@ public interface IWorkerServiceClient {
      *
      * @param rotaIdList
      */
-    @PostMapping("view/list/reg")
-    public ResponseResult<List<DoctorRotaClientPo>> getDoctorRotaByRotaIdList(@RequestBody List<String> rotaIdList);
-
+    @GetMapping("rota/doctor/view/list/reg/{idList}")
+    public ResponseResult<List<DoctorRotaClientPo>> findDoctorRotaListByIdList(@PathVariable("idList") List<String> rotaIdList);
 }

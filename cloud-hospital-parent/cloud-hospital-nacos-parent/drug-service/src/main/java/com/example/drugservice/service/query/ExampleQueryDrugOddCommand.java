@@ -33,11 +33,18 @@ public class ExampleQueryDrugOddCommand {
         this.no = no;
 
     }
-
+    //查集合
     public List<DrugOddVo> execute(){
 
         List<DrugOddVo> list = handle.findList(this);
         return list;
     }
+
+    //查对象
+    public DrugOddVo getByNo(){
+          return   handle.getByNo(this.no);
+    }
+
+
 }
 

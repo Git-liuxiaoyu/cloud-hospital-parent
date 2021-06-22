@@ -7,16 +7,23 @@ import com.example.takenumberservice.outlet.client.drugodd.DrugoddClient;
 import com.example.takenumberservice.outlet.dao.mysql.PharmacyProofDao;
 import com.example.takenumberservice.outlet.dao.mysql.pojo.PharmacyProofPo;
 import com.example.takenumberservice.outlet.dao.mysql.pojo.ProofPo;
+import com.example.takenumberservice.outlet.dao.redis.PharmacyRedisDao;
+import com.example.takenumberservice.outlet.dao.redis.pojo.PharmacyRedisPo;
+import com.example.takenumberservice.outlet.dao.redis.pojo.ProofRedisPo;
 import com.example.takenumberservice.outlet.mq.SendMsg;
 import com.example.takenumberservice.service.command.addCallProof.ProofCommand;
 import com.example.takenumberservice.service.command.addPharmacyProof.PharmacyProofCommand;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
  * 药房取票适配器层
  */
 @Repository
+@Slf4j
 public class PharmacyProofDaoAdapter {
 
     @Autowired
@@ -26,7 +33,7 @@ public class PharmacyProofDaoAdapter {
     private ProofConverter proofConverter;
 
     @Autowired
-    private DrugoddClient drugoddClient;
+    private PharmacyRedisDao pharmacyRedisDao;
 
     @Autowired
     private SendMsg sendMsg;
@@ -79,4 +86,29 @@ public class PharmacyProofDaoAdapter {
         sendMsg.Sendpharmacy(orderNo,No);
 
     }
+
+
+
+    //查询redis中是否有no
+    public boolean findNoRedis(String no) {
+        Optional<PharmacyRedisPo> byId = pharmacyRedisDao.findById(no);
+        System.out.println("redis中查的"+byId.isPresent());
+        if(byId.isPresent()){
+            log.info("已查询出redis存在该数据no:{}",byId.get().getNo());
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    //把no存入redis
+    public void addNoRedis(String no) {
+        PharmacyRedisPo redisPo = new PharmacyRedisPo(no);
+        pharmacyRedisDao.save(redisPo);
+        log.info("执行保存no功能{}",no);
+    }
+
+
+
+
 }

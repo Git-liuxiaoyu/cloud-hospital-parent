@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IExampleQueryOutPatientCommandHandle {
     List<OutPatientVo> findByExample(ExampleQueryOutPatientCommand command);
+
+    OutPatientVo getById (Long id);
 }

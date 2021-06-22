@@ -19,4 +19,9 @@ public class ExampleQueryOutPatientCommandHandle implements IExampleQueryOutPati
     public List<OutPatientVo> findByExample(ExampleQueryOutPatientCommand command) {
         return adapt.findByExample(command);
     }
+
+    @Override
+    public OutPatientVo getById(Long id) {
+        return adapt.getById(id);
+    }
 }

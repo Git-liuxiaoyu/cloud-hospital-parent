@@ -22,14 +22,9 @@ public class DrugOddController {
 
     @RequestMapping("/drugodd/list")
     public ResponseResult<PageInfo<DrugOddVo>> findList(@RequestBody ExampleQueryDrugOddCommand command){
-        System.out.println(command);
-
         List<DrugOddVo> drugOddVos = command.execute();
-
         PageUtils<DrugOddVo> pageUtils = new PageUtils<>();
-
         PageInfo<DrugOddVo> pageInfo = pageUtils.getPageInfo(command.getPageIndex(), command.getPageSize(), drugOddVos);
-
         return new ResponseResult<>(200,"success",pageInfo);
     }
 
@@ -45,6 +40,18 @@ public class DrugOddController {
     public ResponseResult<String> addDrugOdd(@RequestBody AddDrugOddCommand command){
         command.execute();
         return  new ResponseResult<>(200,"success","添加成功");
+    }
+
+    //根据编号查询药品单
+    @RequestMapping("/drugOdd/byNo/{no}")
+    public ResponseResult<Void> getByNo(@PathVariable String no){
+        ExampleQueryDrugOddCommand command =new ExampleQueryDrugOddCommand();
+        command.setNo(no);
+        DrugOddVo vo = command.getByNo();
+        if (vo==null){
+            return new ResponseResult<>(500,"success",null);
+        }
+        return new ResponseResult<>(200,"success",null);
     }
 
 }

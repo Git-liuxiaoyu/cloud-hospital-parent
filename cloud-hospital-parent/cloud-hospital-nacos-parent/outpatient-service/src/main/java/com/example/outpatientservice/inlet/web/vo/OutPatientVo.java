@@ -13,10 +13,17 @@ import java.util.Date;
 @ToString
 public class OutPatientVo {
     private Long id;
+    private String patientno;
+    private String patientname;
+    private String gender;
+    private String idcard;
+    private String patientage;
     private Long registerid;
     private Long patientid;
+    private Long departmentid;
     private Long doctorid;
+    private Long rotaid;
     private String status;
-    private Long orderno;
-    private Date endtime;
+    private Long queueno;
+    private String medicard;
 }

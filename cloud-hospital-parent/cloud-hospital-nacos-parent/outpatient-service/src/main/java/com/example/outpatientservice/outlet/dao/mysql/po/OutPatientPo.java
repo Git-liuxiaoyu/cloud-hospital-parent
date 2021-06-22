@@ -1,24 +1,33 @@
 package com.example.outpatientservice.outlet.dao.mysql.po;
 
-import lombok.ToString;
-
-import java.util.Date;
-
-@ToString
 public class OutPatientPo {
     private Long id;
+
+    private String patientno;
+
+    private String patientname;
+
+    private String gender;
+
+    private String idcard;
+
+    private String patientage;
 
     private Long registerid;
 
     private Long patientid;
 
+    private Long departmentid;
+
     private Long doctorid;
+
+    private Long rotaid;
 
     private String status;
 
-    private Long orderno;
+    private Long queueno;
 
-    private Date endtime;
+    private String medicard;
 
     private String param1;
 
@@ -34,6 +43,46 @@ public class OutPatientPo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPatientno() {
+        return patientno;
+    }
+
+    public void setPatientno(String patientno) {
+        this.patientno = patientno == null ? null : patientno.trim();
+    }
+
+    public String getPatientname() {
+        return patientname;
+    }
+
+    public void setPatientname(String patientname) {
+        this.patientname = patientname == null ? null : patientname.trim();
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender == null ? null : gender.trim();
+    }
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard == null ? null : idcard.trim();
+    }
+
+    public String getPatientage() {
+        return patientage;
+    }
+
+    public void setPatientage(String patientage) {
+        this.patientage = patientage == null ? null : patientage.trim();
     }
 
     public Long getRegisterid() {
@@ -52,12 +101,28 @@ public class OutPatientPo {
         this.patientid = patientid;
     }
 
+    public Long getDepartmentid() {
+        return departmentid;
+    }
+
+    public void setDepartmentid(Long departmentid) {
+        this.departmentid = departmentid;
+    }
+
     public Long getDoctorid() {
         return doctorid;
     }
 
     public void setDoctorid(Long doctorid) {
         this.doctorid = doctorid;
+    }
+
+    public Long getRotaid() {
+        return rotaid;
+    }
+
+    public void setRotaid(Long rotaid) {
+        this.rotaid = rotaid;
     }
 
     public String getStatus() {
@@ -68,20 +133,20 @@ public class OutPatientPo {
         this.status = status == null ? null : status.trim();
     }
 
-    public Long getOrderno() {
-        return orderno;
+    public Long getQueueno() {
+        return queueno;
     }
 
-    public void setOrderno(Long orderno) {
-        this.orderno = orderno;
+    public void setQueueno(Long queueno) {
+        this.queueno = queueno;
     }
 
-    public Date getEndtime() {
-        return endtime;
+    public String getMedicard() {
+        return medicard;
     }
 
-    public void setEndtime(Date endtime) {
-        this.endtime = endtime;
+    public void setMedicard(String medicard) {
+        this.medicard = medicard == null ? null : medicard.trim();
     }
 
     public String getParam1() {

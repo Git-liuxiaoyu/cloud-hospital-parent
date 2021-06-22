@@ -78,5 +78,13 @@ public class DrugOddAdapt {
         return id;
     }
 
+    //根据编号查询
+    public DrugOddVo getByNo(String no){
+      DrugOddPo po=  drugOddDao.selectByNo(no);
+      DrugOddVo vo = new DrugOddVo();
+      BeanUtils.copyProperties(po,vo);
+      return vo;
+    }
+
 
 }
