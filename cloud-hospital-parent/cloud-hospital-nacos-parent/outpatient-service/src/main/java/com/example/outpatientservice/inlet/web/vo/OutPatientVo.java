@@ -13,6 +13,7 @@ import java.util.Date;
 @ToString
 public class OutPatientVo {
     private Long id;
+    private Long outPatientRecordId;
     private String patientno;
     private String patientname;
     private String gender;

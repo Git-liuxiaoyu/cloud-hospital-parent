@@ -15,7 +15,6 @@ import java.util.List;
 @ToString
 public class ExampleQueryOutPatientCommand {
     private String patientName;
-
     //根据患者id拿到患者信息
     private Long patientId;
 
