@@ -1,0 +1,15 @@
+server:
+  port: 6003
+spring:
+  application:
+    name: pay-service
+  datasource:
+    #   - 配置数据库驱动：
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #   - 配置数据源名称
+    name: defaultDataSource
+    #   - 配置数据库用户名&密码：
+    password: root
+    username: root
+    #   - 配置数据库连接地址
+    url: jdbc:mysql://1.117.97.60:3307/h_takenumber?serverTimezone=UTC
