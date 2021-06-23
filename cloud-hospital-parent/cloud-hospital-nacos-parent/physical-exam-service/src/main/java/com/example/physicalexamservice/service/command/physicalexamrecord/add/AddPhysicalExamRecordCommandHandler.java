@@ -52,8 +52,10 @@ public class AddPhysicalExamRecordCommandHandler implements IAddPhysicalExamReco
         command.setId(recordId);
         /* 取出集合 */
         List<AddPhysicalExamRecordCommand.InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList = command.getInnerAddPhysicalExamRecordDetailPoList();
-        /* 补充价格 */
-        physicalExamDaoAdapter.setListPrice(innerAddPhysicalExamRecordDetailPoList);
+        /* 补充价格,减少库存 */
+        physicalExamDaoAdapter.setListPriceAndUpdateStock(innerAddPhysicalExamRecordDetailPoList);
+        /* LOG */
+        log.debug("{}",innerAddPhysicalExamRecordDetailPoList);
         /* 调用 RecordDetail 添加方法 */
         physicalExamRecordDetailDaoAdapter.addFromTreat(innerAddPhysicalExamRecordDetailPoList, recordId, PhysicalExamRecordDetailVo.STATUS_NOTEXAM);
         /* 返回主键 */

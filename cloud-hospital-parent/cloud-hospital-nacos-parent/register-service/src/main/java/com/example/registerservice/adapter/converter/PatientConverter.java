@@ -2,6 +2,7 @@ package com.example.registerservice.adapter.converter;
 
 import com.example.registerservice.inlet.web.vo.PatientVo;
 import com.example.registerservice.outlet.dao.mysql.po.PatientMysqlPo;
+import com.example.registerservice.service.command.updatepatient.UpdatePatientCommand;
 import com.example.registerservice.service.query.querypatient.domain.Patient;
 import lombok.Data;
 import org.springframework.stereotype.Component;
@@ -46,5 +47,21 @@ public class PatientConverter {
         vo.setCreatetime(patient.getCreatetime());
         vo.setMedicard(patient.getMedicard());
         return vo;
+    }
+
+
+    /**
+     *
+     * @param command
+     * @return
+     */
+    public PatientMysqlPo converter(UpdatePatientCommand command) {
+        PatientMysqlPo po = new PatientMysqlPo();
+        po.setName(command.getName());
+        po.setAge(command.getAge());
+        po.setGender(command.getGender());
+        po.setPhone(command.getPhone());
+        po.setIdentityid(command.getIdentityId());
+        return po;
     }
 }

@@ -2,6 +2,7 @@ package com.example.takenumberservice.adapter;
 
 import com.example.takenumberservice.inlet.web.ResponseResult;
 import com.example.takenumberservice.outlet.client.register.RegisterServiceClient;
+import com.example.takenumberservice.outlet.client.register.pojo.QueryGetByIdVo;
 import com.example.takenumberservice.outlet.client.register.pojo.Register;
 import com.example.takenumberservice.outlet.dao.redis.ProofRedisDao;
 import com.example.takenumberservice.outlet.dao.redis.pojo.ProofRedisPo;
@@ -97,5 +98,28 @@ public class RegisterAdapter {
     public void updatebyid(Long id ,String status){
         System.out.println("修改挂号状态");
         registerServiceClient.updatestatus(id,status);
+    }
+
+
+    /**
+     * 向openfeign发送获取挂号信息请求
+     * @return
+     */
+
+    public QueryGetByIdVo findByRegId(Long regId){
+        try{
+            ResponseResult<QueryGetByIdVo> byRegId = registerServiceClient.findByRegId(regId);
+
+
+            if(byRegId.getCode() != 200){
+                return null;
+            }else{//如果请求成功返回数据
+                return byRegId.getData();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }

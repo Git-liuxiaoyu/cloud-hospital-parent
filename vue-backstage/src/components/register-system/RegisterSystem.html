@@ -1,0 +1,94 @@
+<div>
+  <el-row :gutter="20">
+    <el-col :span="6">
+      <el-form ref="form" :model="form" label-width="100px">
+
+        <el-form-item label="挂号时间:">
+          <el-select v-model="form.redisterTimeValue">
+            <el-option v-for="item in redisterTime" :key="item.id" :label="item.value" :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="科目:">
+          <el-select v-model="form.subjectValue">
+            <el-option v-for="item in subject" :key="item.id" :label="item.name" :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="医生类别:">
+          <el-select v-model="form.doctorTypeValue">
+            <el-option v-for="item in doctorType" :key="item.id" :label="item.value" :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="医生:">
+          <el-select v-model="form.doctorValue">
+            <el-option v-for="item in xx" :key="item.id" :label="item.name" :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+    </el-col>
+
+
+    <el-col :span="16" :push="2">
+
+      <el-form :model="identityId" label-width="80px" :rules="identity" ref="identity">
+        <el-col :span="12">
+          <el-form-item prop="identityId" label="身份证号">
+            <el-input v-model="identityId.identityId" placeholder="请输入身份证"></el-input>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="8" :push="4">
+          <el-button type="primary" @click="getPatientItem('identity')">查询患者信息</el-button>
+        </el-col>
+      </el-form>
+
+      <br/><br/><br/>
+
+      <el-form :model="patient" label-width="80px" :rules="rules" ref="rules">
+        <div v-if="showPatient">
+          <el-col :span="12">
+            <el-form-item prop="name" label="患者姓名">
+              <el-input v-model="patient.name" placeholder="请输入姓名"></el-input>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item prop="age" label="患者年龄">
+              <el-input v-model="patient.age" placeholder="请输入年龄"></el-input>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item prop="gender" label="患者性别">
+              <el-radio-group v-model="patient.gender">
+                <el-radio label="0">男</el-radio>
+                <el-radio label="1">女</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item prop="phone" label="患者电话">
+              <el-input v-model="patient.phone" placeholder="请输入电话"></el-input>
+            </el-form-item>
+          </el-col>
+
+          <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+          <el-col :span="24" :push="7">
+            <el-button type="primary" @click="doPatient('rules')">添加患者信息</el-button>
+            <el-button type="warning" @click="updatePatient('rules')">修改患者信息</el-button>
+          </el-col>
+        </div>
+      </el-form>
+
+
+    </el-col>
+
+  </el-row>
+</div>

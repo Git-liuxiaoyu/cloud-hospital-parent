@@ -1,13 +1,12 @@
 package com.example.physicalexamservice.inlet.web.controller;
 
 import com.example.physicalexamservice.inlet.web.vo.ResponseResult;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.VoidType;
+import com.example.physicalexamservice.service.command.physicalexamrecord.add.AddPhysicalExamRecordCommand;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * 控制器类 - PhysicalExamRecord
@@ -18,20 +17,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @CrossOrigin
-@RequestMapping("physica/exam/record")
+@RequestMapping("physical/exam/record")
 public class PhysicalExamRecordController {
 
     /**
-     *
      * @return
      */
-    @GetMapping("add")
-    public ResponseResult<Void> addPhysicalExamRecord(){
+    @PostMapping("add")
+    public ResponseResult<Long> addPhysicalExamRecord(@Valid @RequestBody AddPhysicalExamRecordCommand command, BindingResult bindingResult) {
 
+        log.debug("{}",command);
 
+        /* 判断是否绑定错误 */
+        if (bindingResult.hasErrors()) {
+            throw new IllegalArgumentException("获取信息失败 | 参数异常");
+        }
 
-        /* 返回 */
-        return ResponseResult.SUCCESS;
+//        return ResponseResult.SUCCESS;
+
+        /* 执行命令并返回 */
+        return new ResponseResult<>(command.execute());
     }
 
 

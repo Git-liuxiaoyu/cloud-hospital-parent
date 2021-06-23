@@ -43,3 +43,26 @@ spring:
     port: 6379
     # 连接超时时间（毫秒）
     timeout: 1000
+  #spring-cloud的配置
+  cloud:
+    # nacos 配置
+    nacos:
+      discovery:
+        namespace: public
+        password: nacos
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        group: group3
+
+#日志配置
+logging:
+  level:
+    root: WARN
+    com.example: DEBUG
+  pattern:
+    console: "${CONSOLE_LOG_PATTERN:\
+      %clr(${LOG_LEVEL_PATTERN:%5p}) \
+      %clr(|){faint} \
+      %clr(%-40.40logger{39}){cyan} \
+      %clr(:){faint} \
+      %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}}"

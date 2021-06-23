@@ -46,7 +46,7 @@ public class PharmacyProofCommandHandle implements com.example.takenumberservice
             addProof.setCreateTime(thistime);
             int i = pharmacyProofDaoAdapter.addProof(addProof);
             if(i>0){
-                proofDaoAdapter.sendPharmacy(integer+1, addProof.getNo());//发送消息
+                pharmacyProofDaoAdapter.sendPharmacy(integer+1, addProof.getNo());//发送消息
 
                 //存入redis
                 pharmacyProofDaoAdapter.addNoRedis(addProof.getNo());

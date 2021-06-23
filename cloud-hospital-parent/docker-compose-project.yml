@@ -1,5 +1,16 @@
 version: '3'
 services:
+  gateway-server:
+    build:
+      context: $PWD/cloud-hospital-gateway-server
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: cloud-hospital-gateway-server.jar
+    image: gateway-server
+    container_name: gateway-server-8080
+    network_mode: "host"
+    command: "--server.port=9527 --spring.profiles.active=pro"
+
   drug-service:
     build:
       context: $PWD/cloud-hospital-nacos-parent/drug-service

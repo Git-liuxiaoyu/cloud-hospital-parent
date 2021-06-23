@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -28,12 +29,16 @@ public class AddPhysicalExamRecordCommand {
 
     private Date createTime;
 
+    @NotNull
     private Long treatrecordid;
 
+    @NotNull
     private Integer doctorid;
 
+    @NotNull
     private Long patientid;
 
+    @NotNull
     private List<InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList;
 
     private IAddPhysicalExamRecordCommandHandler addPhysicalExamRecordCommandHandler;
@@ -45,7 +50,7 @@ public class AddPhysicalExamRecordCommand {
     @AllArgsConstructor
     @NoArgsConstructor
     @ToString
-    public class InnerAddPhysicalExamRecordDetailPo {
+    public static class InnerAddPhysicalExamRecordDetailPo {
 
         private Long id;
 
@@ -77,8 +82,7 @@ public class AddPhysicalExamRecordCommand {
         /* Event Bus 通知 添加到 ElasticSearch */
         /* 添加 Record */
         ApplicationContextHolder.getApplicationContext().publishEvent(new IPhysicalExamRecordEsEventPublisher.AddPhysicalExamRecordEsEvent(this));
-        /* 添加 RecordDetail */
-        ApplicationContextHolder.getApplicationContext().publishEvent(new IPhysicalExamRecordDetailEsEventPublisher.AddPhysicalExamRecordDetailEsEvent(this));
+
         /* 返回 */
         return recordId;
     }

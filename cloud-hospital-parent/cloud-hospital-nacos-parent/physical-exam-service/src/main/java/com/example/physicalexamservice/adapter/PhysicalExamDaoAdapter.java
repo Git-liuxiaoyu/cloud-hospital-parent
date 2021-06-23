@@ -113,23 +113,23 @@ public class PhysicalExamDaoAdapter {
      *
      * @param innerAddPhysicalExamRecordDetailPoList
      */
-    public void setListPrice(List<AddPhysicalExamRecordCommand.InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList) {
+    public void setListPriceAndUpdateStock(List<AddPhysicalExamRecordCommand.InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList) {
 
         /* 遍历赋值 */
         innerAddPhysicalExamRecordDetailPoList.forEach(i -> {
-            try {
-                /* 先查 Redis 中有无 */
-                PhysicalExamRedisPo physicalExamRedisPo = physicalExamRedisPoDao.findById(i.getExamid()).orElseThrow(NullPointerException::new);
-                i.setPrice(physicalExamRedisPo.getPrice());
-            } catch (NullPointerException e) {
-                /* 捕获异常到 MySQL中查 */
-                PhysicalExamMysqlPo physicalExamMysqlPo = physicalExamMysqlPoDao.selectByPrimaryKey(i.getExamid());
-                /* 判断为 null 时 , return */
-                if (physicalExamMysqlPo == null)
-                    return;
-                /* 赋值 */
-                i.setPrice(physicalExamMysqlPo.getPrice());
-            }
+            /*  MySQL中查 */
+            PhysicalExamMysqlPo physicalExamMysqlPo = physicalExamMysqlPoDao.selectByPrimaryKey(i.getExamid());
+            /* 判断为 null 时 , return */
+            if (physicalExamMysqlPo == null)
+                return;
+            /* 赋值 */
+            i.setPrice(physicalExamMysqlPo.getPrice());
+            physicalExamMysqlPo.setLeftstock(physicalExamMysqlPo.getLeftstock() - 1);
+            /* 存入 MySQL */
+            physicalExamMysqlPoDao.updateByPrimaryKeySelective(physicalExamMysqlPo);
+            /* 转RedisPo 存入Redis */
+            PhysicalExamRedisPo physicalExamRedisPo = physicalExamRedisPoConverter.convert(physicalExamMysqlPo);
+            physicalExamRedisPoDao.save(physicalExamRedisPo);
         });
     }
 }

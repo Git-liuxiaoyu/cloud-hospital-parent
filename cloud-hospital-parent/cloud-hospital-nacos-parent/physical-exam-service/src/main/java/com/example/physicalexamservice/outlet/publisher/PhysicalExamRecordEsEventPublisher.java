@@ -2,11 +2,13 @@ package com.example.physicalexamservice.outlet.publisher;
 
 import com.example.physicalexamservice.outlet.dao.es.PhysicalExamRecordEsPoDao;
 import com.example.physicalexamservice.outlet.dao.es.po.PhysicalExamRecordEsPo;
+import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordMysqlPo;
+import com.example.physicalexamservice.outlet.publisher.api.IPhysicalExamRecordDetailEsEventPublisher;
 import com.example.physicalexamservice.outlet.publisher.api.IPhysicalExamRecordEsEventPublisher;
 import com.example.physicalexamservice.service.command.physicalexamrecord.add.AddPhysicalExamRecordCommand;
+import com.example.physicalexamservice.util.ApplicationContextHolder;
 import com.example.physicalexamservice.util.converter.PhysicalExamRecordEsPoConverter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +34,22 @@ public class PhysicalExamRecordEsEventPublisher implements IPhysicalExamRecordEs
     }
     /* 构造注入 -END */
 
+
+    /**
+     * 修改支付状态
+     *
+     * @param event
+     */
+    @Override
+    public void updateStatus(UpdateStatusPhysicalExamRecordEsEvent event) {
+        /* 获得 Source */
+        PhysicalExamRecordMysqlPo physicalExamRecordMysqlPo = (PhysicalExamRecordMysqlPo) event.getSource();
+        /* 转换为 EsPo */
+        PhysicalExamRecordEsPo physicalExamRecordEsPo = physicalExamRecordEsPoConverter.convert(physicalExamRecordMysqlPo);
+        /* 存入 Es */
+        physicalExamRecordEsPoDao.save(physicalExamRecordEsPo);
+    }
+
     /**
      * 添加方法
      *
@@ -45,8 +63,11 @@ public class PhysicalExamRecordEsEventPublisher implements IPhysicalExamRecordEs
         /* 转换为 EsPo */
         PhysicalExamRecordEsPo physicalExamRecordEsPo = physicalExamRecordEsPoConverter.convert(command);
         /* Log */
-        log.info("存入 PhysicalExamRecordEsPo 到 Es - [{}]",physicalExamRecordEsPo);
+        log.info("存入 PhysicalExamRecordEsPo 到 Es - [{}]", physicalExamRecordEsPo);
         /* 保存 Es */
         physicalExamRecordEsPoDao.save(physicalExamRecordEsPo);
+
+        /* Event Bus 添加 RecordDetail */
+        ApplicationContextHolder.getApplicationContext().publishEvent(new IPhysicalExamRecordDetailEsEventPublisher.AddPhysicalExamRecordDetailEsEvent(command));
     }
 }

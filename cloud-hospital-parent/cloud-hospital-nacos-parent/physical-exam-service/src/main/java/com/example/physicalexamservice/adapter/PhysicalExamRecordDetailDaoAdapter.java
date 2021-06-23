@@ -47,6 +47,7 @@ public class PhysicalExamRecordDetailDaoAdapter {
             physicalExamRecordDetailMysqlPo.setStatus(status);
             physicalExamRecordDetailMysqlPo.setRecordid(recordId);
             physicalExamRecordDetailMysqlPo.setPrice(i.getPrice());
+            physicalExamRecordDetailMysqlPo.setTypeid(i.getTypeid());
             /* 调用方法添加 */
             physicalExamRecordDetailMysqlPoDao.insert(physicalExamRecordDetailMysqlPo);
             /* 储存主键 */

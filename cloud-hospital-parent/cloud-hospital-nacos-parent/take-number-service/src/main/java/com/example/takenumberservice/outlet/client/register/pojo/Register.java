@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -23,4 +24,7 @@ public class Register {
     private String visitSection;//就诊时间段（1、上午，2、下午）
     private BigDecimal price;//挂号费
     private String status;//挂号状态（0、未付款；1、以退款；2、付款失败；3、待初诊）
+
+
+
 }

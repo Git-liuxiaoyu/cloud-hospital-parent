@@ -20,6 +20,11 @@ export default new Router({
           path: '/doctor/rota',
           name: 'doctor-rota',
           component: () => import('@/components/doctor-rota/DoctorRota.vue')
+        },
+        {
+          path: '/register/system',
+          name: 'RegisterSystem',
+          component: () => import('@/components/register-system/RegisterSystem.vue')
         }
       ]
     }
