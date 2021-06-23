@@ -1,4 +1,12 @@
 spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: public
+        username: nacos
+        password: nacos
+        group: group3
   datasource:
     #   - 配置数据库驱动：
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -31,6 +39,14 @@ spring:
     password: xiaoyu
     port: 6379
     timeout: 1000
+
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+#        namespace: public
+#        password: nacos
+#        username: nacos
 
 
 
