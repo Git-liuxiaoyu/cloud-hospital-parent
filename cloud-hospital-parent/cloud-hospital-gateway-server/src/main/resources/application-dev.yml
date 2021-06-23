@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 1.117.97.60:8848
+        namespace: public
+        username: nacos
+        password: nacos

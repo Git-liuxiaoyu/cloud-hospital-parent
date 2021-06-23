@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: cloud-hospital-gateway-server
+  profiles:
+    active: dev
   cloud:
     gateway:
       discovery:
@@ -20,8 +22,8 @@ spring:
             # 跨域允许的有效期
             allow-credentials: true
             allowed-origins: '*'
-            allowed-headers: Content-Type,Content-Length, Authorization, Accept,X-Requested-With, BackLoginedToken
             allowed-methods: '*'
+            allowed-headers: Content-Type,Content-Length, Authorization, Accept,X-Requested-With, BackLoginedToken
             exposed-headers: Content-Type,Content-Length, Authorization, Accept,X-Requested-With, BackLoginedToken
             max-age: 3600
       default-filters:
