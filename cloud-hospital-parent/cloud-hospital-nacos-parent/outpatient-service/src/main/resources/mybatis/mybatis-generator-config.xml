@@ -53,9 +53,9 @@
         </javaClientGenerator>
 
         <!--生成对应表及类名-->
-        <table tableName="h_out_patient" catalog="h_outpatient"
-               domainObjectName="OutPatientPo"
-               mapperName="OutPatientDao"
+        <table tableName="h_out_patient_record" catalog="h_outpatient"
+               domainObjectName="OutPatientRecordPo"
+               mapperName="OutPatientRecordDao"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"

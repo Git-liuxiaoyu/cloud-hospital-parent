@@ -1,15 +1,4 @@
-server:
-  port: 9010
 spring:
-  application:
-    name: verification-code-service
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 1.117.97.60:8848
-        namespace: public
-        username: nacos
-        password: nacos
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: defaultDataSource

@@ -1,7 +1,12 @@
 spring:
-  profiles:
-    active: dev
-
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.172.0.163:8848
+        namespace: public
+        password: nacos
+        username: nacos
+#日志配置
 logging:
   level:
     root: WARN

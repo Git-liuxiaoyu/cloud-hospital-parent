@@ -1,22 +1,4 @@
-# MyBatis 配置
-mybatis:
-  #   - 配置Mybatis的Mapper文件
-  mapper-locations: classpath:mapper/*.xml
-  #   - 配置Mybatis的实体目录
-  type-aliases-package: com.example.takenumberservice.outlet.dao.mysql.pojo
-server:
-    # 服务端口
-  port: 6001
-
 spring:
-  cloud:
-   nacos:
-    discovery:
-     namespace: public
-     password: nacos
-     server-addr: 1.117.97.60:8848
-     username: nacos
-     group: group3
   datasource:
     #   - 配置数据库驱动：
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -1,10 +1,20 @@
+server:
+  port: 7001
 spring:
   application:
-    name: pay-service
+    name: register-service
   profiles:
     active: dev
 
-# 日志配置
+# MyBatis 配置
+# MyBatis 配置
+mybatis:
+  #   - 配置Mybatis的Mapper文件
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  #   - 配置Mybatis的实体目录
+  type-aliases-package: com.example.registerservice.outlet.dao.mysql.po
+
+#日志配置
 logging:
   level:
     root: WARN

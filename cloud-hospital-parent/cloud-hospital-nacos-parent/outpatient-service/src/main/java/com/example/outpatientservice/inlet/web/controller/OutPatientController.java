@@ -36,11 +36,11 @@ public class OutPatientController {
         return new ResponseResult<>(200,"success",vo);
     }
 
-    @PostMapping("/outPatient/add/record")
-    public ResponseResult<String> addRecord(@RequestBody AddOutPatientRecordCommand command){
-        log.info("command为{}",command);
-        return new ResponseResult<>(200,"success",null);
-    }
+//    @PostMapping("/outPatient/add/record")
+//    public ResponseResult<String> addRecord(@RequestBody AddOutPatientRecordCommand command){
+//        log.info("command为{}",command);
+//        return new ResponseResult<>(200,"success",null);
+//    }
 
     //过号修改状态
     @PostMapping("/outpatient/update")
