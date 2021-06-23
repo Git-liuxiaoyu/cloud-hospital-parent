@@ -5,12 +5,17 @@ import com.example.registerservice.adapter.converter.PatientServicePoConverter;
 import com.example.registerservice.adapter.exception.AdapterException;
 import com.example.registerservice.outlet.dao.mysql.PatientMysqlDao;
 import com.example.registerservice.outlet.dao.mysql.po.PatientMysqlPo;
+import com.example.registerservice.outlet.dao.mysql.po.PatientMysqlPoExample;
 import com.example.registerservice.service.command.addpatient.AddPatientCommand;
+import com.example.registerservice.service.command.updatepatient.UpdatePatientCommand;
 import com.example.registerservice.service.query.querypatient.QueryPatientByIdCommand;
+import com.example.registerservice.service.query.querypatient.QueryPatientByIdentityIdCommand;
 import com.example.registerservice.service.query.querypatient.domain.Patient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -49,7 +54,7 @@ public class PatientAdepter {
     }
 
     /**
-     * 查询患者信息
+     * 根据患者id查询患者信息
      *
      * @param command
      * @return
@@ -63,5 +68,43 @@ public class PatientAdepter {
         }
         Patient converter = patientConverter.converter(mysqlPo);
         return converter;
+    }
+
+    /**
+     * 根据患者身份证查询患者信息
+     *
+     * @param command
+     * @return
+     */
+    public Patient selectGetPatientByIdentityId(QueryPatientByIdentityIdCommand command) {
+        PatientMysqlPoExample example = new PatientMysqlPoExample();
+        example.createCriteria().andIdentityidEqualTo(command.getIdentityId());
+        List<PatientMysqlPo> patientMysqlPos = mysqlDao.selectByExample(example);
+        //判断一下patientMysqlPos是不是空
+        if (!patientMysqlPos.isEmpty()) {
+            Patient converter = patientConverter.converter(patientMysqlPos.get(0));
+            log.debug("根据身份证{}查询到该患者信息{}", command.getIdentityId(), converter);
+            return converter;
+        } else {
+            log.debug("根据身份证{}没有查询到该患者信息", command.getIdentityId());
+            throw new NullPointerException();
+        }
+    }
+
+
+    /**
+     * 事务对象转换为mysql对象
+     *
+     * @param command
+     * @return
+     */
+    public void update(UpdatePatientCommand command) {
+        PatientMysqlPoExample example = new PatientMysqlPoExample();
+        PatientMysqlPo converter = patientConverter.converter(command);
+        example.createCriteria().andIdEqualTo(command.getId());
+        int i = mysqlDao.updateByExampleSelective(converter, example);
+        if (i == 0) {
+            throw new AdapterException();
+        }
     }
 }

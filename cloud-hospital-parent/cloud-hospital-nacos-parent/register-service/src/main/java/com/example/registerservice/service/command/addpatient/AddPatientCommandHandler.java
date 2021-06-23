@@ -28,6 +28,9 @@ public class AddPatientCommandHandler implements IAddPatientCommandHandler {
      */
     @Override
     public Long action(AddPatientCommand command) {
+        /**
+         * 先查询一下看看病人的身份证存不存在
+         */
         Long patientId = adepter.insert(command);
         return patientId;
     }
