@@ -76,3 +76,4 @@ services:
     container_name: worker-service-8085
     network_mode: "host"
     command: "--server.port=8085 --spring.profiles.active=pro"
+
