@@ -3,6 +3,8 @@ package com.example.workerservice.service.command.doctorrota.regquery;
 import com.example.workerservice.inlet.web.vo.DoctorRotaVo;
 import com.example.workerservice.service.api.doctorrota.IRegQueryDoctorRotaCommandHandler;
 import com.example.workerservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
 
@@ -19,14 +21,18 @@ import java.util.List;
  */
 @Data
 @ToString
+@ApiModel
 public class RegQueryDoctorRotaCommand {
 
     @NotNull
+    @ApiModelProperty(value = "想要挂号的日期(yyyy-MM-dd)", example = "2021-06-23",required = true)
     private Date date;
 
     @NotNull
+    @ApiModelProperty(value = "想要挂号的科室主键ID", example = "1",required = true)
     private Integer departmentId;
 
+    @ApiModelProperty(hidden = true)
     private IRegQueryDoctorRotaCommandHandler regQueryDoctorRotaCommandHandler;
 
     public RegQueryDoctorRotaCommand() {

@@ -1,5 +1,7 @@
 package com.example.workerservice.inlet.web.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,16 +17,22 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@ApiModel
 public class DoctorRotaSetVo {
 
+    @ApiModelProperty(value = "医生排班的主键ID", example = "1")
     private Long id;
 
+    @ApiModelProperty(value = "排班的房间主键ID", example = "1")
     private Integer roomid;
 
+    @ApiModelProperty(value = "医生主键ID", example = "1")
     private Integer doctorid;
 
+    @ApiModelProperty(value = "单次排班最大看诊人数", example = "1")
     private Integer maxpatient;
 
+    @ApiModelProperty(value = "排班的状态", example = "1")
     private String status;
 
     public static final String STATUS_NORMAL = "1";

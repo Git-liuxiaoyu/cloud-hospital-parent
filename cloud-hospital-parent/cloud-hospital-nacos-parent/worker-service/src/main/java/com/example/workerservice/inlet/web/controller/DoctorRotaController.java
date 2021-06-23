@@ -11,6 +11,9 @@ import com.example.workerservice.service.command.doctorrota.regquery.RegQueryDoc
 import com.example.workerservice.service.command.doctorrota.rotaquery.RotaQueryDoctorRotaCommand;
 import com.example.workerservice.service.command.doctorrota.update.UpdateDoctorRotaCommand;
 import com.example.workerservice.util.HttpUtil;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +42,7 @@ public class DoctorRotaController {
      * @return
      */
     @PostMapping("reg/back")
+    @ApiOperation(value = "后台挂号获得排班信息[暂未写完]", notes = "通过[日期]、[科室ID]获得当前科室、当日下的所有排班信息以供挂号", produces = "application/json", response = ResponseResult.class)
     public ResponseResult<List<DoctorRotaVo>> backRegGetDoctorRotaList(@Valid @RequestBody RegQueryDoctorRotaCommand command, BindingResult bindingResult) {
         /* 判断是否有绑定错误 */
         if (bindingResult.hasErrors()) {
@@ -57,6 +61,7 @@ public class DoctorRotaController {
      * @return
      */
     @PostMapping("reg")
+    @ApiOperation(value = "前台前端挂号获得排班信息", notes = "通过[日期]、[科室ID]获得当前科室、当日下的所有排班信息以供挂号", produces = "application/json", response = ResponseResult.class)
     public ResponseResult<List<DoctorRotaVo>> regGetDoctorRotaList(@Valid @RequestBody RegQueryDoctorRotaCommand command, BindingResult bindingResult) {
         /* 判断是否有绑定错误 */
         if (bindingResult.hasErrors()) {
@@ -73,6 +78,10 @@ public class DoctorRotaController {
      * @return
      */
     @GetMapping("cancel/{rotaId}")
+    @ApiOperation(value = "撤销医生排班", notes = "通过排班的主键ID,将该排班状态改为[撤销]", produces = "application/json", response = ResponseResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "rotaId", value = "医生排班表主键ID", required = true, dataType = "Long", paramType = "path")
+    })
     public ResponseResult<Void> cancelDoctorRota(@PathVariable("rotaId") Long rotaId) {
         /* LOG */
         log.info("取消的医生排班为 rotaId -> [{}]", rotaId);
@@ -92,6 +101,7 @@ public class DoctorRotaController {
      * @return
      */
     @PostMapping("add")
+    @ApiOperation(value = "添加医生排班", notes = "[选择的医生]、[选择的日期]、[选择排班在上午还是在下午]、[每班最大的看诊人数]、[科室ID]、[选择门诊部排班还是住院部排班]、[在哪个房间看诊]创建排班", produces = "application/json", response = ResponseResult.class)
     public ResponseResult<Long> addDoctorRota(@Valid @RequestBody AddDoctorRotaCommand command, BindingResult bindingResult, HttpServletRequest request) {
         /* 判断是否有绑定错误 */
         if (bindingResult.hasErrors()) {
@@ -116,10 +126,11 @@ public class DoctorRotaController {
      * @return
      */
     @PostMapping("update")
+    @ApiOperation(value = "修改医生排班", notes = "通过[医生排班主键ID],找到对应的医生排班信息,修改其[排班医生]、[最大看诊人数]", produces = "application/json", response = ResponseResult.class)
     public ResponseResult<Void> updateDoctorRota(@Valid @RequestBody UpdateDoctorRotaCommand command, BindingResult bindingResult, HttpServletRequest request) {
         /* 判断是否有绑定错误 */
         if (bindingResult.hasErrors()) {
-            throw new IllegalArgumentException("添加排班失败 | 参数异常");
+            throw new IllegalArgumentException("修改排班失败 | 参数异常");
         }
 
         /* LOG */
@@ -144,6 +155,7 @@ public class DoctorRotaController {
      * @return
      */
     @PostMapping("view/set/rota")
+    @ApiOperation(value = "后台系统反显医生排班信息", notes = "通过[医生排班主键ID]集合,找到这些医生排班信息", produces = "application/json", response = ResponseResult.class)
     public ResponseResult<List<DoctorRotaSetVo>> rotaGetDoctorRotaList(@Valid @RequestBody RotaQueryDoctorRotaCommand command, BindingResult bindingResult) {
         /* 判断是否有绑定错误 */
         if (bindingResult.hasErrors()) {
@@ -160,9 +172,13 @@ public class DoctorRotaController {
      * @return
      */
     @GetMapping("view/list/reg/{idList}")
-    public ResponseResult<List<DoctorRotaVo>> findDoctorRotaListByIdList(@PathVariable("idList") List<Long> rotaIdList) {
+    @ApiOperation(value = "前台前端挂号系统查询历史挂号的排班信息", notes = "通过[医生排班主键ID]集合,找到这些医生排班信息", produces = "application/json", response = ResponseResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "idList", value = "[医生排班主键ID]集合", required = true, dataType = "List<Long>", paramType = "path")
+    })
+    public ResponseResult<List<DoctorRotaVo>> findDoctorRotaListByIdList(@PathVariable("idList") List<Long> idList) {
         /* 实例化命令实体类,执行命令并返回 */
-        return new ResponseResult<>(new QueryDoctorRotaListByIdListCommand(rotaIdList).execute());
+        return new ResponseResult<>(new QueryDoctorRotaListByIdListCommand(idList).execute());
     }
 
     /**
@@ -172,6 +188,10 @@ public class DoctorRotaController {
      * @return
      */
     @GetMapping("view/reg/{id}")
+    @ApiOperation(value = "前台根据[医生排班主键ID]获得该排班的信息", notes = "通过[医生排班主键ID],获得该排班的信息", produces = "application/json", response = ResponseResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "医生排班主键ID", required = true, dataType = "Long", paramType = "path")
+    })
     public ResponseResult<DoctorRotaVo> getDoctorRotaById(@PathVariable("id") Long id) {
         /* 实例化命令实体类,执行命令并返回 */
         return new ResponseResult<>(new QueryDoctorRotaByIdCommand(id).execute());

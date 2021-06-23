@@ -2,6 +2,8 @@ package com.example.workerservice.service.command.user.sendcode;
 
 import com.example.workerservice.service.api.user.ISendVerifyCodeCommandHandler;
 import com.example.workerservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,12 +15,15 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Slf4j
+@ApiModel
 public class SendVerifyCodeCommand {
 
     @NotBlank
     @NotNull
+    @ApiModelProperty(value = "员工工号", example = "STAFF20210616175114619751", required = true)
     private String workerNo;
 
+    @ApiModelProperty(hidden = true)
     private ISendVerifyCodeCommandHandler sendVerifyCodeCommandHandler;
 
     public SendVerifyCodeCommand() {

@@ -2,6 +2,8 @@ package com.example.workerservice.service.command.user.login;
 
 import com.example.workerservice.service.api.user.ILoginUserCommandHandler;
 import com.example.workerservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,20 +15,26 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @Slf4j
+@ApiModel
 public class LoginUserCommand {
 
     @NotNull
     @NotBlank
+    @ApiModelProperty(value = "用户的账号", example = "123", required = true)
     private String account;
 
     @NotNull
     @NotBlank
+    @ApiModelProperty(value = "用户的密码", example = "123123", required = true)
     private String password;
 
+    @ApiModelProperty(value = "用户的请求登录Token", example = "asd12312b3i123oh51")
     private String loginToken;
 
+    @ApiModelProperty(value = "用户的请求的IP", example = "127.0.0.1")
     private String ip;
 
+    @ApiModelProperty(hidden = true)
     private ILoginUserCommandHandler loginUserCommandHandler;
 
     public LoginUserCommand() {

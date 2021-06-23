@@ -3,6 +3,8 @@ package com.example.workerservice.inlet.web.controller;
 import com.example.workerservice.inlet.web.vo.DivisionVo;
 import com.example.workerservice.inlet.web.vo.ResponseResult;
 import com.example.workerservice.service.command.division.queryall.QueryAllDivisionCommand;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,7 @@ import java.util.List;
 @RequestMapping("division")
 @Slf4j
 @CrossOrigin
+@Api(value = "科室大类别(科目) - 接口", description = "科目 API")
 public class DivisionController {
 
     /**
@@ -27,6 +30,7 @@ public class DivisionController {
      * @return
      */
     @PostMapping("all")
+    @ApiOperation(value = "获取全部科室大类别(科目)", notes = "获取全部科室大类别(科目)", produces = "application/json", response = ResponseResult.class)
     public ResponseResult<List<DivisionVo>> getDivisionList(){
         QueryAllDivisionCommand command = new QueryAllDivisionCommand();
         /* 执行命令并返回值 */

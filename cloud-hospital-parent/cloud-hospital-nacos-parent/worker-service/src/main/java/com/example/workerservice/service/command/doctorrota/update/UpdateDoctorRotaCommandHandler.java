@@ -1,12 +1,16 @@
 package com.example.workerservice.service.command.doctorrota.update;
 
 import com.example.workerservice.adapter.DoctorRotaDaoAdapter;
+import com.example.workerservice.adapter.WorkerInfoDaoAdapter;
 import com.example.workerservice.inlet.web.vo.DoctorRotaSetVo;
+import com.example.workerservice.inlet.web.vo.WorkerInfoVo;
 import com.example.workerservice.service.api.doctorrota.IUpdateDoctorRotaCommandHandler;
 import com.example.workerservice.util.DistributedLock;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -22,8 +26,11 @@ public class UpdateDoctorRotaCommandHandler implements IUpdateDoctorRotaCommandH
     /* 构造注入 - 开始 */
     private final DoctorRotaDaoAdapter doctorRotaDaoAdapter;
 
-    public UpdateDoctorRotaCommandHandler(DoctorRotaDaoAdapter doctorRotaDaoAdapter) {
+    private final WorkerInfoDaoAdapter workerInfoDaoAdapter;
+
+    public UpdateDoctorRotaCommandHandler(DoctorRotaDaoAdapter doctorRotaDaoAdapter, WorkerInfoDaoAdapter workerInfoDaoAdapter) {
         this.doctorRotaDaoAdapter = doctorRotaDaoAdapter;
+        this.workerInfoDaoAdapter = workerInfoDaoAdapter;
     }
     /* 构造注入 - 结束 */
 
@@ -37,6 +44,9 @@ public class UpdateDoctorRotaCommandHandler implements IUpdateDoctorRotaCommandH
             throw new DoctorIsRotedInOtherRoomException();
         }
 
+        /* 根据 createWorkerNo 查询所属 createDoctor */
+        WorkerInfoVo workerInfoVo = workerInfoDaoAdapter.queryByWorkerNo(command.getCreateWorkerNo());
+
         /* 获得分布式锁 */
         DistributedLock distributedLock = new DistributedLock("UPDATEROTA-" + command.getId(), UUID.randomUUID().toString());
 
@@ -44,7 +54,7 @@ public class UpdateDoctorRotaCommandHandler implements IUpdateDoctorRotaCommandH
         distributedLock.lock();
 
         /* 更新方法 */
-        doctorRotaDaoAdapter.updateDoctorRota(command.getId(), command.getDepartmentId(), command.getDoctorId(), command.getDate(), command.getRotaType(), command.getShiftType(), command.getMaxPatient(), command.getRoomId(), command.getCreateId(), command.getCreateTime(), command.getStatus());
+        doctorRotaDaoAdapter.updateDoctorRota(command.getId(), command.getDepartmentId(), command.getDoctorId(), command.getDate(), command.getRotaType(), command.getShiftType(), command.getMaxPatient(), command.getRoomId(), workerInfoVo.getId(), new Date(), command.getStatus());
 
         /* 解锁 */
         distributedLock.unlock();

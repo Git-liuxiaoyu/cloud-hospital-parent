@@ -8,7 +8,6 @@ spring:
         namespace: public
         username: nacos
         password: nacos
-        group: group3
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     name: defaultDataSource
