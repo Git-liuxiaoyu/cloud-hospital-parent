@@ -17,4 +17,6 @@ public class PhysicalExamRecordVo {
     /* 没有支付 */
     public static final String STATUS_NOTPAY = "9";
 
+    public static final String STATUS_PAYED = "8";
+
 }

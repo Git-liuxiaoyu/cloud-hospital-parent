@@ -2,6 +2,7 @@ package com.example.physicalexamservice.util.converter;
 
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordVo;
 import com.example.physicalexamservice.outlet.dao.es.po.PhysicalExamRecordEsPo;
+import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordMysqlPo;
 import com.example.physicalexamservice.service.command.physicalexamrecord.add.AddPhysicalExamRecordCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -37,4 +38,24 @@ public class PhysicalExamRecordEsPoConverter {
         return physicalExamRecordEsPo;
     }
 
+    /**
+     * PhysicalExamRecordMysqlPo -> PhysicalExamRecordEsPo
+     *
+     * @param physicalExamRecordMysqlPo
+     * @return
+     */
+    public PhysicalExamRecordEsPo convert(PhysicalExamRecordMysqlPo physicalExamRecordMysqlPo) {
+        /* 实例化 */
+        PhysicalExamRecordEsPo physicalExamRecordEsPo = new PhysicalExamRecordEsPo();
+        /* 赋值 */
+        physicalExamRecordEsPo.setTreatrecordid(physicalExamRecordMysqlPo.getTreatrecordid());
+        physicalExamRecordEsPo.setStatus(physicalExamRecordMysqlPo.getStatus());
+        physicalExamRecordEsPo.setPatientid(physicalExamRecordMysqlPo.getPatientid());
+        physicalExamRecordEsPo.setDoctorid(physicalExamRecordMysqlPo.getDoctorid());
+        physicalExamRecordEsPo.setCreatetime(physicalExamRecordMysqlPo.getCreatetime());
+        physicalExamRecordEsPo.setNo(physicalExamRecordMysqlPo.getNo());
+        physicalExamRecordEsPo.setId(physicalExamRecordMysqlPo.getId());
+        /* 返回 */
+        return physicalExamRecordEsPo;
+    }
 }

@@ -42,7 +42,7 @@ public class PhysicalExamRedisPoConverter {
      * @param physicalExamMysqlPo
      * @return
      */
-    private PhysicalExamRedisPo convert(PhysicalExamMysqlPo physicalExamMysqlPo) {
+    public PhysicalExamRedisPo convert(PhysicalExamMysqlPo physicalExamMysqlPo) {
         /* 实例化 */
         PhysicalExamRedisPo physicalExamRedisPo = new PhysicalExamRedisPo();
         /* 复制属性 */
