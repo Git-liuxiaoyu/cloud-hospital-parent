@@ -1,5 +1,6 @@
 package com.example.registerservice.adapter;
 
+import com.example.registerservice.adapter.converter.RegisterConverter;
 import com.example.registerservice.adapter.converter.RegisterServiceConverter;
 import com.example.registerservice.adapter.converter.RegisterVoConverter;
 import com.example.registerservice.adapter.exception.AdapterException;
@@ -16,10 +17,11 @@ import com.example.registerservice.service.command.addRegister.AddRegisterComman
 import com.example.registerservice.service.command.addphone.PushPhoneGoQueueCommand;
 import com.example.registerservice.service.command.updateregister.UpdateRegisterCommand;
 import com.example.registerservice.service.query.queryphoneandcode.QueryPhoneAndCodeCommand;
+import com.example.registerservice.service.query.queryregister.QueryRegisterByIdCommand;
 import com.example.registerservice.service.query.queryregister.QueryRegisterByPhoneCommand;
+import com.example.registerservice.service.query.queryregister.po.Register;
 import com.example.registerservice.service.query.queryregister.po.RegisterServicePo;
 import com.example.registerservice.util.ResponseResult;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -59,6 +61,9 @@ public class RegisterAdapter {
 
     @Autowired
     private IWorkerServiceClient client;
+
+    @Autowired
+    private RegisterConverter registerConverter;
 
 
     /**
@@ -162,15 +167,27 @@ public class RegisterAdapter {
         ResponseResult<List<DoctorRotaClientPo>> doctorRotaByRotaIdList = client.findDoctorRotaListByIdList(rotaIdList);
         List<DoctorRotaClientPo> data = doctorRotaByRotaIdList.getData();
 
-        for (int i = 0; i < converter.size(); i++) {
-            for (int j = 0; j < data.size(); j++) {
-                if (converter.get(i).getRotaId().equals(""+data.get(i).getId())) {
-                    converter.get(i).setDepartmentName(data.get(i).getDepartmentname());
-                    converter.get(i).setDoctorName(data.get(i).getDoctorName());
-                    break;
-                }
+        converter.forEach(item -> data.forEach(item2 -> {
+            if (item.getRotaId().equals("" + item2.getId())) {
+                item.setDoctorName(item2.getDoctorName());
+                item.setDepartmentName(item2.getDepartmentname());
             }
+        }));
+        return converter;
+    }
+
+    /**
+     * 根据挂号id查询挂号详细信息
+     *
+     * @param command
+     * @return
+     */
+    public Register selectById(QueryRegisterByIdCommand command) {
+        RegisterMysqlPo registerMysqlPo = mysqlDao.selectByPrimaryKey(command.getId());
+        if (registerMysqlPo == null) {
+            throw new NullPointerException();
         }
+        Register converter = registerConverter.converter(registerMysqlPo);
         return converter;
     }
 }
