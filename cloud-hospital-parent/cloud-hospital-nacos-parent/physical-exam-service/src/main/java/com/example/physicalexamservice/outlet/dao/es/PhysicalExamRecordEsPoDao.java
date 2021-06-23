@@ -10,4 +10,8 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @date 2021/6/22
  */
 public interface PhysicalExamRecordEsPoDao extends ElasticsearchRepository<PhysicalExamRecordEsPo, Long> {
+
+    /* 根据No */
+    PhysicalExamRecordEsPo findByNoEquals(String no);
+
 }

@@ -1,5 +1,6 @@
 package com.example.physicalexamservice.inlet.web.controller;
 
+import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordDetailVo;
 import com.example.physicalexamservice.inlet.web.vo.ResponseResult;
 import com.example.physicalexamservice.service.command.physicalexamrecord.add.AddPhysicalExamRecordCommand;
 import lombok.extern.slf4j.Slf4j;
@@ -39,5 +40,19 @@ public class PhysicalExamRecordController {
         return new ResponseResult<>(command.execute());
     }
 
+    /**
+     * 根据No获得体检记录详情
+     *
+     * @return
+     */
+    @GetMapping("view/detail/list/{recordNo}")
+    public ResponseResult<PhysicalExamRecordDetailVo> findPhysicalExamRecordDetailListByNo(@PathVariable("recordNo") String recordNo) {
+        /* 实例化一个命令 */
+        QueryPhysicalExamRecordDetailListByRecordNoCommand command = new QueryPhysicalExamRecordDetailListByRecordNoCommand(recordNo);
+
+        /* 执行命令并返回 */
+        return new ResponseResult<>(command.execute());
+
+    }
 
 }

@@ -38,6 +38,24 @@ public class DoctorRotaController {
      * @param bindingResult
      * @return
      */
+    @PostMapping("reg/back")
+    public ResponseResult<List<DoctorRotaVo>> backRegGetDoctorRotaList(@Valid @RequestBody RegQueryDoctorRotaCommand command, BindingResult bindingResult) {
+        /* 判断是否有绑定错误 */
+        if (bindingResult.hasErrors()) {
+            throw new IllegalArgumentException("获取信息失败 | 参数异常");
+        }
+        /* 执行命令并返回 */
+        return new ResponseResult<>(command.execute());
+    }
+
+
+    /**
+     * 挂号用查询
+     *
+     * @param command
+     * @param bindingResult
+     * @return
+     */
     @PostMapping("reg")
     public ResponseResult<List<DoctorRotaVo>> regGetDoctorRotaList(@Valid @RequestBody RegQueryDoctorRotaCommand command, BindingResult bindingResult) {
         /* 判断是否有绑定错误 */

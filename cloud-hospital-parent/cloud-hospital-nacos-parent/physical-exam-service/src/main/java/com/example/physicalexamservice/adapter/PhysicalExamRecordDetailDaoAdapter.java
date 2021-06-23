@@ -1,5 +1,7 @@
 package com.example.physicalexamservice.adapter;
 
+import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordDetailVo;
+import com.example.physicalexamservice.outlet.dao.es.PhysicalExamRecordDetailEsPoDao;
 import com.example.physicalexamservice.outlet.dao.mysql.PhysicalExamMysqlPoDao;
 import com.example.physicalexamservice.outlet.dao.mysql.PhysicalExamRecordDetailMysqlPoDao;
 import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordDetailMysqlPo;
@@ -24,9 +26,12 @@ public class PhysicalExamRecordDetailDaoAdapter {
 
     private final PhysicalExamMysqlPoDao physicalExamMysqlPoDao;
 
-    public PhysicalExamRecordDetailDaoAdapter(PhysicalExamRecordDetailMysqlPoDao physicalExamRecordDetailMysqlPoDao, PhysicalExamMysqlPoDao physicalExamMysqlPoDao) {
+    private final PhysicalExamRecordDetailEsPoDao physicalExamRecordDetailEsPoDao;
+
+    public PhysicalExamRecordDetailDaoAdapter(PhysicalExamRecordDetailMysqlPoDao physicalExamRecordDetailMysqlPoDao, PhysicalExamMysqlPoDao physicalExamMysqlPoDao, PhysicalExamRecordDetailEsPoDao physicalExamRecordDetailEsPoDao) {
         this.physicalExamRecordDetailMysqlPoDao = physicalExamRecordDetailMysqlPoDao;
         this.physicalExamMysqlPoDao = physicalExamMysqlPoDao;
+        this.physicalExamRecordDetailEsPoDao = physicalExamRecordDetailEsPoDao;
     }
     /* 构造注入 - 结束 */
 
@@ -56,4 +61,18 @@ public class PhysicalExamRecordDetailDaoAdapter {
     }
 
 
+    /**
+     * 根据 no 查询
+     *
+     * @param recordId
+     * @return
+     */
+    public PhysicalExamRecordDetailVo queryById(Long recordId) {
+        /* 直接往 Es 查 */
+        physicalExamRecordDetailEsPoDao.findByRecordidEquals(recordId);
+
+
+
+        return null;
+    }
 }

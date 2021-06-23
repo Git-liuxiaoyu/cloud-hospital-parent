@@ -12,7 +12,12 @@ import lombok.ToString;
 @Data
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class PhysicalExamRecordVo {
+
+    private Long id;
+
+    private String no;
 
     /* 没有支付 */
     public static final String STATUS_NOTPAY = "9";
