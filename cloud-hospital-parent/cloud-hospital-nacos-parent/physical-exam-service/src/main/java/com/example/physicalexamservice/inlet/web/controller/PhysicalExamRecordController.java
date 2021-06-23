@@ -3,6 +3,7 @@ package com.example.physicalexamservice.inlet.web.controller;
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordDetailVo;
 import com.example.physicalexamservice.inlet.web.vo.ResponseResult;
 import com.example.physicalexamservice.service.command.physicalexamrecord.add.AddPhysicalExamRecordCommand;
+import com.example.physicalexamservice.service.command.physicalexamrecord.querydetaillistbyno.QueryPhysicalExamRecordDetailListByRecordNoCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
