@@ -8,6 +8,10 @@ import com.example.registerservice.service.query.querypatient.QueryPatientByIdCo
 import com.example.registerservice.service.query.querypatient.QueryPatientByIdentityIdCommand;
 import com.example.registerservice.service.query.querypatient.domain.Patient;
 import com.example.registerservice.util.ResponseResult;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.github.xiaoymin.knife4j.annotations.DynamicParameter;
+import com.github.xiaoymin.knife4j.annotations.DynamicParameters;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @Slf4j
+@Api(value = "患者服务", description = "用户操作 API")
+@ApiModel
 public class PatientController {
 
     @Autowired
@@ -34,6 +40,9 @@ public class PatientController {
      * @return
      */
     @PostMapping("Patient/add")
+    @ApiOperation(value = "添加患者信息", notes = "根据患者的信息添加患者," +
+            "如果添加患者的时候，患者的身份证存在了数据库里面,是不让添加的",
+            produces = "application/json", response = ResponseResult.class)
     public ResponseResult addPatient(@RequestBody PatientVo vo) {
         AddPatientCommand command = new AddPatientCommand(vo);
         log.debug("添加的患者的信息为{}", vo);
@@ -63,8 +72,14 @@ public class PatientController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "查询患者信息", notes = "根据患者id查询患者信息",
+            produces = "application/json", response = ResponseResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "患者id",
+                    example = "38", required = true, dataType = "Long", paramType = "path")
+    })
     @GetMapping("Patient/query/byId/{id}")
-    public ResponseResult<PatientVo.QueryGetByIdVo> getByIdVoResponseResult(@PathVariable("id") Long id) {
+    public ResponseResult<PatientVo.QueryByIdVo> getByIdVoResponseResult(@PathVariable("id") Long id) {
         QueryPatientByIdCommand command = new QueryPatientByIdCommand(id);
         Patient execute = null;
         try {
@@ -72,7 +87,7 @@ public class PatientController {
         } catch (Exception e) {
             return new ResponseResult<>(444, "");
         }
-        PatientVo.QueryGetByIdVo converter = this.converter.converter(execute);
+        PatientVo.QueryByIdVo converter = this.converter.converter(execute);
         return new ResponseResult(converter);
     }
 
@@ -82,8 +97,14 @@ public class PatientController {
      * @param identityId
      * @return
      */
+    @ApiOperation(value = "查询患者信息", notes = "根据患者身份证查询患者信息",
+            produces = "application/json", response = ResponseResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "identityId", value = "患者身份证",
+                    example = "374362452554532656", required = true, dataType = "String", paramType = "path")
+    })
     @GetMapping("Patient/query/byIdentityId/{identityId}")
-    public ResponseResult<PatientVo.QueryGetByIdVo> getByIdentityIdVoResponseResult(@PathVariable("identityId") String identityId) {
+    public ResponseResult<PatientVo.QueryByIdVo> getByIdentityIdVoResponseResult(@PathVariable("identityId") String identityId) {
         QueryPatientByIdentityIdCommand command = new QueryPatientByIdentityIdCommand(identityId);
         Patient execute = null;
         try {
@@ -91,7 +112,7 @@ public class PatientController {
         } catch (NullPointerException e) {
             return new ResponseResult(444, "没有该患者信息");
         }
-        PatientVo.QueryGetByIdVo converter = this.converter.converter(execute);
+        PatientVo.QueryByIdVo converter = this.converter.converter(execute);
         return new ResponseResult(converter);
     }
 
@@ -102,6 +123,8 @@ public class PatientController {
      * @return
      */
     @PostMapping("Patient/update")
+    @ApiOperation(value = "修改患者", notes = "修改患者的信息",
+            produces = "application/json", response = ResponseResult.class)
     public ResponseResult update(@RequestBody PatientVo vo) {
         UpdatePatientCommand command = new UpdatePatientCommand(vo);
         try {

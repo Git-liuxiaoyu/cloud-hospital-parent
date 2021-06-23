@@ -1,8 +1,18 @@
 package com.example.registerservice.util;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel
 public class ResponseResult<T> {
+
+    @ApiModelProperty(value = "响应状态码", example = "200")
     private int code; // 状态码 200,成功，500:失败，403：无权
+
+    @ApiModelProperty(value = "响应状态信息", example = "success")
     private String msg; // 消息
+
+    @ApiModelProperty(value = "响应数据")
     private T data; // 数据
 
     public ResponseResult() {

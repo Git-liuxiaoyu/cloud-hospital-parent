@@ -32,7 +32,7 @@ public class RegisterVoConverter {
 
 
     /**
-     * 科目的ClientPo对象转换科目的vo对象
+     * 科目的mysqlPo对象转换科目的vo对象
      *
      * @param mysqlPo
      * @return

@@ -3,6 +3,7 @@ package com.example.registerservice.inlet.web.controller;
 import com.example.registerservice.inlet.web.vo.SubjectVo;
 import com.example.registerservice.service.query.querysubject.QuerySubjectCommand;
 import com.example.registerservice.util.ResponseResult;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,8 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class SubjectController {
-
+    @ApiOperation(value = "查询所有科室", notes = "查询所有科室发的是client",
+            produces = "application/json", response = ResponseResult.class)
     @GetMapping("subject/querySubject")
     public ResponseResult<SubjectVo> findAll() {
         QuerySubjectCommand command = new QuerySubjectCommand();

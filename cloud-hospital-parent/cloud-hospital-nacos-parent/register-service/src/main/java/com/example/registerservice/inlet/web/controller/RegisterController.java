@@ -14,6 +14,7 @@ import com.example.registerservice.service.query.queryregister.QueryRegisterGetB
 import com.example.registerservice.service.query.queryregister.po.Register;
 import com.example.registerservice.service.query.queryregister.po.RegisterServicePo;
 import com.example.registerservice.util.ResponseResult;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,8 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
+@Api(value = "挂号服务", description = "用户操作 API")
+@ApiModel
 public class RegisterController {
 
     @Autowired
@@ -37,6 +40,12 @@ public class RegisterController {
      * @param phone
      * @return 给验证码队列发消息
      */
+    @ApiOperation(value = "验证码队列", notes = "给验证码队列发消息",
+            produces = "application/json", response = ResponseResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "phone", value = "手机号",
+                    example = "17683858973", required = true, dataType = "String", paramType = "path")
+    })
     @PostMapping("Register/getCode/{phone}")
     public ResponseResult pushPhoneGoQueue(@PathVariable String phone) {
         PushPhoneGoQueueCommand command = new PushPhoneGoQueueCommand(phone);
@@ -53,6 +62,8 @@ public class RegisterController {
      * @param command
      * @return
      */
+    @ApiOperation(value = "登入", notes = "登入表单验证",
+            produces = "application/json", response = ResponseResult.class)
     @PostMapping("Register/doLogin")
     public ResponseResult doLogin(@RequestBody QueryPhoneAndCodeCommand command) {
         boolean execute = command.execute();
@@ -68,8 +79,14 @@ public class RegisterController {
      * @param no
      * @return
      */
+    @ApiOperation(value = "根据挂号编号No查询数据", notes = "根据挂号编号No查询数据",
+            produces = "application/json", response = ResponseResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "no", value = "挂号编号",
+                    example = "GH20210622102208869988203", required = true, dataType = "String", paramType = "path")
+    })
     @GetMapping("Register/queryRegister/getByNo/{no}")
-    public ResponseResult<SubjectVo> queryRegisterGetByNo(@PathVariable("no") String no) {
+    public ResponseResult<RegisterVo> queryRegisterGetByNo(@PathVariable("no") String no) {
         QueryRegisterGetByNoCommand command = new QueryRegisterGetByNoCommand(no);
         RegisterVo execute = null;
         try {
@@ -87,6 +104,14 @@ public class RegisterController {
      * @param status
      * @return
      */
+    @ApiOperation(value = "修改挂号的状态", notes = "根据id修改挂号的状态",
+            produces = "application/json", response = ResponseResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "挂号id",
+                    example = "13", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "status", value = "挂号状态",
+                    example = "0", required = true, dataType = "String", paramType = "path")
+    })
     @PostMapping("/Register/update/status/{id}/{status}")
     public ResponseResult updateStatus(@PathVariable("id") Long id, @PathVariable("status") String status) {
         UpdateRegisterCommand command = new UpdateRegisterCommand(id, status);
@@ -104,6 +129,8 @@ public class RegisterController {
      * @param vo
      * @return
      */
+    @ApiOperation(value = "添加挂号订单", notes = "添加挂号订单",
+            produces = "application/json", response = ResponseResult.class)
     @PostMapping("/Register/add")
     public ResponseResult registerAdd(@RequestBody RegisterVo.AddRegisterVo vo) {
         AddRegisterCommand command = new AddRegisterCommand(vo);
@@ -116,11 +143,17 @@ public class RegisterController {
     }
 
     /**
-     * 根据挂号的手机号查询挂号的订单
+     * 根据挂号的手机号phone查询挂号的订单
      *
      * @param phone
      * @return
      */
+    @ApiOperation(value = "根据挂号的手机号phone查询挂号信息", notes = "根据挂号的手机号phone查询挂号的订单",
+            produces = "application/json", response = ResponseResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "phone", value = "挂号手机号",
+                    example = "17683858973", required = true, dataType = "String", paramType = "path")
+    })
     @GetMapping("/Register/query/phone/{phone}")
     public ResponseResult<RegisterServicePo> findAll(@PathVariable("phone") String phone) {
         QueryRegisterByPhoneCommand command = new QueryRegisterByPhoneCommand(phone);
@@ -134,6 +167,12 @@ public class RegisterController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "根据挂号id查询挂号详细信息", notes = "根据挂号id查询挂号详细信息",
+            produces = "application/json", response = ResponseResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "挂号id",
+                    example = "11", required = true, dataType = "Long", paramType = "path")
+    })
     @GetMapping("/Register/query/byId/{id}")
     public ResponseResult<RegisterVo.QueryGetByIdVo> getByIdVoResponseResult(@PathVariable("id") Long id) {
         QueryRegisterByIdCommand command = new QueryRegisterByIdCommand(id);

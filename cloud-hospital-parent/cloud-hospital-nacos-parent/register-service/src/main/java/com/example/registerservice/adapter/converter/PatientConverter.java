@@ -34,8 +34,8 @@ public class PatientConverter {
         return patient;
     }
 
-    public PatientVo.QueryGetByIdVo converter(Patient patient) {
-        PatientVo.QueryGetByIdVo vo = new PatientVo.QueryGetByIdVo();
+    public PatientVo.QueryByIdVo converter(Patient patient) {
+        PatientVo.QueryByIdVo vo = new PatientVo.QueryByIdVo();
         vo.setId(patient.getId());
         vo.setNo(patient.getNo());
         vo.setName(patient.getName());

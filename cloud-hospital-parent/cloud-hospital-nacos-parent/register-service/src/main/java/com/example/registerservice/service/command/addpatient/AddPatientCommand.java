@@ -4,8 +4,11 @@ import com.example.registerservice.inlet.web.vo.PatientVo;
 import com.example.registerservice.service.api.IAddPatientCommandHandler;
 import com.example.registerservice.util.ApplicationContextHolder;
 import com.example.registerservice.util.PatientUtil;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -30,9 +33,13 @@ public class AddPatientCommand implements Serializable {
      * ControllerVo注入进来的值
      */
     private String name;//患者姓名
+
     private Integer age;//患者年龄
+
     private String gender;//患者性别
+
     private String phone;//患者电话
+
     private String identityId;//患者身份证
 
     private IAddPatientCommandHandler handler;
@@ -45,9 +52,9 @@ public class AddPatientCommand implements Serializable {
         this.phone = vo.getPhone();
         this.identityId = vo.getIdentityId();
         //下面的是系统自动生成赋的值
-        this.no= PatientUtil.getPatientNo();
-        this.status="0";//默认待就诊
-        this.createtime=new Date();//系统时间
+        this.no = PatientUtil.getPatientNo();
+        this.status = "0";//默认待就诊
+        this.createtime = new Date();//系统时间
 //        this.medicard=null;//默认没有医保卡
     }
 
@@ -57,7 +64,7 @@ public class AddPatientCommand implements Serializable {
                 .getBean(IAddPatientCommandHandler.class);
     }
 
-    public Long execute(){
+    public Long execute() {
         Long patientId = handler.action(this);
         return patientId;
     }
