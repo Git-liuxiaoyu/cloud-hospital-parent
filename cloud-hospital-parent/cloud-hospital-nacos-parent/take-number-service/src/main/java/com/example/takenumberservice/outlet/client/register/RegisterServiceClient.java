@@ -1,6 +1,7 @@
 package com.example.takenumberservice.outlet.client.register;
 
 import com.example.takenumberservice.inlet.web.ResponseResult;
+import com.example.takenumberservice.outlet.client.register.pojo.QueryGetByIdVo;
 import com.example.takenumberservice.outlet.client.register.pojo.Register;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,15 @@ public interface RegisterServiceClient {
      */
     @PostMapping("/Register/update/status/{id}/{status}")
     void updatestatus(@PathVariable("id") Long id ,@PathVariable("status")String status);
+
+
+    /**
+     * 通过挂号Id查询挂号信息
+     *
+     * @return
+     */
+    @GetMapping("/Register/query/byId/{id}")
+    ResponseResult<QueryGetByIdVo>findByRegId(@PathVariable("id") Long id);
 
 
 
