@@ -1,3 +1,20 @@
 spring:
-  profiles:
-    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.172.0.163:8848
+        namespace: public
+        password: nacos
+        username: nacos
+#日志配置
+logging:
+  level:
+    root: WARN
+    com.example: DEBUG
+  pattern:
+    console: "${CONSOLE_LOG_PATTERN:\
+      %clr(${LOG_LEVEL_PATTERN:%5p}) \
+      %clr(|){faint} \
+      %clr(%-40.40logger{39}){cyan} \
+      %clr(:){faint} \
+      %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}}"

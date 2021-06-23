@@ -1,20 +1,24 @@
-server:
-  port: 6001
 spring:
-  application:
-    name: take-number-service
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 1.117.97.60:8848
-        namespace: public
-        username: nacos
-        password: nacos
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/h_takenumber?serverTimezone=UTC
+    url: jdbc:mysql://192.172.0.163:3306/h_takenumber?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: root
+    name: defaultDataSource
     username: root
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.example.takenumberservice.outlet.dao.mysql.pojo
+    password: 123456
+  redis:
+    host: 192.172.0.163
+    port: 6379
+    database: 0
+    jedis:
+      pool:
+        max-active: 20
+        max-idle: 10
+        max-wait: -1
+        min-idle: 0
+    timeout: 1000
+  rabbitmq:
+    host: 192.172.0.163
+    port: 5672
+    username: guest
+    password: guest
+

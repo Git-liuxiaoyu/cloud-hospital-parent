@@ -1,8 +1,14 @@
+server:
+  port: 8080
 spring:
   application:
-    name: pay-service
+    name: drug-service
   profiles:
     active: dev
+
+# mybatis配置
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/*.xml
 
 # 日志配置
 logging:
