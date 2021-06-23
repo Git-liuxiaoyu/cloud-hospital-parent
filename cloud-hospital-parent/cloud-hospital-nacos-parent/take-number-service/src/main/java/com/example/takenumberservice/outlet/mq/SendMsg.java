@@ -47,4 +47,18 @@ public class SendMsg {
     }
 
 
+    /**
+     * 发送给药房的消息
+     */
+    public void SendExamine(String No,Integer orderNo){
+        /**
+         * 1：排队序号
+         * 2：药房取票No
+         */
+        String msg = orderNo+","+No;
+
+        rabbitTemplate.convertAndSend("patient_examine_exchange","patient.jc",msg);
+    }
+
+
 }

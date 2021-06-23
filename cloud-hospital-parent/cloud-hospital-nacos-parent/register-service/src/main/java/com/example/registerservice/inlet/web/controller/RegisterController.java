@@ -1,16 +1,20 @@
 package com.example.registerservice.inlet.web.controller;
 
 
+import com.example.registerservice.adapter.converter.RegisterConverter;
 import com.example.registerservice.inlet.web.vo.RegisterVo;
 import com.example.registerservice.inlet.web.vo.SubjectVo;
 import com.example.registerservice.service.command.addRegister.AddRegisterCommand;
 import com.example.registerservice.service.command.addphone.PushPhoneGoQueueCommand;
 import com.example.registerservice.service.command.updateregister.UpdateRegisterCommand;
 import com.example.registerservice.service.query.queryphoneandcode.QueryPhoneAndCodeCommand;
+import com.example.registerservice.service.query.queryregister.QueryRegisterByIdCommand;
 import com.example.registerservice.service.query.queryregister.QueryRegisterByPhoneCommand;
 import com.example.registerservice.service.query.queryregister.QueryRegisterGetByNoCommand;
+import com.example.registerservice.service.query.queryregister.po.Register;
 import com.example.registerservice.service.query.queryregister.po.RegisterServicePo;
 import com.example.registerservice.util.ResponseResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +29,9 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class RegisterController {
+
+    @Autowired
+    private RegisterConverter converter;
 
     /**
      * @param phone
@@ -108,10 +115,35 @@ public class RegisterController {
         return ResponseResult.SUCCESS;
     }
 
+    /**
+     * 根据挂号的手机号查询挂号的订单
+     *
+     * @param phone
+     * @return
+     */
     @GetMapping("/Register/query/phone/{phone}")
     public ResponseResult<RegisterServicePo> findAll(@PathVariable("phone") String phone) {
         QueryRegisterByPhoneCommand command = new QueryRegisterByPhoneCommand(phone);
         List<RegisterServicePo> execute = command.execute();
         return new ResponseResult(execute);
+    }
+
+    /**
+     * 根据挂号id查询挂号详细信息
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/Register/query/byId/{id}")
+    public ResponseResult<RegisterVo.QueryGetByIdVo> getByIdVoResponseResult(@PathVariable("id") Long id) {
+        QueryRegisterByIdCommand command = new QueryRegisterByIdCommand(id);
+        Register execute = null;
+        try {
+            execute = command.execute();
+        } catch (Exception e) {
+            return new ResponseResult<>(444, "");
+        }
+        RegisterVo.QueryGetByIdVo converter = this.converter.converter(execute);
+        return new ResponseResult(converter);
     }
 }

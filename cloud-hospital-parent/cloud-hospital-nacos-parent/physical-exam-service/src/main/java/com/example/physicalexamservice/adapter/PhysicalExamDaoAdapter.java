@@ -6,6 +6,7 @@ import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPo;
 import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPoExample;
 import com.example.physicalexamservice.outlet.dao.redis.PhysicalExamRedisPoDao;
 import com.example.physicalexamservice.outlet.dao.redis.po.PhysicalExamRedisPo;
+import com.example.physicalexamservice.service.command.physicalexamrecord.add.AddPhysicalExamRecordCommand;
 import com.example.physicalexamservice.util.converter.PhysicalExamRedisPoConverter;
 import com.example.physicalexamservice.util.converter.PhysicalExamTreatVoConverter;
 import lombok.extern.slf4j.Slf4j;
@@ -71,5 +72,64 @@ public class PhysicalExamDaoAdapter {
         }
         /* 返回 */
         return physicalExamTreatVoList;
+    }
+
+    /**
+     * 根据状态和类型查
+     *
+     * @param typeId
+     * @param status
+     * @return
+     */
+    public List<PhysicalExamTreatVo> queryListByTypeId(Integer typeId, String status) {
+        /* 声明 */
+        List<PhysicalExamTreatVo> physicalExamTreatVoList = new ArrayList<>();
+        try {
+            /* 先看Redis中有没有 */
+            List<PhysicalExamRedisPo> physicalExamRedisPoList = physicalExamRedisPoDao.findAllByStatusEqualsAndTypeidEquals(status, typeId);
+            /* 判断有无,无抛异常 NullPointerException */
+            if (physicalExamRedisPoList.isEmpty())
+                throw new NullPointerException();
+            /* 有则转换 */
+            physicalExamTreatVoList = physicalExamTreatVoConverter.convert(physicalExamRedisPoList);
+        } catch (NullPointerException e) {
+            /* 实例化 */
+            PhysicalExamMysqlPoExample physicalExamMysqlPoExample = new PhysicalExamMysqlPoExample();
+            /* 编写条件 */
+            physicalExamMysqlPoExample.createCriteria().andStatusEqualTo(status).andTypeidEqualTo(typeId);
+            /* 调用方法 */
+            List<PhysicalExamMysqlPo> physicalExamMysqlPoList = physicalExamMysqlPoDao.selectByExample(physicalExamMysqlPoExample);
+            /* 转换Vo */
+            physicalExamTreatVoList = physicalExamTreatVoConverter.convert(physicalExamMysqlPoList);
+            /* 转换 RedisPo,并存入 Redis */
+            physicalExamRedisPoDao.saveAll(physicalExamRedisPoConverter.convert(physicalExamMysqlPoList));
+        }
+        /* 返回 */
+        return physicalExamTreatVoList;
+    }
+
+    /**
+     * 设置价格
+     *
+     * @param innerAddPhysicalExamRecordDetailPoList
+     */
+    public void setListPrice(List<AddPhysicalExamRecordCommand.InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList) {
+
+        /* 遍历赋值 */
+        innerAddPhysicalExamRecordDetailPoList.forEach(i -> {
+            try {
+                /* 先查 Redis 中有无 */
+                PhysicalExamRedisPo physicalExamRedisPo = physicalExamRedisPoDao.findById(i.getExamid()).orElseThrow(NullPointerException::new);
+                i.setPrice(physicalExamRedisPo.getPrice());
+            } catch (NullPointerException e) {
+                /* 捕获异常到 MySQL中查 */
+                PhysicalExamMysqlPo physicalExamMysqlPo = physicalExamMysqlPoDao.selectByPrimaryKey(i.getExamid());
+                /* 判断为 null 时 , return */
+                if (physicalExamMysqlPo == null)
+                    return;
+                /* 赋值 */
+                i.setPrice(physicalExamMysqlPo.getPrice());
+            }
+        });
     }
 }

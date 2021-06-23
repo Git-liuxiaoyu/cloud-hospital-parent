@@ -4,7 +4,9 @@ import com.example.workerservice.outlet.dao.mysql.po.PositionPo;
 import com.example.workerservice.outlet.dao.mysql.po.PositionPoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface PositionPoDao {
     long countByExample(PositionPoExample example);
 

@@ -53,4 +53,25 @@ public class RegisterVo {
         private String status;//挂号状态
         private String name;//患者名字
     }
+
+    /**
+     * 根据挂号id查询挂号详细对象
+     */
+    @Data
+    public static class QueryGetByIdVo {
+        private Long id;
+        private String no;
+        private Long patientid;
+        private String regtype;
+        private Date regtime;
+        private Long rotaid;
+        private Integer departmentid;
+        private Integer roomid;
+        private Date visittime;
+        private String visitsection;
+        private BigDecimal price;
+        private String type;
+        private String status;
+        private String phone;
+    }
 }

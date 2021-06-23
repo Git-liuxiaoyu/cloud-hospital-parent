@@ -2,6 +2,8 @@ package com.example.registerservice.inlet.web.vo;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  *
@@ -17,4 +19,22 @@ public class PatientVo {
     private String gender;//患者性别
     private String phone;//患者电话
     private String identityId;//患者身份证
+
+
+    /**
+     * 根据id查询患者表的对象
+     */
+    @Data
+    public static class QueryGetByIdVo{
+        private Long id;
+        private String no;
+        private String name;
+        private Integer age;
+        private String gender;
+        private String phone;
+        private String identityid;
+        private String status;
+        private Date createtime;
+        private String medicard;
+    }
 }

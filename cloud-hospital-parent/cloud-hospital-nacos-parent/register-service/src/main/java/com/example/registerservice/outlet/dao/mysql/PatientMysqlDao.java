@@ -4,7 +4,10 @@ import com.example.registerservice.outlet.dao.mysql.po.PatientMysqlPo;
 import com.example.registerservice.outlet.dao.mysql.po.PatientMysqlPoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+
+@Repository
 public interface PatientMysqlDao {
     long countByExample(PatientMysqlPoExample example);
 

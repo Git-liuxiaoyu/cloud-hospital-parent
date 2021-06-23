@@ -8,6 +8,8 @@ public class PhysicalExamMysqlPo {
 
     private String no;
 
+    private Integer typeid;
+
     private String name;
 
     private BigDecimal price;
@@ -26,6 +28,8 @@ public class PhysicalExamMysqlPo {
 
     private Date param4;
 
+    private BigDecimal param5;
+
     public Integer getId() {
         return id;
     }
@@ -40,6 +44,14 @@ public class PhysicalExamMysqlPo {
 
     public void setNo(String no) {
         this.no = no == null ? null : no.trim();
+    }
+
+    public Integer getTypeid() {
+        return typeid;
+    }
+
+    public void setTypeid(Integer typeid) {
+        this.typeid = typeid;
     }
 
     public String getName() {
@@ -112,5 +124,13 @@ public class PhysicalExamMysqlPo {
 
     public void setParam4(Date param4) {
         this.param4 = param4;
+    }
+
+    public BigDecimal getParam5() {
+        return param5;
+    }
+
+    public void setParam5(BigDecimal param5) {
+        this.param5 = param5;
     }
 }

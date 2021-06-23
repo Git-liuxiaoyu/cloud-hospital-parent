@@ -16,7 +16,7 @@ public class PharmacyProofController {
     public ResponseResult<PharmacyProofCommand> findbyregId(@PathVariable("no") String no){
         PharmacyProofCommand proofCommand = new PharmacyProofCommand();
         proofCommand.setNo(no);
-        return proofCommand.execute(proofCommand);
+        return proofCommand.execute();
     }
 
 

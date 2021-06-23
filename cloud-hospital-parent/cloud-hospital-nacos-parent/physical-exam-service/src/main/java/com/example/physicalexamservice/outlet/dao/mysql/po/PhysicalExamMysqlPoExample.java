@@ -236,6 +236,66 @@ public class PhysicalExamMysqlPoExample {
             return (Criteria) this;
         }
 
+        public Criteria andTypeidIsNull() {
+            addCriterion("typeId is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeidIsNotNull() {
+            addCriterion("typeId is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeidEqualTo(Integer value) {
+            addCriterion("typeId =", value, "typeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeidNotEqualTo(Integer value) {
+            addCriterion("typeId <>", value, "typeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeidGreaterThan(Integer value) {
+            addCriterion("typeId >", value, "typeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("typeId >=", value, "typeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeidLessThan(Integer value) {
+            addCriterion("typeId <", value, "typeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeidLessThanOrEqualTo(Integer value) {
+            addCriterion("typeId <=", value, "typeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeidIn(List<Integer> values) {
+            addCriterion("typeId in", values, "typeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeidNotIn(List<Integer> values) {
+            addCriterion("typeId not in", values, "typeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeidBetween(Integer value1, Integer value2) {
+            addCriterion("typeId between", value1, value2, "typeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeidNotBetween(Integer value1, Integer value2) {
+            addCriterion("typeId not between", value1, value2, "typeid");
+            return (Criteria) this;
+        }
+
         public Criteria andNameIsNull() {
             addCriterion("name is null");
             return (Criteria) this;
@@ -813,6 +873,66 @@ public class PhysicalExamMysqlPoExample {
 
         public Criteria andParam4NotBetween(Date value1, Date value2) {
             addCriterion("param4 not between", value1, value2, "param4");
+            return (Criteria) this;
+        }
+
+        public Criteria andParam5IsNull() {
+            addCriterion("param5 is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParam5IsNotNull() {
+            addCriterion("param5 is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParam5EqualTo(BigDecimal value) {
+            addCriterion("param5 =", value, "param5");
+            return (Criteria) this;
+        }
+
+        public Criteria andParam5NotEqualTo(BigDecimal value) {
+            addCriterion("param5 <>", value, "param5");
+            return (Criteria) this;
+        }
+
+        public Criteria andParam5GreaterThan(BigDecimal value) {
+            addCriterion("param5 >", value, "param5");
+            return (Criteria) this;
+        }
+
+        public Criteria andParam5GreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("param5 >=", value, "param5");
+            return (Criteria) this;
+        }
+
+        public Criteria andParam5LessThan(BigDecimal value) {
+            addCriterion("param5 <", value, "param5");
+            return (Criteria) this;
+        }
+
+        public Criteria andParam5LessThanOrEqualTo(BigDecimal value) {
+            addCriterion("param5 <=", value, "param5");
+            return (Criteria) this;
+        }
+
+        public Criteria andParam5In(List<BigDecimal> values) {
+            addCriterion("param5 in", values, "param5");
+            return (Criteria) this;
+        }
+
+        public Criteria andParam5NotIn(List<BigDecimal> values) {
+            addCriterion("param5 not in", values, "param5");
+            return (Criteria) this;
+        }
+
+        public Criteria andParam5Between(BigDecimal value1, BigDecimal value2) {
+            addCriterion("param5 between", value1, value2, "param5");
+            return (Criteria) this;
+        }
+
+        public Criteria andParam5NotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("param5 not between", value1, value2, "param5");
             return (Criteria) this;
         }
     }

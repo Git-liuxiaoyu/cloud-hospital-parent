@@ -54,6 +54,30 @@ public class RabbitMQConfig {
     }
 
 
+    /*===========================================================================================*/
+
+
+    //声明药房交换机
+    @Bean("jcexchange")
+    public Exchange toexamineExchange(){
+        return ExchangeBuilder.topicExchange("patient_examine_exchange").durable(true).build();
+    }
+
+    //声明药房消息队列
+    @Bean("jcQueue")
+    public Queue getQueueexamine(){
+        return QueueBuilder.durable("patient_examine").build();
+    }
+
+
+    //绑定药房队列交换机
+    @Bean
+    public Binding itemQueueexamineExchange(@Qualifier("jcQueue") Queue queue
+            ,@Qualifier("jcexchange") Exchange exchange){
+        return BindingBuilder.bind(queue).to(exchange).with("patient.jc").noargs();
+    }
+
+
 
 
 }

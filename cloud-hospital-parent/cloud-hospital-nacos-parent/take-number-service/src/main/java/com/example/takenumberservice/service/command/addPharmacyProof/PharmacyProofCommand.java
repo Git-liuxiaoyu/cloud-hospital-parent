@@ -41,8 +41,8 @@ public class PharmacyProofCommand {
      * 执行方法
      * @return
      */
-    public ResponseResult<PharmacyProofCommand> execute(PharmacyProofCommand addProof){
+    public ResponseResult<PharmacyProofCommand> execute(){
 
-        return handler.add(addProof);
+        return handler.add(this);
     }
 }

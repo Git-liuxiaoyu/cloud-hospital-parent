@@ -30,6 +30,9 @@ public class PhysicalExamRedisPo {
 
     private String name;
 
+    @Indexed
+    private Integer typeid;
+
     private BigDecimal price;
 
     private Long leftstock;

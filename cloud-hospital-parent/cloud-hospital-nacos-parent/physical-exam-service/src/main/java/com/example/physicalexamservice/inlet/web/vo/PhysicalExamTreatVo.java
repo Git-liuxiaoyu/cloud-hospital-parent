@@ -27,6 +27,8 @@ public class PhysicalExamTreatVo {
 
     private BigDecimal price;
 
+    private Integer typeid;
+
     private Long leftstock;
 
     private String status;

@@ -3,11 +3,9 @@ package com.example.physicalexamservice.inlet.web.controller;
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamTreatVo;
 import com.example.physicalexamservice.inlet.web.vo.ResponseResult;
 import com.example.physicalexamservice.service.command.physicalexam.queryall.QueryAllPhysicalExamListCommand;
+import com.example.physicalexamservice.service.command.physicalexam.queryallbytypeid.QueryPhysicalExamListByTypeIdCommand;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +31,17 @@ public class PhysicalExamController {
         /* 执行命令并返回 */
         return new ResponseResult<>(command.execute());
     }
+
+    /**
+     * 根据typeId查找
+     *
+     * @return
+     */
+    @GetMapping("view/list/{typeId}")
+    public ResponseResult<List<PhysicalExamTreatVo>> findPhysicalExamListByTypeId(@PathVariable("typeId") Integer typeId) {
+        /* 匿名实例化命令类,执行命令并返回 */
+        return new ResponseResult<>(new QueryPhysicalExamListByTypeIdCommand(typeId).execute());
+    }
+
 
 }
