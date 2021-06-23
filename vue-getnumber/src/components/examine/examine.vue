@@ -17,25 +17,29 @@
             </font>
         </el-header>
             <el-main>
-
                 <el-input
                     type="text"
                     placeholder="请输入4位取票码"
-                    v-model="text"
+                    v-model="num"
                     maxlength="4"
-                    show-word-limit style="width:50%">
+                    show-word-limit style="width:50%" >
                  <template slot="prepend">JC</template>
                 </el-input>
 
                 <br/>
                 <br/>
-                <el-button type="success" plain @click="getnumber()">取&nbsp;&nbsp;票</el-button>
+                <el-button type="success" plain @click="getnumber()" id="button1">取&nbsp;&nbsp;票</el-button>
             </el-main>
             <el-footer><font class="font1">版权所有&copy; XXX医院</font></el-footer>
         </el-container>
 
+
+        <!-- 取票成功显示票务信息 -->
+
         
     </div>
+
+    
 
 
 </template>
@@ -45,18 +49,57 @@ import axios from 'axios';
 export default { 
        data(){
             return {
-                text:"",
-                profile:{
-                  
-                },
+                num:"",
+                getNumberOk: true,
+                takeNumber:[{
+                    id:"",
+                    roomName:"",
+                    orderNum:"",
+                    createTime:"",
+                    status:"",
+                }]
             }
+           
         },
         methods:{
-             getnumber(){//取票
-                var num = "JC"+this.text;
-                alert("号码："+num);
+            getnumber(){//取票
+                var no = "JC"+this.num;
+
+               axios.get("http://localhost:6001/JCproof/findbyno/"+no).then(r => {  
+                    var msg = r.data.msg;
+                   console.log(r)
+                   var num1 = this.num;
+                   if(num1 == null){
+                       num1 = "null";
+                   }
+
+                   if(r.data.code != 200){//取票失败
+                      this.$alert('<font>'+msg+'</font><br/><font>取票号：'+this.num+'，请认真核对号码，或寻求工作人员帮助！</font>', '取票失败', {
+                        dangerouslyUseHTMLString: true
+                        });
+                   }else if(r.data.code == 200){//取票成功
+                    this.takeNumber.no = r.data.data.no;//取票号码
+                    if( r.data.data.examineType == 1){
+                        this.takeNumber.roomName = "抽血检查";
+                    }else if(r.data.data.examineType == 2){
+                        this.takeNumber.roomName = "CT 检查";
+                    }    
+                    this.takeNumber.orderNum = r.data.data.orderNum;//排队序号
+                    this.takeNumber.createTime = r.data.data.createTime;//取票时间
+
+                       this.$notify({
+                            title: '取票成功',
+                            dangerouslyUseHTMLString: true,
+                            duration:20000,
+                            message: '<font>检查方式：'+this.takeNumber.roomName+'</font><br/><br/><font>排队序号：'+this.takeNumber.orderNum+'</font><br/><br/><font>取票号码：'+this.takeNumber.no+'</font><br/><br/><font>取票时间：'+this.takeNumber.createTime+'</font><br/><br/><font>就诊状态：待检查</font><br/>'
+                            });
+                   }
+                    
+                       
+                });
             },
-            returnindex(){
+
+            returnindex(){//返回
                 this.$router.push("/");
             }
             
@@ -112,10 +155,33 @@ export default {
       margin-top: 200px;
   }
 
-  .el-button{
+  #button1{
       font-family: "楷体";
       font-size: 25px;
       width: 200px;
       height: 60px;
   }
+
+  /*=============取票成功右侧弹出框开始===================*/
+
+  
+  /*内容*/
+  .el-notification__content{
+      text-align: left;
+      color: aquamarine;
+      font-size: 20px;
+  }
+
+/*标题*/
+  .el-notification__title{
+        text-align: center;
+        font-size: 25px;
+        color: aquamarine;
+  }
+  /*div*/
+  .el-notification__group{
+        width: 100%;
+  }
+   /*=============取票成功右侧弹出框结束===================*/
+
 </style>

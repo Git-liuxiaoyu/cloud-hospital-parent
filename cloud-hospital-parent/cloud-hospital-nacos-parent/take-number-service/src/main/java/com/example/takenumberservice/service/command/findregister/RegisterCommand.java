@@ -48,7 +48,6 @@ public class RegisterCommand {
      * @return
      */
     public ResponseResult<ProofCommand> execute(){
-        log.info("执行查询取号信息功能");
         return handle.findbyno(this.no);
     }
 }
