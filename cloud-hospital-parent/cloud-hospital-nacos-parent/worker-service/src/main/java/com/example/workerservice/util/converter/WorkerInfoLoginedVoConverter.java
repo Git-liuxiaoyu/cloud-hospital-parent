@@ -38,6 +38,7 @@ public class WorkerInfoLoginedVoConverter {
         workerInfoLoginedVo.setPositionIsOut(workerInfoPo.getPositionPo().getIsout());
         workerInfoLoginedVo.setPositionIsIn(workerInfoPo.getPositionPo().getIsin());
         workerInfoLoginedVo.setPositionIsMdc(workerInfoPo.getPositionPo().getIsmdc());
+        workerInfoLoginedVo.setPositionIsExam(workerInfoPo.getPositionPo().getIsexam());
         /* 返回 */
         return workerInfoLoginedVo;
     }

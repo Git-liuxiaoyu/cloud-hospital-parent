@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.physicalexamservice.outlet.dao.mysql.PhysicalExamMysqlPoDao">
-  <resultMap id="BaseResultMap" type="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPo">
-    <id column="id" jdbcType="INTEGER" property="id" />
+<mapper namespace="com.example.physicalexamservice.outlet.dao.mysql.PhysicalExamRecordMysqlPoDao">
+  <resultMap id="BaseResultMap" type="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordMysqlPo">
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="no" jdbcType="VARCHAR" property="no" />
-    <result column="typeId" jdbcType="INTEGER" property="typeid" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="price" jdbcType="DECIMAL" property="price" />
-    <result column="leftStock" jdbcType="BIGINT" property="leftstock" />
-    <result column="maxStock" jdbcType="BIGINT" property="maxstock" />
+    <result column="treatRecordId" jdbcType="BIGINT" property="treatrecordid" />
+    <result column="doctorId" jdbcType="INTEGER" property="doctorid" />
+    <result column="patientId" jdbcType="BIGINT" property="patientid" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="status" jdbcType="CHAR" property="status" />
     <result column="param1" jdbcType="VARCHAR" property="param1" />
     <result column="param2" jdbcType="VARCHAR" property="param2" />
-    <result column="param3" jdbcType="BIGINT" property="param3" />
-    <result column="param4" jdbcType="TIMESTAMP" property="param4" />
+    <result column="param3" jdbcType="TIMESTAMP" property="param3" />
+    <result column="param4" jdbcType="BIGINT" property="param4" />
     <result column="param5" jdbcType="DECIMAL" property="param5" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -75,16 +74,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, no, typeId, name, price, leftStock, maxStock, status, param1, param2, param3, 
+    id, no, treatRecordId, doctorId, patientId, createTime, status, param1, param2, param3, 
     param4, param5
   </sql>
-  <select id="selectByExample" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordMysqlPoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from h_physical_exam
+    from h_physical_exam_record
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,36 +91,36 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from h_physical_exam
-    where id = #{id,jdbcType=INTEGER}
+    from h_physical_exam_record
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from h_physical_exam
-    where id = #{id,jdbcType=INTEGER}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from h_physical_exam_record
+    where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPoExample">
-    delete from h_physical_exam
+  <delete id="deleteByExample" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordMysqlPoExample">
+    delete from h_physical_exam_record
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPo">
-    insert into h_physical_exam (id, no, typeId, 
-      name, price, leftStock, 
-      maxStock, status, param1, 
-      param2, param3, param4, 
-      param5)
-    values (#{id,jdbcType=INTEGER}, #{no,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
-      #{name,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{leftstock,jdbcType=BIGINT}, 
-      #{maxstock,jdbcType=BIGINT}, #{status,jdbcType=CHAR}, #{param1,jdbcType=VARCHAR}, 
-      #{param2,jdbcType=VARCHAR}, #{param3,jdbcType=BIGINT}, #{param4,jdbcType=TIMESTAMP}, 
-      #{param5,jdbcType=DECIMAL})
+  <insert id="insert" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordMysqlPo">
+    insert into h_physical_exam_record (id, no, treatRecordId, 
+      doctorId, patientId, createTime, 
+      status, param1, param2, 
+      param3, param4, param5
+      )
+    values (#{id,jdbcType=BIGINT}, #{no,jdbcType=VARCHAR}, #{treatrecordid,jdbcType=BIGINT}, 
+      #{doctorid,jdbcType=INTEGER}, #{patientid,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=CHAR}, #{param1,jdbcType=VARCHAR}, #{param2,jdbcType=VARCHAR}, 
+      #{param3,jdbcType=TIMESTAMP}, #{param4,jdbcType=BIGINT}, #{param5,jdbcType=DECIMAL}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPo">
-    insert into h_physical_exam
+  <insert id="insertSelective" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordMysqlPo">
+    insert into h_physical_exam_record
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -129,20 +128,17 @@
       <if test="no != null">
         no,
       </if>
-      <if test="typeid != null">
-        typeId,
+      <if test="treatrecordid != null">
+        treatRecordId,
       </if>
-      <if test="name != null">
-        name,
+      <if test="doctorid != null">
+        doctorId,
       </if>
-      <if test="price != null">
-        price,
+      <if test="patientid != null">
+        patientId,
       </if>
-      <if test="leftstock != null">
-        leftStock,
-      </if>
-      <if test="maxstock != null">
-        maxStock,
+      <if test="createtime != null">
+        createTime,
       </if>
       <if test="status != null">
         status,
@@ -165,25 +161,22 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="no != null">
         #{no,jdbcType=VARCHAR},
       </if>
-      <if test="typeid != null">
-        #{typeid,jdbcType=INTEGER},
+      <if test="treatrecordid != null">
+        #{treatrecordid,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="doctorid != null">
+        #{doctorid,jdbcType=INTEGER},
       </if>
-      <if test="price != null">
-        #{price,jdbcType=DECIMAL},
+      <if test="patientid != null">
+        #{patientid,jdbcType=BIGINT},
       </if>
-      <if test="leftstock != null">
-        #{leftstock,jdbcType=BIGINT},
-      </if>
-      <if test="maxstock != null">
-        #{maxstock,jdbcType=BIGINT},
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null">
         #{status,jdbcType=CHAR},
@@ -195,45 +188,42 @@
         #{param2,jdbcType=VARCHAR},
       </if>
       <if test="param3 != null">
-        #{param3,jdbcType=BIGINT},
+        #{param3,jdbcType=TIMESTAMP},
       </if>
       <if test="param4 != null">
-        #{param4,jdbcType=TIMESTAMP},
+        #{param4,jdbcType=BIGINT},
       </if>
       <if test="param5 != null">
         #{param5,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPoExample" resultType="java.lang.Long">
-    select count(*) from h_physical_exam
+  <select id="countByExample" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordMysqlPoExample" resultType="java.lang.Long">
+    select count(*) from h_physical_exam_record
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update h_physical_exam
+    update h_physical_exam_record
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.no != null">
         no = #{record.no,jdbcType=VARCHAR},
       </if>
-      <if test="record.typeid != null">
-        typeId = #{record.typeid,jdbcType=INTEGER},
+      <if test="record.treatrecordid != null">
+        treatRecordId = #{record.treatrecordid,jdbcType=BIGINT},
       </if>
-      <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.doctorid != null">
+        doctorId = #{record.doctorid,jdbcType=INTEGER},
       </if>
-      <if test="record.price != null">
-        price = #{record.price,jdbcType=DECIMAL},
+      <if test="record.patientid != null">
+        patientId = #{record.patientid,jdbcType=BIGINT},
       </if>
-      <if test="record.leftstock != null">
-        leftStock = #{record.leftstock,jdbcType=BIGINT},
-      </if>
-      <if test="record.maxstock != null">
-        maxStock = #{record.maxstock,jdbcType=BIGINT},
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=CHAR},
@@ -245,10 +235,10 @@
         param2 = #{record.param2,jdbcType=VARCHAR},
       </if>
       <if test="record.param3 != null">
-        param3 = #{record.param3,jdbcType=BIGINT},
+        param3 = #{record.param3,jdbcType=TIMESTAMP},
       </if>
       <if test="record.param4 != null">
-        param4 = #{record.param4,jdbcType=TIMESTAMP},
+        param4 = #{record.param4,jdbcType=BIGINT},
       </if>
       <if test="record.param5 != null">
         param5 = #{record.param5,jdbcType=DECIMAL},
@@ -259,44 +249,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update h_physical_exam
-    set id = #{record.id,jdbcType=INTEGER},
+    update h_physical_exam_record
+    set id = #{record.id,jdbcType=BIGINT},
       no = #{record.no,jdbcType=VARCHAR},
-      typeId = #{record.typeid,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
-      price = #{record.price,jdbcType=DECIMAL},
-      leftStock = #{record.leftstock,jdbcType=BIGINT},
-      maxStock = #{record.maxstock,jdbcType=BIGINT},
+      treatRecordId = #{record.treatrecordid,jdbcType=BIGINT},
+      doctorId = #{record.doctorid,jdbcType=INTEGER},
+      patientId = #{record.patientid,jdbcType=BIGINT},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=CHAR},
       param1 = #{record.param1,jdbcType=VARCHAR},
       param2 = #{record.param2,jdbcType=VARCHAR},
-      param3 = #{record.param3,jdbcType=BIGINT},
-      param4 = #{record.param4,jdbcType=TIMESTAMP},
+      param3 = #{record.param3,jdbcType=TIMESTAMP},
+      param4 = #{record.param4,jdbcType=BIGINT},
       param5 = #{record.param5,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPo">
-    update h_physical_exam
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordMysqlPo">
+    update h_physical_exam_record
     <set>
       <if test="no != null">
         no = #{no,jdbcType=VARCHAR},
       </if>
-      <if test="typeid != null">
-        typeId = #{typeid,jdbcType=INTEGER},
+      <if test="treatrecordid != null">
+        treatRecordId = #{treatrecordid,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+      <if test="doctorid != null">
+        doctorId = #{doctorid,jdbcType=INTEGER},
       </if>
-      <if test="price != null">
-        price = #{price,jdbcType=DECIMAL},
+      <if test="patientid != null">
+        patientId = #{patientid,jdbcType=BIGINT},
       </if>
-      <if test="leftstock != null">
-        leftStock = #{leftstock,jdbcType=BIGINT},
-      </if>
-      <if test="maxstock != null">
-        maxStock = #{maxstock,jdbcType=BIGINT},
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=CHAR},
@@ -308,31 +294,30 @@
         param2 = #{param2,jdbcType=VARCHAR},
       </if>
       <if test="param3 != null">
-        param3 = #{param3,jdbcType=BIGINT},
+        param3 = #{param3,jdbcType=TIMESTAMP},
       </if>
       <if test="param4 != null">
-        param4 = #{param4,jdbcType=TIMESTAMP},
+        param4 = #{param4,jdbcType=BIGINT},
       </if>
       <if test="param5 != null">
         param5 = #{param5,jdbcType=DECIMAL},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPo">
-    update h_physical_exam
+  <update id="updateByPrimaryKey" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordMysqlPo">
+    update h_physical_exam_record
     set no = #{no,jdbcType=VARCHAR},
-      typeId = #{typeid,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
-      leftStock = #{leftstock,jdbcType=BIGINT},
-      maxStock = #{maxstock,jdbcType=BIGINT},
+      treatRecordId = #{treatrecordid,jdbcType=BIGINT},
+      doctorId = #{doctorid,jdbcType=INTEGER},
+      patientId = #{patientid,jdbcType=BIGINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=CHAR},
       param1 = #{param1,jdbcType=VARCHAR},
       param2 = #{param2,jdbcType=VARCHAR},
-      param3 = #{param3,jdbcType=BIGINT},
-      param4 = #{param4,jdbcType=TIMESTAMP},
+      param3 = #{param3,jdbcType=TIMESTAMP},
+      param4 = #{param4,jdbcType=BIGINT},
       param5 = #{param5,jdbcType=DECIMAL}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

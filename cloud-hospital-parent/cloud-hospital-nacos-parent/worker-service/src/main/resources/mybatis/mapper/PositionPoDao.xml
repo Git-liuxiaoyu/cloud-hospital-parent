@@ -8,6 +8,7 @@
     <result column="isOut" jdbcType="CHAR" property="isout" />
     <result column="isIn" jdbcType="CHAR" property="isin" />
     <result column="isMdc" jdbcType="CHAR" property="ismdc" />
+    <result column="isExam" jdbcType="CHAR" property="isexam" />
     <result column="status" jdbcType="CHAR" property="status" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, type, level, isOut, isIn, isMdc, status
+    id, type, level, isOut, isIn, isMdc, isExam, status
   </sql>
   <select id="selectByExample" parameterType="com.example.workerservice.outlet.dao.mysql.po.PositionPoExample" resultMap="BaseResultMap">
     select
@@ -103,9 +104,11 @@
   </delete>
   <insert id="insert" parameterType="com.example.workerservice.outlet.dao.mysql.po.PositionPo">
     insert into h_position (id, type, level, isOut, 
-      isIn, isMdc, status)
+      isIn, isMdc, isExam, status
+      )
     values (#{id,jdbcType=INTEGER}, #{type,jdbcType=CHAR}, #{level,jdbcType=CHAR}, #{isout,jdbcType=CHAR}, 
-      #{isin,jdbcType=CHAR}, #{ismdc,jdbcType=CHAR}, #{status,jdbcType=CHAR})
+      #{isin,jdbcType=CHAR}, #{ismdc,jdbcType=CHAR}, #{isexam,jdbcType=CHAR}, #{status,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.example.workerservice.outlet.dao.mysql.po.PositionPo">
     insert into h_position
@@ -127,6 +130,9 @@
       </if>
       <if test="ismdc != null">
         isMdc,
+      </if>
+      <if test="isexam != null">
+        isExam,
       </if>
       <if test="status != null">
         status,
@@ -150,6 +156,9 @@
       </if>
       <if test="ismdc != null">
         #{ismdc,jdbcType=CHAR},
+      </if>
+      <if test="isexam != null">
+        #{isexam,jdbcType=CHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=CHAR},
@@ -183,6 +192,9 @@
       <if test="record.ismdc != null">
         isMdc = #{record.ismdc,jdbcType=CHAR},
       </if>
+      <if test="record.isexam != null">
+        isExam = #{record.isexam,jdbcType=CHAR},
+      </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=CHAR},
       </if>
@@ -199,6 +211,7 @@
       isOut = #{record.isout,jdbcType=CHAR},
       isIn = #{record.isin,jdbcType=CHAR},
       isMdc = #{record.ismdc,jdbcType=CHAR},
+      isExam = #{record.isexam,jdbcType=CHAR},
       status = #{record.status,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -222,6 +235,9 @@
       <if test="ismdc != null">
         isMdc = #{ismdc,jdbcType=CHAR},
       </if>
+      <if test="isexam != null">
+        isExam = #{isexam,jdbcType=CHAR},
+      </if>
       <if test="status != null">
         status = #{status,jdbcType=CHAR},
       </if>
@@ -235,6 +251,7 @@
       isOut = #{isout,jdbcType=CHAR},
       isIn = #{isin,jdbcType=CHAR},
       isMdc = #{ismdc,jdbcType=CHAR},
+      isExam = #{isexam,jdbcType=CHAR},
       status = #{status,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

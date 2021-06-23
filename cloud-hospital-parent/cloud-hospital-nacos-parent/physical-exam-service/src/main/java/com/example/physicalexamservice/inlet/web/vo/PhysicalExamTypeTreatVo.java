@@ -5,10 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.math.BigDecimal;
-
 /**
- * 实体类 - Vo - 就诊用 - PhysicalExam
+ * 实体类 - Vo - For Treat - PhysicalExamType
  *
  * @author Alnwick11AtoZ 松
  * @date 2021/6/22
@@ -17,19 +15,11 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PhysicalExamTreatVo {
+public class PhysicalExamTypeTreatVo {
 
     private Integer id;
 
-    private String no;
-
     private String name;
-
-    private BigDecimal price;
-
-    private Integer typeid;
-
-    private Long leftstock;
 
     private String status;
 

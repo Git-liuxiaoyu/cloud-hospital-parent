@@ -1,6 +1,9 @@
 package com.example.workerservice.inlet.web.vo;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * 登陆后传送给页面的 WorkerInfo
@@ -33,6 +36,8 @@ public class WorkerInfoLoginedVo {
     private String positionIsIn;
 
     private String positionIsMdc;
+
+    private String positionIsExam;
 
     private String positionStatus;
 

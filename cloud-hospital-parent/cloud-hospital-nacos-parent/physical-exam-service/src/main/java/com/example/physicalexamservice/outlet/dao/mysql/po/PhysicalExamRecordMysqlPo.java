@@ -3,20 +3,18 @@ package com.example.physicalexamservice.outlet.dao.mysql.po;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class PhysicalExamMysqlPo {
-    private Integer id;
+public class PhysicalExamRecordMysqlPo {
+    private Long id;
 
     private String no;
 
-    private Integer typeid;
+    private Long treatrecordid;
 
-    private String name;
+    private Integer doctorid;
 
-    private BigDecimal price;
+    private Long patientid;
 
-    private Long leftstock;
-
-    private Long maxstock;
+    private Date createtime;
 
     private String status;
 
@@ -24,17 +22,17 @@ public class PhysicalExamMysqlPo {
 
     private String param2;
 
-    private Long param3;
+    private Date param3;
 
-    private Date param4;
+    private Long param4;
 
     private BigDecimal param5;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -46,44 +44,36 @@ public class PhysicalExamMysqlPo {
         this.no = no == null ? null : no.trim();
     }
 
-    public Integer getTypeid() {
-        return typeid;
+    public Long getTreatrecordid() {
+        return treatrecordid;
     }
 
-    public void setTypeid(Integer typeid) {
-        this.typeid = typeid;
+    public void setTreatrecordid(Long treatrecordid) {
+        this.treatrecordid = treatrecordid;
     }
 
-    public String getName() {
-        return name;
+    public Integer getDoctorid() {
+        return doctorid;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setDoctorid(Integer doctorid) {
+        this.doctorid = doctorid;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public Long getPatientid() {
+        return patientid;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setPatientid(Long patientid) {
+        this.patientid = patientid;
     }
 
-    public Long getLeftstock() {
-        return leftstock;
+    public Date getCreatetime() {
+        return createtime;
     }
 
-    public void setLeftstock(Long leftstock) {
-        this.leftstock = leftstock;
-    }
-
-    public Long getMaxstock() {
-        return maxstock;
-    }
-
-    public void setMaxstock(Long maxstock) {
-        this.maxstock = maxstock;
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 
     public String getStatus() {
@@ -110,19 +100,19 @@ public class PhysicalExamMysqlPo {
         this.param2 = param2 == null ? null : param2.trim();
     }
 
-    public Long getParam3() {
+    public Date getParam3() {
         return param3;
     }
 
-    public void setParam3(Long param3) {
+    public void setParam3(Date param3) {
         this.param3 = param3;
     }
 
-    public Date getParam4() {
+    public Long getParam4() {
         return param4;
     }
 
-    public void setParam4(Date param4) {
+    public void setParam4(Long param4) {
         this.param4 = param4;
     }
 

@@ -8,10 +8,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
-import java.math.BigDecimal;
-
 /**
- * 实体类 - RedisPo -  PhysicalExam
+ * 实体类 - RedisPo - PhysicalExamType
  *
  * @author Alnwick11AtoZ 松
  * @date 2021/6/22
@@ -21,21 +19,14 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @ToString
 @RedisHash
-public class PhysicalExamRedisPo {
+public class PhysicalExamTypeRedisPo {
 
     @Id
     private Integer id;
 
-    private String no;
-
     private String name;
 
-    @Indexed
-    private Integer typeid;
-
-    private BigDecimal price;
-
-    private Long leftstock;
+    private String description;
 
     @Indexed
     private String status;

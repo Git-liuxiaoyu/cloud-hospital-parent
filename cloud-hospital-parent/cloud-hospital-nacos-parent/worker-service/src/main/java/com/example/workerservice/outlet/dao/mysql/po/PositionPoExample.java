@@ -514,6 +514,76 @@ public class PositionPoExample {
             return (Criteria) this;
         }
 
+        public Criteria andIsexamIsNull() {
+            addCriterion("isExam is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamIsNotNull() {
+            addCriterion("isExam is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamEqualTo(String value) {
+            addCriterion("isExam =", value, "isexam");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamNotEqualTo(String value) {
+            addCriterion("isExam <>", value, "isexam");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamGreaterThan(String value) {
+            addCriterion("isExam >", value, "isexam");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamGreaterThanOrEqualTo(String value) {
+            addCriterion("isExam >=", value, "isexam");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamLessThan(String value) {
+            addCriterion("isExam <", value, "isexam");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamLessThanOrEqualTo(String value) {
+            addCriterion("isExam <=", value, "isexam");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamLike(String value) {
+            addCriterion("isExam like", value, "isexam");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamNotLike(String value) {
+            addCriterion("isExam not like", value, "isexam");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamIn(List<String> values) {
+            addCriterion("isExam in", values, "isexam");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamNotIn(List<String> values) {
+            addCriterion("isExam not in", values, "isexam");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamBetween(String value1, String value2) {
+            addCriterion("isExam between", value1, value2, "isexam");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsexamNotBetween(String value1, String value2) {
+            addCriterion("isExam not between", value1, value2, "isexam");
+            return (Criteria) this;
+        }
+
         public Criteria andStatusIsNull() {
             addCriterion("status is null");
             return (Criteria) this;

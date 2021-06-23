@@ -58,15 +58,45 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
-        <table tableName="h_physical_exam" catalog="h_physical_exam"
-               domainObjectName="PhysicalExamMysqlPo"
-               mapperName="PhysicalExamMysqlPoDao"
+<!--        <table tableName="h_physical_exam" catalog="h_physical_exam"-->
+<!--               domainObjectName="PhysicalExamMysqlPo"-->
+<!--               mapperName="PhysicalExamMysqlPoDao"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true">-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--        </table>-->
+
+<!--        <table tableName="h_physical_exam_type" catalog="h_physical_exam"-->
+<!--               domainObjectName="PhysicalExamTypeMysqlPo"-->
+<!--               mapperName="PhysicalExamTypeMysqlPoDao"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true">-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--        </table>-->
+
+        <table tableName="h_physical_exam_record" catalog="h_physical_exam"
+               domainObjectName="PhysicalExamRecordMysqlPo"
+               mapperName="PhysicalExamRecordMysqlPoDao"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
                enableSelectByExample="true">
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>
+
+<!--        <table tableName="h_physical_exam_record_detail" catalog="h_physical_exam"-->
+<!--               domainObjectName="PhysicalExamRecordDetailMysqlPo"-->
+<!--               mapperName="PhysicalExamRecordDetailMysqlPoDao"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true">-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--        </table>-->
 
     </context>
 </generatorConfiguration>

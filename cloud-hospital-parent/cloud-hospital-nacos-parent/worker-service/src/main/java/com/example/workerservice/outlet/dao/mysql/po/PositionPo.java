@@ -13,6 +13,8 @@ public class PositionPo {
 
     private String ismdc;
 
+    private String isexam;
+
     private String status;
 
     public Integer getId() {
@@ -61,6 +63,14 @@ public class PositionPo {
 
     public void setIsmdc(String ismdc) {
         this.ismdc = ismdc == null ? null : ismdc.trim();
+    }
+
+    public String getIsexam() {
+        return isexam;
+    }
+
+    public void setIsexam(String isexam) {
+        this.isexam = isexam == null ? null : isexam.trim();
     }
 
     public String getStatus() {
