@@ -1,5 +1,6 @@
 package com.example.takenumberservice.inlet.web;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 public class ResponseResult<T> {
+    @ApiModelProperty(value="状态码",required = true,example = "200")
     private int code;
+    @ApiModelProperty(value="返回的消息",required = true,example = "执行成功")
     private String msg;
+    @ApiModelProperty(value="返回的泛型参数",required = true,example = "ProofController")
     private T data;
 
     public ResponseResult() {
