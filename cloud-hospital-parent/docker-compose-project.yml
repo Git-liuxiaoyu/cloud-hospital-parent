@@ -7,7 +7,7 @@ services:
       args:
         JAR_FILE: cloud-hospital-gateway-server.jar
     image: gateway-server
-    container_name: gateway-server-8080
+    container_name: gateway-server-9527
     network_mode: "host"
     command: "--server.port=9527 --spring.profiles.active=pro"
 

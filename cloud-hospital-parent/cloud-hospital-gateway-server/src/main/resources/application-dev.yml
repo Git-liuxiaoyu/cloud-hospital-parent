@@ -2,7 +2,30 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 1.117.97.60:8848
+        server-addr: http://1.117.97.60:8848
         namespace: public
         username: nacos
         password: nacos
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      # 如遇到跨域问题,将以下所有注释,重新启动网关微服务,再接触注释,再重新启动网关微服务即可,具体原因不明
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            # 允许携带认证信息
+            # 允许跨域的源(网站域名/ip)，设置*为全部
+            # 允许跨域请求里的head字段，设置*为全部
+            # 允许跨域的method， 默认为GET和OPTIONS，设置*为全部
+            # 跨域允许的有效期
+            allow-credentials: true
+            allowed-origins: '*'
+            allowed-methods: '*'
+            allowed-headers: Content-Type,Content-Length, Authorization, Accept,X-Requested-With, BackLoginedToken
+            exposed-headers: Content-Type,Content-Length, Authorization, Accept,X-Requested-With, BackLoginedToken
+            max-age: 3600
+      default-filters:
+        - DedupeResponseHeader=Vary Access-Control-Allow-Credentials Access-Control-Allow-Origin, RETAIN_UNIQUE
+        - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
