@@ -9,12 +9,15 @@ import com.example.drugservice.outlet.dao.mysql.DrugOddDao;
 import com.example.drugservice.outlet.dao.mysql.DrugTypeDao;
 import com.example.drugservice.outlet.dao.mysql.po.DrugOddPo;
 import com.example.drugservice.outlet.dao.mysql.po.DrugPo;
+import com.example.drugservice.outlet.dao.redis.DrugOddRedisDao;
+import com.example.drugservice.outlet.dao.redis.po.DrugOddRedisPo;
 import com.example.drugservice.service.add.AddDrugOddCommand;
 import com.example.drugservice.service.instock.InStockDrugCommand;
 import com.example.drugservice.service.query.ExampleQueryDrugCommand;
 import com.example.drugservice.service.query.ExampleQueryDrugOddCommand;
 import com.example.drugservice.service.update.UpdateDrugOddCommand;
 import com.example.drugservice.util.NoUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,12 +28,16 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 public class DrugOddAdapt {
     @Autowired
     private DrugOddDao drugOddDao;
 
     @Autowired
     private DrugOddVoConverter converter;
+
+    @Autowired
+    private DrugOddRedisDao redisDao;
 
     //条件查询集合
     public List<DrugOddVo> findDrugListByExample( ExampleQueryDrugOddCommand command){
@@ -80,7 +87,18 @@ public class DrugOddAdapt {
 
     //根据编号查询
     public DrugOddVo getByNo(String no){
-      DrugOddPo po=  drugOddDao.selectByNo(no);
+        try{
+            //先查redis
+            DrugOddRedisPo redisPo = redisDao.getAllByNo(no);
+            log.info("从redis中读取药品单编号{}的数据",no);
+            DrugOddVo vo = converter.convert(redisPo);
+        }catch (Exception e){
+            //redis没有 在mysql 查 然后存入redis
+        }
+
+
+
+        DrugOddPo po=  drugOddDao.selectByNo(no);
       DrugOddVo vo = new DrugOddVo();
       BeanUtils.copyProperties(po,vo);
       return vo;

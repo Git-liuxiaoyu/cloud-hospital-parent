@@ -5,6 +5,7 @@ import com.example.drugservice.inlet.web.vo.DrugOddVo;
 import com.example.drugservice.inlet.web.vo.DrugVo;
 import com.example.drugservice.outlet.dao.mysql.po.DrugOddPo;
 import com.example.drugservice.outlet.dao.mysql.po.DrugPo;
+import com.example.drugservice.outlet.dao.redis.po.DrugOddRedisPo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -26,11 +27,11 @@ public class DrugOddVoConverter {
 //        return voList;
 //    }
 //        //po对象转换为vo对象
-//        public DrugOddVo convert(DrugOddPo po) {
-//            DrugOddVo vo = new DrugOddVo();
-//            BeanUtils.copyProperties(po,vo);
-//        return vo;
-//    }
+        public DrugOddVo convert(DrugOddRedisPo po) {
+            DrugOddVo vo = new DrugOddVo();
+            BeanUtils.copyProperties(po,vo);
+        return vo;
+    }
 
 
 

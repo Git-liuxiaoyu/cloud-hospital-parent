@@ -6,10 +6,7 @@ import com.example.drugservice.service.query.ExampleQueryDrugOddDetailCommand;
 import com.example.drugservice.service.query.ExampleQueryInventoryOddDetailCommand;
 import com.example.drugservice.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +15,7 @@ import java.util.List;
 @CrossOrigin
 public class InventoryOddDetailController {
 
-    @RequestMapping("/inventoryOddDetail/list/byId")
+    @RequestMapping(value = "/inventoryOddDetail/list/byId",method = RequestMethod.POST)
     public ResponseResult<List<InventoryOddDetailVo>> list(@RequestBody ExampleQueryInventoryOddDetailCommand command){
         List<InventoryOddDetailVo> vos = command.execute();
         System.out.println(vos);

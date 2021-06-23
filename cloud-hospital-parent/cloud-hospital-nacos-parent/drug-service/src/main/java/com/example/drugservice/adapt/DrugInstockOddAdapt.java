@@ -2,6 +2,7 @@ package com.example.drugservice.adapt;
 
 import com.example.drugservice.inlet.web.vo.DrugInstockOddVo;
 import com.example.drugservice.inlet.web.vo.InventoryOddVo;
+import com.example.drugservice.outlet.dao.es.DrugInstockOddEsDao;
 import com.example.drugservice.outlet.dao.mysql.*;
 import com.example.drugservice.outlet.dao.mysql.po.*;
 import com.example.drugservice.service.addinstockodd.AddInstockOddCommand;
@@ -33,6 +34,9 @@ public class DrugInstockOddAdapt {
 
     @Autowired
     private DrugDao drugDao;
+
+    @Autowired
+    private DrugInstockOddEsDao drugInstockOddEsDao;
 
 
 

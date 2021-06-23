@@ -2,18 +2,24 @@ package com.example.drugservice.adapt;
 
 import com.example.drugservice.adapt.converter.DrugVoConverter;
 import com.example.drugservice.inlet.web.vo.DrugVo;
+import com.example.drugservice.outlet.dao.es.DrugEsDao;
+import com.example.drugservice.outlet.dao.es.po.DrugEsPo;
 import com.example.drugservice.outlet.dao.mysql.DrugDao;
 import com.example.drugservice.outlet.dao.mysql.po.DrugPo;
 
 import com.example.drugservice.service.instock.InStockDrugCommand;
 import com.example.drugservice.service.query.ExampleQueryDrugCommand;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
+@Slf4j
 public class DrugAdapt {
     @Autowired
     private DrugDao drugDao;
@@ -21,26 +27,43 @@ public class DrugAdapt {
     @Autowired
     private DrugVoConverter converter;
 
-//    @Autowired
-//    private DrugRedisDao redisDao;
-
-
+    @Autowired
+    private DrugEsDao drugEsDao;
 
     //动态查询 分页列表
     public List<DrugVo> findDrugListByExample(ExampleQueryDrugCommand command){
-        //先查redis
-//        redisDao.findAllByNameAndNoAndLocation(command.getName(),
-//                                                command.getNo(),
-//                                                command.getLocation(),
-//                                                command.getTypeId())
-//                                                                        ;
+        //查es
+        List<DrugEsPo> poList =new ArrayList<>();
+        if (command.getNo()!=null){
+            poList=drugEsDao.findAllByNo(command.getNo());
+        }else if (command.getName()!=null){
+            poList= drugEsDao.findAllByName(command.getName());
+        }else {
+           poList= drugEsDao.findAll();
+        }
+        //es po 转换为vo
+        List<DrugVo> vos = converter.convert2(poList);
 
-        DrugPo  po = new DrugPo();
-        BeanUtils.copyProperties(command,po);
-        List<DrugPo> drugPos = drugDao.selectByCon(po);
-        List<DrugVo> drugVos = converter.convert(drugPos);
-
-        return drugVos;
+//        if (poList.size()==0){
+//            log.info("走mysql 查询列表");
+//
+//            DrugPo  po = new DrugPo();
+//            BeanUtils.copyProperties(command,po);
+//            List<DrugPo> drugPos = drugDao.selectByCon(po);
+//            List<DrugVo> drugVos = converter.convert(drugPos);
+//
+//            //mysql数据转存到es
+//            for (DrugPo drugPo : drugPos) {
+//                DrugEsPo po1 = new DrugEsPo();
+//                po1.setTypeName(drugPo.getDrugtype());
+//                po1.setStock(drugPo.getStock());
+//                BeanUtils.copyProperties(drugPo,po1);
+//                drugEsDao.save(po1);
+//            }
+//            return drugVos;
+//        }
+        log.info("走es 查询列表");
+        return vos;
     }
 
 
@@ -75,6 +98,12 @@ public class DrugAdapt {
 
         BeanUtils.copyProperties(command,po);
         drugDao.insert(po);
+
+        //同时存入es
+        DrugEsPo drugEsPo = new DrugEsPo();
+        BeanUtils.copyProperties(po,drugEsPo);
+        drugEsDao.save(drugEsPo);
+
     }
 
 
@@ -84,11 +113,23 @@ public class DrugAdapt {
 
         drugDao.updateByNo(command.getNum(),command.getNo());
 
+        //查出es对象 然后修改
+        DrugEsPo esPo = drugEsDao.getAllByNo(command.getNo());
+        esPo.setStock(esPo.getStock()+command.getNum());
+        drugEsDao.save(esPo);
+
+
+
     }
 
     //减少药品库存
     public void updateDrugReduce(String no,Integer num){
 
         drugDao.updateByNoReduce(no,num);
+
+        //查出es对象 然后修改
+        DrugEsPo esPo = drugEsDao.getAllByNo(no);
+        esPo.setStock(esPo.getStock()-num);
+        drugEsDao.save(esPo);
     }
 }

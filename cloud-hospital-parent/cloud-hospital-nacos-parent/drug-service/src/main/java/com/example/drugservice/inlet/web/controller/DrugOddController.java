@@ -9,6 +9,7 @@ import com.example.drugservice.service.update.UpdateDrugOddCommand;
 import com.example.drugservice.util.PageUtils;
 import com.example.drugservice.util.ResponseResult;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,8 @@ import java.util.List;
 @CrossOrigin
 public class DrugOddController {
 
-    @RequestMapping("/drugodd/list")
+    @RequestMapping(value = "/drugodd/list",method = RequestMethod.POST)
+    @ApiOperation(value = "查询药品单集合",notes = "分页条件查询药品单集合,可以传一个药品单编号 来查询集合,还要传pageindex和pageSize表示查询第几页每页几条数据")
     public ResponseResult<PageInfo<DrugOddVo>> findList(@RequestBody ExampleQueryDrugOddCommand command){
         List<DrugOddVo> drugOddVos = command.execute();
         PageUtils<DrugOddVo> pageUtils = new PageUtils<>();
@@ -29,21 +31,24 @@ public class DrugOddController {
     }
 
     //修改药品单状态
-    @RequestMapping("/drugodd/update/byId")
+    @RequestMapping(value = "/drugodd/update/byId",method = RequestMethod.POST)
+    @ApiOperation(value = "根据药品单id修改状态",notes = "传一个药品单id,修改状态,表示通过审核")
     public ResponseResult<String> updateStatusById(@RequestBody UpdateDrugOddCommand command){
         command.execute();
         return new ResponseResult<>(200,"success","成功哦");
     }
 
     //添加药品单
-    @RequestMapping("/drugodd/add")
+    @RequestMapping(value = "/drugodd/add",method = RequestMethod.POST)
+    @ApiOperation(value = "添加药品单",notes = "要传一个对象,对象里有添加药品的人,添加时间,对象里面还有个集合里面是添加了哪些药")
     public ResponseResult<String> addDrugOdd(@RequestBody AddDrugOddCommand command){
         command.execute();
         return  new ResponseResult<>(200,"success","添加成功");
     }
 
     //根据编号查询药品单
-    @RequestMapping("/drugOdd/byNo/{no}")
+    @RequestMapping(value = "/drugOdd/byNo/{no}",method = RequestMethod.POST)
+    @ApiOperation(value = "根据编号查询药品单对象",notes = "根据药品单编号,查询这个编号存不存在,不存在就返回500,存在返回200")
     public ResponseResult<Void> getByNo(@PathVariable String no){
         ExampleQueryDrugOddCommand command =new ExampleQueryDrugOddCommand();
         command.setNo(no);

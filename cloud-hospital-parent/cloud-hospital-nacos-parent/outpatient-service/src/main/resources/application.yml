@@ -25,8 +25,8 @@ spring:
                 namespace: public
                 password: nacos
                 #                server-addr: 192.172.0.160:8848
-                server-addr: 1.117.97.60:8848
-#                server-addr: 127.0.0.1:8848
+#                server-addr: 1.117.97.60:8848
+                server-addr: 127.0.0.1:8848
                 username: nacos
 
 server:

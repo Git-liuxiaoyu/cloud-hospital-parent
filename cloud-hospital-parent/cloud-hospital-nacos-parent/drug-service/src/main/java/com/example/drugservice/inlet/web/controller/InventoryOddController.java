@@ -10,10 +10,7 @@ import com.example.drugservice.util.PageUtils;
 import com.example.drugservice.util.ResponseResult;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +20,7 @@ import java.util.List;
 public class InventoryOddController {
 
     //盘点单列表
-    @RequestMapping("/inventoryOdd/list")
+    @RequestMapping(value = "/inventoryOdd/list",method = RequestMethod.POST)
     public ResponseResult<PageInfo<InventoryOddVo>> findList(@RequestBody ExampleQueryInventoryOddCommand command){
         List<InventoryOddVo> voList = command.execute();
 
@@ -35,7 +32,7 @@ public class InventoryOddController {
 
 
     //添加盘点单
-    @RequestMapping("/inventoryOdd/add")
+    @RequestMapping(value = "/inventoryOdd/add",method = RequestMethod.POST)
     //public ResponseResult<String> add(@RequestBody List<AddInventoryCommand> command){
     public ResponseResult<String> add(@RequestBody AddInventoryCommand command){
         log.info("进入");
@@ -43,7 +40,7 @@ public class InventoryOddController {
         return new ResponseResult<>(200,"success",null);
     }
     //修改状态
-    @RequestMapping("/inventoryodd/update/byId")
+    @RequestMapping(value = "/inventoryodd/update/byId",method = RequestMethod.POST)
     public ResponseResult<String> updateStatusById(@RequestBody UpdateInventoryOddCommand command){
         command.execute();
         return new ResponseResult<>(200,"success","成功哦");

@@ -7,7 +7,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@MapperScan("com.example.drugservice.outlet.dao.mysql")
 public class DrugServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(DrugServiceApplication.class, args);

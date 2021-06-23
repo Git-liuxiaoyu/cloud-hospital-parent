@@ -16,7 +16,7 @@ public class DrugTypeController {
     @Autowired
     private DrugTypeAdapt adapt;
 
- @RequestMapping("/drugType/list")
+ @RequestMapping(value = "/drugType/list",method = RequestMethod.POST)
     public ResponseResult<List<DrugTypeVo>> list(){
      List<DrugTypeVo> list = adapt.findList();
      return new ResponseResult<>(200,"success",list);

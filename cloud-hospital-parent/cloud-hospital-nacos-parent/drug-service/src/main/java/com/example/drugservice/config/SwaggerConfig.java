@@ -1,7 +1,9 @@
-package com.example.drugservice.util;
+package com.example.drugservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -12,26 +14,28 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
+@Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfig {
+    private static final String BASE_PACKAGE = "com.example.drugservice.inlet.web.controller";
+
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
+                .paths(PathSelectors.any())
+                .build();
+    }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("XXX 项目接口文挡")
-                .description("XXX Project Swagger2 UserService Interface")
-                .termsOfServiceUrl("http://localhost:8080/swagger-ui.html")
+        String title = "test";
+        return new ApiInfoBuilder().title(title)
+                .description("接口")
+                .termsOfServiceUrl("http://localhost:8080/doc.html")
                 .version("1.0")
                 .build();
     }
 
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                // 此处自行修改为自己的 Controller 包路径。
-                .apis(RequestHandlerSelectors.basePackage("com.example.drugservice.inlet.web.controller"))
-                .paths(PathSelectors.any())
-                .build();
-    }
 
 }
