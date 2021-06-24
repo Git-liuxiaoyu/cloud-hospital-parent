@@ -2,6 +2,7 @@ package com.example.physicalexamservice.util.converter;
 
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordVo;
 import com.example.physicalexamservice.outlet.dao.es.po.PhysicalExamRecordEsPo;
+import com.example.physicalexamservice.outlet.dao.redis.po.PhysicalExamRecordRedisPo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
@@ -27,10 +28,29 @@ public class PhysicalExamRecordVoConverter {
         PhysicalExamRecordVo physicalExamRecordVo = new PhysicalExamRecordVo();
         /* 判断是否为 null */
         if (physicalExamRecordEsPo == null) {
-            return physicalExamRecordVo;
+            throw new NullPointerException();
         }
         /* 赋值 */
         BeanUtils.copyProperties(physicalExamRecordEsPo, physicalExamRecordVo);
+        /* 返回 */
+        return physicalExamRecordVo;
+    }
+
+    /**
+     * PhysicalExamRecordRedisPo -> PhysicalExamRecordVo
+     *
+     * @param physicalExamRecordRedisPo
+     * @return
+     */
+    public PhysicalExamRecordVo convert(PhysicalExamRecordRedisPo physicalExamRecordRedisPo) {
+        /* 实例化 PhysicalExamRecordVo */
+        PhysicalExamRecordVo physicalExamRecordVo = new PhysicalExamRecordVo();
+        /* 判断是否为 null */
+        if (physicalExamRecordRedisPo == null) {
+            throw new NullPointerException();
+        }
+        /* 赋值 */
+        BeanUtils.copyProperties(physicalExamRecordRedisPo, physicalExamRecordVo);
         /* 返回 */
         return physicalExamRecordVo;
     }

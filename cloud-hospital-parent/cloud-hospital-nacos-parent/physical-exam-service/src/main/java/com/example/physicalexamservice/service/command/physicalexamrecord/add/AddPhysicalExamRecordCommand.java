@@ -70,9 +70,13 @@ public class AddPhysicalExamRecordCommand {
         @NotNull
         private Integer typeid;
 
+        private String typeName;
+
         @ApiModelProperty(value = "体检记录详情得体检的是哪个项目(体检项目主键ID)", example = "1",required = true)
         @NotNull
         private Integer examid;
+
+        private String examName;
 
         @ApiModelProperty(value = "体检记录详情得体检项目检查次数", example = "1",required = true)
         @NotNull
@@ -80,6 +84,8 @@ public class AddPhysicalExamRecordCommand {
 
         @ApiModelProperty(value = "体检记录详情得体检项目的金额", example = "1.00")
         private BigDecimal price;
+
+        private String status;
     }
 
     public AddPhysicalExamRecordCommand() {
@@ -94,16 +100,16 @@ public class AddPhysicalExamRecordCommand {
         this.innerAddPhysicalExamRecordDetailPoList = innerAddPhysicalExamRecordDetailPoList;
     }
 
-    public Long execute() {
+    public String execute() {
         /* 执行方法 */
-        Long recordId = this.addPhysicalExamRecordCommandHandler.action(this);
+        String recordIdAndRecordNo = this.addPhysicalExamRecordCommandHandler.action(this);
 
         /* Event Bus 通知 添加到 ElasticSearch */
         /* 添加 Record */
         ApplicationContextHolder.getApplicationContext().publishEvent(new IPhysicalExamRecordEsEventPublisher.AddPhysicalExamRecordEsEvent(this));
 
         /* 返回 */
-        return recordId;
+        return recordIdAndRecordNo;
     }
 
 

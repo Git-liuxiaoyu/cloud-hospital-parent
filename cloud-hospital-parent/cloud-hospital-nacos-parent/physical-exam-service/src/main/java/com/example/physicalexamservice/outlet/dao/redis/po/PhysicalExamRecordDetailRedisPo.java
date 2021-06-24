@@ -1,33 +1,36 @@
-package com.example.physicalexamservice.inlet.web.vo;
+package com.example.physicalexamservice.outlet.dao.redis.po;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
-
 import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
+ * 实体类 - RedisPo - PhysicalExamRecordDetail
+ *
  * @author Alnwick11AtoZ 松
- * @date 2021/6/22
+ * @date 2021/6/24
  */
-@ApiModel
 @Data
-@NoArgsConstructor
+@RedisHash
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
-public class PhysicalExamRecordDetailVo {
+public class PhysicalExamRecordDetailRedisPo {
 
+    @Id
     private Long id;
 
+    @Indexed
     private Long recordid;
 
+    @Indexed
     private Integer typeid;
 
     private String typeName;
@@ -46,12 +49,11 @@ public class PhysicalExamRecordDetailVo {
 
     private String resulttext;
 
+    @Indexed
     private Integer examdocid;
 
     private String examDocName;
 
     private String status;
-
-    public static final String STATUS_NOTEXAM = "0";
 
 }

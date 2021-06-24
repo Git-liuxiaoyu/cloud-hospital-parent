@@ -27,27 +27,23 @@ import java.util.List;
 public class PhysicalExamRecordController {
 
     /**
+     * 添加体检记录(体检单)
+     *
      * @return
      */
     @PostMapping("add")
-    @ApiOperation(value = "添加体检记录(体检单)", notes = "xxx", produces = "application/json", response = ResponseResult.class)
-    public ResponseResult<Long> addPhysicalExamRecord(@Valid @RequestBody AddPhysicalExamRecordCommand command, BindingResult bindingResult) {
-
-        log.debug("{}",command);
-
+    @ApiOperation(value = "添加体检记录(体检单)", notes = "添加体检记录单,连带医生设置的体检记录详情添加并绑定在该体检记录单下", produces = "application/json", response = ResponseResult.class)
+    public ResponseResult<String> addPhysicalExamRecord(@Valid @RequestBody AddPhysicalExamRecordCommand command, BindingResult bindingResult) {
         /* 判断是否绑定错误 */
         if (bindingResult.hasErrors()) {
             throw new IllegalArgumentException("获取信息失败 | 参数异常");
         }
-
-//        return ResponseResult.SUCCESS;
-
         /* 执行命令并返回 */
         return new ResponseResult<>(command.execute());
     }
 
     /**
-     * 根据No获得体检记录详情
+     * 根据体检记录编号No获得旗下体检记录详情
      *
      * @return
      */
@@ -59,10 +55,8 @@ public class PhysicalExamRecordController {
     public ResponseResult<List<PhysicalExamRecordDetailVo>> findPhysicalExamRecordDetailListByNo(@PathVariable("recordNo") String recordNo) {
         /* 实例化一个命令 */
         QueryPhysicalExamRecordDetailListByRecordNoCommand command = new QueryPhysicalExamRecordDetailListByRecordNoCommand(recordNo);
-
         /* 执行命令并返回 */
         return new ResponseResult<>(command.execute());
-
     }
 
 }

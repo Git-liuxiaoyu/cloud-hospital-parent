@@ -113,7 +113,7 @@ public class PhysicalExamDaoAdapter {
      *
      * @param innerAddPhysicalExamRecordDetailPoList
      */
-    public void setListPriceAndUpdateStock(List<AddPhysicalExamRecordCommand.InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList) {
+    public void setListPriceAndUpdateStockAndExamInfo(List<AddPhysicalExamRecordCommand.InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList) {
 
         /* 遍历赋值 */
         innerAddPhysicalExamRecordDetailPoList.forEach(i -> {
@@ -123,8 +123,11 @@ public class PhysicalExamDaoAdapter {
             if (physicalExamMysqlPo == null)
                 return;
             /* 赋值 */
+            log.debug("库存 {}",physicalExamMysqlPo.getLeftstock());
+            i.setExamName(physicalExamMysqlPo.getName());
             i.setPrice(physicalExamMysqlPo.getPrice());
             physicalExamMysqlPo.setLeftstock(physicalExamMysqlPo.getLeftstock() - 1);
+            log.debug("库存 {}",physicalExamMysqlPo.getLeftstock());
             /* 存入 MySQL */
             physicalExamMysqlPoDao.updateByPrimaryKeySelective(physicalExamMysqlPo);
             /* 转RedisPo 存入Redis */

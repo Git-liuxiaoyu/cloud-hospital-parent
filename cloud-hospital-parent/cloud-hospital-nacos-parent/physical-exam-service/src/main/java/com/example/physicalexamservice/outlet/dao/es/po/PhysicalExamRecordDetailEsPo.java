@@ -35,8 +35,14 @@ public class PhysicalExamRecordDetailEsPo {
     @Field(name = "typeid", type = FieldType.Integer)
     private Integer typeid;
 
+    @Field(name = "typeName", type = FieldType.Keyword)
+    private String typeName;
+
     @Field(name = "examid", type = FieldType.Integer)
     private Integer examid;
+
+    @Field(name = "examName", type = FieldType.Keyword)
+    private String examName;
 
     @Field(name = "count", type = FieldType.Integer)
     private Integer count;
@@ -46,5 +52,20 @@ public class PhysicalExamRecordDetailEsPo {
 
     @Field(name = "examtime", type = FieldType.Date_Range)
     private Date examtime;
+
+    @Field(name = "examdocid", type = FieldType.Integer)
+    private Integer examdocid;
+
+    @Field(name = "examName", type = FieldType.Keyword)
+    private String examDocName;
+
+    @Field(name = "resultfile", type = FieldType.Keyword)
+    private String resultfile;
+
+    @Field(name = "resulttext", type = FieldType.Text, analyzer = "ik_smart")
+    private String resulttext;
+
+    @Field(name = "status", type = FieldType.Keyword)
+    private String status;
 
 }

@@ -10,6 +10,6 @@ import com.example.physicalexamservice.service.command.physicalexamrecord.add.Ad
  */
 public interface IAddPhysicalExamRecordCommandHandler {
 
-    Long action(AddPhysicalExamRecordCommand command);
+    String action(AddPhysicalExamRecordCommand command);
 
 }

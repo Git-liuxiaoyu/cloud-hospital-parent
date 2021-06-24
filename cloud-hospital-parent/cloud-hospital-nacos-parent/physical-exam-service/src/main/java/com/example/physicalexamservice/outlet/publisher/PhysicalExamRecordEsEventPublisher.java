@@ -66,7 +66,6 @@ public class PhysicalExamRecordEsEventPublisher implements IPhysicalExamRecordEs
         log.info("存入 PhysicalExamRecordEsPo 到 Es - [{}]", physicalExamRecordEsPo);
         /* 保存 Es */
         physicalExamRecordEsPoDao.save(physicalExamRecordEsPo);
-
         /* Event Bus 添加 RecordDetail */
         ApplicationContextHolder.getApplicationContext().publishEvent(new IPhysicalExamRecordDetailEsEventPublisher.AddPhysicalExamRecordDetailEsEvent(command));
     }

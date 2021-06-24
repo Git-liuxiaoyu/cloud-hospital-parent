@@ -3,12 +3,12 @@ package com.example.physicalexamservice.service.command.physicalexamrecord.add;
 import com.example.physicalexamservice.adapter.PhysicalExamDaoAdapter;
 import com.example.physicalexamservice.adapter.PhysicalExamRecordDaoAdapter;
 import com.example.physicalexamservice.adapter.PhysicalExamRecordDetailDaoAdapter;
+import com.example.physicalexamservice.adapter.PhysicalExamTypeDaoAdapter;
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordDetailVo;
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordVo;
 import com.example.physicalexamservice.service.api.physicalexamrecord.IAddPhysicalExamRecordCommandHandler;
 import com.example.physicalexamservice.util.CreateRandomUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,16 +33,19 @@ public class AddPhysicalExamRecordCommandHandler implements IAddPhysicalExamReco
 
     private final PhysicalExamDaoAdapter physicalExamDaoAdapter;
 
-    public AddPhysicalExamRecordCommandHandler(PhysicalExamRecordDaoAdapter physicalExamRecordDaoAdapter, PhysicalExamRecordDetailDaoAdapter physicalExamRecordDetailDaoAdapter, PhysicalExamDaoAdapter physicalExamDaoAdapter) {
+    private final PhysicalExamTypeDaoAdapter physicalExamTypeDaoAdapter;
+
+    public AddPhysicalExamRecordCommandHandler(PhysicalExamRecordDaoAdapter physicalExamRecordDaoAdapter, PhysicalExamRecordDetailDaoAdapter physicalExamRecordDetailDaoAdapter, PhysicalExamDaoAdapter physicalExamDaoAdapter, PhysicalExamTypeDaoAdapter physicalExamTypeDaoAdapter) {
         this.physicalExamRecordDaoAdapter = physicalExamRecordDaoAdapter;
         this.physicalExamRecordDetailDaoAdapter = physicalExamRecordDetailDaoAdapter;
         this.physicalExamDaoAdapter = physicalExamDaoAdapter;
+        this.physicalExamTypeDaoAdapter = physicalExamTypeDaoAdapter;
     }
     /* 构造注入 - 结束 */
 
 
     @Override
-    public Long action(AddPhysicalExamRecordCommand command) {
+    public String action(AddPhysicalExamRecordCommand command) {
         /* 完善数据 */
         command.setCreateTime(new Date());
         command.setNo("EXAMNO" + CreateRandomUtil.createRandomVerifyCode(true, 19));
@@ -52,13 +55,14 @@ public class AddPhysicalExamRecordCommandHandler implements IAddPhysicalExamReco
         command.setId(recordId);
         /* 取出集合 */
         List<AddPhysicalExamRecordCommand.InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList = command.getInnerAddPhysicalExamRecordDetailPoList();
-        /* 补充价格,减少库存 */
-        physicalExamDaoAdapter.setListPriceAndUpdateStock(innerAddPhysicalExamRecordDetailPoList);
-        /* LOG */
-        log.debug("{}",innerAddPhysicalExamRecordDetailPoList);
+        /* 补充价格,减少库存,添加项目名 */
+        physicalExamDaoAdapter.setListPriceAndUpdateStockAndExamInfo(innerAddPhysicalExamRecordDetailPoList);
+        /* 补充类型信息 */
+        physicalExamTypeDaoAdapter.setListTypeInfo(innerAddPhysicalExamRecordDetailPoList);
         /* 调用 RecordDetail 添加方法 */
         physicalExamRecordDetailDaoAdapter.addFromTreat(innerAddPhysicalExamRecordDetailPoList, recordId, PhysicalExamRecordDetailVo.STATUS_NOTEXAM);
+        log.debug("添加到MySQL,{}",innerAddPhysicalExamRecordDetailPoList);
         /* 返回主键 */
-        return recordId;
+        return recordId + "-" + command.getNo();
     }
 }

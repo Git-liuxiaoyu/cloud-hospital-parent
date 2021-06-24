@@ -15,4 +15,13 @@ public interface IQueryPhysicalExamRecordDetailListByRecordNoCommandHandler {
 
     List<PhysicalExamRecordDetailVo> action(QueryPhysicalExamRecordDetailListByRecordNoCommand command);
 
+    /**
+     * 自定义业务异常 - 用户未发现
+     **/
+    class PhysicalExamRecordNotFoundException extends RuntimeException {
+        public PhysicalExamRecordNotFoundException() {
+            super("没有找到该体检记录");
+        }
+    }
+
 }

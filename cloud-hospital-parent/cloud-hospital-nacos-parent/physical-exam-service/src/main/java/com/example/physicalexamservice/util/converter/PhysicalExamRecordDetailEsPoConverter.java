@@ -39,11 +39,14 @@ public class PhysicalExamRecordDetailEsPoConverter {
         PhysicalExamRecordDetailEsPo physicalExamRecordDetailEsPo = new PhysicalExamRecordDetailEsPo();
         /* 赋值 */
         physicalExamRecordDetailEsPo.setExamid(i.getExamid());
+        physicalExamRecordDetailEsPo.setExamName(i.getExamName());
         physicalExamRecordDetailEsPo.setRecordid(recordId);
         physicalExamRecordDetailEsPo.setCount(i.getCount());
         physicalExamRecordDetailEsPo.setTypeid(i.getTypeid());
+        physicalExamRecordDetailEsPo.setTypeName(i.getTypeName());
         physicalExamRecordDetailEsPo.setId(i.getId());
         physicalExamRecordDetailEsPo.setPrice(i.getPrice());
+        physicalExamRecordDetailEsPo.setStatus(i.getStatus());
         /* 返回 */
         return physicalExamRecordDetailEsPo;
     }

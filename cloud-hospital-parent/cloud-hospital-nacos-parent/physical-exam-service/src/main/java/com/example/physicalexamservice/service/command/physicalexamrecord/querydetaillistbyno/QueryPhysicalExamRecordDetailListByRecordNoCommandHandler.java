@@ -6,7 +6,6 @@ import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordDetailVo;
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordVo;
 import com.example.physicalexamservice.service.api.physicalexamrecord.IQueryPhysicalExamRecordDetailListByRecordNoCommandHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -34,12 +33,15 @@ public class QueryPhysicalExamRecordDetailListByRecordNoCommandHandler implement
 
     @Override
     public List<PhysicalExamRecordDetailVo> action(QueryPhysicalExamRecordDetailListByRecordNoCommand command) {
-        /* 调用方法 - 根据 RecordNo 查询 RecordId */
-        PhysicalExamRecordVo physicalExamRecordVo =  physicalExamRecordDaoAdapter.queryByNo(command.getRecordNo());
+        try {
+            /* 调用方法 - 根据 RecordNo 查询 RecordId */
+            PhysicalExamRecordVo physicalExamRecordVo = physicalExamRecordDaoAdapter.queryByNo(command.getRecordNo());
+            /* 调用方法查询并返回 */
+            return physicalExamRecordDetailDaoAdapter.queryListByRecordId(physicalExamRecordVo.getId());
+        } catch (NullPointerException e) {
+            /* 捕获到 NullPointerException */
+            throw new PhysicalExamRecordNotFoundException();
+        }
 
-        /* 调用方法查询并返回 */
-        PhysicalExamRecordDetailVo physicalExamRecordDetailVo= physicalExamRecordDetailDaoAdapter.queryById(physicalExamRecordVo.getId());
-
-        return null;
     }
 }

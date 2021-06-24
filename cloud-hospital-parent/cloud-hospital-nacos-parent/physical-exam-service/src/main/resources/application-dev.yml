@@ -2,7 +2,7 @@ mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: com.example.workerservice.outlet.dao.mysql.po
 server:
-  port: 9200
+  port: 9400
 spring:
   application:
     name: physical-exam-service

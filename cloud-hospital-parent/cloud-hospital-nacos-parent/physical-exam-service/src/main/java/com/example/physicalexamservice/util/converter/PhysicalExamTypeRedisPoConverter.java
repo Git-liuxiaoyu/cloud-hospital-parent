@@ -40,7 +40,7 @@ public class PhysicalExamTypeRedisPoConverter {
      * @param physicalExamTypeMysqlPo
      * @return
      */
-    private PhysicalExamTypeRedisPo convert(PhysicalExamTypeMysqlPo physicalExamTypeMysqlPo) {
+    public PhysicalExamTypeRedisPo convert(PhysicalExamTypeMysqlPo physicalExamTypeMysqlPo) {
         /* 实例化 PhysicalExamTypeTreatVo */
         PhysicalExamTypeRedisPo physicalExamTypeRedisPo = new PhysicalExamTypeRedisPo();
         /* 复制属性 */
