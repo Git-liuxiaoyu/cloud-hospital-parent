@@ -1,22 +1,9 @@
 version: '3'
 services:
-  nacos:
-    image: nacos/nacos-server:1.4.1
-    container_name: nacos-standalone-8848
-    ports:
-      - "8848:8848"
-    environment:
-      - "PREFER_HOST_MODE=hostname"
-      - "MODE=standalone"
-      - "JVM_XMS=512m"
-      - "JVM_MMS=512m"
-    volumes:
-      - "/etc/localtime:/etc/localtime:ro"
-      - "~/docker/8848/logs/:/home/nacos/logs"
-      - "./docker/8848/init.d/custom.properties:/home/nacos/init.d/custom.properties"
   mysql:
     image: mysql:5.7
     container_name: mysql-3306
+    mem_limit: 512m
     #network_mode: "bridge"
     #restart: always
     environment:
@@ -31,6 +18,7 @@ services:
   redis:
     image: redis:5.0
     container_name: redis-6379
+    mem_limit: 512m
     ports:
       - 6379:6379
     volumes:
@@ -41,6 +29,7 @@ services:
   rabbitmq:
     image: rabbitmq:3.8.14-management
     container_name: rabbitmq-5672
+    mem_limit: 512m
     hostname: rabbitmq
     environment:
       - TZ=Asia/Shanghai
@@ -50,9 +39,25 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+  nacos:
+    image: nacos/nacos-server:1.4.1
+    container_name: nacos-standalone-8848
+    mem_limit: 1024m
+    ports:
+      - "8848:8848"
+    environment:
+      - "PREFER_HOST_MODE=hostname"
+      - "MODE=standalone"
+      - "JVM_XMS=512m"
+      - "JVM_MMS=512m"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "~/docker/8848/logs/:/home/nacos/logs"
+      - "./docker/8848/init.d/custom.properties:/home/nacos/init.d/custom.properties"
   es:
     image: elasticsearch:7.10.1
     container_name: es-9200
+    mem_limit: 1024m
     environment:
       discovery.type: single-node
       ES_JAVA_OPTS: -Xms512m -Xmx512m

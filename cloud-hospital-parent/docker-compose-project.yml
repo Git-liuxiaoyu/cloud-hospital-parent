@@ -8,6 +8,8 @@ services:
         JAR_FILE: cloud-hospital-gateway-server.jar
     image: gateway-server
     container_name: gateway-server-9527
+    environment:
+      - "JAVA_OPTS=-Xms512m -Xmx512m -Xmn256m"
     network_mode: "host"
     command: "--server.port=9527 --spring.profiles.active=pro"
 
@@ -19,6 +21,9 @@ services:
         JAR_FILE: drug-service.jar
     image: drug-service
     container_name: drug-service-8080
+    mem_limit: 512m
+    environment:
+      - "JAVA_OPTS=-Xms512m -Xmx512m -Xmn256m"
     network_mode: "host"
     command: "--server.port=8080 --spring.profiles.active=pro"
 
@@ -30,6 +35,9 @@ services:
         JAR_FILE: outpatient-service.jar
     image: outpatient-service-8081
     container_name: outpatient-service
+    mem_limit: 512m
+    environment:
+      - "JAVA_OPTS=-Xms512m -Xmx512m -Xmn256m"
     network_mode: "host"
     command: "--server.port=8081 --spring.profiles.active=pro"
 
@@ -41,6 +49,9 @@ services:
         JAR_FILE: pay-service.jar
     image: pay-service
     container_name: pay-service-8082
+    mem_limit: 512m
+    environment:
+      - "JAVA_OPTS=-Xms512m -Xmx512m -Xmn256m"
     network_mode: "host"
     command: "--server.port=8082 --spring.profiles.active=pro"
 
@@ -52,6 +63,9 @@ services:
         JAR_FILE: physical-exam-service.jar
     image: physical-exam-service
     container_name: physical-exam-service-8083
+    mem_limit: 512m
+    environment:
+      - "JAVA_OPTS=-Xms512m -Xmx512m -Xmn256m"
     network_mode: "host"
     command: "--server.port=8083 --spring.profiles.active=pro"
 
@@ -63,6 +77,9 @@ services:
         JAR_FILE: register-service.jar
     image: register-service
     container_name: register-service-8084
+    mem_limit: 512m
+    environment:
+      - "JAVA_OPTS=-Xms512m -Xmx512m -Xmn256m"
     network_mode: "host"
     command: "--server.port=8084 --spring.profiles.active=pro"
 
@@ -74,6 +91,9 @@ services:
         JAR_FILE: take-number-service.jar
     image: take-number-service
     container_name: take-number-service-8085
+    mem_limit: 512m
+    environment:
+      - "JAVA_OPTS=-Xms512m -Xmx512m -Xmn256m"
     network_mode: "host"
     command: "--server.port=8085 --spring.profiles.active=pro"
 
@@ -85,6 +105,9 @@ services:
         JAR_FILE: verification-code-service.jar
     image: verification-code-service
     container_name: verification-code-service-8086
+    mem_limit: 512m
+    environment:
+      - "JAVA_OPTS=-Xms512m -Xmx512m -Xmn256m"
     network_mode: "host"
     command: "--server.port=8086 --spring.profiles.active=pro"
 
@@ -94,8 +117,11 @@ services:
       dockerfile: Dockerfile
       args:
         JAR_FILE: worker-service.jar
-    image: worker-service
+    image: worker-service8087
     container_name: worker-service-8087
+    mem_limit: 512m
+    environment:
+      - "JAVA_OPTS=-Xms512m -Xmx512m -Xmn256m"
     network_mode: "host"
     command: "--server.port=8087 --spring.profiles.active=pro"
 
