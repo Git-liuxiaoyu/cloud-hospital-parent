@@ -22,6 +22,17 @@ services:
     network_mode: "host"
     command: "--server.port=8080 --spring.profiles.active=pro"
 
+  outpatient-service:
+    build:
+      context: $PWD/cloud-hospital-nacos-parent/outpatient-service
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: outpatient-service.jar
+    image: outpatient-service-8081
+    container_name: outpatient-service
+    network_mode: "host"
+    command: "--server.port=8081 --spring.profiles.active=pro"
+
   pay-service:
     build:
       context: $PWD/cloud-hospital-nacos-parent/pay-service
@@ -29,9 +40,20 @@ services:
       args:
         JAR_FILE: pay-service.jar
     image: pay-service
-    container_name: pay-service-8081
+    container_name: pay-service-8082
     network_mode: "host"
-    command: "--server.port=8081 --spring.profiles.active=pro"
+    command: "--server.port=8082 --spring.profiles.active=pro"
+
+  physical-exam-service:
+    build:
+      context: $PWD/cloud-hospital-nacos-parent/physical-exam-service
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: physical-exam-service.jar
+    image: physical-exam-service
+    container_name: physical-exam-service-8083
+    network_mode: "host"
+    command: "--server.port=8083 --spring.profiles.active=pro"
 
   register-service:
     build:
@@ -40,9 +62,9 @@ services:
       args:
         JAR_FILE: register-service.jar
     image: register-service
-    container_name: register-service-8082
+    container_name: register-service-8084
     network_mode: "host"
-    command: "--server.port=8082 --spring.profiles.active=pro"
+    command: "--server.port=8084 --spring.profiles.active=pro"
 
   take-number-service:
     build:
@@ -51,9 +73,9 @@ services:
       args:
         JAR_FILE: take-number-service.jar
     image: take-number-service
-    container_name: take-number-service-8083
+    container_name: take-number-service-8085
     network_mode: "host"
-    command: "--server.port=8083 --spring.profiles.active=pro"
+    command: "--server.port=8085 --spring.profiles.active=pro"
 
   verification-code-service:
     build:
@@ -62,9 +84,9 @@ services:
       args:
         JAR_FILE: verification-code-service.jar
     image: verification-code-service
-    container_name: verification-code-service-8084
+    container_name: verification-code-service-8086
     network_mode: "host"
-    command: "--server.port=8084 --spring.profiles.active=pro"
+    command: "--server.port=8086 --spring.profiles.active=pro"
 
   worker-service:
     build:
@@ -73,7 +95,7 @@ services:
       args:
         JAR_FILE: worker-service.jar
     image: worker-service
-    container_name: worker-service-8085
+    container_name: worker-service-8087
     network_mode: "host"
-    command: "--server.port=8085 --spring.profiles.active=pro"
+    command: "--server.port=8087 --spring.profiles.active=pro"
 

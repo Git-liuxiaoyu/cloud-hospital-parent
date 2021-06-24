@@ -14,13 +14,14 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>drug-service</module>
+        <module>outpatient-service</module>
         <module>pay-service</module>
-        <module>worker-service</module>
-        <module>verification-code-service</module>
+        <module>physical-exam-service</module>
         <module>register-service</module>
         <module>take-number-service</module>
-        <module>drug-service</module>
-        <module>physical-exam-service</module>
+        <module>verification-code-service</module>
+        <module>worker-service</module>
     </modules>
 
     <dependencies>
