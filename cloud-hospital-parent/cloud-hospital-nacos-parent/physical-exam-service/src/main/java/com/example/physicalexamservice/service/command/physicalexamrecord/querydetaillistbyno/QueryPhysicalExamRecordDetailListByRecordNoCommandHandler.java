@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * 接口 - 实现 - IQueryPhysicalExamRecordDetailListByRecordNoCommandHandler
  *
@@ -31,7 +33,7 @@ public class QueryPhysicalExamRecordDetailListByRecordNoCommandHandler implement
     /* 构造注入 - 结束 */
 
     @Override
-    public PhysicalExamRecordDetailVo action(QueryPhysicalExamRecordDetailListByRecordNoCommand command) {
+    public List<PhysicalExamRecordDetailVo> action(QueryPhysicalExamRecordDetailListByRecordNoCommand command) {
         /* 调用方法 - 根据 RecordNo 查询 RecordId */
         PhysicalExamRecordVo physicalExamRecordVo =  physicalExamRecordDaoAdapter.queryByNo(command.getRecordNo());
 

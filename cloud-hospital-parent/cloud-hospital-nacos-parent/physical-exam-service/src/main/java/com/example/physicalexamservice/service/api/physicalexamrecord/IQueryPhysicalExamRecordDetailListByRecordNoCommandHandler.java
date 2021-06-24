@@ -13,6 +13,6 @@ import java.util.List;
  */
 public interface IQueryPhysicalExamRecordDetailListByRecordNoCommandHandler {
 
-    PhysicalExamRecordDetailVo action(QueryPhysicalExamRecordDetailListByRecordNoCommand command);
+    List<PhysicalExamRecordDetailVo> action(QueryPhysicalExamRecordDetailListByRecordNoCommand command);
 
 }

@@ -4,12 +4,15 @@ import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordDetailVo;
 import com.example.physicalexamservice.inlet.web.vo.ResponseResult;
 import com.example.physicalexamservice.service.command.physicalexamrecord.add.AddPhysicalExamRecordCommand;
 import com.example.physicalexamservice.service.command.physicalexamrecord.querydetaillistbyno.QueryPhysicalExamRecordDetailListByRecordNoCommand;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 控制器类 - PhysicalExamRecord
@@ -49,7 +52,11 @@ public class PhysicalExamRecordController {
      * @return
      */
     @GetMapping("view/detail/list/{recordNo}")
-    public ResponseResult<PhysicalExamRecordDetailVo> findPhysicalExamRecordDetailListByNo(@PathVariable("recordNo") String recordNo) {
+    @ApiOperation(value = "根据[体检记录编号No]查询得其下所有[体检记录详情]", notes = "根据[体检记录编号No]查询得其下所有[体检记录详情]", produces = "application/json", response = ResponseResult.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "recordNo", value = "体检记录编号No", required = true, dataType = "String", paramType = "path")
+    })
+    public ResponseResult<List<PhysicalExamRecordDetailVo>> findPhysicalExamRecordDetailListByNo(@PathVariable("recordNo") String recordNo) {
         /* 实例化一个命令 */
         QueryPhysicalExamRecordDetailListByRecordNoCommand command = new QueryPhysicalExamRecordDetailListByRecordNoCommand(recordNo);
 

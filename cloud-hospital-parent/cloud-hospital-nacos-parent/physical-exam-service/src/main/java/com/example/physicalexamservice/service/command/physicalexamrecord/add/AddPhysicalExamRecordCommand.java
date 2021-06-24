@@ -1,9 +1,10 @@
 package com.example.physicalexamservice.service.command.physicalexamrecord.add;
 
-import com.example.physicalexamservice.outlet.publisher.api.IPhysicalExamRecordDetailEsEventPublisher;
 import com.example.physicalexamservice.outlet.publisher.api.IPhysicalExamRecordEsEventPublisher;
 import com.example.physicalexamservice.service.api.physicalexamrecord.IAddPhysicalExamRecordCommandHandler;
 import com.example.physicalexamservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,26 +22,35 @@ import java.util.List;
  * @date 2021/6/22
  */
 @Data
+@ApiModel
 public class AddPhysicalExamRecordCommand {
 
+    @ApiModelProperty(value = "体检记录主键ID", example = "1")
     private Long id;
 
+    @ApiModelProperty(value = "体检记录编号No")
     private String no;
 
+    @ApiModelProperty(value = "体检记录创建时间")
     private Date createTime;
 
     @NotNull
+    @ApiModelProperty(value = "就诊记录主键ID", example = "1", required = true)
     private Long treatrecordid;
 
     @NotNull
+    @ApiModelProperty(value = "发起这个体检单(记录)请求得医生(员工)主键ID", example = "1", required = true)
     private Integer doctorid;
 
     @NotNull
+    @ApiModelProperty(value = "这个体检单(记录)给哪个病人体检得主键ID", example = "1", required = true)
     private Long patientid;
 
     @NotNull
+    @ApiModelProperty(value = "需要添加到", example = "1", required = true)
     private List<InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList;
 
+    @ApiModelProperty(hidden = true)
     private IAddPhysicalExamRecordCommandHandler addPhysicalExamRecordCommandHandler;
 
     /**
@@ -50,16 +60,25 @@ public class AddPhysicalExamRecordCommand {
     @AllArgsConstructor
     @NoArgsConstructor
     @ToString
+    @ApiModel
     public static class InnerAddPhysicalExamRecordDetailPo {
 
+        @ApiModelProperty(value = "体检记录详情主键ID", example = "1")
         private Long id;
 
+        @ApiModelProperty(value = "体检记录详情得体检类型主键ID(体检的项目是哪个类型)", example = "1",required = true)
+        @NotNull
         private Integer typeid;
 
+        @ApiModelProperty(value = "体检记录详情得体检的是哪个项目(体检项目主键ID)", example = "1",required = true)
+        @NotNull
         private Integer examid;
 
+        @ApiModelProperty(value = "体检记录详情得体检项目检查次数", example = "1",required = true)
+        @NotNull
         private Integer count;
 
+        @ApiModelProperty(value = "体检记录详情得体检项目的金额", example = "1.00")
         private BigDecimal price;
     }
 

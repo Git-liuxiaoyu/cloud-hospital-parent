@@ -3,6 +3,8 @@ package com.example.physicalexamservice.service.command.physicalexamrecord.query
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordDetailVo;
 import com.example.physicalexamservice.service.api.physicalexamrecord.IQueryPhysicalExamRecordDetailListByRecordNoCommandHandler;
 import com.example.physicalexamservice.util.ApplicationContextHolder;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.List;
  * @date 2021/6/23
  */
 @Data
+@ApiModel
 public class QueryPhysicalExamRecordDetailListByRecordNoCommand {
 
     private String recordNo;
@@ -29,7 +32,7 @@ public class QueryPhysicalExamRecordDetailListByRecordNoCommand {
         this.recordNo = recordNo;
     }
 
-    public PhysicalExamRecordDetailVo execute() {
+    public List<PhysicalExamRecordDetailVo> execute() {
         /* 执行方法 */
         return this.queryPhysicalExamRecordDetailListByRecordNoCommandHandler.action(this);
     }

@@ -1,9 +1,10 @@
 package com.example.physicalexamservice.service.command.physicalexamtype.queryall;
 
-import com.example.physicalexamservice.inlet.web.vo.PhysicalExamTreatVo;
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamTypeTreatVo;
 import com.example.physicalexamservice.service.api.physicalexamtype.IQueryAllPhysicalExamTypeListCommandHandler;
 import com.example.physicalexamservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,8 +18,10 @@ import java.util.List;
  */
 @Data
 @Slf4j
+@ApiModel
 public class QueryAllPhysicalExamTypeListCommand {
 
+    @ApiModelProperty(hidden = true)
     private IQueryAllPhysicalExamTypeListCommandHandler queryAllPhysicalExamTypeListCommandHandler;
 
     public QueryAllPhysicalExamTypeListCommand() {

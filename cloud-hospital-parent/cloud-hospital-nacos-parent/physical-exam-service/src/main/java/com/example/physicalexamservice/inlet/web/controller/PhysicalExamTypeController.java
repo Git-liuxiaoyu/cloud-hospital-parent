@@ -3,6 +3,7 @@ package com.example.physicalexamservice.inlet.web.controller;
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamTypeTreatVo;
 import com.example.physicalexamservice.inlet.web.vo.ResponseResult;
 import com.example.physicalexamservice.service.command.physicalexamtype.queryall.QueryAllPhysicalExamTypeListCommand;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ public class PhysicalExamTypeController {
      * @return
      */
     @GetMapping("view/all")
+    @ApiOperation(value = "获得所有的检查类型", notes = "获得所有的检查类型", produces = "application/json", response = ResponseResult.class)
     public ResponseResult<List<PhysicalExamTypeTreatVo>> findAllPhysicalExamTypeList(QueryAllPhysicalExamTypeListCommand command) {
         /* 执行方法并返回 */
         return new ResponseResult<>(command.execute());
