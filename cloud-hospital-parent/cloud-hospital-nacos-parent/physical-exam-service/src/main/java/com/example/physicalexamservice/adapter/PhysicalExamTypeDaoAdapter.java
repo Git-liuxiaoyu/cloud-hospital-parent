@@ -78,6 +78,36 @@ public class PhysicalExamTypeDaoAdapter {
     }
 
     /**
+     * 添加检查类型方法
+     *
+     * @param name
+     * @param description
+     */
+    public Integer add(String name, String description, String status) {
+        /* 实例化 PhysicalExamTypeMysqlPoExample */
+        PhysicalExamTypeMysqlPoExample physicalExamTypeMysqlPoExample = new PhysicalExamTypeMysqlPoExample();
+        /* 编写条件 */
+        physicalExamTypeMysqlPoExample.createCriteria().andNameEqualTo(name);
+        /* 查找 */
+        List<PhysicalExamTypeMysqlPo> physicalExamTypeMysqlPoList = physicalExamTypeMysqlPoDao.selectByExample(physicalExamTypeMysqlPoExample);
+        /* 判断是否为空集合 */
+        if (!physicalExamTypeMysqlPoList.isEmpty()) {
+            throw new NullPointerException();
+        }
+        /* 空集合则进行添加步骤 */
+        /* 实例化 */
+        PhysicalExamTypeMysqlPo physicalExamTypeMysqlPo = new PhysicalExamTypeMysqlPo();
+        /* 赋值 */
+        physicalExamTypeMysqlPo.setDescription(description);
+        physicalExamTypeMysqlPo.setName(name);
+        physicalExamTypeMysqlPo.setStatus(status);
+        /* 执行方法 */
+        physicalExamTypeMysqlPoDao.insertSelective(physicalExamTypeMysqlPo);
+        /* 返回主键ID */
+        return physicalExamTypeMysqlPo.getId();
+    }
+
+    /**
      * 给集合补充类型信息
      *
      * @param innerAddPhysicalExamRecordDetailPoList
@@ -104,7 +134,5 @@ public class PhysicalExamTypeDaoAdapter {
                 physicalExamTypeRedisPoDao.save(physicalExamTypeRedisPoConverter.convert(physicalExamTypeMysqlPo));
             }
         });
-
-
     }
 }

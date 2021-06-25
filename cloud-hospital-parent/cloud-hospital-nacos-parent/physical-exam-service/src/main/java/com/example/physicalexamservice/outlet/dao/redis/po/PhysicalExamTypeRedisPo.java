@@ -24,6 +24,7 @@ public class PhysicalExamTypeRedisPo {
     @Id
     private Integer id;
 
+    @Indexed
     private String name;
 
     private String description;

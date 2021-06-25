@@ -110,7 +110,7 @@
       #{status,jdbcType=CHAR}, #{param1,jdbcType=VARCHAR}, #{param2,jdbcType=VARCHAR}, 
       #{param3,jdbcType=TIMESTAMP}, #{param4,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamTypeMysqlPo">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamTypeMysqlPo">
     insert into h_physical_exam_type
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

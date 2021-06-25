@@ -13,4 +13,6 @@ public interface PhysicalExamTypeRedisPoDao extends CrudRepository<PhysicalExamT
 
     List<PhysicalExamTypeRedisPo> findAllByStatusEquals(String status);
 
+    PhysicalExamTypeRedisPo findByNameEquals(String name);
+
 }

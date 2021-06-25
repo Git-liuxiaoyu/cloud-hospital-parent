@@ -25,13 +25,13 @@ import java.util.List;
 @ApiModel
 public class AddPhysicalExamRecordCommand {
 
-    @ApiModelProperty(value = "体检记录主键ID", example = "1")
+    @ApiModelProperty(value = "体检记录主键ID", example = "1",hidden = true)
     private Long id;
 
-    @ApiModelProperty(value = "体检记录编号No")
+    @ApiModelProperty(value = "体检记录编号No",hidden = true)
     private String no;
 
-    @ApiModelProperty(value = "体检记录创建时间")
+    @ApiModelProperty(value = "体检记录创建时间",hidden = true)
     private Date createTime;
 
     @NotNull
