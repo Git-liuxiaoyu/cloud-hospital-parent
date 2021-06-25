@@ -103,11 +103,11 @@
 
   <insert id="insert" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo" useGeneratedKeys="true" keyProperty="id">
     insert into h_drugodd (id, no, createtime, 
-      doctorid, totalmoney, patientid,status
+      doctorid, totalmoney, patientid,status,outPatientRecordId
       )
     values (#{id,jdbcType=BIGINT}, #{no,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
       #{doctorid,jdbcType=INTEGER}, #{totalmoney,jdbcType=DECIMAL}, #{patientid,jdbcType=INTEGER},
-            #{status,jdbcType=VARCHAR}
+            #{status,jdbcType=VARCHAR},#{outPatientRecordId,jdbcType=BIGINT}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo">

@@ -30,12 +30,13 @@ public class UpdateOutPatientCommand {
     }
 
     public void execute(){
-        handle.UpdateById(this.id);
+        handle.UpdateById(this.id,"3");
 
         //根据门诊患者id查询出挂号id
         //执行发消息
+        //过号状态为3
         IUpdateOutPatientStatusEventPublisher.UpdatePatientCommandCompletedEvent event
-                = new IUpdateOutPatientStatusEventPublisher.UpdatePatientCommandCompletedEvent(this.registerid,"2");
+                = new IUpdateOutPatientStatusEventPublisher.UpdatePatientCommandCompletedEvent(this.registerid,"3");
         ApplicationContextHolder.getApplicationContext().publishEvent(event);
     }
 }

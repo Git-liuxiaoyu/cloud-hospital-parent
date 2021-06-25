@@ -14,7 +14,6 @@ public class AddDrugOddCommandHandle implements IAddDrugOddCommandHandle{
 
     @Override
     public Long AddDrugOdd(AddDrugOddCommand command) {
-        Long id = adapt.addDrugOdd(command);
-        return id;
+      return   adapt.addDrugOdd(command);
     }
 }

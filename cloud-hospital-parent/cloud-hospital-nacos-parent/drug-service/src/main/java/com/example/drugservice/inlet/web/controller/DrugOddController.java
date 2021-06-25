@@ -41,9 +41,11 @@ public class DrugOddController {
     //添加药品单
     @RequestMapping(value = "/drugodd/add",method = RequestMethod.POST)
     @ApiOperation(value = "添加药品单",notes = "要传一个对象,对象里有添加药品的人,添加时间,对象里面还有个集合里面是添加了哪些药")
-    public ResponseResult<String> addDrugOdd(@RequestBody AddDrugOddCommand command){
-        command.execute();
-        return  new ResponseResult<>(200,"success","添加成功");
+    public ResponseResult<Long> addDrugOdd(@RequestBody AddDrugOddCommand command){
+        log.info("药房接收到的参数"+command);
+         Long drugOddId = command.execute();
+         log.info("返回给门诊的药品单id为{}",drugOddId);
+        return  new ResponseResult<>(200,"success",drugOddId);
     }
 
     //根据编号查询药品单
@@ -58,5 +60,6 @@ public class DrugOddController {
         }
         return new ResponseResult<>(200,"success",null);
     }
+
 
 }

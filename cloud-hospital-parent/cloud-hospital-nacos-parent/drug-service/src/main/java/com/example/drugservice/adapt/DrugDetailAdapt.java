@@ -23,7 +23,6 @@ public class DrugDetailAdapt {
     public List<DrugOddDetailVo> findByDrugOddId(Long drugOddId){
         List<DrugOddDetailPo> drugOddDetailPos = drugOddDetailDao.selectByDrugoddId(drugOddId);
 
-        System.out.println(drugOddDetailPos);
         List<DrugOddDetailVo> voList = new ArrayList<>();
 
         for (DrugOddDetailPo po : drugOddDetailPos) {

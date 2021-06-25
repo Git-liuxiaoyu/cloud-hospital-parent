@@ -1,11 +1,13 @@
 package com.example.outpatientservice.service.query;
 
 import com.example.outpatientservice.inlet.web.vo.OutPatientVo;
+import com.example.outpatientservice.outlet.client.DrugServiceClient;
 import com.example.outpatientservice.util.ApplicationContextHolder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -17,6 +19,8 @@ public class ExampleQueryOutPatientCommand {
     private String patientName;
     //根据患者id拿到患者信息
     private Long patientId;
+
+
 
     //分页参数
     private Integer pageIndex;
@@ -42,6 +46,9 @@ public class ExampleQueryOutPatientCommand {
 
     //查对象
     public OutPatientVo getById(){
+
+
+
         return handle.getById(this.patientId);
     }
 

@@ -19,7 +19,7 @@ public class DrugOddDetailController {
 
 
  @RequestMapping(value = "drugoddDetail/list/byId",method = RequestMethod.POST)
- @ApiOperation(value = "根据进货单id修改状态",notes = "传一个进货单id,修改状态,表示通过审核")
+ @ApiOperation(value = "根据药品单id查询药品详情单",notes = "传一个进货单id查询药品单详情")
  public ResponseResult<List<DrugOddDetailVo>> list(@RequestBody ExampleQueryDrugOddDetailCommand command){
      List<DrugOddDetailVo> vos = command.execute();
      return new ResponseResult<>(200,"success",vos);

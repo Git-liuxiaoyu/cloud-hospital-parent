@@ -13,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DrugOddPo {
+    private Long outPatientRecordId;
     private Long id;
 
     private String no;

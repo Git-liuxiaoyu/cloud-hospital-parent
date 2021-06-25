@@ -86,6 +86,7 @@ public class AddPhysicalExamRecordCommand {
         private BigDecimal price;
 
         private String status;
+
     }
 
     public AddPhysicalExamRecordCommand() {

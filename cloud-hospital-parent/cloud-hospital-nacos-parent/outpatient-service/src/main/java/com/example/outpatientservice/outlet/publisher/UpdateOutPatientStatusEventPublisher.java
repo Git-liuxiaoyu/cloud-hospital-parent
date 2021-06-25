@@ -44,7 +44,9 @@ public class UpdateOutPatientStatusEventPublisher implements IUpdateOutPatientSt
             log.debug("向outpatient_update_queue路由发送了就诊结束挂号id为:{}！", event.getSource());
             //就诊完走这里
             template.convertAndSend("outpatient_over_exchange", "outpatient.update", event.getSource()+","+status);
-        }else {
+        }else  if(status.equals("9")){
+            template.convertAndSend("outpatient_over_exchange", "outpatient.update", event.getSource()+","+status);
+        } else {
             log.info("发消息失败");
         }
     }
