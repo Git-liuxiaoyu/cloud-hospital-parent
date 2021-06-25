@@ -10,4 +10,6 @@ public interface DrugOddRedisDao extends CrudRepository<DrugOddRedisPo,Long> {
 
         public DrugOddRedisPo getAllByNo(String no);
 
+        public DrugOddRedisPo getAllById(Long id);
+
 }

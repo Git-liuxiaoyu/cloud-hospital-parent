@@ -17,7 +17,7 @@ public class DrugTypeController {
     @Autowired
     private DrugTypeAdapt adapt;
 
- @RequestMapping(value = "/drugType/list",method = RequestMethod.POST)
+ @RequestMapping(value = "/drugType/list",method = RequestMethod.GET)
  @ApiOperation(value = "查询药品类型",notes = "没有参数 直接查询所有")
  public ResponseResult<List<DrugTypeVo>> list(){
      List<DrugTypeVo> list = adapt.findList();

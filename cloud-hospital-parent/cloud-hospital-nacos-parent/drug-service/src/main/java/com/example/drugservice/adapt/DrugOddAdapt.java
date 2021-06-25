@@ -1,5 +1,7 @@
 package com.example.drugservice.adapt;
 
+import com.example.drugservice.adapt.Exception.DrugOddIsNullException;
+import com.example.drugservice.adapt.Exception.DrugOddNotFoundException;
 import com.example.drugservice.adapt.converter.DrugOddVoConverter;
 import com.example.drugservice.adapt.converter.DrugVoConverter;
 import com.example.drugservice.inlet.web.vo.DrugOddVo;
@@ -70,10 +72,12 @@ public class DrugOddAdapt {
         DrugOddPo po = new DrugOddPo();
         po.setId(command.getId());
         po.setStatus("2");
-
-        //drugOddDao.updateByPrimaryKey(po);
-        //上面是普通修改   下面是动态修改
+        //动态修改
         drugOddDao.updateByPrimaryKeySelective(po);
+
+        //删除redis 缓存
+        redisDao.deleteById(command.getId());
+        log.info("已删除Redis里药品表单编号为[{}]的数据",command.getId());
     }
 
     //添加药品表单
@@ -105,18 +109,28 @@ public class DrugOddAdapt {
 
     //根据编号查询
     public DrugOddVo getByNo(String no){
+        DrugOddVo vo=new DrugOddVo();
         try{
             //先查redis
             DrugOddRedisPo redisPo = redisDao.getAllByNo(no);
             log.info("从redis中读取药品单编号{}的数据",no);
-            DrugOddVo vo = converter.convert(redisPo);
+             vo = converter.convert(redisPo);
         }catch (Exception e){
-            //redis没有 在mysql 查 然后存入redis
-        }
+                //查Mysql
+                DrugOddPo po=  drugOddDao.selectByNo(no);
+                log.info("从Mysql中读取药品单编号{}的数据",no);
+                if (po!=null){
+                    BeanUtils.copyProperties(po,vo);
 
-        DrugOddPo po=  drugOddDao.selectByNo(no);
-      DrugOddVo vo = new DrugOddVo();
-      BeanUtils.copyProperties(po,vo);
+                    //同步数据 存入Redis
+                    DrugOddRedisPo redisPo = new DrugOddRedisPo();
+                    BeanUtils.copyProperties(po,redisPo);
+                    redisDao.save(redisPo);
+                    log.info("存入Redis读取药品单编号{}的数据",redisPo.getNo());
+                }else {
+                    log.info("Mysql不存在这个编号[{}]",no);
+                }
+        }
       return vo;
     }
 

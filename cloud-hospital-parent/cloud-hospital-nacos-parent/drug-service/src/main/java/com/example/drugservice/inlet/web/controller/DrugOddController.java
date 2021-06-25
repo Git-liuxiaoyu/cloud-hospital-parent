@@ -49,7 +49,7 @@ public class DrugOddController {
     }
 
     //根据编号查询药品单
-    @RequestMapping(value = "/drugOdd/byNo/{no}",method = RequestMethod.POST)
+    @RequestMapping(value = "/drugOdd/byNo/{no}",method = RequestMethod.GET)
     @ApiOperation(value = "根据编号查询药品单对象",notes = "根据药品单编号,查询这个编号存不存在,不存在就返回500,存在返回200")
     public ResponseResult<Void> getByNo(@PathVariable String no){
         ExampleQueryDrugOddCommand command =new ExampleQueryDrugOddCommand();

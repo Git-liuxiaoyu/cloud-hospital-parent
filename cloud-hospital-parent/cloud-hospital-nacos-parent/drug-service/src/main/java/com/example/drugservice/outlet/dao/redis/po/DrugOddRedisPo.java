@@ -16,6 +16,8 @@ public class DrugOddRedisPo {
     @Indexed
     private String no;
 
+    private Long outPatientRecordId;
+
     private Date createtime;
 
     private Integer doctorid;

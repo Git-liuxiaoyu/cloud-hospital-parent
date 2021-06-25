@@ -1,5 +1,6 @@
 package com.example.drugservice.adapt;
 
+import com.example.drugservice.adapt.Exception.DrugNotFoundException;
 import com.example.drugservice.adapt.converter.DrugVoConverter;
 import com.example.drugservice.inlet.web.vo.DrugVo;
 import com.example.drugservice.outlet.dao.es.DrugEsDao;
@@ -7,8 +8,11 @@ import com.example.drugservice.outlet.dao.es.po.DrugEsPo;
 import com.example.drugservice.outlet.dao.mysql.DrugDao;
 import com.example.drugservice.outlet.dao.mysql.po.DrugPo;
 
+import com.example.drugservice.outlet.dao.redis.DrugRedisDao;
+import com.example.drugservice.outlet.dao.redis.po.DrugRedisPo;
 import com.example.drugservice.service.instock.InStockDrugCommand;
 import com.example.drugservice.service.query.ExampleQueryDrugCommand;
+import com.example.drugservice.util.NoUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,9 @@ public class DrugAdapt {
 
     @Autowired
     private DrugEsDao drugEsDao;
+
+    @Autowired
+    private DrugRedisDao drugRedisDao;
 
     //动态查询 分页列表
     public List<DrugVo> findDrugListByExample(ExampleQueryDrugCommand command){
@@ -67,20 +74,35 @@ public class DrugAdapt {
     }
 
 
-    //根据药品名和生产地查询
+    //根据药品名和生产地查询药品   /*查对象*/
     public InStockDrugCommand getDrugByNameAndLocation(String name,String location){
-        DrugPo po = new DrugPo();
-        po.setName(name);
-        po.setLocation(location);
-        DrugPo po1 = drugDao.selectByNameAndByLocation(name, location);
+        InStockDrugCommand command=new InStockDrugCommand();
+        try {
+            //先查redis
+            DrugRedisPo drugRedisPo = drugRedisDao
+                        .getAllByNameAndLocation(name, location);
+            log.info("从Redis中读取药品[{}]的数据",drugRedisPo.getId());
 
-        InStockDrugCommand command = new InStockDrugCommand();
-        System.out.println(po1);
-        if (po1==null){
-            //返回一个空
-            return null;
+            /*redisPo转换*/
+            BeanUtils.copyProperties(drugRedisPo,command);
+
+        }catch (DrugNotFoundException e){
+            /*查mysql*/
+            DrugPo po1 = drugDao.selectByNameAndByLocation(name, location);
+            if (po1==null){
+                //返回一个空
+                return null;
+            }
+            log.info("从Mysql中读取药品[{}]的数据",po1.getId());
+            BeanUtils.copyProperties(po1,command);
+            /*数据同步 存redis*/
+            DrugRedisPo redisPo = new DrugRedisPo();
+            BeanUtils.copyProperties(po1,redisPo);
+            drugRedisDao.save(redisPo);
         }
-        BeanUtils.copyProperties(po1,command);
+//        DrugPo po = new DrugPo();
+//        po.setName(name);
+//        po.setLocation(location);
         return command;
     }
 
@@ -92,7 +114,7 @@ public class DrugAdapt {
         System.out.println(no);
 
         DrugPo po = new DrugPo();
-        po.setNo(no+1+"");
+        po.setNo(NoUtils.getNoUtils());
         po.setTypeid(command.getTypeId());
         po.setStock(command.getNum());
 
@@ -103,33 +125,40 @@ public class DrugAdapt {
         DrugEsPo drugEsPo = new DrugEsPo();
         BeanUtils.copyProperties(po,drugEsPo);
         drugEsDao.save(drugEsPo);
+        log.info("添加到Es的药品为[{}]",drugEsPo.getNo());
 
     }
 
 
     //增加药品库存
     public void upDateDrug(InStockDrugCommand command){
-        System.out.println("nono"+command.getNo());
-
+        /*修改msql*/
         drugDao.updateByNo(command.getNum(),command.getNo());
+        log.info("增加mysql的药品为[{}]的数据",command.getNo());
 
-        //查出es对象 然后修改
+        /*修改es*/
         DrugEsPo esPo = drugEsDao.getAllByNo(command.getNo());
         esPo.setStock(esPo.getStock()+command.getNum());
         drugEsDao.save(esPo);
+        log.info("增加es的药品为[{}]的数据",esPo.getNo());
 
-
-
+        /*删除redis*/
+        drugRedisDao.deleteByNo(command.getNo());
+        log.info("删除Redis的药品为[{}]的数据",command.getNo());
     }
 
     //减少药品库存
     public void updateDrugReduce(String no,Integer num){
-
+        /*修改Mysql*/
         drugDao.updateByNoReduce(no,num);
 
         //查出es对象 然后修改
         DrugEsPo esPo = drugEsDao.getAllByNo(no);
         esPo.setStock(esPo.getStock()-num);
         drugEsDao.save(esPo);
+
+        /*删除Redis*/
+        drugRedisDao.deleteByNo(no);
+        log.info("删除Redis的药品为[{}]的数据",no);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.drugservice.service.addinstockodddetail;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,8 @@ public class AddInstockOddDetailCommand {
     private BigDecimal costprice;
     private BigDecimal saleprice;
     private String location;
+   // @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private Date productiontime;
+   // @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     private Date expirationtime;
 }

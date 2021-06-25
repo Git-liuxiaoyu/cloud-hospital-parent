@@ -100,8 +100,7 @@ public class DrugInstockOddAdapt {
         po.setId(command.getId());
         po.setStatus("1");
 
-        //drugOddDao.updateByPrimaryKey(po);
-        //上面是普通修改   下面是动态修改
+        //动态修改
         drugInstockOddDao.updateByPrimaryKeySelective(po);
 
         //根据进货单id 查询详情

@@ -9,5 +9,10 @@ public interface DrugRedisDao extends CrudRepository<DrugRedisPo,Long> {
 
     List<DrugRedisPo> findAllByNameAndNoAndLocation(String name,String no,String location,Integer typeid);
 
+    DrugRedisPo getAllByNameAndLocation(String name,String location);
+
+    DrugRedisPo getAllByNo(String no);
+
+    int deleteByNo(String no);
 
 }
