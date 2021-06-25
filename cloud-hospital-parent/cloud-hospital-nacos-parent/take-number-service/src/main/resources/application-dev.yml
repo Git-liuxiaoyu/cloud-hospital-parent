@@ -6,7 +6,7 @@ spring:
         namespace: public
         username: nacos
         password: nacos
-        group: group3
+#        group: group3
   datasource:
     #   - 配置数据库驱动：
     driver-class-name: com.mysql.cj.jdbc.Driver

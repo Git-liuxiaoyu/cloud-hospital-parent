@@ -52,7 +52,7 @@ spring:
         password: nacos
         server-addr: 127.0.0.1:8848
         username: nacos
-        group: group3
+#        group: group3
 
 #日志配置
 logging:

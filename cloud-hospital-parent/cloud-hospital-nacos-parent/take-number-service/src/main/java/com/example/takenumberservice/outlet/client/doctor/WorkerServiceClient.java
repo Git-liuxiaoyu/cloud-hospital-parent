@@ -11,14 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
  * 调用员工微服务
  */
 
-@FeignClient("worker-service-test1")
+@FeignClient("worker-service")
 public interface WorkerServiceClient {
-
-//    //根据房间id查询房间名字
-//    @GetMapping("/room/out/view/{id}")
-//    ResponseResult<DoctorRotaVo> findByIdAndName(@PathVariable("id") Long id);
-
-
 
     //根据房间id查询房间名字
     @GetMapping("room/out/view/{id}")

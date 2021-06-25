@@ -4,6 +4,7 @@ package com.example.takenumberservice.adapter;
 import com.example.takenumberservice.adapter.converter.ProofConverter;
 import com.example.takenumberservice.inlet.web.ResponseResult;
 import com.example.takenumberservice.outlet.client.drugodd.DrugoddClient;
+import com.example.takenumberservice.outlet.client.drugodd.util.ResponseResultD;
 import com.example.takenumberservice.outlet.dao.mysql.PharmacyProofDao;
 import com.example.takenumberservice.outlet.dao.mysql.pojo.PharmacyProofPo;
 import com.example.takenumberservice.outlet.dao.mysql.pojo.ProofPo;
@@ -38,6 +39,9 @@ public class PharmacyProofDaoAdapter {
     @Autowired
     private SendMsg sendMsg;
 
+    @Autowired
+    private DrugoddClient drugoddClient;
+
 
     /**
      * 添加进mysql
@@ -71,9 +75,13 @@ public class PharmacyProofDaoAdapter {
      * @return
      */
     public ResponseResult<Void> findByNo(String no){
-        //ResponseResult<Void> byYFNo = drugoddClient.findByYFNo(no);
-        ResponseResult<Void> byYFNo = new ResponseResult<>(200,"无",null);
-            return byYFNo;
+        ResponseResultD<Void> byYFNo = drugoddClient.findByYFNo(no);
+        if(byYFNo.getCode()!=200){
+            return new ResponseResult<Void>(500,"未查到药品单信息，请稍后重试", null);
+        }else{
+            return new ResponseResult<Void>(200,"ok", null);
+        }
+
 
     }
 

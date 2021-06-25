@@ -13,3 +13,10 @@ spring:
     username: root
     #   - 配置数据库连接地址
     url: jdbc:mysql://1.117.97.60:3307/h_takenumber?serverTimezone=UTC
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: public
+        password: nacos
+        username: nacos

@@ -12,7 +12,11 @@ mybatis:
   type-aliases-package: com.example.takenumberservice.outlet.dao.mysql.pojo
 
 
-
+feign:
+  client:
+    config:
+      default:
+        read-timeout: 5000
 
 
 

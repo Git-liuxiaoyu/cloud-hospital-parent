@@ -21,6 +21,7 @@
                     type="text"
                     placeholder="请输入4位取票码"
                     v-model="num"
+                    @input="num=num.replace(/[^\d]/g,'')"
                     maxlength="4"
                     show-word-limit style="width:50%" >
                  <template slot="prepend">GH</template>

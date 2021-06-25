@@ -47,8 +47,12 @@ public class RegisterAdapter {
                     rc.setRotaId(findbyno.getData().getRotaId());//获得排班id
                     rc.setDepartmentId(findbyno.getData().getDepartmentId());//科室id
                     rc.setRoomId(findbyno.getData().getRoomId());//房间id
+                    if(rc.getRoomId() == null){
+                        rc.setRoomId(1);//房间id
+                    }
                     rc.setVisitSection(findbyno.getData().getVisitSection());//就诊时间段
                     rc.setStatus(findbyno.getData().getStatus());//挂号状态
+                    log.info(rc.toString());
                     return new ResponseResult<RegisterCommand>(200,"ok",rc);
                 }
                 //return "就诊室";
