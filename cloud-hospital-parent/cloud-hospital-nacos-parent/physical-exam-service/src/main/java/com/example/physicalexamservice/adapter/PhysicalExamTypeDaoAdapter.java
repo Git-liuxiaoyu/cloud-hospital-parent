@@ -6,6 +6,7 @@ import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamTypeMysql
 import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamTypeMysqlPoExample;
 import com.example.physicalexamservice.outlet.dao.redis.PhysicalExamTypeRedisPoDao;
 import com.example.physicalexamservice.outlet.dao.redis.po.PhysicalExamTypeRedisPo;
+import com.example.physicalexamservice.outlet.publisher.PhysicalExamTypeRedisCachePublisher;
 import com.example.physicalexamservice.service.command.physicalexamrecord.add.AddPhysicalExamRecordCommand;
 import com.example.physicalexamservice.util.converter.PhysicalExamTypeRedisPoConverter;
 import com.example.physicalexamservice.util.converter.PhysicalExamTypeTreatVoConverter;
@@ -34,11 +35,14 @@ public class PhysicalExamTypeDaoAdapter {
 
     private final PhysicalExamTypeRedisPoConverter physicalExamTypeRedisPoConverter;
 
-    public PhysicalExamTypeDaoAdapter(PhysicalExamTypeMysqlPoDao physicalExamTypeMysqlPoDao, PhysicalExamTypeRedisPoDao physicalExamTypeRedisPoDao, PhysicalExamTypeTreatVoConverter physicalExamTypeTreatVoConverter, PhysicalExamTypeRedisPoConverter physicalExamTypeRedisPoConverter) {
+    private final PhysicalExamTypeRedisCachePublisher physicalExamTypeRedisCachePublisher;
+
+    public PhysicalExamTypeDaoAdapter(PhysicalExamTypeMysqlPoDao physicalExamTypeMysqlPoDao, PhysicalExamTypeRedisPoDao physicalExamTypeRedisPoDao, PhysicalExamTypeTreatVoConverter physicalExamTypeTreatVoConverter, PhysicalExamTypeRedisPoConverter physicalExamTypeRedisPoConverter, PhysicalExamTypeRedisCachePublisher physicalExamTypeRedisCachePublisher) {
         this.physicalExamTypeMysqlPoDao = physicalExamTypeMysqlPoDao;
         this.physicalExamTypeRedisPoDao = physicalExamTypeRedisPoDao;
         this.physicalExamTypeTreatVoConverter = physicalExamTypeTreatVoConverter;
         this.physicalExamTypeRedisPoConverter = physicalExamTypeRedisPoConverter;
+        this.physicalExamTypeRedisCachePublisher = physicalExamTypeRedisCachePublisher;
     }
     /* 构造注入 - 结束 */
 
@@ -71,7 +75,12 @@ public class PhysicalExamTypeDaoAdapter {
             /* 转换Vo */
             physicalExamTreatVoList = physicalExamTypeTreatVoConverter.convert(physicalExamTypeMysqlPos);
             /* 转换 RedisPo 并存入 Redis */
-            physicalExamTypeRedisPoDao.saveAll(physicalExamTypeRedisPoConverter.convert(physicalExamTypeMysqlPos));
+            /* 实例化 */
+            List<Integer> idList = new ArrayList<>();
+            /* 存入id */
+            physicalExamTypeMysqlPos.forEach(p -> idList.add(p.getId()));
+            /* 推送到缓存队列来存入Redis */
+            physicalExamTypeRedisCachePublisher.publishPhysicalExamTypeAllUpdateDelete(status);
         }
         /* 返回 */
         return physicalExamTreatVoList;
@@ -134,5 +143,36 @@ public class PhysicalExamTypeDaoAdapter {
                 physicalExamTypeRedisPoDao.save(physicalExamTypeRedisPoConverter.convert(physicalExamTypeMysqlPo));
             }
         });
+    }
+
+    /**
+     * 更新检查类型
+     *
+     * @param id
+     * @param name
+     * @param description
+     */
+    public void update(Integer id, String name, String description) {
+        /* 先去查是否名字重复 */
+        /* 实例化 PhysicalExamTypeMysqlPoExample */
+        PhysicalExamTypeMysqlPoExample physicalExamTypeMysqlPoExample = new PhysicalExamTypeMysqlPoExample();
+        /* 编写条件 */
+        physicalExamTypeMysqlPoExample.createCriteria().andNameEqualTo(name);
+        /* 查找 */
+        List<PhysicalExamTypeMysqlPo> physicalExamTypeMysqlPoList = physicalExamTypeMysqlPoDao.selectByExample(physicalExamTypeMysqlPoExample);
+        /* 判断是否为null */
+        if (!physicalExamTypeMysqlPoList.isEmpty()) {
+            /* 抛异常 */
+            throw new NullPointerException();
+        }
+        /* 执行修改 */
+        /* 实例化 */
+        PhysicalExamTypeMysqlPo physicalExamTypeMysqlPo = new PhysicalExamTypeMysqlPo();
+        /* 赋值 */
+        physicalExamTypeMysqlPo.setName(name);
+        physicalExamTypeMysqlPo.setDescription(description);
+        physicalExamTypeMysqlPo.setId(id);
+        /* 修改 */
+        physicalExamTypeMysqlPoDao.updateByPrimaryKeySelective(physicalExamTypeMysqlPo);
     }
 }

@@ -4,6 +4,7 @@ import com.example.physicalexamservice.inlet.web.vo.PhysicalExamTypeTreatVo;
 import com.example.physicalexamservice.inlet.web.vo.ResponseResult;
 import com.example.physicalexamservice.service.command.physicalexamtype.add.AddPhysicalExamTypeCommand;
 import com.example.physicalexamservice.service.command.physicalexamtype.queryall.QueryAllPhysicalExamTypeListCommand;
+import com.example.physicalexamservice.service.command.physicalexamtype.update.UpdatePhysicalExamTypeCommand;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
@@ -33,6 +34,21 @@ public class PhysicalExamTypeController {
         /* 执行方法并返回 */
         return new ResponseResult<>(command.execute());
     }
+
+    /**
+     * 修改检查类型
+     *
+     * @return
+     */
+    @GetMapping("update")
+    @ApiOperation(value = "修改检查类型", notes = "修改检查类型", produces = "application/json", response = ResponseResult.class)
+    public ResponseResult<Void> updatePhysicalExamType(UpdatePhysicalExamTypeCommand command) {
+        /* 执行方法 */
+        command.execute();
+        /* 执行方法并返回 */
+        return ResponseResult.SUCCESS;
+    }
+
 
     /**
      * 新增体检类型

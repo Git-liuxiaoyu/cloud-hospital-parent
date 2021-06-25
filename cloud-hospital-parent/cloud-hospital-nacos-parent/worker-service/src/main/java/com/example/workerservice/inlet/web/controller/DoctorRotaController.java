@@ -11,6 +11,7 @@ import com.example.workerservice.service.command.doctorrota.regquery.RegQueryDoc
 import com.example.workerservice.service.command.doctorrota.rotaquery.RotaQueryDoctorRotaCommand;
 import com.example.workerservice.service.command.doctorrota.update.UpdateDoctorRotaCommand;
 import com.example.workerservice.util.HttpUtil;
+import com.netflix.ribbon.proxy.annotation.Http;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
