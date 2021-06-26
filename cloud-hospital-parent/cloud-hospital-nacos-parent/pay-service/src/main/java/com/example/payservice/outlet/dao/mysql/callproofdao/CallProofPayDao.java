@@ -1,6 +1,7 @@
-package com.example.payservice.outlet.dao.mysql;
+package com.example.payservice.outlet.dao.mysql.callproofdao;
 
-import com.example.payservice.outlet.dao.mysql.pojo.CallProofPayPo;
+
+import com.example.payservice.outlet.dao.mysql.callproofdao.pojo.CallProofPayPo;
 import org.springframework.stereotype.Repository;
 
 /**

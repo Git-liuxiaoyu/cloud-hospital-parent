@@ -49,7 +49,7 @@ public class ProofCommand {
 
 
     @NotNull
-    @ApiModelProperty(value="命令模式构造注入",required = true)
+    @ApiModelProperty(value="命令模式构造注入",hidden = true)
     private ProofCommandHandle handler;
 
     public ProofCommand(){

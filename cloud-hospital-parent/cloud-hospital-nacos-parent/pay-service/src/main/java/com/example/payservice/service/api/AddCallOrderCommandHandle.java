@@ -1,7 +1,6 @@
 package com.example.payservice.service.api;
 
 
-import com.example.payservice.inlet.web.controller.vo.CallProofPayVo;
 import com.example.payservice.service.command.addcallorder.AddCallOrderCommand;
 import com.example.payservice.util.ResponseResult;
 

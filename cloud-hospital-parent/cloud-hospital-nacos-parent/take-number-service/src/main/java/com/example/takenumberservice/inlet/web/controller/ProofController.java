@@ -3,6 +3,7 @@ package com.example.takenumberservice.inlet.web.controller;
 import com.example.takenumberservice.inlet.web.ResponseResult;
 import com.example.takenumberservice.service.command.addCallProof.ProofCommand;
 import com.example.takenumberservice.service.command.findregister.RegisterCommand;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -22,6 +23,7 @@ public class ProofController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "no", value = "挂号no(如GH1018)通过挂号no判断挂号状态是否付款出票并存入取票凭证", required = true, dataType = "String", paramType = "path")
     })
+    @ApiOperationSupport(ignoreParameters = "handle")
     @GetMapping("findbyno/{no}")
     public ResponseResult<ProofCommand> findbyregId(@PathVariable("no") String no){
         RegisterCommand rc = new RegisterCommand();

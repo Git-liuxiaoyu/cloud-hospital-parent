@@ -35,7 +35,7 @@ public class PharmacyProofCommand {
 
 
 
-
+    @ApiModelProperty(value="命令模式构造注入",hidden = true)
     private PharmacyProofCommandHandle handler;
 
     public PharmacyProofCommand(){

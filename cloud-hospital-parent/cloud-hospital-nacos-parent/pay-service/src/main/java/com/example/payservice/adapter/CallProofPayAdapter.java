@@ -3,9 +3,11 @@ package com.example.payservice.adapter;
 
 import com.example.payservice.adapter.converter.CallProofPayConverter;
 import com.example.payservice.outlet.cliten.register.RegServiceClient;
+import com.example.payservice.outlet.cliten.register.pojo.QueryGetByIdVo;
 import com.example.payservice.outlet.cliten.register.pojo.Register;
-import com.example.payservice.outlet.dao.mysql.CallProofPayDao;
-import com.example.payservice.outlet.dao.mysql.pojo.CallProofPayPo;
+import com.example.payservice.outlet.dao.mysql.callproofdao.CallProofPayDao;
+
+import com.example.payservice.outlet.dao.mysql.callproofdao.pojo.CallProofPayPo;
 import com.example.payservice.service.command.addcallorder.AddCallOrderCommand;
 import com.example.payservice.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +43,7 @@ public class CallProofPayAdapter {
     public int addCallProof(AddCallOrderCommand addCallOrderCommand){
         CallProofPayPo excmtopo = converter.excmtopo(addCallOrderCommand);
 
+        log.info("存入:{}",addCallOrderCommand.toString());
         int i = callProofPayDao.addCallProofOrder(excmtopo);
         return i;
 
@@ -52,16 +55,18 @@ public class CallProofPayAdapter {
      * @return
      */
 
-    public ResponseResult<AddCallOrderCommand> findbyno(String no) {
+    public ResponseResult<AddCallOrderCommand> findbyno(Long regId) {
         try {
-            ResponseResult<Register> findbyno = regServiceClient.findbyno(no);
+            ResponseResult<QueryGetByIdVo> findbyno = regServiceClient.findByRegId(regId);
+
 
             if (findbyno.getCode() != 200) {
                 return new ResponseResult<AddCallOrderCommand>(400, "未查询到挂号信息，请稍后重试！", null);
             }else{
                 AddCallOrderCommand addCallOrderCommand = new AddCallOrderCommand();
-                addCallOrderCommand.setPatientId(findbyno.getData().getPatientId());
+                addCallOrderCommand.setPatientId(findbyno.getData().getPatientid());
                 addCallOrderCommand.setType(findbyno.getData().getType());//挂号类别专家普通
+                addCallOrderCommand.setNo(findbyno.getData().getNo());
                 return new ResponseResult<AddCallOrderCommand>(200, "ok", addCallOrderCommand);
 
             }

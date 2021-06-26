@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
-@FeignClient("regtest")
+@FeignClient("register-service")
 public interface RegServiceClient {
 
 

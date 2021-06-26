@@ -1,4 +1,4 @@
-package com.example.payservice.inlet.web.controller.vo;
+package com.example.payservice.inlet.web.controller.callproofpqy.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 public class CallProofPayVo {
 
     private Long id;
+    private Long regId;//挂号Id
     private String no;//挂号no
     private String orderNum;//订单编号
     private BigDecimal money;//订单支付金额

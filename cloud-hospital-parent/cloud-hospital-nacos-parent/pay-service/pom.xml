@@ -21,6 +21,12 @@
     </properties>
     
     <dependencies>
+    
+        <!--thymeleaf启动器-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
         
         <!--沙箱支付依赖-->
         <dependency>

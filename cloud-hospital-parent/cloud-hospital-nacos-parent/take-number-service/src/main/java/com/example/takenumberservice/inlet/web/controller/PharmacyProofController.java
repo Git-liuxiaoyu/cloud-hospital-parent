@@ -5,6 +5,7 @@ import com.example.takenumberservice.inlet.web.ResponseResult;
 import com.example.takenumberservice.service.command.addCallProof.ProofCommand;
 import com.example.takenumberservice.service.command.addPharmacyProof.PharmacyProofCommand;
 import com.example.takenumberservice.service.command.findregister.RegisterCommand;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -24,6 +25,7 @@ public class PharmacyProofController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "no", value = "药房no(如YF0001)通过医生给患者的药房取票no出票并存入取票凭证", required = true, dataType = "String", paramType = "path")
     })
+    @ApiOperationSupport(ignoreParameters = "handle")
     @GetMapping("findbyno/{no}")
     public ResponseResult<PharmacyProofCommand> findbyregId(@PathVariable("no") String no){
         PharmacyProofCommand proofCommand = new PharmacyProofCommand();

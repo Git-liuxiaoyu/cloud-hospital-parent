@@ -6,6 +6,7 @@ import com.example.takenumberservice.inlet.web.controller.vo.ExamineProofVo;
 import com.example.takenumberservice.inlet.web.converter.TransformVo;
 import com.example.takenumberservice.service.command.addPharmacyProof.PharmacyProofCommand;
 import com.example.takenumberservice.service.command.addexamineProof.ExamineProofCommand;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -33,6 +34,7 @@ public class ExamineProofController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "no", value = "检查取票no(如JC1018)", required = true, dataType = "String", paramType = "path")
     })
+    @ApiOperationSupport(ignoreParameters = "handle")
     @GetMapping("findbyno/{no}")
     public ResponseResult<ExamineProofVo> getNum(@PathVariable("no") String no){
         ExamineProofCommand examineProofCommand = new ExamineProofCommand();

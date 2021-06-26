@@ -22,9 +22,9 @@ public class PayUtil {
     //签名方式
     private final String SIGN_TYPE = "RSA2";
     //支付宝异步通知路径,付款完毕后会异步调用本项目的方法,必须为公网地址
-    private final String NOTIFY_URL = "http://localhost:8080/";
+    private final String NOTIFY_URL = "http://localhost:6003/call/returnUrl";
     //支付宝同步通知路径,也就是当付款完毕后跳转本项目的页面,可以不是公网地址
-    private final String RETURN_URL = "http://localhost:8080/";
+    private final String RETURN_URL = "http://localhost:6003/call/returnUrl";
 
 
 }

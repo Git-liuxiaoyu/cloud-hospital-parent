@@ -38,7 +38,7 @@ public class ExamineProofCommand {
 
 
     @NotNull
-    @ApiModelProperty(value="主键Id",required = true,example = "1")
+    @ApiModelProperty(value="命令模式构造注入",hidden = true)
     private ExamineProofCommandHandle handle;
 
 
