@@ -3,7 +3,6 @@ package com.example.registerservice.inlet.web.controller;
 
 import com.example.registerservice.adapter.converter.RegisterConverter;
 import com.example.registerservice.inlet.web.vo.RegisterVo;
-import com.example.registerservice.inlet.web.vo.SubjectVo;
 import com.example.registerservice.service.command.addRegister.AddRegisterCommand;
 import com.example.registerservice.service.command.addphone.PushPhoneGoQueueCommand;
 import com.example.registerservice.service.command.updateregister.UpdateRegisterCommand;

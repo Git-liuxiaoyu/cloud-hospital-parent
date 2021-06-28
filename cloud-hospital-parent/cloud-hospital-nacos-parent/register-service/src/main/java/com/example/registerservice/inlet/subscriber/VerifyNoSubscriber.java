@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  *
  * @Auther: 小刘
  * @Date: 2021/06/21/20:56
- * @Description: 监听死信队列
+ * @Description: 监听挂号的死信队列
  */
 @Component
 @RabbitListener(queues = "register_order_dlq")

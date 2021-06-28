@@ -5,30 +5,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
-
-import java.util.Date;
+import org.springframework.data.redis.core.index.Indexed;
 
 /**
  * Created with IntelliJ IDEA.
  *
  * @Auther: 小刘
- * @Date: 2021/06/25/14:51
- * @Description:患者的PatientRedisPo
+ * @Date: 2021/06/17/15:04
+ * @Description: 存手机号的PO
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @RedisHash
-public class PatientRedisPo {
+public class PhoneRedisPo {
+
     @Id
-    private Long id;
-    private String no;
-    private String name;
-    private Integer age;
-    private String gender;
     private String phone;
-    private String identityid;
-    private String status;
-    private Date createtime;
-    private String medicard;
 }

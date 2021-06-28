@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  *
  * @Auther: 小刘
  * @Date: 2021/06/17/10:48
- * @Description:
+ * @Description: 给队列发送手机号消息的实现类
  */
 @Slf4j
 @Component

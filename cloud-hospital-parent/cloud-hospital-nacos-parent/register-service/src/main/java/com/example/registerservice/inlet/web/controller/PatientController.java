@@ -8,9 +8,6 @@ import com.example.registerservice.service.query.querypatient.QueryPatientByIdCo
 import com.example.registerservice.service.query.querypatient.QueryPatientByIdentityIdCommand;
 import com.example.registerservice.service.query.querypatient.domain.Patient;
 import com.example.registerservice.util.ResponseResult;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.github.xiaoymin.knife4j.annotations.DynamicParameter;
-import com.github.xiaoymin.knife4j.annotations.DynamicParameters;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,23 +69,16 @@ public class PatientController {
      * @param id
      * @return
      */
+    @GetMapping("Patient/query/byId/{id}")
     @ApiOperation(value = "查询患者信息", notes = "根据患者id查询患者信息",
             produces = "application/json", response = ResponseResult.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "患者id",
-                    example = "38", required = true, dataType = "Long", paramType = "path")
+            @ApiImplicitParam(name = "id", value = "患者id", example = "38",
+                    required = true, dataType = "Long", paramType = "path")
     })
-    @GetMapping("Patient/query/byId/{id}")
-    public ResponseResult<PatientVo.QueryByIdVo> getByIdVoResponseResult(@PathVariable("id") Long id) {
-        QueryPatientByIdCommand command = new QueryPatientByIdCommand(id);
-        Patient execute = null;
-        try {
-            execute = command.execute();
-        } catch (Exception e) {
-            return new ResponseResult<>(444, "");
-        }
-        PatientVo.QueryByIdVo converter = this.converter.converter(execute);
-        return new ResponseResult(converter);
+    public ResponseResult<Patient> getByIdVoResponseResult(@PathVariable("id") Long id) {
+        /*返回给页面的数据*/
+        return new ResponseResult(new QueryPatientByIdCommand(id).execute());
     }
 
     /**

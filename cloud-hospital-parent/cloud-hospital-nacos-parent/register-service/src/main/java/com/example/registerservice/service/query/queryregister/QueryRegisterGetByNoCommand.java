@@ -2,12 +2,10 @@ package com.example.registerservice.service.query.queryregister;
 
 import com.example.registerservice.inlet.web.vo.RegisterVo;
 import com.example.registerservice.service.api.IQueryRegisterGetByNoCommandHandler;
-import com.example.registerservice.service.api.IQuerySubjectCommandHandler;
 import com.example.registerservice.util.ApplicationContextHolder;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

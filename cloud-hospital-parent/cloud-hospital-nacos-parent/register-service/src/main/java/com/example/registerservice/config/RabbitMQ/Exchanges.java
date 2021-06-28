@@ -44,4 +44,14 @@ public class Exchanges {
     public Exchange registerOrderDlx() {
         return ExchangeBuilder.topicExchange("register_order_dl_exchange").durable(true).build();
     }
+
+    /**
+     * 消息一致性的交换机
+     *
+     * @return
+     */
+    @Bean("news_exchange")
+    public Exchange newsExchange() {
+        return ExchangeBuilder.topicExchange("news_exchange").durable(true).build();
+    }
 }

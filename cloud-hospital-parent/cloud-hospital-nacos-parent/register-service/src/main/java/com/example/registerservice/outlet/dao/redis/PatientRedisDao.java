@@ -7,8 +7,8 @@ import org.springframework.data.repository.CrudRepository;
  * Created with IntelliJ IDEA.
  *
  * @Auther: 小刘
- * @Date: 2021/06/17/15:03
- * @Description: 存手机号的redis
+ * @Date: 2021/06/25/14:50
+ * @Description: 存患者的redis
  */
-public interface PatientRedisDao extends CrudRepository<PatientRedisPo, String> {
+public interface PatientRedisDao extends CrudRepository<PatientRedisPo, Long> {
 }

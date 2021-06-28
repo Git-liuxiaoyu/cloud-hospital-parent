@@ -59,34 +59,34 @@
         </javaClientGenerator>
 
         <!--生成对应表及类名-->
-<!--        <table tableName="h_worker_info" catalog="hospital"-->
-<!--               domainObjectName="WorkerInfoPo"-->
-<!--               mapperName="WorkerInfoPoDao"-->
+        <table tableName="message" catalog="h_register"
+               domainObjectName="MessageMysqlPo"
+               mapperName="MessageMysqlDao"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true">
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+<!--        <table tableName="h_register" catalog="h_register"-->
+<!--               domainObjectName="RegisterMysqlPo"-->
+<!--               mapperName="RegisterMysqlDao"-->
 <!--               enableCountByExample="true"-->
 <!--               enableUpdateByExample="true"-->
 <!--               enableDeleteByExample="true"-->
 <!--               enableSelectByExample="true">-->
 <!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
 <!--        </table>-->
-        <table tableName="h_register" catalog="h_register"
-               domainObjectName="RegisterMysqlPo"
-               mapperName="RegisterMysqlDao"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true">
-            <property name="ignoreQualifiersAtRuntime" value="true"/>
-        </table>
 
-        <table tableName="h_patient" catalog="h_register"
-               domainObjectName="PatientMysqlPo"
-               mapperName="PatientMysqlDao"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true">
-            <property name="ignoreQualifiersAtRuntime" value="true"/>
-        </table>
+<!--        <table tableName="h_patient" catalog="h_register"-->
+<!--               domainObjectName="PatientMysqlPo"-->
+<!--               mapperName="PatientMysqlDao"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true">-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--        </table>-->
 
     </context>
 </generatorConfiguration>

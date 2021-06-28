@@ -21,6 +21,13 @@ spring:
     username: xiaoyu
     # rabbitmq服务器连接密码
     password: xiaoyu
+    #开启『发送者确认』
+    publisher-confirm-type: CORRELATED
+    #在需要使用消息的return机制时候，此参数必须设置为true
+    template:
+      mandatory: true
+    #开启消息的return机制
+    publisher-returns: true
   # Redis 配置
   redis:
     # Redis数据库索引（默认为0）

@@ -11,8 +11,8 @@ import com.example.registerservice.outlet.dao.mysql.RegisterMysqlDao;
 import com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPo;
 import com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPoExample;
 import com.example.registerservice.outlet.dao.mysql.po.RegisterOrderMysqlPo;
-import com.example.registerservice.outlet.dao.redis.PatientRedisDao;
-import com.example.registerservice.outlet.dao.redis.po.PatientRedisPo;
+import com.example.registerservice.outlet.dao.redis.PhoneRedisDao;
+import com.example.registerservice.outlet.dao.redis.po.PhoneRedisPo;
 import com.example.registerservice.service.command.addRegister.AddRegisterCommand;
 import com.example.registerservice.service.command.addphone.PushPhoneGoQueueCommand;
 import com.example.registerservice.service.command.updateregister.UpdateRegisterCommand;
@@ -47,7 +47,7 @@ public class RegisterAdapter {
     private RegisterMysqlDao mysqlDao;
 
     @Autowired
-    private PatientRedisDao redisDao;
+    private PhoneRedisDao redisDao;
 
     @Autowired
     private StringRedisTemplate template;
@@ -72,7 +72,7 @@ public class RegisterAdapter {
      * @param command
      */
     public void addPhoneGoRedis(PushPhoneGoQueueCommand command) {
-        PatientRedisPo redisPo = new PatientRedisPo(command.getPhone());
+        PhoneRedisPo redisPo = new PhoneRedisPo(command.getPhone());
         redisDao.save(redisPo);
     }
 
@@ -82,8 +82,8 @@ public class RegisterAdapter {
      * @param command
      * @return
      */
-    public PatientRedisPo select(PushPhoneGoQueueCommand command) {
-        Optional<PatientRedisPo> redisPo = redisDao.findById(command.getPhone());
+    public PhoneRedisPo select(PushPhoneGoQueueCommand command) {
+        Optional<PhoneRedisPo> redisPo = redisDao.findById(command.getPhone());
         return redisPo.orElseThrow(NullPointerException::new);
     }
 

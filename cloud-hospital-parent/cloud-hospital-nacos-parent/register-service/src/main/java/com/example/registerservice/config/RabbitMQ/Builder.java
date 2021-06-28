@@ -60,4 +60,18 @@ public class Builder {
             @Qualifier("register_order_dlq") Queue queue) {
         return BindingBuilder.bind(queue).to(exchange).with("dl.order.add").noargs();
     }
+
+    /**
+     * 消息一致性的队列和消息一致性交换机的绑定
+     *
+     * @param exchange
+     * @param queue
+     * @return
+     */
+    @Bean
+    public Binding newsQueueExchange(
+            @Qualifier("news_exchange") Exchange exchange,
+            @Qualifier("news_queue") Queue queue) {
+        return BindingBuilder.bind(queue).to(exchange).with("news.add").noargs();
+    }
 }

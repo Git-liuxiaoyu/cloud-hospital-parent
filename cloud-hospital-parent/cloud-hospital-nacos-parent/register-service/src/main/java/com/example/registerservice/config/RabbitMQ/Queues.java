@@ -52,4 +52,15 @@ public class Queues {
     public Queue registerOrderDlq() {
         return QueueBuilder.durable("register_order_dlq").build();
     }
+
+
+    /**
+     * 消息一致性的路由
+     *
+     * @return
+     */
+    @Bean("news_queue")
+    public Queue newsQueue() {
+        return QueueBuilder.durable("news_queue").build();
+    }
 }

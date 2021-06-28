@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  *
  * @Auther: 小刘
  * @Date: 2021/06/21/19:55
- * @Description:
+ * @Description: 添加挂号订单的时候给队列发送消息的实现类
  */
 @Slf4j
 @Component

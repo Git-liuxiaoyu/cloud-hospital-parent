@@ -1,8 +1,6 @@
 package com.example.registerservice.adapter.converter;
 
 import com.example.registerservice.inlet.web.vo.RegisterVo;
-import com.example.registerservice.inlet.web.vo.SubjectTypeVo;
-import com.example.registerservice.outlet.client.po.DepartmentClientPo;
 import com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPo;
 import org.springframework.stereotype.Component;
 

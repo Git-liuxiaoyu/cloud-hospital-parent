@@ -33,8 +33,7 @@ public interface RegisterMysqlDao {
 
     int updateByPrimaryKey(RegisterMysqlPo record);
 
-    @Select("" +
-            "select r.id,r.no,r.regTime,r.departmentId,r.rotaId,r.price,r.type,r.status," +
+    @Select("select r.id,r.no,r.regTime,r.departmentId,r.rotaId,r.price,r.type,r.status," +
             "p.name from h_patient p,h_register r where p.id=r.patientId and r.phone=#{phone}")
     List<RegisterOrderMysqlPo> findAll(String phone);
 }
