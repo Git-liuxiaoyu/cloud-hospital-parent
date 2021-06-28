@@ -13,6 +13,6 @@ import java.util.List;
  */
 public interface IQueryDoctorRotaListByIdListCommandHandler {
 
-    List<DoctorRotaVo> action(QueryDoctorRotaListByIdListCommand command);
+    List<QueryDoctorRotaListByIdListCommand.DoctorRotaVo> action(QueryDoctorRotaListByIdListCommand command);
 
 }

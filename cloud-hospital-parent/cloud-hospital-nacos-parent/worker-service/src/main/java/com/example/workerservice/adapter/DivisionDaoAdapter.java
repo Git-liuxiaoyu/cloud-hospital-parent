@@ -1,14 +1,12 @@
 package com.example.workerservice.adapter;
 
-import com.example.workerservice.inlet.web.vo.DivisionVo;
+import com.example.workerservice.outlet.dao.es.DivisionEsPoDao;
+import com.example.workerservice.outlet.dao.es.po.DivisionEsPo;
 import com.example.workerservice.outlet.dao.mysql.DivisionPoDao;
-import com.example.workerservice.outlet.dao.mysql.po.DivisionPo;
-import com.example.workerservice.outlet.dao.mysql.po.DivisionPoExample;
 import com.example.workerservice.outlet.dao.redis.DivisionRedisPoDao;
-import com.example.workerservice.outlet.dao.redis.po.DivisionRedisPo;
-import com.example.workerservice.util.converter.DivisionRedisPoConverter;
-import com.example.workerservice.util.converter.DivisionVoConverter;
+import com.example.workerservice.service.command.division.queryall.QueryAllDivisionCommand;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -29,15 +27,12 @@ public class DivisionDaoAdapter {
 
     private final DivisionRedisPoDao divisionRedisPoDao;
 
-    private final DivisionRedisPoConverter divisionRedisPoConverter;
+    private final DivisionEsPoDao divisionEsPoDao;
 
-    private final DivisionVoConverter divisionVoConverter;
-
-    public DivisionDaoAdapter(DivisionPoDao divisionPoDao, DivisionRedisPoDao divisionRedisPoDao, DivisionVoConverter divisionVoConverter, DivisionRedisPoConverter divisionRedisPoConverter) {
+    public DivisionDaoAdapter(DivisionPoDao divisionPoDao, DivisionRedisPoDao divisionRedisPoDao, DivisionEsPoDao divisionEsPoDao) {
         this.divisionPoDao = divisionPoDao;
         this.divisionRedisPoDao = divisionRedisPoDao;
-        this.divisionVoConverter = divisionVoConverter;
-        this.divisionRedisPoConverter = divisionRedisPoConverter;
+        this.divisionEsPoDao = divisionEsPoDao;
     }
     /* 构造注入 - 结束 */
 
@@ -47,37 +42,40 @@ public class DivisionDaoAdapter {
      * @param status
      * @return
      */
-    public List<DivisionVo> queryAllByStatus(String status) {
-        /* 实例化一个List<DivisionVo>  */
-        List<DivisionVo> divisionVoList = new ArrayList<>();
+    public List<QueryAllDivisionCommand.DivisionVo> queryAllByStatus(String status) {
+        /* 直接 Es 查 */
+        List<DivisionEsPo> divisionEsPoList = divisionEsPoDao.findByStatusEquals(status);
+        /* 转为Vo返回 */
+        return convert(divisionEsPoList);
+    }
 
-        try {
-            /* 先查 Redis 中有没有 */
-            List<DivisionRedisPo> divisionRedisPoList = divisionRedisPoDao.findAllByStatusEquals(status);
-            /* 没有会抛出异常 NullPointerException */
-            if (divisionRedisPoList.isEmpty())
-                throw new NullPointerException();
-            /* 转换 */
-            divisionVoList = divisionVoConverter.convert(divisionRedisPoList);
-            /* LOG */
-            log.debug("从 Redis 查询到 List<DivisionVo> -> [{}]",divisionVoList);
-        } catch (NullPointerException e) {
-            /* 捕获异常 NullPointerException , 前往 MySQL 查询 */
-            /* 实例化DivisionPoExample */
-            DivisionPoExample divisionPoExample = new DivisionPoExample();
-            divisionPoExample.createCriteria().andStatusEqualTo(status);
-            /* 查询获得对象 */
-            List<DivisionPo> divisionPoList = divisionPoDao.selectByExample(divisionPoExample);
-            /* 转换 */
-            divisionVoList = divisionVoConverter.convert(divisionPoList);
-            /* 转换 */
-            List<DivisionRedisPo> divisionRedisPoList = divisionRedisPoConverter.convert(divisionPoList);
-            /* 存入 Redis */
-            divisionRedisPoDao.saveAll(divisionRedisPoList);
-            /* LOG */
-            log.debug("从 MySQL 查询到 List<DivisionVo> -> [{}]",divisionVoList);
-        }
-        /* 返回值 */
+    /**
+     * List<DivisionEsPo> -> List<QueryAllDivisionCommand.DivisionVo>
+     *
+     * @param divisionEsPoList
+     * @return
+     */
+    private List<QueryAllDivisionCommand.DivisionVo> convert(List<DivisionEsPo> divisionEsPoList) {
+        /* 实例化 List<QueryAllDivisionCommand.DivisionVo> */
+        List<QueryAllDivisionCommand.DivisionVo> divisionVoList = new ArrayList<>();
+        /* 循环赋值 */
+        divisionEsPoList.forEach(divisionEsPo -> divisionVoList.add(convert(divisionEsPo)));
+        /* 返回 */
         return divisionVoList;
+    }
+
+    /**
+     * DivisionEsPo -> QueryAllDivisionCommand.DivisionVo
+     *
+     * @param divisionEsPo
+     * @return
+     */
+    private QueryAllDivisionCommand.DivisionVo convert(DivisionEsPo divisionEsPo) {
+        /* 实例化 QueryAllDivisionCommand.DivisionVo */
+        QueryAllDivisionCommand.DivisionVo divisionVo = new QueryAllDivisionCommand.DivisionVo();
+        /* 赋值 */
+        BeanUtils.copyProperties(divisionEsPo, divisionVo);
+        /* 返回 */
+        return divisionVo;
     }
 }

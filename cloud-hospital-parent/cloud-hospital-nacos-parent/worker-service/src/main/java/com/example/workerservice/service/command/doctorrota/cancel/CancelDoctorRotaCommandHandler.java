@@ -33,9 +33,15 @@ public class CancelDoctorRotaCommandHandler implements ICancelDoctorRotaCommandH
         DistributedLock distributedLock = new DistributedLock("UPDATEROTA-" + command.getId(), UUID.randomUUID().toString());
         /* 锁上 */
         distributedLock.lock();
-        /* 执行修改状态方法 */
-        doctorRotaDaoAdapter.updateDoctorRotaStatus(command.getId(), DoctorRotaSetVo.STATUS_CANCEL);
-        /* 解锁 */
-        distributedLock.unlock();
+        try {
+            /* 执行修改状态方法 */
+            doctorRotaDaoAdapter.updateDoctorRotaStatus(command.getId(), DoctorRotaSetVo.STATUS_CANCEL);
+        } catch (NullPointerException e) {
+            /* 捕获异常 NullPointerException , 抛 DoctorRotaNotFoundException */
+            throw new DoctorRotaNotFoundException();
+        } finally {
+            /* 解锁 */
+            distributedLock.unlock();
+        }
     }
 }

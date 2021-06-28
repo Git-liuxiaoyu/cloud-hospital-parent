@@ -2,6 +2,8 @@ package com.example.workerservice.service.command.doctorrota.cancel;
 
 import com.example.workerservice.service.api.doctorrota.ICancelDoctorRotaCommandHandler;
 import com.example.workerservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,10 +15,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
+@ApiModel
 public class CancelDoctorRotaCommand {
 
+    @ApiModelProperty(value = "医生排班的主键ID", example = "1")
     private Long id;
 
+    @ApiModelProperty(hidden = true)
     private ICancelDoctorRotaCommandHandler cancelDoctorRotaCommandHandler;
 
     public CancelDoctorRotaCommand() {
@@ -28,7 +33,7 @@ public class CancelDoctorRotaCommand {
         this.id = id;
     }
 
-    public void execute(){
+    public void execute() {
         /* 执行方法 */
         this.cancelDoctorRotaCommandHandler.action(this);
     }

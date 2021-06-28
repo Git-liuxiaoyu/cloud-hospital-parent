@@ -47,7 +47,7 @@ public class AddPhysicalExamRecordCommand {
     private Long patientid;
 
     @NotNull
-    @ApiModelProperty(value = "需要添加到", example = "1", required = true)
+    @ApiModelProperty(value = "体检项目详情信息",required = true)
     private List<InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList;
 
     @ApiModelProperty(hidden = true)
@@ -70,12 +70,14 @@ public class AddPhysicalExamRecordCommand {
         @NotNull
         private Integer typeid;
 
+        @ApiModelProperty(hidden = true)
         private String typeName;
 
         @ApiModelProperty(value = "体检记录详情得体检的是哪个项目(体检项目主键ID)", example = "1",required = true)
         @NotNull
         private Integer examid;
 
+        @ApiModelProperty(hidden = true)
         private String examName;
 
         @ApiModelProperty(value = "体检记录详情得体检项目检查次数", example = "1",required = true)
@@ -85,6 +87,7 @@ public class AddPhysicalExamRecordCommand {
         @ApiModelProperty(value = "体检记录详情得体检项目的金额", example = "1.00")
         private BigDecimal price;
 
+        @ApiModelProperty(hidden = true)
         private String status;
 
     }

@@ -27,11 +27,10 @@ public class RegQueryDoctorRotaCommandHandler implements IRegQueryDoctorRotaComm
     /* 构造注入 - 结束 */
 
     @Override
-    public List<DoctorRotaVo> action(RegQueryDoctorRotaCommand command) {
+    public List<RegQueryDoctorRotaCommand.DoctorRotaVo> action(RegQueryDoctorRotaCommand command) {
         /* 查询到基本的数据 */
-        List<DoctorRotaVo> doctorRotaVoList = doctorRotaDaoAdapter.query(command.getDate(), command.getDepartmentId(), DoctorRotaVo.STATUS_NORMAL);
-
-        return doctorRotaVoList;
+        /* 返回 */
+        return doctorRotaDaoAdapter.query(command.getDate(), command.getDepartmentId(), DoctorRotaVo.STATUS_NORMAL);
     }
 
 

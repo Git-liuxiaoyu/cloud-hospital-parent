@@ -28,8 +28,13 @@ public class QueryAllDepartmentByDivisionIdCommandHandler implements IQueryAllDe
 
 
     @Override
-    public List<DepartmentVo> action(QueryAllDepartmentByDivisionIdCommand command) {
-        /* 执行方法并返回 */
-        return departmentDaoAdapter.queryAllByDivisionIdAndStatus(command.getDivisionId(),DepartmentVo.STATUS_NORMAL);
+    public List<QueryAllDepartmentByDivisionIdCommand.DepartmentVo> action(QueryAllDepartmentByDivisionIdCommand command) {
+        try {
+            /* 执行方法并返回 */
+            return departmentDaoAdapter.queryAllByDivisionIdAndStatus(command.getDivisionId(), DepartmentVo.STATUS_NORMAL);
+        } catch (NullPointerException e) {
+            /* 捕获到 NullPointerException , 抛 DivisionNotFoundException */
+            throw new DivisionNotFoundException();
+        }
     }
 }

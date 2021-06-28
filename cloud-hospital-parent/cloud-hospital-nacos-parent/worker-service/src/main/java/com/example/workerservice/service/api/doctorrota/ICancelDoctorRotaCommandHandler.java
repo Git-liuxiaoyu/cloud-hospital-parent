@@ -12,4 +12,13 @@ public interface ICancelDoctorRotaCommandHandler {
 
     void action(CancelDoctorRotaCommand command);
 
+    /**
+     * 自定义业务异常 - 没有发现该医生排班
+     **/
+    class DoctorRotaNotFoundException extends RuntimeException {
+        public DoctorRotaNotFoundException() {
+            super("没有发现该医生排班");
+        }
+    }
+
 }

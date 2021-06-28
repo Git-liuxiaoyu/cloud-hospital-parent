@@ -1,11 +1,10 @@
 package com.example.workerservice.service.command.doctorrota.rotaquery;
 
-import com.example.workerservice.inlet.web.vo.DoctorRotaSetVo;
 import com.example.workerservice.service.api.doctorrota.IRotaQueryDoctorRotaCommandHandler;
 import com.example.workerservice.util.ApplicationContextHolder;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -34,6 +33,32 @@ public class RotaQueryDoctorRotaCommand {
     @ApiModelProperty(hidden = true)
     private IRotaQueryDoctorRotaCommandHandler rotaQueryDoctorRotaCommandHandler;
 
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @ToString
+    @ApiModel
+    @Builder(toBuilder = true)
+    public static class DoctorRotaVo {
+
+        @ApiModelProperty(value = "医生排班的主键ID", example = "1")
+        private Long id;
+
+        @ApiModelProperty(value = "排班的房间主键ID", example = "1")
+        private Integer roomid;
+
+        @ApiModelProperty(value = "医生主键ID", example = "1")
+        private Integer doctorid;
+
+        @ApiModelProperty(value = "单次排班最大看诊人数", example = "1")
+        private Integer maxpatient;
+
+        @ApiModelProperty(value = "排班的状态", example = "1")
+        private String status;
+
+    }
+
+
     public RotaQueryDoctorRotaCommand() {
         this.rotaQueryDoctorRotaCommandHandler = ApplicationContextHolder.getApplicationContext().getBean(IRotaQueryDoctorRotaCommandHandler.class);
     }
@@ -45,7 +70,7 @@ public class RotaQueryDoctorRotaCommand {
         this.shiftType = shiftType;
     }
 
-    public List<DoctorRotaSetVo> execute() {
+    public List<DoctorRotaVo> execute() {
         /* 执行方法 */
         return this.rotaQueryDoctorRotaCommandHandler.action(this);
     }

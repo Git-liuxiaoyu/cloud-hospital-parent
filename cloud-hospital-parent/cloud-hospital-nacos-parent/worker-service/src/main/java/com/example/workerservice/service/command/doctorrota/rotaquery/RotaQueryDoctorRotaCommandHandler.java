@@ -28,7 +28,7 @@ public class RotaQueryDoctorRotaCommandHandler implements IRotaQueryDoctorRotaCo
     /* 构造注入 - 结束 */
 
     @Override
-    public List<DoctorRotaSetVo> action(RotaQueryDoctorRotaCommand command) {
+    public List<RotaQueryDoctorRotaCommand.DoctorRotaVo> action(RotaQueryDoctorRotaCommand command) {
         /* 执行方法 */
         return doctorRotaDaoAdapter.query(command.getDepartmentId(),command.getDate(),command.getShiftType(),DoctorRotaSetVo.STATUS_NORMAL);
     }

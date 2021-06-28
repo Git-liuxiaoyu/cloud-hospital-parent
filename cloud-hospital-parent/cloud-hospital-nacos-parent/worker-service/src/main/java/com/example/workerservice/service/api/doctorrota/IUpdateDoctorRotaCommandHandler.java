@@ -21,4 +21,23 @@ public interface IUpdateDoctorRotaCommandHandler {
         }
     }
 
+    /**
+     * 自定义业务异常 - 员工未发现
+     **/
+    class WorkerInfoNotFoundException extends RuntimeException {
+        public WorkerInfoNotFoundException() {
+            super("找不到该员工");
+        }
+    }
+
+
+    /**
+     * 自定义业务异常 - 类型未发现
+     **/
+    class ClassTypeNotFoundException extends RuntimeException {
+        public ClassTypeNotFoundException() {
+            super("添加失败");
+        }
+    }
+
 }

@@ -13,6 +13,6 @@ import java.util.List;
  */
 public interface IRotaQueryDoctorRotaCommandHandler {
 
-    List<DoctorRotaSetVo> action(RotaQueryDoctorRotaCommand command);
+    List<RotaQueryDoctorRotaCommand.DoctorRotaVo> action(RotaQueryDoctorRotaCommand command);
 
 }

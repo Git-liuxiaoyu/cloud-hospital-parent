@@ -31,33 +31,33 @@ public class AddDoctorRotaCommand {
     private String createWorkerNo;
 
     @NotNull
-    @ApiModelProperty(value = "科室主键ID", example = "1",required = true)
+    @ApiModelProperty(value = "科室主键ID", example = "1", required = true)
     private Integer departmentId;
 
     @NotNull
-    @ApiModelProperty(value = "排班的日期(yyyy-MM-dd)", example = "2021-06-23",required = true)
+    @ApiModelProperty(value = "排班的日期(yyyy-MM-dd)", example = "2021-06-23", required = true)
     private Date date;
 
     @NotNull
     @NotBlank
-    @ApiModelProperty(value = "排班的类型(1、门诊排班,2、住院排班[未做])", example = "1",required = true)
+    @ApiModelProperty(value = "排班的类型(1、门诊排班,2、住院排班[未做])", example = "1", required = true)
     private String rotaType;
 
     @NotNull
     @NotBlank
-    @ApiModelProperty(value = "排班时间类型（1、上午班,2、下午班, 3、晚班）[无晚班]", example = "1",required = true)
+    @ApiModelProperty(value = "排班时间类型（1、上午班,2、下午班, 3、晚班）[无晚班]", example = "1", required = true)
     private String shiftType;
 
     @NotNull
-    @ApiModelProperty(value = "排班的医生主键ID", example = "1",required = true)
+    @ApiModelProperty(value = "排班的医生主键ID", example = "1", required = true)
     private Integer doctorId;
 
     @NotNull
-    @ApiModelProperty(value = "单次排班最大看诊人数", example = "1",required = true)
+    @ApiModelProperty(value = "单次排班最大看诊人数", example = "1", required = true)
     private Integer maxPatient;
 
     @NotNull
-    @ApiModelProperty(value = "排班的房间主键ID(该排班在哪个诊室)", example = "1",required = true)
+    @ApiModelProperty(value = "排班的房间主键ID(该排班在哪个诊室)", example = "1", required = true)
     private Integer roomId;
 
     @ApiModelProperty(value = "创建该排班的医生主键ID", example = "1")
@@ -94,7 +94,10 @@ public class AddDoctorRotaCommand {
 
     public Long execute() {
         /* 执行方法 */
-        return this.addDoctorRotaCommandHandler.action(this);
+        Long rotaId = this.addDoctorRotaCommandHandler.action(this);
+
+        /* 返回 */
+        return rotaId;
     }
 
 }

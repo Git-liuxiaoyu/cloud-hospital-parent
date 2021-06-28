@@ -1,14 +1,12 @@
 package com.example.workerservice.adapter;
 
-import com.example.workerservice.inlet.web.vo.DepartmentVo;
+import com.example.workerservice.outlet.dao.es.DepartmentEsPoDao;
+import com.example.workerservice.outlet.dao.es.po.DepartmentEsPo;
 import com.example.workerservice.outlet.dao.mysql.DepartmentPoDao;
-import com.example.workerservice.outlet.dao.mysql.po.DepartmentPo;
-import com.example.workerservice.outlet.dao.mysql.po.DepartmentPoExample;
 import com.example.workerservice.outlet.dao.redis.DepartmentRedisPoDao;
-import com.example.workerservice.outlet.dao.redis.po.DepartmentRedisPo;
-import com.example.workerservice.util.converter.DepartmentRedisPoConverter;
-import com.example.workerservice.util.converter.DepartmentVoConverter;
+import com.example.workerservice.service.command.department.queryallbydivision.QueryAllDepartmentByDivisionIdCommand;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,8 +18,8 @@ import java.util.List;
  * @author Alnwick11AtoZ 松
  * @date 2021/6/18
  */
-@Component
 @Slf4j
+@Component
 public class DepartmentDaoAdapter {
 
     /* 构造注入 - BEGIN */
@@ -29,15 +27,12 @@ public class DepartmentDaoAdapter {
 
     private final DepartmentRedisPoDao departmentRedisPoDao;
 
-    private final DepartmentVoConverter departmentVoConverter;
+    private final DepartmentEsPoDao departmentEsPoDao;
 
-    private final DepartmentRedisPoConverter departmentRedisPoConverter;
-
-    public DepartmentDaoAdapter(DepartmentPoDao departmentPoDao, DepartmentRedisPoDao departmentRedisPoDao, DepartmentVoConverter departmentVoConverter, DepartmentRedisPoConverter departmentRedisPoConverter) {
+    public DepartmentDaoAdapter(DepartmentPoDao departmentPoDao, DepartmentRedisPoDao departmentRedisPoDao, DepartmentEsPoDao departmentEsPoDao) {
         this.departmentPoDao = departmentPoDao;
         this.departmentRedisPoDao = departmentRedisPoDao;
-        this.departmentVoConverter = departmentVoConverter;
-        this.departmentRedisPoConverter = departmentRedisPoConverter;
+        this.departmentEsPoDao = departmentEsPoDao;
     }
     /* 构造注入 - END */
 
@@ -48,38 +43,44 @@ public class DepartmentDaoAdapter {
      * @param status     Department 状态
      * @return
      */
-    public List<DepartmentVo> queryAllByDivisionIdAndStatus(Integer divisionId, String status) {
-        /* 实例化一个 List<DepartmentVo> */
-        List<DepartmentVo> departmentVoList = new ArrayList<>();
+    public List<QueryAllDepartmentByDivisionIdCommand.DepartmentVo> queryAllByDivisionIdAndStatus(Integer divisionId, String status) {
+        /* 直接 Es 查询 */
+        List<DepartmentEsPo> departmentEsPos = departmentEsPoDao.findAllByStatusEqualsAndDivisionidEquals(status, divisionId);
+        /* 直接转换为Vo并返回 */
+        return convert(departmentEsPos);
+    }
 
-        try {
-            /* 先判断Redis中有无 */
-            List<DepartmentRedisPo> departmentRedisPoList = departmentRedisPoDao.findAllByDivisionidEqualsAndStatusEquals(divisionId, status);
-            /* 无的话抛出异常 */
-            if (departmentRedisPoList.isEmpty())
-                throw new NullPointerException();
-            /* 转换 */
-            departmentVoList = departmentVoConverter.convert(departmentRedisPoList);
-            /* LOG */
-            log.debug("从 Redis 查询到 List<DepartmentVo> -> [{}]",departmentVoList);
-        } catch (NullPointerException e) {
-            /* 捕获异常到 MySQL 中查询 */
-            /* 实例化一个departmentPoExample */
-            DepartmentPoExample departmentPoExample = new DepartmentPoExample();
-            /* 构造条件 */
-            departmentPoExample.createCriteria().andStatusEqualTo(status).andDivisionidEqualTo(divisionId);
-            /* 调用方法 */
-            List<DepartmentPo> departmentPoList = departmentPoDao.selectByExample(departmentPoExample);
-            /* 转换为List<DepartmentVo> */
-            departmentVoList = departmentVoConverter.convert(departmentPoList);
-            /* 转换为List<DepartmentRedisPo> */
-            List<DepartmentRedisPo> departmentRedisPoList = departmentRedisPoConverter.convert(departmentPoList);
-            /* 存入Redis */
-            departmentRedisPoDao.saveAll(departmentRedisPoList);
-            /* LOG */
-            log.debug("从 MySQL 查询到 List<DepartmentVo> -> [{}]",departmentVoList);
-        }
+    /**
+     * List<QueryAllDepartmentByDivisionIdCommand.DepartmentVo> -> List<DepartmentEsPo>
+     *
+     * @param departmentEsPoList
+     * @return
+     */
+    private List<QueryAllDepartmentByDivisionIdCommand.DepartmentVo> convert(List<DepartmentEsPo> departmentEsPoList) {
+        /* 实例化 List<QueryAllDepartmentByDivisionIdCommand.DepartmentVo> */
+        List<QueryAllDepartmentByDivisionIdCommand.DepartmentVo> departmentVoList = new ArrayList<>();
+        /* 循环赋值 */
+        departmentEsPoList.forEach(d -> departmentVoList.add(convert(d)));
         /* 返回 */
         return departmentVoList;
+    }
+
+    /**
+     * DepartmentEsPo -> QueryAllDepartmentByDivisionIdCommand.DepartmentVo
+     *
+     * @param departmentEsPo
+     * @return
+     */
+    private QueryAllDepartmentByDivisionIdCommand.DepartmentVo convert(DepartmentEsPo departmentEsPo) {
+        /* 实例化 */
+        QueryAllDepartmentByDivisionIdCommand.DepartmentVo departmentVo = new QueryAllDepartmentByDivisionIdCommand.DepartmentVo();
+        /* 判断是否为null */
+        if (departmentEsPo == null) {
+            return departmentVo;
+        }
+        /* 赋值 */
+        BeanUtils.copyProperties(departmentEsPo, departmentVo);
+        /* 返回 */
+        return departmentVo;
     }
 }

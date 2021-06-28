@@ -169,7 +169,7 @@
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
         insert into h_doctor_rota (id, departmentId, date,
                                    rotaType, shiftType, doctorId,
                                    leftPatient, maxPatient, roomId,
@@ -179,7 +179,7 @@
                 #{leftpatient,jdbcType=INTEGER}, #{maxpatient,jdbcType=INTEGER}, #{roomid,jdbcType=INTEGER},
                 #{createid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR})
     </insert>
-    <insert id="insertSelective" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.workerservice.outlet.dao.mysql.po.DoctorRotaPo">
         insert into h_doctor_rota
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

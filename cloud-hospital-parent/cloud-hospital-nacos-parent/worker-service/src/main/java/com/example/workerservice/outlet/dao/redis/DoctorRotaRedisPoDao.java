@@ -18,4 +18,8 @@ public interface DoctorRotaRedisPoDao extends CrudRepository<DoctorRotaRedisPo, 
 
     List<DoctorRotaRedisPo> findAllByStatusEqualsAndDepartmentidEqualsAndDateEquals(String status, Integer departmentid, Date date);
 
+
+
+
+
 }

@@ -1,6 +1,6 @@
 package com.example.workerservice.service.command.doctorrota.regquery;
 
-import com.example.workerservice.inlet.web.vo.DoctorRotaVo;
+import com.example.workerservice.service.api.doctorrota.IRegBackQueryDoctorRotaCommandHandler;
 import com.example.workerservice.service.api.doctorrota.IRegQueryDoctorRotaCommandHandler;
 import com.example.workerservice.util.ApplicationContextHolder;
 import io.swagger.annotations.ApiModel;
@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
@@ -24,25 +23,32 @@ import java.util.List;
 @Data
 @ToString
 @ApiModel
-public class RegQueryDoctorRotaCommand {
+public class RegBackQueryDoctorRotaCommand {
 
-    @NotNull
-    @ApiModelProperty(value = "想要挂号的日期(yyyy-MM-dd)", example = "2021-06-23",required = true)
+    @ApiModelProperty(value = "想要挂号的日期(yyyy-MM-dd)", example = "2021-06-23", hidden = true)
     private Date date;
 
     @NotNull
-    @ApiModelProperty(value = "想要挂号的科室主键ID", example = "1",required = true)
+    @ApiModelProperty(value = "想要挂号的科室主键ID", example = "1", required = true)
     private Integer departmentId;
 
+    @NotNull
+    @ApiModelProperty(value = "医生类别(0、普通;1、专家)", example = "1", required = true)
+    private String doctorType;
+
+    @NotNull
+    @ApiModelProperty(value = "挂号时间段(1、上午,2、下午)", example = "1", required = true)
+    private String shiftType;
+
     @ApiModelProperty(hidden = true)
-    private IRegQueryDoctorRotaCommandHandler regQueryDoctorRotaCommandHandler;
+    private IRegBackQueryDoctorRotaCommandHandler regBackQueryDoctorRotaCommandHandler;
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
     @ToString
     @ApiModel
-    public static class DoctorRotaVo{
+    public static class DoctorRotaVo {
 
         @ApiModelProperty(value = "医生排班的主键ID", example = "1")
         private Long id;
@@ -85,19 +91,19 @@ public class RegQueryDoctorRotaCommand {
         private String status;
     }
 
-    public RegQueryDoctorRotaCommand() {
-        this.regQueryDoctorRotaCommandHandler = ApplicationContextHolder.getApplicationContext().getBean(IRegQueryDoctorRotaCommandHandler.class);
+    public RegBackQueryDoctorRotaCommand() {
+        this.regBackQueryDoctorRotaCommandHandler = ApplicationContextHolder.getApplicationContext().getBean(IRegBackQueryDoctorRotaCommandHandler.class);
     }
 
-    public RegQueryDoctorRotaCommand(Date date, Integer departmentId) {
+    public RegBackQueryDoctorRotaCommand(Date date, Integer departmentId) {
         this();
         this.date = date;
         this.departmentId = departmentId;
     }
 
-    public List<DoctorRotaVo> execute(){
+    public List<DoctorRotaVo> execute() {
         /* 执行方法 */
-        return this.regQueryDoctorRotaCommandHandler.action(this);
+        return this.regBackQueryDoctorRotaCommandHandler.action(this);
     }
 
 }

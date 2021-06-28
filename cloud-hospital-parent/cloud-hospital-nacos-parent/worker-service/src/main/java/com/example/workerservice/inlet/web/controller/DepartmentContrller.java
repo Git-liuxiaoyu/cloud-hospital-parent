@@ -1,12 +1,8 @@
 package com.example.workerservice.inlet.web.controller;
 
-import com.example.workerservice.inlet.web.vo.DepartmentVo;
 import com.example.workerservice.inlet.web.vo.ResponseResult;
 import com.example.workerservice.service.command.department.queryallbydivision.QueryAllDepartmentByDivisionIdCommand;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.github.xiaoymin.knife4j.annotations.DynamicParameter;
-import com.github.xiaoymin.knife4j.annotations.DynamicParameters;
-import com.github.xiaoymin.knife4j.annotations.DynamicResponseParameters;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -37,7 +33,8 @@ public class DepartmentContrller {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "divisionId", value = "科目大类别主键ID", required = true, dataType = "Integer", paramType = "path")
     })
-    public ResponseResult<List<DepartmentVo>> getDepartmentListByDivisionId(@PathVariable("divisionId") Integer divisionId) {
+    public ResponseResult<List<QueryAllDepartmentByDivisionIdCommand.DepartmentVo>> getDepartmentListByDivisionId(@PathVariable("divisionId") Integer divisionId) {
+        log.debug("divisionId -> {}", divisionId);
         /* 实例化一个命令 */
         return new ResponseResult<>(new QueryAllDepartmentByDivisionIdCommand(divisionId).execute());
     }

@@ -27,7 +27,7 @@ public class QueryAllDivisionCommandHandler implements IQueryAllDivisionCommandH
     /* 构造注入 - 结束 */
 
     @Override
-    public List<DivisionVo> action() {
+    public List<QueryAllDivisionCommand.DivisionVo> action() {
         /* 调用方法并返回 */
         return divisionDaoAdapter.queryAllByStatus(DivisionVo.STATUS_NORMAL);
     }

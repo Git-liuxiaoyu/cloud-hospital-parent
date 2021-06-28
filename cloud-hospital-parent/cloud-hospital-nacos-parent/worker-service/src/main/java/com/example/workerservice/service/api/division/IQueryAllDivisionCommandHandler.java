@@ -1,6 +1,7 @@
 package com.example.workerservice.service.api.division;
 
 import com.example.workerservice.inlet.web.vo.DivisionVo;
+import com.example.workerservice.service.command.division.queryall.QueryAllDivisionCommand;
 
 import java.util.List;
 
@@ -12,6 +13,6 @@ import java.util.List;
  */
 public interface IQueryAllDivisionCommandHandler {
 
-    List<DivisionVo> action();
+    List<QueryAllDivisionCommand.DivisionVo> action();
 
 }

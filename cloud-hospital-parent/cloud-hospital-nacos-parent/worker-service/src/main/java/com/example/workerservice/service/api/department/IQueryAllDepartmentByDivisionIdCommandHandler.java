@@ -2,7 +2,6 @@ package com.example.workerservice.service.api.department;
 
 import com.example.workerservice.inlet.web.vo.DepartmentVo;
 import com.example.workerservice.service.command.department.queryallbydivision.QueryAllDepartmentByDivisionIdCommand;
-import com.example.workerservice.service.command.division.queryall.QueryAllDivisionCommand;
 
 import java.util.List;
 
@@ -14,6 +13,15 @@ import java.util.List;
  */
 public interface IQueryAllDepartmentByDivisionIdCommandHandler {
 
-    List<DepartmentVo> action(QueryAllDepartmentByDivisionIdCommand command);
+    List<QueryAllDepartmentByDivisionIdCommand.DepartmentVo> action(QueryAllDepartmentByDivisionIdCommand command);
+
+    /**
+     * 自定义业务异常 - 科室类别未发现
+     **/
+    class DivisionNotFoundException extends RuntimeException {
+        public DivisionNotFoundException() {
+            super("科室类别未发现");
+        }
+    }
 
 }

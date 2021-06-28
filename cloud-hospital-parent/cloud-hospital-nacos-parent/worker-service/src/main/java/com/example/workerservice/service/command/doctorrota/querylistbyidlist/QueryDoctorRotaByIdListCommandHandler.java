@@ -27,7 +27,7 @@ public class QueryDoctorRotaByIdListCommandHandler implements IQueryDoctorRotaLi
     /* 构造注入 - 结束 */
 
     @Override
-    public List<DoctorRotaVo> action(QueryDoctorRotaListByIdListCommand command) {
+    public List<QueryDoctorRotaListByIdListCommand.DoctorRotaVo> action(QueryDoctorRotaListByIdListCommand command) {
         /* 调用方法 */
         return doctorRotaDaoAdapter.query(command.getIdList());
     }

@@ -1,8 +1,8 @@
 package com.example.workerservice.inlet.web.controller;
 
-import com.example.workerservice.inlet.web.vo.DivisionVo;
 import com.example.workerservice.inlet.web.vo.ResponseResult;
 import com.example.workerservice.service.command.division.queryall.QueryAllDivisionCommand;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +31,8 @@ public class DivisionController {
      */
     @PostMapping("all")
     @ApiOperation(value = "获取全部科室大类别(科目)", notes = "获取全部科室大类别(科目)", produces = "application/json", response = ResponseResult.class)
-    public ResponseResult<List<DivisionVo>> getDivisionList(){
-        QueryAllDivisionCommand command = new QueryAllDivisionCommand();
+    @ApiOperationSupport(ignoreParameters = "queryAllDivisionCommandHandler")
+    public ResponseResult<List<QueryAllDivisionCommand.DivisionVo>> getDivisionList(QueryAllDivisionCommand command) {
         /* 执行命令并返回值 */
         return new ResponseResult<>(command.execute());
     }
