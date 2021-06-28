@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.drugservice.outlet.dao.mysql.ReceivedDao">
+  <resultMap id="BaseResultMap" type="com.example.drugservice.outlet.dao.mysql.po.ReceivedPo">
+    <id column="messageId" jdbcType="VARCHAR" property="messageid" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from received
+    where messageId = #{messageid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.drugservice.outlet.dao.mysql.po.ReceivedPo">
+    insert into received (messageId)
+    values (#{messageid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.drugservice.outlet.dao.mysql.po.ReceivedPo">
+    insert into received
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageid != null">
+        messageId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="messageid != null">
+        #{messageid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

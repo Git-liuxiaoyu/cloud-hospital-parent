@@ -53,26 +53,18 @@
         </javaClientGenerator>
 
         <!--生成对应表及类名-->
-        <table tableName="h_drug_instockodd" catalog="hospital_four"
-               domainObjectName="DrugInstockOddPo"
-               mapperName="DrugInstockOddDao"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true">
+        <table tableName="received" catalog="hospital_four"
+               domainObjectName="ReceivedPo"
+               mapperName="ReceivedDao"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false">
             <property name="ignoreQualifiersAtRuntime" value="true"/>
         </table>
 
 
-        <table tableName="h_drug_instockodd_detail" catalog="hospital_four"
-               domainObjectName="DrugInstockoddDetailPo"
-               mapperName="DrugInstockoddDetailDao"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true">
-            <property name="ignoreQualifiersAtRuntime" value="true"/>
-        </table>
+
 
     </context>
 </generatorConfiguration>

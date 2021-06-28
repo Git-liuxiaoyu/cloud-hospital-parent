@@ -9,6 +9,7 @@ import com.example.drugservice.service.update.UpdateDrugOddCommand;
 import com.example.drugservice.util.PageUtils;
 import com.example.drugservice.util.ResponseResult;
 import com.github.pagehelper.PageInfo;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class DrugOddController {
 
     @RequestMapping(value = "/drugodd/list",method = RequestMethod.POST)
     @ApiOperation(value = "查询药品单集合",notes = "分页条件查询药品单集合,可以传一个药品单编号 来查询集合,还要传pageindex和pageSize表示查询第几页每页几条数据")
+    @ApiOperationSupport(ignoreParameters = "handle")
     public ResponseResult<PageInfo<DrugOddVo>> findList(@RequestBody ExampleQueryDrugOddCommand command){
         List<DrugOddVo> drugOddVos = command.execute();
         PageUtils<DrugOddVo> pageUtils = new PageUtils<>();

@@ -9,4 +9,6 @@ public interface IExampleQueryDrugOddCommandHandle {
     public List<DrugOddVo> findList(ExampleQueryDrugOddCommand command);
 
     public DrugOddVo getByNo(String no);
+
+    void updateById(Long drugOddId);
 }

@@ -5,10 +5,37 @@ spring:
     name: drug-service
   profiles:
     active: dev
+  rabbitmq:
+    # rabbitmq服务器地址
+    host: 1.117.97.60
+#    host: 192.172.0.163
+    # rabbitmq服务器连接端口
+    port: 5672
+    #        virtual-host: /xiaoyu
+    virtual-host: /xiaoyu
+    # rabbitmq服务器连接账号
+    username: xiaoyu
+    # rabbitmq服务器连接密码
+    password: xiaoyu
+    publisher-confirm-type: CORRELATED
+    listener:
+      direct:
+        acknowledge-mode: manual
+      simple:
+        acknowledge-mode: manual
 
 # mybatis配置
 mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
+ribbon:
+  eager-load:
+    enabled: true   # 开启饥饿加载
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false # 直接关停 hystrix 的超时判断功能，或
 
 # 日志配置
 logging:
@@ -22,3 +49,4 @@ logging:
       %clr(%-40.40logger{39}){cyan} \
       %clr(:){faint} \
       %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}}"
+

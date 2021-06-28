@@ -23,4 +23,9 @@ public class ExampleQueryDrugOddCommandHandle implements IExampleQueryDrugOddCom
     public DrugOddVo getByNo(String no) {
         return adapt.getByNo(no);
     }
+
+    @Override
+    public void updateById(Long drugOddId) {
+        adapt.updateById(drugOddId);
+    }
 }

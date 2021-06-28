@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.drugservice.outlet.dao.mysql.DrugOddDao">
-  <resultMap id="BaseResultMap" type="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo">
+<mapper namespace="com.example.drugservice.outlet.dao.mysql.MessageDao">
+  <resultMap id="BaseResultMap" type="com.example.drugservice.outlet.dao.mysql.po.MessagePo">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="no" jdbcType="VARCHAR" property="no" />
-    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
-    <result column="doctorid" jdbcType="INTEGER" property="doctorid" />
-    <result column="totalmoney" jdbcType="DECIMAL" property="totalmoney" />
-    <result column="patientid" jdbcType="INTEGER" property="patientid" />
+    <result column="exchange" jdbcType="VARCHAR" property="exchange" />
+    <result column="routing_key" jdbcType="VARCHAR" property="routingKey" />
+    <result column="message_content" jdbcType="VARCHAR" property="messageContent" />
     <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="retry_count" jdbcType="INTEGER" property="retryCount" />
+    <result column="version" jdbcType="BIGINT" property="version" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,15 +69,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, no, createtime, doctorid, totalmoney, patientid,status
+    id, exchange, routing_key, message_content, status, retry_count, version
   </sql>
-  <select id="selectByExample" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.example.drugservice.outlet.dao.mysql.po.MessagePoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from h_drugodd
+    from message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,98 +88,105 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from h_drugodd
+    from message
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from h_drugodd
+    delete from message
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPoExample">
-    delete from h_drugodd
+  <delete id="deleteByExample" parameterType="com.example.drugservice.outlet.dao.mysql.po.MessagePoExample">
+    delete from message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-
-  <insert id="insert" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo" useGeneratedKeys="true" keyProperty="id">
-    insert into h_drugodd (id, no, createtime, 
-      doctorid, totalmoney, patientid,status,outPatientRecordId
-      )
-    values (#{id,jdbcType=BIGINT}, #{no,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{doctorid,jdbcType=INTEGER}, #{totalmoney,jdbcType=DECIMAL}, #{patientid,jdbcType=INTEGER},
-            #{status,jdbcType=VARCHAR},#{outPatientRecordId,jdbcType=BIGINT}
-      )
+  <insert id="insert" parameterType="com.example.drugservice.outlet.dao.mysql.po.MessagePo">
+    insert into message (id, exchange, routing_key, 
+      message_content, status, retry_count, 
+      version)
+    values (#{id,jdbcType=BIGINT}, #{exchange,jdbcType=VARCHAR}, #{routingKey,jdbcType=VARCHAR}, 
+      #{messageContent,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{retryCount,jdbcType=INTEGER}, 
+      #{version,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo">
-    insert into h_drugodd
+  <insert id="insertSelective" parameterType="com.example.drugservice.outlet.dao.mysql.po.MessagePo">
+    insert into message
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="no != null">
-        no,
+      <if test="exchange != null">
+        exchange,
       </if>
-      <if test="createtime != null">
-        createtime,
+      <if test="routingKey != null">
+        routing_key,
       </if>
-      <if test="doctorid != null">
-        doctorid,
+      <if test="messageContent != null">
+        message_content,
       </if>
-      <if test="totalmoney != null">
-        totalmoney,
+      <if test="status != null">
+        status,
       </if>
-      <if test="patientid != null">
-        patientid,
+      <if test="retryCount != null">
+        retry_count,
+      </if>
+      <if test="version != null">
+        version,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="no != null">
-        #{no,jdbcType=VARCHAR},
+      <if test="exchange != null">
+        #{exchange,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null">
-        #{createtime,jdbcType=TIMESTAMP},
+      <if test="routingKey != null">
+        #{routingKey,jdbcType=VARCHAR},
       </if>
-      <if test="doctorid != null">
-        #{doctorid,jdbcType=INTEGER},
+      <if test="messageContent != null">
+        #{messageContent,jdbcType=VARCHAR},
       </if>
-      <if test="totalmoney != null">
-        #{totalmoney,jdbcType=DECIMAL},
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
       </if>
-      <if test="patientid != null">
-        #{patientid,jdbcType=INTEGER},
+      <if test="retryCount != null">
+        #{retryCount,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPoExample" resultType="java.lang.Long">
-    select count(*) from h_drugodd
+  <select id="countByExample" parameterType="com.example.drugservice.outlet.dao.mysql.po.MessagePoExample" resultType="java.lang.Long">
+    select count(*) from message
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update h_drugodd
+    update message
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.no != null">
-        no = #{record.no,jdbcType=VARCHAR},
+      <if test="record.exchange != null">
+        exchange = #{record.exchange,jdbcType=VARCHAR},
       </if>
-      <if test="record.createtime != null">
-        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      <if test="record.routingKey != null">
+        routing_key = #{record.routingKey,jdbcType=VARCHAR},
       </if>
-      <if test="record.doctorid != null">
-        doctorid = #{record.doctorid,jdbcType=INTEGER},
+      <if test="record.messageContent != null">
+        message_content = #{record.messageContent,jdbcType=VARCHAR},
       </if>
-      <if test="record.totalmoney != null">
-        totalmoney = #{record.totalmoney,jdbcType=DECIMAL},
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
       </if>
-      <if test="record.patientid != null">
-        patientid = #{record.patientid,jdbcType=INTEGER},
+      <if test="record.retryCount != null">
+        retry_count = #{record.retryCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.version != null">
+        version = #{record.version,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -187,66 +194,50 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update h_drugodd
+    update message
     set id = #{record.id,jdbcType=BIGINT},
-      no = #{record.no,jdbcType=VARCHAR},
-      createtime = #{record.createtime,jdbcType=TIMESTAMP},
-      doctorid = #{record.doctorid,jdbcType=INTEGER},
-      totalmoney = #{record.totalmoney,jdbcType=DECIMAL},
-      patientid = #{record.patientid,jdbcType=INTEGER}
+      exchange = #{record.exchange,jdbcType=VARCHAR},
+      routing_key = #{record.routingKey,jdbcType=VARCHAR},
+      message_content = #{record.messageContent,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      retry_count = #{record.retryCount,jdbcType=INTEGER},
+      version = #{record.version,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo">
-    update h_drugodd
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.drugservice.outlet.dao.mysql.po.MessagePo">
+    update message
     <set>
-      <if test="no != null">
-        no = #{no,jdbcType=VARCHAR},
+      <if test="exchange != null">
+        exchange = #{exchange,jdbcType=VARCHAR},
       </if>
-      <if test="createtime != null">
-        createtime = #{createtime,jdbcType=TIMESTAMP},
+      <if test="routingKey != null">
+        routing_key = #{routingKey,jdbcType=VARCHAR},
       </if>
-      <if test="doctorid != null">
-        doctorid = #{doctorid,jdbcType=INTEGER},
-      </if>
-      <if test="totalmoney != null">
-        totalmoney = #{totalmoney,jdbcType=DECIMAL},
-      </if>
-      <if test="patientid != null">
-        patientid = #{patientid,jdbcType=INTEGER},
+      <if test="messageContent != null">
+        message_content = #{messageContent,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=VARCHAR},
       </if>
+      <if test="retryCount != null">
+        retry_count = #{retryCount,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=BIGINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo">
-    update h_drugodd
-    set no = #{no,jdbcType=VARCHAR},
-      createtime = #{createtime,jdbcType=TIMESTAMP},
-      doctorid = #{doctorid,jdbcType=INTEGER},
-      totalmoney = #{totalmoney,jdbcType=DECIMAL},
-      patientid = #{patientid,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.example.drugservice.outlet.dao.mysql.po.MessagePo">
+    update message
+    set exchange = #{exchange,jdbcType=VARCHAR},
+      routing_key = #{routingKey,jdbcType=VARCHAR},
+      message_content = #{messageContent,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      retry_count = #{retryCount,jdbcType=INTEGER},
+      version = #{version,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
-
-  <select id="selectByCon" parameterType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo" resultType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo">
-    select
-    *
-    from h_drugodd
-    <where>
-      <if test="no!=null and no!=''" >
-        and no=#{no}
-      </if>
-
-        and status!=2
-    </where>
-
-  </select>
-
-  <select id="selectByNo" resultType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo">
-    select * from h_drugodd where no=#{no}
-  </select>
 </mapper>

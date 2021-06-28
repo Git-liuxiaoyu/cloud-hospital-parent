@@ -46,9 +46,6 @@ public class ExampleQueryOutPatientCommand {
 
     //查对象
     public OutPatientVo getById(){
-
-
-
         return handle.getById(this.patientId);
     }
 
