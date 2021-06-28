@@ -24,4 +24,14 @@ public interface CallProofPayDao {
      */
     public int updateCallProofOrderStatus(UpdateCallProofPayPo updateCallProofPayPo);
 
+
+    /**
+     * 查询订单是否存在
+     * @param regId
+     * @return
+     */
+    public CallProofPayPo findByRegId(Long regId);
+
+
+
 }

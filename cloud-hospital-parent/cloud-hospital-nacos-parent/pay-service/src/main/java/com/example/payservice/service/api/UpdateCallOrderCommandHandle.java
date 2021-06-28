@@ -1,6 +1,6 @@
 package com.example.payservice.service.api;
 
-import com.example.payservice.service.command.updatecallorder.UpdateCallOrderCommand;
+import com.example.payservice.service.command.CallProofPay.updatecallorder.UpdateCallOrderCommand;
 import com.example.payservice.util.ResponseResult;
 
 /**

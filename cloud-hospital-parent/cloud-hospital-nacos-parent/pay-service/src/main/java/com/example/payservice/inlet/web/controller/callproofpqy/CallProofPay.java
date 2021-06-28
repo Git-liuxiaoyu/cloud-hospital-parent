@@ -7,15 +7,15 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.example.payservice.service.command.addcallorder.AddCallOrderCommand;
-import com.example.payservice.service.command.updatecallorder.UpdateCallOrderCommand;
+import com.example.payservice.service.command.CallProofPay.addcallorder.AddCallOrderCommand;
+import com.example.payservice.service.command.CallProofPay.refundcallproof.RefundCallProofCommand;
+import com.example.payservice.service.command.CallProofPay.updatecallorder.UpdateCallOrderCommand;
 import com.example.payservice.util.PayUtil;
 import com.example.payservice.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,8 +57,8 @@ public class CallProofPay {
         String out_trade_no = UUID.randomUUID().toString();
         log.info("随机生成的订单号：{}", out_trade_no);
         //在公共参数中设置回跳和通知地址
-        request.setReturnUrl("http://localhost:6003/call/returnUrl");
-        request.setNotifyUrl("http://localhost:6003/call/returnUrl");
+        request.setReturnUrl("http://localhost:6003/call/returnUrl/"+regId);
+        request.setNotifyUrl("http://localhost:6003/call/returnUrl/"+regId);
 
 
 
@@ -138,8 +138,8 @@ public class CallProofPay {
 
 
 
-    @RequestMapping(value = "returnUrl")
-    public String returnUrl(HttpServletRequest request, HttpServletResponse response)
+    @RequestMapping(value = "returnUrl/{regId}")
+    public String returnUrl(@PathVariable("regId") Long regId,HttpServletRequest request, HttpServletResponse response)
             throws IOException, AlipayApiException {
         System.out.println("=================================同步回调=====================================");
         // 获取支付宝GET过来反馈信息
@@ -178,6 +178,7 @@ public class CallProofPay {
             UpdateCallOrderCommand update = new UpdateCallOrderCommand();
             update.setStatus("1");//已付款
             update.setOrderNum(out_trade_no);
+            update.setRegId(regId);
             ResponseResult<Void> execute = update.execute();
 
             log.info("状态：{}",execute.getMsg());
@@ -189,6 +190,21 @@ public class CallProofPay {
 
         }
 
+    }
+
+    /**
+     * 挂号退款接口
+     * @return
+     */
+
+    @RequestMapping("refund/{regId}")
+    @ResponseBody
+    public ResponseResult<Void> refund( @PathVariable("regId") Long regId){
+        RefundCallProofCommand ref = new RefundCallProofCommand();
+
+        ref.setRegId(regId);
+        ref.setStatus("3");
+        return ref.execute();
     }
 
 }

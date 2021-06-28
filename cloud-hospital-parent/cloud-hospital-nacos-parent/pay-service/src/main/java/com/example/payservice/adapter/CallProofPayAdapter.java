@@ -4,12 +4,12 @@ package com.example.payservice.adapter;
 import com.example.payservice.adapter.converter.CallProofPayConverter;
 import com.example.payservice.outlet.cliten.register.RegServiceClient;
 import com.example.payservice.outlet.cliten.register.pojo.QueryGetByIdVo;
-import com.example.payservice.outlet.cliten.register.pojo.Register;
 import com.example.payservice.outlet.dao.mysql.callproofdao.CallProofPayDao;
 
 import com.example.payservice.outlet.dao.mysql.callproofdao.pojo.CallProofPayPo;
-import com.example.payservice.service.command.addcallorder.AddCallOrderCommand;
-import com.example.payservice.service.command.updatecallorder.UpdateCallOrderCommand;
+import com.example.payservice.service.command.CallProofPay.addcallorder.AddCallOrderCommand;
+import com.example.payservice.service.command.CallProofPay.refundcallproof.RefundCallProofCommand;
+import com.example.payservice.service.command.CallProofPay.updatecallorder.UpdateCallOrderCommand;
 import com.example.payservice.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +79,14 @@ public class CallProofPayAdapter {
 
     }
 
+    /**
+     * 修改挂号表的状态为未付款
+     */
+    public void updateRegStatus(RefundCallProofCommand refundCallProofCommand){
+        log.info("修改挂号表状态的id：{}",refundCallProofCommand.getRegId());
+        regServiceClient.updatestatus(refundCallProofCommand.getRegId(),refundCallProofCommand.getStatus());
+    }
+
 
     /**
      * 修改订单状态
@@ -92,5 +100,20 @@ public class CallProofPayAdapter {
             return new ResponseResult<>(500,"修改订单数据失败",null);
         }
     }
+
+    /**
+     * 查询订单是否存在
+     * @return
+     */
+    public CallProofPayPo findRegId(Long regId){
+        CallProofPayPo byRegId = callProofPayDao.findByRegId(regId);
+        if(byRegId == null){
+            return null;//没有值
+        }else{
+            return byRegId;//有值
+        }
+    }
+
+
 
 }

@@ -3,8 +3,8 @@ package com.example.payservice.adapter.converter;
 
 import com.example.payservice.outlet.dao.mysql.callproofdao.pojo.CallProofPayPo;
 import com.example.payservice.outlet.dao.mysql.callproofdao.pojo.UpdateCallProofPayPo;
-import com.example.payservice.service.command.addcallorder.AddCallOrderCommand;
-import com.example.payservice.service.command.updatecallorder.UpdateCallOrderCommand;
+import com.example.payservice.service.command.CallProofPay.addcallorder.AddCallOrderCommand;
+import com.example.payservice.service.command.CallProofPay.updatecallorder.UpdateCallOrderCommand;
 import org.springframework.stereotype.Component;
 
 @Component

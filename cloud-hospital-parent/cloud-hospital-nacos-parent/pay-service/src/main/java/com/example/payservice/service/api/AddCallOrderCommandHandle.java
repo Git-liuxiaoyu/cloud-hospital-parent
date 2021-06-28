@@ -1,7 +1,7 @@
 package com.example.payservice.service.api;
 
 
-import com.example.payservice.service.command.addcallorder.AddCallOrderCommand;
+import com.example.payservice.service.command.CallProofPay.addcallorder.AddCallOrderCommand;
 import com.example.payservice.util.ResponseResult;
 
 public interface AddCallOrderCommandHandle {

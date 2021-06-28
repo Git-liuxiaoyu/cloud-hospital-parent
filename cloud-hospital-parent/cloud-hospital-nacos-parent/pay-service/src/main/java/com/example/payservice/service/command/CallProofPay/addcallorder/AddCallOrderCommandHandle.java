@@ -1,4 +1,4 @@
-package com.example.payservice.service.command.addcallorder;
+package com.example.payservice.service.command.CallProofPay.addcallorder;
 
 import com.example.payservice.adapter.CallProofPayAdapter;
 import com.example.payservice.util.ResponseResult;

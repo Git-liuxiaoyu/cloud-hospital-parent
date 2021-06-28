@@ -9,10 +9,16 @@
         values(#{regId},#{no},#{orderNum},#{money},#{type},#{patientId},#{status},#{time})
     </insert>
     
+    <!--修改订单状态-->
     <update id="updateCallProofOrderStatus" parameterType="UpdateCallProofPayPo">
         update h_callorder set status=#{status} where orderNum=#{orderNum}
-    
     </update>
+    
+    <select id="findByRegId" parameterType="Long" resultType="CallProofPayPo">
+        select * from h_callorder where regId = #{regId}
+    </select>
+    
+    
     
     
     
