@@ -9,5 +9,12 @@
         values(#{regId},#{no},#{orderNum},#{money},#{type},#{patientId},#{status},#{time})
     </insert>
     
+    <update id="updateCallProofOrderStatus" parameterType="UpdateCallProofPayPo">
+        update h_callorder set status=#{status} where orderNum=#{orderNum}
+    
+    </update>
+    
+    
+    
 
 </mapper>

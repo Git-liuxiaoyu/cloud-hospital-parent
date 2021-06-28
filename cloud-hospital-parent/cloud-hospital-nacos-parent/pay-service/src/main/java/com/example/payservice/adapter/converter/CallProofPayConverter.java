@@ -2,7 +2,9 @@ package com.example.payservice.adapter.converter;
 
 
 import com.example.payservice.outlet.dao.mysql.callproofdao.pojo.CallProofPayPo;
+import com.example.payservice.outlet.dao.mysql.callproofdao.pojo.UpdateCallProofPayPo;
 import com.example.payservice.service.command.addcallorder.AddCallOrderCommand;
+import com.example.payservice.service.command.updatecallorder.UpdateCallOrderCommand;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -28,6 +30,18 @@ public class CallProofPayConverter {
         System.out.println("转换："+po.getNo());
 
         return po;
+    }
+
+
+    /**
+     * command转修改po类
+     * @return
+     */
+    public UpdateCallProofPayPo CommToUpdataPo(UpdateCallOrderCommand updateCallOrderCommand){
+        UpdateCallProofPayPo up = new UpdateCallProofPayPo();
+        up.setOrderNum(updateCallOrderCommand.getOrderNum());
+        up.setStatus(updateCallOrderCommand.getStatus());
+        return up;
     }
 
 

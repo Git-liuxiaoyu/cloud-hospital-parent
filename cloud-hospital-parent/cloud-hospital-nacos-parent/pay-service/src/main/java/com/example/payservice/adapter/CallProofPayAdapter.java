@@ -9,6 +9,7 @@ import com.example.payservice.outlet.dao.mysql.callproofdao.CallProofPayDao;
 
 import com.example.payservice.outlet.dao.mysql.callproofdao.pojo.CallProofPayPo;
 import com.example.payservice.service.command.addcallorder.AddCallOrderCommand;
+import com.example.payservice.service.command.updatecallorder.UpdateCallOrderCommand;
 import com.example.payservice.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,20 @@ public class CallProofPayAdapter {
             return new ResponseResult<AddCallOrderCommand>(400, "未查询到挂号信息，请稍后重试！", null);
         }
 
+    }
+
+
+    /**
+     * 修改订单状态
+     * @return
+     */
+    public ResponseResult<Void> updateCallProofStatus(UpdateCallOrderCommand updateCallOrderCommand){
+        int i = callProofPayDao.updateCallProofOrderStatus(converter.CommToUpdataPo(updateCallOrderCommand));
+        if(i>0){
+            return new ResponseResult<>(200,"成功",null);
+        }else{
+            return new ResponseResult<>(500,"修改订单数据失败",null);
+        }
     }
 
 }

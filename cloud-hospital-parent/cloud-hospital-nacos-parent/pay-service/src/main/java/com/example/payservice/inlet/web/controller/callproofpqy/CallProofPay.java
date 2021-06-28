@@ -8,6 +8,7 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.example.payservice.service.command.addcallorder.AddCallOrderCommand;
+import com.example.payservice.service.command.updatecallorder.UpdateCallOrderCommand;
 import com.example.payservice.util.PayUtil;
 import com.example.payservice.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
@@ -50,15 +51,17 @@ public class CallProofPay {
         //实例化客户端,填入所需参数
         AlipayClient alipayClient = new DefaultAlipayClient(payUtil.getGATEWAY_URL(), payUtil.getAPP_ID(), payUtil.getAPP_PRIVATE_KEY(), payUtil.getFORMAT(), payUtil.getCHARSET(), payUtil.getALIPAY_PUBLIC_KEY(), payUtil.getSIGN_TYPE());
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
-        //在公共参数中设置回跳和通知地址
-        request.setReturnUrl("http://localhost:6003/call/returnUrl");//"http://localhost:6003/call/returnUrl"
-        request.setNotifyUrl("http://localhost:6003/call/returnUrl");
-
 
         //商户订单号，商户网站订单系统中唯一订单号，必填
         //生成随机Id
         String out_trade_no = UUID.randomUUID().toString();
         log.info("随机生成的订单号：{}", out_trade_no);
+        //在公共参数中设置回跳和通知地址
+        request.setReturnUrl("http://localhost:6003/call/returnUrl");
+        request.setNotifyUrl("http://localhost:6003/call/returnUrl");
+
+
+
 
         //付款金额
         String total_amount = Integer.toString(2);//普通号
@@ -171,7 +174,13 @@ public class CallProofPay {
             System.out.println("支付宝交易号="+trade_no);
             System.out.println("付款金额="+total_amount);
             //支付成功，修改对应的订单状态
+            //调用挂号微服务的openfeign修改挂号信息为
+            UpdateCallOrderCommand update = new UpdateCallOrderCommand();
+            update.setStatus("1");//已付款
+            update.setOrderNum(out_trade_no);
+            ResponseResult<Void> execute = update.execute();
 
+            log.info("状态：{}",execute.getMsg());
 
             return "callProofOk";//跳转付款成功页面
 
