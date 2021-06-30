@@ -45,12 +45,16 @@ public class DrugAdapt {
             poList=drugEsDao.findAllByNo(command.getNo());
         }else if (command.getName()!=null){
             poList= drugEsDao.findAllByName(command.getName());
-        }else {
+        }else if (command.getTypeId()!=null){
+            poList=drugEsDao.getAllByTypeId(command.getTypeId());
+        }
+        else {
            poList= drugEsDao.findAll();
         }
         //es po 转换为vo
         List<DrugVo> vos = converter.convert2(poList);
 
+        //drugEsDao.deleteAll();
 //        if (poList.size()==0){
 //            log.info("走mysql 查询列表");
 //
@@ -64,11 +68,14 @@ public class DrugAdapt {
 //                DrugEsPo po1 = new DrugEsPo();
 //                po1.setTypeName(drugPo.getDrugtype());
 //                po1.setStock(drugPo.getStock());
+//                po1.setTypeId(drugPo.getTypeid());
+//                System.out.println(drugPo.getId().toString());
+//                po1.setId(drugPo.getId().toString());
 //                BeanUtils.copyProperties(drugPo,po1);
 //                drugEsDao.save(po1);
 //            }
 //            return drugVos;
-//        }
+//       }
         log.info("走es 查询列表");
         return vos;
     }

@@ -6,5 +6,4 @@ spring:
         namespace: public
         password: nacos
         username: nacos
-        group: group3
 

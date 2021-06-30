@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(value = "check-service")
+@FeignClient(value = "physical-exam-service")
 @Repository
 public interface CheckServiceClient {
 

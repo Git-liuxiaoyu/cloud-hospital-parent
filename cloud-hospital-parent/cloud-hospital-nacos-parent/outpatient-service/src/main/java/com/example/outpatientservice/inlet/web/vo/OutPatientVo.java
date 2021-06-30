@@ -23,6 +23,7 @@ public class OutPatientVo {
     private Long patientid;
     private Long departmentid;
     private Long doctorid;
+    private String doctorname;
     private Long rotaid;
     private String status;
     private Long queueno;

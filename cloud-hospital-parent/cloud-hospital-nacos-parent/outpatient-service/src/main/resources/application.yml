@@ -21,7 +21,6 @@ spring:
     cloud:
         nacos:
             discovery:
-                group: group3
                 namespace: public
                 password: nacos
                 #                server-addr: 192.172.0.160:8848

@@ -27,6 +27,9 @@ public class DrugEsPo {
     @Field(name = "typeName", type = FieldType.Keyword)
     private String typeName;
 
+    @Field(name = "typeId",type = FieldType.Keyword)
+    private Integer typeId;
+
     @Field(name = "stock", type = FieldType.Keyword)
     private Integer stock;
 

@@ -5,9 +5,11 @@ import com.example.outpatientservice.adapt.exception.AdapterException;
 import com.example.outpatientservice.inlet.web.vo.OutPatientVo;
 import com.example.outpatientservice.outlet.client.CheckServiceClient;
 import com.example.outpatientservice.outlet.client.DrugServiceClient;
+import com.example.outpatientservice.outlet.client.WorkerServiceClient;
 import com.example.outpatientservice.outlet.client.po.check.AddPhysicalExamRecordCommand;
 import com.example.outpatientservice.outlet.client.po.check.InnerAddPhysicalExamRecordDetailPo;
 import com.example.outpatientservice.outlet.client.po.drug.AddDrugOddCommand;
+import com.example.outpatientservice.outlet.client.po.worker.WorkerInfoVo;
 import com.example.outpatientservice.outlet.dao.mysql.OutPatientDao;
 import com.example.outpatientservice.outlet.dao.mysql.OutPatientRecordDao;
 import com.example.outpatientservice.outlet.dao.mysql.po.OutPatientPo;
@@ -40,12 +42,20 @@ public class OutPatientAdapt {
     @Autowired
     private CheckServiceClient checkClient;
 
+    @Autowired
+    private WorkerServiceClient workerClient;
+
     //查询 集合
     public List<OutPatientVo> findByExample(ExampleQueryOutPatientCommand command){
         OutPatientPo po = new OutPatientPo();
         List<OutPatientPo>poList= outPatientDao.selectByCon(po);
        //poList 转voList
         List<OutPatientVo> voList = converter.convert(poList);
+        for (OutPatientVo outPatientVo : voList) {
+            //获取医生姓名
+            ResponseResult<WorkerInfoVo> workers = workerClient.getWorkerInfoById(outPatientVo.getDoctorid().intValue());
+            outPatientVo.setDoctorname(workers.getData().getName());
+        }
         return voList;
 
     }
@@ -62,6 +72,12 @@ public class OutPatientAdapt {
             OutPatientPo po = outPatientDao.selectByPrimaryKey(id);
             OutPatientVo vo = converter.convert(po);
             vo.setOutPatientRecordId(outPatientRecordId);
+            //获取医生姓名
+            ResponseResult<WorkerInfoVo> workers = workerClient.getWorkerInfoById(vo.getDoctorid().intValue());
+            vo.setDoctorname(workers.getData().getName());
+
+
+
             return vo;
         }catch (AdapterException e){
             e.printStackTrace();
@@ -120,6 +136,8 @@ public class OutPatientAdapt {
         command1.setPatientid(command.getOutPatientId().intValue());
         command1.setDoctorid(command.getDoctorid().intValue());
         BeanUtils.copyProperties(command,command1);
+
+        log.info("{}",command1);
         ResponseResult<Long> result = client.addDrugOdd(command1);
 
         System.out.println(result);

@@ -78,6 +78,7 @@ public class DrugVoConverter {
     //po对象转换为vo对象
     public DrugVo convert(DrugEsPo po) {
         DrugVo vo = new DrugVo();
+        vo.setId(Long.parseLong(po.getId()));
         BeanUtils.copyProperties(po,vo);
         return vo;
     }

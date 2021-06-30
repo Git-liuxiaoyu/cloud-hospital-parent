@@ -71,7 +71,7 @@ public class AddOutPatientRecordCommand {
     }
 
     //患者状态改为就诊结束  调用updateCommand里的方法
-    public void updateOutpatientStatusById(){
+    public Long updateOutpatientStatusById(){
         //修改患者状态为就诊完  2表示待复诊
         updateHandle.UpdateById(this.outPatientId,"2");
 
@@ -88,6 +88,8 @@ public class AddOutPatientRecordCommand {
         //拿到检查表单回显id 添加到患者记录表里
         recordHandle.updateById(checkOddId,outPatientRecordId,"2");
         //修改药品记录
+
+        return checkOddId;
 
     }
 

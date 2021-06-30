@@ -61,4 +61,12 @@ public class DrugController {
         command.execute();
         return new ResponseResult<>(200,"success","减库存成功");
     }
+
+    @PostMapping("/drug/bytypeid")
+    public ResponseResult<List<DrugVo>> findByTypeId(@RequestBody ExampleQueryDrugCommand command){
+       log.info("{}",command);
+        List<DrugVo> execute = command.execute();
+        log.info("{}",execute);
+        return new ResponseResult(200,"success",execute);
+    }
 }

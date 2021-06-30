@@ -64,7 +64,7 @@ public class AddOutPatientDrugRecordCommand {
         this.drugPrice = drugPrice;
         this.detailCommands = detailCommands;
     }
-    public void execute(){
+    public Long execute(){
         //修改患者状态为就诊完  9表示就诊结束
         updateHandle.UpdateById(this.outPatientId,"9");
 
@@ -82,6 +82,8 @@ public class AddOutPatientDrugRecordCommand {
         log.info("要修改就诊记录的id{}",this.outPatientRecordId);
         //修改药品记录
         recordHandle.updateById(drugOddId,this.outPatientRecordId,"1");
+
+        return drugOddId;
     }
 
 

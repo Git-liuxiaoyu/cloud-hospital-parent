@@ -26,18 +26,18 @@ public class OutPatientRecordController {
     //添加检查 检查的就诊记录
     @PostMapping("/outPatientRecord/add")
     @ApiOperation(value = "添加门诊患者就诊纪录",notes = "把就诊记录添加到就诊记录表里")
-    public ResponseResult<String> addRecord(@RequestBody AddOutPatientRecordCommand command){
+    public ResponseResult<Long> addRecord(@RequestBody AddOutPatientRecordCommand command){
         log.info("command为{}",command);
-        command.updateOutpatientStatusById();
-        return new ResponseResult<>(200,"success",null);
+        Long checkOddId = command.updateOutpatientStatusById();
+        return new ResponseResult<>(200,"success",checkOddId);
     }
 
     //添加开药 医嘱的就诊记录
     @PostMapping("/outPatientRecord/add/openDrug")
-    public ResponseResult<String> addDrugRecord(@RequestBody AddOutPatientDrugRecordCommand command){
+    public ResponseResult<Long> addDrugRecord(@RequestBody AddOutPatientDrugRecordCommand command){
         log.info("医生开药的参数{}",command);
-        command.execute();
-        return  new ResponseResult<>(200,"success",null);
+        Long drugOddId = command.execute();
+        return  new ResponseResult<>(200,"success",drugOddId);
     }
 
 
