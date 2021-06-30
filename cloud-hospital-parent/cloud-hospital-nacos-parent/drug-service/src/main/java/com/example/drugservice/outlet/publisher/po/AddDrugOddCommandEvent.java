@@ -1,6 +1,5 @@
 package com.example.drugservice.outlet.publisher.po;
 
-import javafx.application.Application;
 import lombok.ToString;
 import org.springframework.context.ApplicationEvent;
 
