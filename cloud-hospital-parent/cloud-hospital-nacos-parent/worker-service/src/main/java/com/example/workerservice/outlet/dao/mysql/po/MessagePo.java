@@ -1,5 +1,14 @@
 package com.example.workerservice.outlet.dao.mysql.po;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@Data
+@AllArgsConstructor
 public class MessagePo {
     private Long id;
 
@@ -15,59 +24,18 @@ public class MessagePo {
 
     private Long version;
 
-    public Long getId() {
-        return id;
-    }
+    public static final String NOT_SEND = "1";
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public static final String SEND_TO_EX_FAIL = "2";
 
-    public String getExchange() {
-        return exchange;
-    }
+    public static final String SEND_TO_EX_SUCCESS = "3";
 
-    public void setExchange(String exchange) {
-        this.exchange = exchange == null ? null : exchange.trim();
-    }
+    public static final String SEND_TO_Q_FAIL = "4";
 
-    public String getRoutingKey() {
-        return routingKey;
-    }
+    public static final String SEND_TO_Q_SUCCESS = "5";
 
-    public void setRoutingKey(String routingKey) {
-        this.routingKey = routingKey == null ? null : routingKey.trim();
-    }
+    public static final String COMSUME_SUCCESS = "6";
 
-    public String getMessageContent() {
-        return messageContent;
-    }
+    public static final String COMSUME_FAIL = "7";
 
-    public void setMessageContent(String messageContent) {
-        this.messageContent = messageContent == null ? null : messageContent.trim();
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
-    public Integer getRetryCount() {
-        return retryCount;
-    }
-
-    public void setRetryCount(Integer retryCount) {
-        this.retryCount = retryCount;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
 }

@@ -1,9 +1,10 @@
 package com.example.physicalexamservice.adapter;
 
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamTreatVo;
+import com.example.physicalexamservice.outlet.dao.es.PhysicalExamEsPoDao;
+import com.example.physicalexamservice.outlet.dao.es.po.PhysicalExamEsPo;
 import com.example.physicalexamservice.outlet.dao.mysql.PhysicalExamMysqlPoDao;
 import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPo;
-import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPoExample;
 import com.example.physicalexamservice.outlet.dao.redis.PhysicalExamRedisPoDao;
 import com.example.physicalexamservice.outlet.dao.redis.po.PhysicalExamRedisPo;
 import com.example.physicalexamservice.service.command.physicalexamrecord.add.AddPhysicalExamRecordCommand;
@@ -30,15 +31,18 @@ public class PhysicalExamDaoAdapter {
 
     private final PhysicalExamRedisPoDao physicalExamRedisPoDao;
 
+    private final PhysicalExamEsPoDao physicalExamEsPoDao;
+
     private final PhysicalExamTreatVoConverter physicalExamTreatVoConverter;
 
     private final PhysicalExamRedisPoConverter physicalExamRedisPoConverter;
 
-    public PhysicalExamDaoAdapter(PhysicalExamMysqlPoDao physicalExamMysqlPoDao, PhysicalExamRedisPoDao physicalExamRedisPoDao, PhysicalExamTreatVoConverter physicalExamTreatVoConverter, PhysicalExamRedisPoConverter physicalExamRedisPoConverter) {
+    public PhysicalExamDaoAdapter(PhysicalExamMysqlPoDao physicalExamMysqlPoDao, PhysicalExamRedisPoDao physicalExamRedisPoDao, PhysicalExamTreatVoConverter physicalExamTreatVoConverter, PhysicalExamRedisPoConverter physicalExamRedisPoConverter, PhysicalExamEsPoDao physicalExamEsPoDao) {
         this.physicalExamMysqlPoDao = physicalExamMysqlPoDao;
         this.physicalExamRedisPoDao = physicalExamRedisPoDao;
         this.physicalExamTreatVoConverter = physicalExamTreatVoConverter;
         this.physicalExamRedisPoConverter = physicalExamRedisPoConverter;
+        this.physicalExamEsPoDao = physicalExamEsPoDao;
     }
     /* 构造注入 - 结束 */
 
@@ -48,28 +52,15 @@ public class PhysicalExamDaoAdapter {
      * @return
      */
     public List<PhysicalExamTreatVo> queryAllForTreat(String status) {
-        /* 声明 */
+        /* 直接到 Es 里面查 */
+        List<PhysicalExamEsPo> physicalExamEsPoList = physicalExamEsPoDao.findAllByStatusEquals(status);
+
+        /* 实例化 List<PhysicalExamTreatVo> */
         List<PhysicalExamTreatVo> physicalExamTreatVoList = new ArrayList<>();
-        try {
-            /* 先看Redis中有没有 */
-            List<PhysicalExamRedisPo> physicalExamRedisPoList = physicalExamRedisPoDao.findAllByStatusEquals(status);
-            /* 判断有无,无抛异常 NullPointerException */
-            if (physicalExamRedisPoList.isEmpty())
-                throw new NullPointerException();
-            /* 有则转换 */
-            physicalExamTreatVoList = physicalExamTreatVoConverter.convert(physicalExamRedisPoList);
-        } catch (NullPointerException e) {
-            /* 实例化 */
-            PhysicalExamMysqlPoExample physicalExamMysqlPoExample = new PhysicalExamMysqlPoExample();
-            /* 编写条件 */
-            physicalExamMysqlPoExample.createCriteria().andStatusEqualTo(status);
-            /* 调用方法 */
-            List<PhysicalExamMysqlPo> physicalExamMysqlPoList = physicalExamMysqlPoDao.selectByExample(physicalExamMysqlPoExample);
-            /* 转换Vo */
-            physicalExamTreatVoList = physicalExamTreatVoConverter.convert(physicalExamMysqlPoList);
-            /* 转换 RedisPo,并存入 Redis */
-            physicalExamRedisPoDao.saveAll(physicalExamRedisPoConverter.convert(physicalExamMysqlPoList));
-        }
+        /* 循环添加 */
+        physicalExamEsPoList.forEach(physicalExamEsPo -> {
+            physicalExamTreatVoList.add(physicalExamTreatVoConverter.convert(physicalExamEsPo));
+        });
         /* 返回 */
         return physicalExamTreatVoList;
     }
@@ -82,28 +73,14 @@ public class PhysicalExamDaoAdapter {
      * @return
      */
     public List<PhysicalExamTreatVo> queryListByTypeId(Integer typeId, String status) {
-        /* 声明 */
+        /* 直接 Es 查 */
+        List<PhysicalExamEsPo> physicalExamEsPoList = physicalExamEsPoDao.findAllByStatusEqualsAndTypeidEquals(status, typeId);
+        /* 实例化 */
         List<PhysicalExamTreatVo> physicalExamTreatVoList = new ArrayList<>();
-        try {
-            /* 先看Redis中有没有 */
-            List<PhysicalExamRedisPo> physicalExamRedisPoList = physicalExamRedisPoDao.findAllByStatusEqualsAndTypeidEquals(status, typeId);
-            /* 判断有无,无抛异常 NullPointerException */
-            if (physicalExamRedisPoList.isEmpty())
-                throw new NullPointerException();
-            /* 有则转换 */
-            physicalExamTreatVoList = physicalExamTreatVoConverter.convert(physicalExamRedisPoList);
-        } catch (NullPointerException e) {
-            /* 实例化 */
-            PhysicalExamMysqlPoExample physicalExamMysqlPoExample = new PhysicalExamMysqlPoExample();
-            /* 编写条件 */
-            physicalExamMysqlPoExample.createCriteria().andStatusEqualTo(status).andTypeidEqualTo(typeId);
-            /* 调用方法 */
-            List<PhysicalExamMysqlPo> physicalExamMysqlPoList = physicalExamMysqlPoDao.selectByExample(physicalExamMysqlPoExample);
-            /* 转换Vo */
-            physicalExamTreatVoList = physicalExamTreatVoConverter.convert(physicalExamMysqlPoList);
-            /* 转换 RedisPo,并存入 Redis */
-            physicalExamRedisPoDao.saveAll(physicalExamRedisPoConverter.convert(physicalExamMysqlPoList));
-        }
+        /* 循环转换 */
+        physicalExamEsPoList.forEach(physicalExamEsPo -> {
+            physicalExamTreatVoList.add(physicalExamTreatVoConverter.convert(physicalExamEsPo));
+        });
         /* 返回 */
         return physicalExamTreatVoList;
     }
@@ -123,11 +100,11 @@ public class PhysicalExamDaoAdapter {
             if (physicalExamMysqlPo == null)
                 return;
             /* 赋值 */
-            log.debug("库存 {}",physicalExamMysqlPo.getLeftstock());
+            log.debug("库存 {}", physicalExamMysqlPo.getLeftstock());
             i.setExamName(physicalExamMysqlPo.getName());
             i.setPrice(physicalExamMysqlPo.getPrice());
             physicalExamMysqlPo.setLeftstock(physicalExamMysqlPo.getLeftstock() - 1);
-            log.debug("库存 {}",physicalExamMysqlPo.getLeftstock());
+            log.debug("库存 {}", physicalExamMysqlPo.getLeftstock());
             /* 存入 MySQL */
             physicalExamMysqlPoDao.updateByPrimaryKeySelective(physicalExamMysqlPo);
             /* 转RedisPo 存入Redis */

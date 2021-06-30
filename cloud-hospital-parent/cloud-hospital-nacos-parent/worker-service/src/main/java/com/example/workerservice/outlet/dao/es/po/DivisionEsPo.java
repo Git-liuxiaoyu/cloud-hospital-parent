@@ -1,9 +1,6 @@
 package com.example.workerservice.outlet.dao.es.po;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -18,6 +15,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @NoArgsConstructor
 @ToString
 @Document(indexName = "division", shards = 1, replicas = 0)
+@Builder(toBuilder = true)
 public class DivisionEsPo {
 
     @Id

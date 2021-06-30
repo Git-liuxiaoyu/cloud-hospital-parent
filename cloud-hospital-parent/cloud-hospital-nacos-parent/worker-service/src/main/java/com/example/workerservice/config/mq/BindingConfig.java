@@ -22,4 +22,19 @@ public class BindingConfig {
             @Qualifier("phone_code_queue") Queue queue) {
         return BindingBuilder.bind(queue).to(exchange).with("phone.add").noargs();
     }
+
+    @Bean
+    public Binding getDivisionRedisCacheQAndExBinding(
+            @Qualifier("DivisionRedisCacheEx") Exchange exchange,
+            @Qualifier("DivisionRedisCacheQ") Queue queue) {
+        return BindingBuilder.bind(queue).to(exchange).with("division.redis.cache").noargs();
+    }
+
+    @Bean
+    public Binding getDivisionEsQAndExBinding(
+            @Qualifier("DivisionEsEx") Exchange exchange,
+            @Qualifier("DivisionEsQ") Queue queue) {
+        return BindingBuilder.bind(queue).to(exchange).with("division.es").noargs();
+    }
+
 }

@@ -4,7 +4,9 @@ import com.example.workerservice.outlet.dao.mysql.po.MessagePo;
 import com.example.workerservice.outlet.dao.mysql.po.MessagePoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface MessagePoDao {
     long countByExample(MessagePoExample example);
 

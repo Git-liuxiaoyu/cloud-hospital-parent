@@ -20,4 +20,9 @@ spring:
     port: 5672
     username: guest
     password: guest
-
+    publisher-confirm-type: correlated
+    listener:
+      direct:
+        acknowledge-mode: manual
+      simple:
+        acknowledge-mode: manual

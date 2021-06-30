@@ -1,9 +1,11 @@
 package com.example.workerservice.util.converter;
 
 import com.example.workerservice.inlet.web.vo.DivisionVo;
+import com.example.workerservice.outlet.dao.es.po.DivisionEsPo;
 import com.example.workerservice.outlet.dao.mysql.po.DivisionPo;
 import com.example.workerservice.outlet.dao.redis.po.DivisionRedisPo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,7 +20,6 @@ import java.util.List;
 @Component
 @Slf4j
 public class DivisionVoConverter {
-
 
 
     /**
@@ -79,6 +80,21 @@ public class DivisionVoConverter {
         /* 赋值 */
         divisionVo.setId(divisionRedisPo.getId());
         divisionVo.setName(divisionRedisPo.getName());
+        /* 返回 */
+        return divisionVo;
+    }
+
+    /**
+     * DivisionEsPo -> DivisionVo
+     *
+     * @param divisionEsPo
+     * @return
+     */
+    public DivisionVo convert(DivisionEsPo divisionEsPo) {
+        /* 实例化 DivisionVo */
+        DivisionVo divisionVo = new DivisionVo();
+        /* 赋值 */
+        BeanUtils.copyProperties(divisionEsPo, divisionVo);
         /* 返回 */
         return divisionVo;
     }

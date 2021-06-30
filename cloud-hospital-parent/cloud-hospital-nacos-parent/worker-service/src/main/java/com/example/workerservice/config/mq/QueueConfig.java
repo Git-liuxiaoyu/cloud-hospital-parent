@@ -16,4 +16,14 @@ public class QueueConfig {
         return QueueBuilder.durable("phone_code_queue").build();
     }
 
+    @Bean("DivisionRedisCacheQ")
+    public Queue getDivisionRedisCacheQueue(){
+        return new Queue("division_redis_cache_q",true,false,false);
+    }
+
+    @Bean("DivisionEsQ")
+    public Queue getDivisionEsQueue(){
+        return new Queue("division_es_q",true,false,false);
+    }
+
 }

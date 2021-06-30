@@ -1,4 +1,9 @@
 spring:
+  data:
+    elasticsearch:
+      client:
+        reactive:
+          connection-timeout: 50000
   application:
     name: worker-service
   cloud:
@@ -20,6 +25,12 @@ spring:
     port: 5672
     username: xiaoyu
     virtual-host: /xiaoyu
+    publisher-confirm-type: correlated
+    listener:
+      direct:
+        acknowledge-mode: manual
+      simple:
+        acknowledge-mode: manual
   redis:
     database: 0
     host: 1.117.97.60

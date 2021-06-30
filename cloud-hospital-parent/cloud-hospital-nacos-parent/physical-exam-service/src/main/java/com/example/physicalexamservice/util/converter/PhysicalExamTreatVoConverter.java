@@ -1,6 +1,7 @@
 package com.example.physicalexamservice.util.converter;
 
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamTreatVo;
+import com.example.physicalexamservice.outlet.dao.es.po.PhysicalExamEsPo;
 import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPo;
 import com.example.physicalexamservice.outlet.dao.redis.po.PhysicalExamRedisPo;
 import lombok.extern.slf4j.Slf4j;
@@ -84,4 +85,18 @@ public class PhysicalExamTreatVoConverter {
     }
 
 
+    /**
+     * PhysicalExamEsPo -> PhysicalExamTreatVo
+     *
+     * @param physicalExamEsPo
+     * @return
+     */
+    public PhysicalExamTreatVo convert(PhysicalExamEsPo physicalExamEsPo) {
+        /* 实例化 */
+        PhysicalExamTreatVo physicalExamTreatVo = new PhysicalExamTreatVo();
+        /* 复制属性 */
+        BeanUtils.copyProperties(physicalExamEsPo, physicalExamTreatVo);
+        /* 返回 */
+        return physicalExamTreatVo;
+    }
 }

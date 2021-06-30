@@ -88,9 +88,19 @@
 <!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
 <!--        </table>-->
 
-        <table tableName="h_message" catalog="h_worker"
-               domainObjectName="MessagePo"
-               mapperName="MessagePoDao"
+<!--        <table tableName="h_message" catalog="h_worker"-->
+<!--               domainObjectName="MessagePo"-->
+<!--               mapperName="MessagePoDao"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true">-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--        </table>-->
+
+        <table tableName="h_received" catalog="h_worker"
+               domainObjectName="ReceivedPo"
+               mapperName="ReceivedPoDao"
                enableCountByExample="true"
                enableUpdateByExample="true"
                enableDeleteByExample="true"
