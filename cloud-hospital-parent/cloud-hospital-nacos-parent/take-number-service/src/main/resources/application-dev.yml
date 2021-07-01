@@ -27,6 +27,7 @@ spring:
     port: 5672
     username: xiaoyu
     virtual-host: /xiaoyu
+    publisher-confirm-type: CORRELATED
   redis:
     database: 0
     host: 1.117.97.60

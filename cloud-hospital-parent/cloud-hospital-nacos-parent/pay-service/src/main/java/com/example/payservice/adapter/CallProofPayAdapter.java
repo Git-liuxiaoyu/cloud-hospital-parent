@@ -4,9 +4,9 @@ package com.example.payservice.adapter;
 import com.example.payservice.adapter.converter.CallProofPayConverter;
 import com.example.payservice.outlet.cliten.register.RegServiceClient;
 import com.example.payservice.outlet.cliten.register.pojo.QueryGetByIdVo;
-import com.example.payservice.outlet.dao.mysql.callproofdao.CallProofPayDao;
 
-import com.example.payservice.outlet.dao.mysql.callproofdao.pojo.CallProofPayPo;
+import com.example.payservice.outlet.dao.mysql.callproofdao.CallProofPayDao;
+import com.example.payservice.outlet.dao.mysql.pojo.CallProofPayPo;
 import com.example.payservice.service.command.CallProofPay.addcallorder.AddCallOrderCommand;
 import com.example.payservice.service.command.CallProofPay.refundcallproof.RefundCallProofCommand;
 import com.example.payservice.service.command.CallProofPay.updatecallorder.UpdateCallOrderCommand;
@@ -14,12 +14,11 @@ import com.example.payservice.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 /**
  * 挂号付款适配器
  */
-@Repository
+
 @Slf4j
 @Component
 public class CallProofPayAdapter {

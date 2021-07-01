@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.payservice.outlet.dao.mysql.pharmacyproofdao.PharmacyProofDao">
+    
+    
+<!--    添加药房支付订单信息-->
+    <insert id="addPharmacyProofOrder" parameterType="com.example.payservice.outlet.dao.mysql.pojo.PharmacyProofPayPo">
+        insert into h_pharmacy(drugoddId,orderNum,money,`no`,`time`,status,patientId)
+        values(#{drugoddId},#{orderNum},#{money},#{no},#{time},#{status},#{patientId})
+    </insert>
+    
+    <!--修改订单状态-->
+    <update id="updatePharmacyProofOrderStatus" parameterType="com.example.payservice.outlet.dao.mysql.pojo.PharmacyProofPayPo">
+        update h_pharmacy set status=#{status} where orderNum=#{orderNum}
+    </update>
+
+    <!--查询订单信息-->
+    <select id="findBydrugId" parameterType="Long" resultType="com.example.payservice.outlet.dao.mysql.pojo.PharmacyProofPayPo">
+        select * from h_pharmacy where drugoddId = #{drugoddId}
+    </select>
+    
+    <!--修改订单状态-->
+    <update id="updatePharmacyProofOrderRefund" parameterType="com.example.payservice.outlet.dao.mysql.pojo.UpdatePharmacyProofPayPo">
+        update h_pharmacy set status=#{status} where drugoddId=#{drugoddId}
+    </update>
+
+    
+</mapper>

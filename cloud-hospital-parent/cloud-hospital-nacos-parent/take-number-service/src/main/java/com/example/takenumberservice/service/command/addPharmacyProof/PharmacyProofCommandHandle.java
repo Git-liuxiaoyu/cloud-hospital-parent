@@ -6,6 +6,7 @@ import com.example.takenumberservice.outlet.mq.SendMsg;
 import com.example.takenumberservice.outlet.mq.pojo.MqPo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,6 +27,7 @@ public class PharmacyProofCommandHandle implements com.example.takenumberservice
      * @return
      */
     @Override
+    @Transactional
     public ResponseResult<PharmacyProofCommand> add(PharmacyProofCommand addProof) {
         //查询redis，是否存在no
         boolean noRedis = pharmacyProofDaoAdapter.findNoRedis(addProof.getNo());

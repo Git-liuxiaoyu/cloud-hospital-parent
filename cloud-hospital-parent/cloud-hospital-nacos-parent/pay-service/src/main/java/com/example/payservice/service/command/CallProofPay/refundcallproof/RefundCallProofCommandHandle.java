@@ -1,7 +1,7 @@
 package com.example.payservice.service.command.CallProofPay.refundcallproof;
 
 import com.example.payservice.adapter.CallProofPayAdapter;
-import com.example.payservice.outlet.dao.mysql.callproofdao.pojo.CallProofPayPo;
+import com.example.payservice.outlet.dao.mysql.pojo.CallProofPayPo;
 import com.example.payservice.service.command.CallProofPay.updatecallorder.UpdateCallOrderCommand;
 import com.example.payservice.util.ResponseResult;
 import lombok.extern.slf4j.Slf4j;

@@ -19,5 +19,5 @@
         delete
         from h_call_proof
     </delete>
-    
+
 </mapper>

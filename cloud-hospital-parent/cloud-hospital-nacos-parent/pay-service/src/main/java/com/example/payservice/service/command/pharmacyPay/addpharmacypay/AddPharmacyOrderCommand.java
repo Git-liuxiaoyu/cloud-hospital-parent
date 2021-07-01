@@ -22,7 +22,7 @@ public class AddPharmacyOrderCommand {
     private String no;//取药no
     private Long patientId;//患者id
     private String time;//交易时间
-    private String status;//订单状态
+    private String status;//订单状态(0：未付款、1已付款)
 
     private AddPharmacyOrderCommandHandle handle;
 
@@ -46,11 +46,19 @@ public class AddPharmacyOrderCommand {
     }
 
     /**
-     * 执行命令
+     * 执行命令添加
      * @return
      */
     public ResponseResult<AddPharmacyOrderCommand> execute(){
 
         return handle.execute(this);
+    }
+
+    /**
+     * 执行命令查询
+     * @return
+     */
+    public AddPharmacyOrderCommand findByNo(){
+        return handle.findByNo(this.no);
     }
 }

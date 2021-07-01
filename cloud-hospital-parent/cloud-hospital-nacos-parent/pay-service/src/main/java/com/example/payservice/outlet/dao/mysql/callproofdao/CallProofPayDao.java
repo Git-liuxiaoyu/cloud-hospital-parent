@@ -1,20 +1,16 @@
 package com.example.payservice.outlet.dao.mysql.callproofdao;
 
-
-import com.example.payservice.outlet.dao.mysql.callproofdao.pojo.CallProofPayPo;
-import com.example.payservice.outlet.dao.mysql.callproofdao.pojo.UpdateCallProofPayPo;
+import com.example.payservice.outlet.dao.mysql.pojo.CallProofPayPo;
+import com.example.payservice.outlet.dao.mysql.pojo.UpdateCallProofPayPo;
 import org.springframework.stereotype.Repository;
 
-/**
- * 挂号订单
- */
 @Repository
 public interface CallProofPayDao {
 
     /**
      * 添加
      */
-    public int addCallProofOrder(CallProofPayPo po);
+    int addCallProofOrder(CallProofPayPo po);
 
 
     /**
@@ -22,7 +18,8 @@ public interface CallProofPayDao {
      * @param
      * @return
      */
-    public int updateCallProofOrderStatus(UpdateCallProofPayPo updateCallProofPayPo);
+    int updateCallProofOrderStatus(UpdateCallProofPayPo updateCallProofPayPo);
+
 
 
     /**
@@ -30,8 +27,6 @@ public interface CallProofPayDao {
      * @param regId
      * @return
      */
-    public CallProofPayPo findByRegId(Long regId);
-
-
+    CallProofPayPo findByRegId(Long regId);
 
 }

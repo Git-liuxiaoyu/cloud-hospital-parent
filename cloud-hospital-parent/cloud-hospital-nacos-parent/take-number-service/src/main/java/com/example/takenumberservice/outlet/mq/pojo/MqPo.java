@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MqPo {
 
+
     private Integer orderNum;//排队序号
     private Long regId;//挂号id
     private Integer doctorId;//医生id

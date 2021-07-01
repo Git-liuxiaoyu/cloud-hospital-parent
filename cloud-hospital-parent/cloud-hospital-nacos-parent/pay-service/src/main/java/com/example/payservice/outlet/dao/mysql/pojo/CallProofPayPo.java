@@ -1,4 +1,4 @@
-package com.example.payservice.outlet.dao.mysql.callproofdao.pojo;
+package com.example.payservice.outlet.dao.mysql.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

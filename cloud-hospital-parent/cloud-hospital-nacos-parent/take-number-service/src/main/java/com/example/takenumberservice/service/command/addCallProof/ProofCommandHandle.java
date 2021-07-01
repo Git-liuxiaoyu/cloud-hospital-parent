@@ -53,7 +53,7 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
             }
         }else{//反之，就诊时间段为下午
             String pmstart = "14:00:00";
-            String pmend = "18:00:00";
+            String pmend = "20:00:00";
             Integer i=thistime.compareTo(pmend);//如果是正数则代表当前系统时间大于下午12点,不让取票
             Integer k=pmstart.compareTo(thistime);//如果是正数则代表当前系统时间小于下午14点，不让取票
             if(i>0){
@@ -93,6 +93,8 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
             proofCommand.setStatus("2");//设置取票状态为复诊票
             //修改挂号状态为已取复诊票
             registerAdapter.updatebyid(findbyno.getId(),"7");
+        }else if(findbyno.getStatus().equals("0")||findbyno.getStatus().equals("1")||findbyno.getStatus().equals("2")){
+            return new ResponseResult<>(400,"未付款，请先付款再来取票",null);
         }
         proofCommand.setNo(findbyno.getNo());
         //存入取票凭证表
@@ -121,6 +123,9 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
             po.setDoctorId(doctorRotaById.getData().getDoctorid());//医生id
             po.setDoctorName(doctorRotaById.getData().getDoctorName());//医生姓名
             proofDaoAdapter.send(po);//发送给叫号微服务
+            //将数据存入消息表
+
+
             //存入redis,挂号取票码加上挂号状态
             registerAdapter.addNoRedis(findbyno.getNo());
             return new ResponseResult<ProofCommand>(200,"取票成功",proofCommand);

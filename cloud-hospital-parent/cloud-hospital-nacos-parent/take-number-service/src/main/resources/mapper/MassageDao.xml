@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.takenumberservice.outlet.dao.mysql.MassageDao">
+
+    <!--添加取号凭证-->
+    <insert id="addMassage" parameterType="com.example.takenumberservice.outlet.dao.mysql.pojo.MassagePo" useGeneratedKeys="true" keyProperty="id">
+        insert into message(exchange,routing_key,message_content,status,retry_count,version)
+        values(#{exchange},#{routing_key},#{message_content},#{status},#{retry_count},#{version})
+    </insert>
+    
+    <!--修改消息状态-->
+    <update id="updateMessage" parameterType="com.example.takenumberservice.outlet.dao.mysql.pojo.MassagePo">
+        update message set status=#{status} where id=#{id}
+    </update>
+    
+    
+    <!--查询消息状态为发送失败的消息-->
+    <select id="findbystatus" resultType="com.example.takenumberservice.outlet.dao.mysql.pojo.MassagePo">
+        SELECT * FROM message where status = 2;
+    </select>
+    
+    <!--修改消息状态-->
+    <update id="updateMessagecont" parameterType="com.example.takenumberservice.outlet.dao.mysql.pojo.MassagePo">
+        update message set retry_count=#{retry_count} where id=#{id}
+    </update>
+    
+    
+    <!--查询消消息-->
+    <select id="findbyId" resultType="com.example.takenumberservice.outlet.dao.mysql.pojo.MassagePo">
+        SELECT * FROM message where id = #{id};
+    </select>
+    
+
+</mapper>
