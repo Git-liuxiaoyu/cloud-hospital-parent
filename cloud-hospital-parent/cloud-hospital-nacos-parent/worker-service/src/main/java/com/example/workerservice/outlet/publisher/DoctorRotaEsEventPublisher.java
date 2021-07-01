@@ -8,6 +8,7 @@ import com.example.workerservice.service.command.doctorrota.add.AddDoctorRotaCom
 import com.example.workerservice.service.command.doctorrota.update.UpdateDoctorRotaCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,11 +35,14 @@ public class DoctorRotaEsEventPublisher implements IDoctorRotaEsEventPublisher {
      * @param event
      */
     @Override
+    @EventListener(AddDoctorRotaEsEvent.class)
     public void insert(AddDoctorRotaEsEvent event) {
         /* 转换成 source */
         AddDoctorRotaCommand command = (AddDoctorRotaCommand) event.getSource();
         /* 实例化 DoctorRotaEsPo */
-        DoctorRotaEsPo doctorRotaEsPo = DoctorRotaEsPo.builder().id(command.getId()).departmentid(command.getDepartmentId()).doctorid(command.getDoctorId()).date(command.getDate()).rotatype(command.getRotaType()).shifttype(command.getShiftType()).maxpatient(command.getMaxPatient()).roomid(command.getRoomId()).createid(command.getCreateId()).createtime(command.getCreateTime()).status(command.getStatus()).build();
+        DoctorRotaEsPo doctorRotaEsPo = DoctorRotaEsPo.builder().id(command.getId()).departmentid(command.getDepartmentId()).doctorid(command.getDoctorId()).date(command.getDate()).rotatype(command.getRotaType()).shifttype(command.getShiftType()).maxpatient(command.getMaxPatient()).roomid(command.getRoomId()).createid(command.getCreateId()).createtime(command.getCreateTime()).status(command.getStatus()).leftpatient(command.getMaxPatient()).build();
+        /* LOG */
+        log.debug("添加 ES {}",doctorRotaEsPo);
         /* 赋值 */
         doctorRotaEsPoDao.save(doctorRotaEsPo);
     }
@@ -49,6 +53,7 @@ public class DoctorRotaEsEventPublisher implements IDoctorRotaEsEventPublisher {
      * @param event
      */
     @Override
+    @EventListener(UpdateDoctorRotaEsEvent.class)
     public void update(UpdateDoctorRotaEsEvent event) {
         /* 转换成 source */
         UpdateDoctorRotaCommand command = (UpdateDoctorRotaCommand) event.getSource();

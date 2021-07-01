@@ -3,6 +3,7 @@ package com.example.workerservice.service.api.doctorrota;
 import com.example.workerservice.service.command.doctorrota.regquery.RegBackQueryDoctorRotaCommand;
 import com.example.workerservice.service.command.doctorrota.regquery.RegQueryDoctorRotaCommand;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public interface IRegBackQueryDoctorRotaCommandHandler {
      **/
     class NewDateParseException extends RuntimeException {
         public NewDateParseException() {
-            super("账号或密码错误");
+            super("日期转换错误");
         }
     }
 

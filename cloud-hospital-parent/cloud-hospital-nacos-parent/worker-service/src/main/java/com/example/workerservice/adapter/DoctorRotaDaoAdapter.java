@@ -126,6 +126,7 @@ public class DoctorRotaDaoAdapter {
             doctorRotaVo.setMaxpatient(doctorRotaEsPo.getMaxpatient());
             doctorRotaVo.setId(doctorRotaEsPo.getId());
             doctorRotaVo.setDepartmentid(doctorRotaEsPo.getDepartmentid());
+            doctorRotaVo.setRoomid(doctorRotaEsPo.getRoomid());
             doctorRotaVo.setShifttype(doctorRotaEsPo.getShifttype());
             doctorRotaVo.setLeftpatient(doctorRotaEsPo.getLeftpatient());
             doctorRotaVo.setDoctorid(doctorRotaEsPo.getDoctorid());
@@ -141,6 +142,7 @@ public class DoctorRotaDaoAdapter {
             doctorRotaVo.setDepartmentname(doctorRotaEsPo.getDepartment().getName());
             doctorRotaVo.setMaxpatient(doctorRotaEsPo.getMaxpatient());
             doctorRotaVo.setId(doctorRotaEsPo.getId());
+            doctorRotaVo.setRoomid(doctorRotaEsPo.getRoomid());
             doctorRotaVo.setDepartmentid(doctorRotaEsPo.getDepartmentid());
             doctorRotaVo.setShifttype(doctorRotaEsPo.getShifttype());
             doctorRotaVo.setLeftpatient(doctorRotaEsPo.getLeftpatient());
@@ -168,6 +170,7 @@ public class DoctorRotaDaoAdapter {
     public List<RegQueryDoctorRotaCommand.DoctorRotaVo> query(Date date, Integer departmentId, String status) {
         /* 直接 Es 查 */
         List<DoctorRotaEsPo> doctorRotaEsPoList = doctorRotaEsPoDao.findAllByDateEqualsAndDepartmentidEqualsAndStatusEquals(date, departmentId, status);
+        log.debug("{}",doctorRotaEsPoList);
         /* 转换 List<DoctorRotaEsPo> -> List<RegQueryDoctorRotaCommand.DoctorRotaVo> */
         List<RegQueryDoctorRotaCommand.DoctorRotaVo> doctorRotaVoList = convert(doctorRotaEsPoList);
         /* 回传 */
@@ -211,6 +214,7 @@ public class DoctorRotaDaoAdapter {
         doctorRotaVo.setId(doctorRotaEsPo.getId());
         doctorRotaVo.setDepartmentid(doctorRotaEsPo.getDepartmentid());
         doctorRotaVo.setShifttype(doctorRotaEsPo.getShifttype());
+        doctorRotaVo.setRoomid(doctorRotaEsPo.getRoomid());
         doctorRotaVo.setLeftpatient(doctorRotaEsPo.getLeftpatient());
         doctorRotaVo.setDoctorid(doctorRotaEsPo.getDoctorid());
         doctorRotaVo.setDoctorName(doctorRotaEsPo.getWorkerInfo().getName());

@@ -35,7 +35,7 @@ public class WorkerInfoEsPo {
     @Field(name = "name", type = FieldType.Keyword)
     private String name;
 
-    @Field(name = "birthday", type = FieldType.Date_Range, format = DateFormat.date)
+    @Field(name = "birthday", type = FieldType.Date, format = DateFormat.date)
     private Date birthday;
 
     @Field(name = "gender", type = FieldType.Keyword)
@@ -60,10 +60,10 @@ public class WorkerInfoEsPo {
 
     private PositionEsPo position;
 
-    @Field(name = "signtime", type = FieldType.Date_Range, format = DateFormat.date)
+    @Field(name = "signtime", type = FieldType.Date, format = DateFormat.date)
     private Date signtime;
 
-    @Field(name = "resigntime", type = FieldType.Date_Range, format = DateFormat.date)
+    @Field(name = "resigntime", type = FieldType.Date, format = DateFormat.date)
     private Date resigntime;
 
     @Field(name = "avatar", type = FieldType.Keyword)

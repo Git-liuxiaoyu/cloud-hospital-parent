@@ -57,7 +57,7 @@ public class DivisionRedisCacheMQSubscriber {
         MessagePo messagePo = messagePoDao.selectByPrimaryKey(msgId);
         /* 判断是否为null */
         if (messagePo == null) {
-            log.debug("没有找到主键ID为 [{}] 的数据库信息", msgId);
+            log.warn("没有找到主键ID为 [{}] 的数据库信息", msgId);
             return;
         }
         /* 实例化 */
@@ -104,6 +104,7 @@ public class DivisionRedisCacheMQSubscriber {
                 messagePo.setStatus(MessagePo.COMSUME_FAIL); /* 切换状态 */
                 /* 调用方法更新 */
                 messagePoDao.updateByExampleSelective(messagePo, messagePoExample);
+                RabbitMQConfig.basicRejectQuietly(channel, tag, false);
                 return;
             } else {
                 log.info("等待可靠消息服务的定时任务重新发送消息 , 再次执行业务");

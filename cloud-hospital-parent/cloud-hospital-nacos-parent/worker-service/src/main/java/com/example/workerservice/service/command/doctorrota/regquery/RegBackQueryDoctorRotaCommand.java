@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -101,7 +102,7 @@ public class RegBackQueryDoctorRotaCommand {
         this.departmentId = departmentId;
     }
 
-    public List<DoctorRotaVo> execute() {
+    public List<DoctorRotaVo> execute()  {
         /* 执行方法 */
         return this.regBackQueryDoctorRotaCommandHandler.action(this);
     }

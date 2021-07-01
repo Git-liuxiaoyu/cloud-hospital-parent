@@ -28,7 +28,7 @@ public class DoctorRotaEsPo {
     @Field(name = "departmentid", type = FieldType.Integer)
     private Integer departmentid;
 
-    @Field(name = "date", type = FieldType.Date, format = DateFormat.date_hour_minute)
+    @Field(name = "date", type = FieldType.Date, format = DateFormat.date)
     private Date date;
 
     @Field(name = "rotatype", type = FieldType.Keyword)
@@ -56,10 +56,10 @@ public class DoctorRotaEsPo {
     @Field(name = "createid", type = FieldType.Integer)
     private Integer createid;
 
-    @Field(name = "createtime", type = FieldType.Date, format = DateFormat.hour_minute_second)
+    @Field(name = "createtime", type = FieldType.Date, format = DateFormat.date_hour_minute_second)
     private Date createtime;
 
-    @Field(name = "createtime", type = FieldType.Date, format = DateFormat.hour_minute_second)
+    @Field(name = "status", type = FieldType.Keyword)
     private String status;
 
 }

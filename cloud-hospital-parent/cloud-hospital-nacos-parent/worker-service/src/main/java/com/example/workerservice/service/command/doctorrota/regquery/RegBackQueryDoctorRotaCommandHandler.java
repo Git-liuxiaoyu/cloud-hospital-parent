@@ -31,16 +31,21 @@ public class RegBackQueryDoctorRotaCommandHandler implements IRegBackQueryDoctor
 
     @Override
     public List<RegBackQueryDoctorRotaCommand.DoctorRotaVo> action(RegBackQueryDoctorRotaCommand command) {
-        /* 查询到基本的数据 */
-        /* 返回 */
-        String currentDate = new Date().toString();
-        /* LOG */
-        log.info("查询的日期为今日 : [{}]", currentDate);
+        /* 找个日期 */
+        String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+        Date parse = null;
         try {
-            return doctorRotaDaoAdapter.backQuery(new SimpleDateFormat("yyyy-MM-dd").parse(currentDate), command.getDepartmentId(), DoctorRotaVo.STATUS_NORMAL, command.getDoctorType(), command.getShiftType());
+            parse = new SimpleDateFormat("yyyy-MM-dd").parse(format);
         } catch (ParseException e) {
-            throw new NewDateParseException();
+            e.printStackTrace();
         }
+
+        /* LOG */
+        log.info("查询的日期为今日 : [{}]", parse);
+        /* 执行方法并返回 */
+        return doctorRotaDaoAdapter.backQuery(parse, command.getDepartmentId(), DoctorRotaVo.STATUS_NORMAL, command.getDoctorType(), command.getShiftType());
+
     }
 
 
