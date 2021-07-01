@@ -13,6 +13,8 @@ import com.example.registerservice.outlet.dao.redis.po.PatientRedisPo;
 import com.example.registerservice.service.command.addmessage.AddMessageCommand;
 import com.example.registerservice.service.command.addpatient.AddPatientCommand;
 import com.example.registerservice.service.command.updatepatient.UpdatePatientCommand;
+import com.example.registerservice.service.query.querymessage.QueryMessageCommand;
+import com.example.registerservice.service.query.querymessage.QueryMessageCommandHandler;
 import com.example.registerservice.service.query.querypatient.QueryPatientByIdCommand;
 import com.example.registerservice.service.query.querypatient.QueryPatientByIdentityIdCommand;
 import com.example.registerservice.service.query.querypatient.domain.Patient;
@@ -21,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created with IntelliJ IDEA.
@@ -90,12 +91,16 @@ public class PatientAdepter {
                 /*如果没有抛异常说明查到数据,就进行对象转换*/
                 patient = patientConverter.converter(esPo);
                 /*在es查询到了数据,redis既然没有的话,就在去存redis*/
-                AddMessageCommand addMessageCommand = new AddMessageCommand
-                        ("news_exchange", "news.add", "h_patient-redis-" + command.getId());
-                /*执行添加消息表*/
-                addMessageCommand.execute();
-                log.debug("添加信息表成功，消息为{}","h_patient-redis-" + command.getId());
-                log.debug("根据id{}查询es的数据{}", command.getId(), patient);
+                /*为了防止重复消息，先查询一下看看消息表里面有没有*/
+                try {
+                    new QueryMessageCommand("h_patient-redis-" + command.getId()).execute();
+                    log.debug("消息表不存在h_patient-redis-{}的数据,执行添加消息", command.getId());
+                    new AddMessageCommand("news_exchange", "news.add", "h_patient-redis-" + command.getId()).execute();
+                    log.debug("添加信息表成功，消息为{}", "h_patient-redis-" + command.getId());
+                    log.debug("根据id{}查询es的数据{}", command.getId(), patient);
+                } catch (AdapterException adapterException) {
+                    log.debug("消息表存在h_patient-redis-{}的数据", command.getId());
+                }
             } catch (NullPointerException nullPointerException) {
                 log.debug("根据id{}查询es没有查到数据", command.getId());
                 /*如果es没有查询到就去mysql去查询*/
@@ -105,13 +110,28 @@ public class PatientAdepter {
                     log.debug("根据id{}查询Mysql没有查到数据", command.getId());
                     throw new NullPointerException();
                 }
-                log.debug("根据id{}查询mysql的数据{}", command.getId(), patient);
+                log.debug("根据id{}查询mysql的数据{}", command.getId(), mysqlPo);
                 /*在mysql查询到了数据,es,和redis既然没有的话,就在去存es和redis*/
-                AddMessageCommand addMessageCommand = new AddMessageCommand
-                        ("news_exchange", "news.add", "h_patient-mysql-" + command.getId());
-                /*执行添加消息表*/
-                addMessageCommand.execute();
-                log.debug("添加信息表成功，消息为{}","mysql-" + command.getId());
+                /*为了防止重复消息，先查询一下看看消息表里面有没有*/
+                try {
+                    new QueryMessageCommand("h_patient-redis-" + command.getId()).execute();
+                    log.debug("消息表不存在h_patient-redis-{}的数据,执行添加消息", command.getId());
+                    new AddMessageCommand("news_exchange", "news.add", "h_patient-redis-" + command.getId()).execute();
+                    log.debug("添加信息表成功，消息为{}", "h_patient-redis-" + command.getId());
+                    log.debug("根据id{}查询es的数据{}", command.getId(), patient);
+                } catch (AdapterException adapterException) {
+                    log.debug("消息表存在h_patient-redis-{}的数据", command.getId());
+                }
+                /*为了防止重复消息，先查询一下看看消息表里面有没有*/
+                try {
+                    new QueryMessageCommand("h_patient-es-" + command.getId()).execute();
+                    log.debug("消息表不存在h_patient-redis-{}的数据,执行添加消息", command.getId());
+                    new AddMessageCommand("news_exchange", "news.add", "h_patient-es-" + command.getId()).execute();
+                    log.debug("添加信息表成功，消息为{}", "h_patient-es-" + command.getId());
+                    log.debug("根据id{}查询es的数据{}", command.getId(), patient);
+                } catch (AdapterException adapterException) {
+                    log.debug("消息表存在h_patient-redis-{}的数据", command.getId());
+                }
                 /*如果没有抛异常说明查到数据,就进行对象转换*/
                 patient = patientConverter.converter(mysqlPo);
             }
@@ -151,10 +171,11 @@ public class PatientAdepter {
     public void update(UpdatePatientCommand command) {
         PatientMysqlPoExample example = new PatientMysqlPoExample();
         PatientMysqlPo converter = patientConverter.converter(command);
-        example.createCriteria().andIdEqualTo(command.getId());
-        int i = mysqlDao.updateByExampleSelective(converter, example);
+        int i = mysqlDao.updateByPrimaryKeySelective(converter);
         if (i == 0) {
             throw new AdapterException();
         }
+        redisDao.deleteById(converter.getId());
+        esDao.deleteById(converter.getId());
     }
 }

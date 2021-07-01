@@ -1,6 +1,7 @@
 package com.example.registerservice.service.command.updatepatient;
 
 import com.example.registerservice.adapter.PatientAdepter;
+import com.example.registerservice.adapter.exception.AdapterException;
 import com.example.registerservice.service.api.IUpdatePatientCommandHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,11 @@ public class UpdatePatientCommandHandler implements IUpdatePatientCommandHandler
 
     @Override
     public void action(UpdatePatientCommand command) {
-        adepter.update(command);
+        try {
+            adepter.update(command);
+        } catch (AdapterException e) {
+            /*抛出修改的异常*/
+            throw new UpdatePatientException();
+        }
     }
 }

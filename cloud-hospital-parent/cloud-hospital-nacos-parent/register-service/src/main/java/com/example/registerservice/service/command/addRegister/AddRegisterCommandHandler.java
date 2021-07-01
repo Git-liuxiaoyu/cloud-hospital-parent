@@ -1,6 +1,7 @@
 package com.example.registerservice.service.command.addRegister;
 
 import com.example.registerservice.adapter.RegisterAdapter;
+import com.example.registerservice.adapter.exception.AdapterException;
 import com.example.registerservice.service.api.IAddRegisterCommandHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,10 @@ public class AddRegisterCommandHandler implements IAddRegisterCommandHandler {
 
     @Override
     public void action(AddRegisterCommand command) {
-        adapter.insert(command);
+        try {
+            adapter.insert(command);
+        } catch (AdapterException e) {
+            throw new AddRegisterException();
+        }
     }
 }

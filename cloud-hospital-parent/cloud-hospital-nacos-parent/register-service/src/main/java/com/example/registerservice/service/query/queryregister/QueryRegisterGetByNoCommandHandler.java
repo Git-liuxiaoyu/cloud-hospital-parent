@@ -1,9 +1,8 @@
 package com.example.registerservice.service.query.queryregister;
 
 import com.example.registerservice.adapter.RegisterAdapter;
-import com.example.registerservice.inlet.web.vo.RegisterVo;
 import com.example.registerservice.service.api.IQueryRegisterGetByNoCommandHandler;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.registerservice.service.query.queryregister.po.Register;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,12 +15,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class QueryRegisterGetByNoCommandHandler implements IQueryRegisterGetByNoCommandHandler {
 
-    @Autowired
-    private RegisterAdapter adapter;
+    private final RegisterAdapter adapter;
+
+    public QueryRegisterGetByNoCommandHandler(RegisterAdapter adapter) {
+        this.adapter = adapter;
+    }
 
     @Override
-    public RegisterVo action(QueryRegisterGetByNoCommand command) {
-        RegisterVo registerVo = adapter.getByNo(command.getNo());
-        return registerVo;
+    public Register.ByNo action(QueryRegisterGetByNoCommand command) {
+        Register.ByNo byNo = null;
+        try {
+            byNo = adapter.getByNo(command.getNo());
+        } catch (NullPointerException e) {
+            throw new QueryRegisterGetByNoException();
+        }
+        return byNo;
     }
 }

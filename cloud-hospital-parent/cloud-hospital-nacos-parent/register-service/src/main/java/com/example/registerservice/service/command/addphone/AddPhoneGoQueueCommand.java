@@ -15,7 +15,7 @@ import java.io.Serializable;
  * @Description:
  */
 @Data
-public class PushPhoneGoQueueCommand implements Serializable {
+public class AddPhoneGoQueueCommand {
 
     private String phone;
 
@@ -23,27 +23,23 @@ public class PushPhoneGoQueueCommand implements Serializable {
 
     private IAddPhoneGoRedisCommandHandler handler;
 
-    public PushPhoneGoQueueCommand() {
+    public AddPhoneGoQueueCommand() {
         //命令模式代理对象注入
         handler = ApplicationContextHolder
                 .getApplicationContext()
                 .getBean(IAddPhoneGoRedisCommandHandler.class);
     }
 
-    public PushPhoneGoQueueCommand(String phone) {
+    public AddPhoneGoQueueCommand(String phone) {
         this();
         this.phone = phone;
     }
 
-    public boolean execute() {
+    public void execute() {
         //调用接口方法
-        boolean action = handler.action(this);
+        handler.action(this);
 
-        //执行event事件 如果action为true表示今天已经获取过验证码 false表示没有获取
-        if (!action) {
-            PushPhoneGoQueueCommandCompletedEvent event = new PushPhoneGoQueueCommandCompletedEvent(phone);
-            ApplicationContextHolder.getApplicationContext().publishEvent(event);
-        }
-        return action;
+        PushPhoneGoQueueCommandCompletedEvent event = new PushPhoneGoQueueCommandCompletedEvent(phone);
+        ApplicationContextHolder.getApplicationContext().publishEvent(event);
     }
 }

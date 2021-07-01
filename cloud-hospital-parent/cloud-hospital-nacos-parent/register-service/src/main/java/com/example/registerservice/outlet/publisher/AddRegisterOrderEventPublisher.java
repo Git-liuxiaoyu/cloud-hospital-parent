@@ -2,6 +2,7 @@ package com.example.registerservice.outlet.publisher;
 
 import com.example.registerservice.outlet.publisher.api.IAddRegisterOrderEventPublisher;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -26,6 +27,6 @@ public class AddRegisterOrderEventPublisher implements IAddRegisterOrderEventPub
     public void publish(AddRegisterOrderCommandCompletedEvent event) {
         log.debug("向register_order_queue路由发送了挂号订单为:{}！", event.getSource());
         String no = (String) event.getSource();//no为挂号订单号
-        template.convertAndSend("register_order_exchange", "order.add", no);
+        template.convertAndSend("register_order_exchange", "order.add", no,new CorrelationData("no"));
     }
 }

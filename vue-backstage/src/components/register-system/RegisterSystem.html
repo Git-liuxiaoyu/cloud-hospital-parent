@@ -4,21 +4,21 @@
       <el-form ref="form" :model="form" label-width="100px">
 
         <el-form-item label="挂号时间:">
-          <el-select v-model="form.redisterTimeValue">
+          <el-select v-model="form.redisterTimeValue" @change="getDoctor()">
             <el-option v-for="item in redisterTime" :key="item.id" :label="item.value" :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
 
         <el-form-item label="科目:">
-          <el-select v-model="form.subjectValue">
+          <el-select v-model="form.subjectValue" @change="getDoctor()">
             <el-option v-for="item in subject" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
 
         <el-form-item label="医生类别:">
-          <el-select v-model="form.doctorTypeValue">
+          <el-select v-model="form.doctorTypeValue" @change="getDoctor()">
             <el-option v-for="item in doctorType" :key="item.id" :label="item.value" :value="item.id">
             </el-option>
           </el-select>
@@ -31,6 +31,9 @@
           </el-select>
         </el-form-item>
       </el-form>
+      <div style="text-align: center">
+        <el-button type="primary" @click="doRegister()">添加挂号信息</el-button>
+      </div>
     </el-col>
 
 

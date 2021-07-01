@@ -1,6 +1,5 @@
 package com.example.registerservice.service.query.queryregister;
 
-import com.example.registerservice.inlet.web.vo.RegisterVo;
 import com.example.registerservice.service.api.IQueryRegisterByPhoneCommandHandler;
 import com.example.registerservice.service.query.queryregister.po.RegisterServicePo;
 import com.example.registerservice.util.ApplicationContextHolder;

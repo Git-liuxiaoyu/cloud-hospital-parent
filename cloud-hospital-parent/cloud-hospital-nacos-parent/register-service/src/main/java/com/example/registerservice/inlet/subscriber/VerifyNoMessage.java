@@ -1,10 +1,11 @@
 package com.example.registerservice.inlet.subscriber;
 
 import com.example.registerservice.adapter.converter.PatientConverter;
-import com.example.registerservice.inlet.web.vo.RegisterVo;
+import com.example.registerservice.adapter.converter.RegisterConverter;
 import com.example.registerservice.outlet.dao.es.PatientEsDao;
 import com.example.registerservice.outlet.dao.es.RegisterEsDao;
 import com.example.registerservice.outlet.dao.es.po.PatientEsPo;
+import com.example.registerservice.outlet.dao.es.po.RegisterEsPo;
 import com.example.registerservice.outlet.dao.mysql.PatientMysqlDao;
 import com.example.registerservice.outlet.dao.mysql.RegisterMysqlDao;
 import com.example.registerservice.outlet.dao.mysql.po.PatientMysqlPo;
@@ -12,10 +13,10 @@ import com.example.registerservice.outlet.dao.mysql.po.RegisterMysqlPo;
 import com.example.registerservice.outlet.dao.redis.PatientRedisDao;
 import com.example.registerservice.outlet.dao.redis.RegisterRedisDao;
 import com.example.registerservice.outlet.dao.redis.po.PatientRedisPo;
+import com.example.registerservice.outlet.dao.redis.po.RegisterRedisPo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,6 +30,8 @@ import org.springframework.stereotype.Component;
 @RabbitListener(queues = "news_queue")
 @Slf4j
 public class VerifyNoMessage {
+
+    private RegisterConverter registerConverter;
 
     private final PatientConverter patientConverter;
 
@@ -44,7 +47,7 @@ public class VerifyNoMessage {
 
     private final RegisterRedisDao registerRedisDao;
 
-    public VerifyNoMessage(PatientMysqlDao patientMysqlDao, PatientEsDao patientEsDao, PatientRedisDao patientRedisDao, RegisterMysqlDao registerMysqlDao, RegisterEsDao registerEsDao, RegisterRedisDao registerRedisDao, PatientConverter patientConverter) {
+    public VerifyNoMessage(PatientMysqlDao patientMysqlDao, PatientEsDao patientEsDao, PatientRedisDao patientRedisDao, RegisterMysqlDao registerMysqlDao, RegisterEsDao registerEsDao, RegisterRedisDao registerRedisDao, PatientConverter patientConverter, RegisterConverter registerConverter) {
         this.patientMysqlDao = patientMysqlDao;
         this.patientEsDao = patientEsDao;
         this.patientRedisDao = patientRedisDao;
@@ -52,6 +55,7 @@ public class VerifyNoMessage {
         this.registerEsDao = registerEsDao;
         this.registerRedisDao = registerRedisDao;
         this.patientConverter = patientConverter;
+        this.registerConverter = registerConverter;
     }
 
 
@@ -65,17 +69,21 @@ public class VerifyNoMessage {
                 PatientRedisPo redisPo = patientConverter.redisConverter(po);
                 patientRedisDao.save(redisPo);
                 log.debug("添加patientRedisDao成功");
-            } else if (str[2].equals("es")) {
+            } else if (str[1].equals("es")) {
                 PatientEsPo esPo = patientConverter.esConverter(po);
                 patientEsDao.save(esPo);
-                log.debug("添加patientRedisDao成功");
+                log.debug("添加patientEsDao成功");
             }
         } else if (str[0].equals("h_register")) {
-            RegisterMysqlPo po = new RegisterMysqlPo();
+            RegisterMysqlPo po = registerMysqlDao.selectByPrimaryKey(Long.valueOf(str[2]));
             if (str[1].equals("redis")) {
-
+                RegisterRedisPo redisPo = registerConverter.redisConverter(po);
+                registerRedisDao.save(redisPo);
+                log.debug("添加patientRedisDao成功");
             } else if (str[2].equals("es")) {
-
+                RegisterEsPo esPo = registerConverter.esConverter(po);
+                registerEsDao.save(esPo);
+                log.debug("添加patientEsDao成功");
             }
         }
     }

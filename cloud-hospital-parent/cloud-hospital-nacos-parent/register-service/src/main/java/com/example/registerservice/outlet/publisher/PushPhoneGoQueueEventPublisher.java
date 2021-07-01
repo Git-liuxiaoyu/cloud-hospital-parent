@@ -2,6 +2,7 @@ package com.example.registerservice.outlet.publisher;
 
 import com.example.registerservice.outlet.publisher.api.IPushPhoneGoQueueEventPublisher;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -26,6 +27,6 @@ public class PushPhoneGoQueueEventPublisher implements IPushPhoneGoQueueEventPub
     public void publish(PushPhoneGoQueueCommandCompletedEvent event) {
         log.debug("phone_code_queue路由发送了手机号为:{}！请短信微服务注意。", event.getSource());
         String msg = "Login-" + event.getSource();//登录验证码，前缀为Login
-        template.convertAndSend("code_exchange", "phone.add", msg);
+        template.convertAndSend("code_exchange", "phone.add", msg,new CorrelationData("no"));
     }
 }

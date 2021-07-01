@@ -3,7 +3,12 @@ package com.example.registerservice.service.query.queryregister;
 import com.example.registerservice.service.api.IQueryRegisterByIdCommandHandler;
 import com.example.registerservice.service.query.queryregister.po.Register;
 import com.example.registerservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,8 +34,9 @@ public class QueryRegisterByIdCommand {
                 .getBean(IQueryRegisterByIdCommandHandler.class);
     }
 
-    public Register execute() {
-        Register action = handler.action(this);
+    public Register.ById execute() {
+        Register.ById action = handler.action(this);
         return action;
     }
+
 }

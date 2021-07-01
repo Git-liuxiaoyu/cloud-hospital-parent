@@ -14,25 +14,26 @@ import java.util.Date;
  */
 
 @Data
+
 public class Patient {
-    @ApiModelProperty(value = "患者id", hidden = true)
+    @ApiModelProperty(value = "患者id", required = true)
     private Long id;
-    @ApiModelProperty(value = "患者编号", hidden = true)
+    @ApiModelProperty(value = "患者编号", required = true)
     private String no;
-    @ApiModelProperty(value = "患者姓名", hidden = true)
+    @ApiModelProperty(value = "患者姓名", required = true)
     private String name;
-    @ApiModelProperty(value = "患者年龄", hidden = true)
+    @ApiModelProperty(value = "患者年龄", required = true)
     private Integer age;
-    @ApiModelProperty(value = "患者性别", hidden = true)
+    @ApiModelProperty(value = "患者性别", required = true)
     private String gender;
-    @ApiModelProperty(value = "患者电话", hidden = true)
+    @ApiModelProperty(value = "患者电话", required = true)
     private String phone;
-    @ApiModelProperty(value = "患者身份证", hidden = true)
+    @ApiModelProperty(value = "患者身份证", required = true)
     private String identityid;
-    @ApiModelProperty(value = "患者状态", hidden = true)
+    @ApiModelProperty(value = "患者状态", required = true)
     private String status;
-    @ApiModelProperty(value = "患者建档时间", hidden = true)
+    @ApiModelProperty(value = "患者建档时间", required = true)
     private Date createtime;
-    @ApiModelProperty(value = "患者医保卡号", hidden = true)
+    @ApiModelProperty(value = "患者医保卡号", required = true)
     private String medicard;
 }

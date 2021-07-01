@@ -38,10 +38,8 @@ public class QueryPhoneAndCodeCommand implements Serializable {
                 .getBean(IQueryPhoneAndCodeCommandHandler.class);
     }
 
-    public boolean execute() {
-        //返回的是true表示表单验证通过 false取反
-        boolean action = handler.action(this);
-        return action;
+    public void execute() {
+        handler.action(this);
     }
 
 }

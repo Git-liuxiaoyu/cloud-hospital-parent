@@ -21,17 +21,17 @@ public class AddPhoneGoRedisCommandHandler implements IAddPhoneGoRedisCommandHan
     private RegisterAdapter daoAdapter;
 
     @Override
-    public boolean action(PushPhoneGoQueueCommand command) {
+    public void action(AddPhoneGoQueueCommand command) {
         try {
             //如果为null就抛异常
             daoAdapter.select(command);
             log.debug("该{}手机号今天已获取验证码！", command.getPhone());
-        } catch (Exception e) {
+            /*该手机号今天已获取验证码就抛异常*/
+            throw new AddPhoneGoRedisException();
+        } catch (NullPointerException e) {
             log.debug("该{}手机号今天没有获取验证码！", command.getPhone());
             //将手机号添加redis
             daoAdapter.addPhoneGoRedis(command);
-            return false;
         }
-        return true;
     }
 }

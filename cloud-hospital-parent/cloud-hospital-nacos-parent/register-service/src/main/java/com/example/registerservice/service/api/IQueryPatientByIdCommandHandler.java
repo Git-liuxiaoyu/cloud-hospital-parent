@@ -19,7 +19,7 @@ public interface IQueryPatientByIdCommandHandler {
      **/
     class PatientByIdNotFoundException extends RuntimeException {
         public PatientByIdNotFoundException() {
-            super("找不到该员工");
+            super("找不到该患者");
         }
     }
 }

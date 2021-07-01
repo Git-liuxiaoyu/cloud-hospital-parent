@@ -2,6 +2,7 @@ package com.example.registerservice.outlet.publisher;
 
 import com.example.registerservice.outlet.publisher.api.IPackIdEventPublisher;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -26,7 +27,7 @@ public class PackIdEventPublisher implements IPackIdEventPublisher {
     public void publish(PackIdCommandCompletedEvent event) {
         /*获取id*/
         String id = (String) event.getSource();
-        template.convertAndSend("news_exchange", "news.add", id);
+        template.convertAndSend("news_exchange", "news.add", id,new CorrelationData("no"));
         log.debug("向news_exchange路由发送了消息,请注意！", event.getSource());
     }
 }

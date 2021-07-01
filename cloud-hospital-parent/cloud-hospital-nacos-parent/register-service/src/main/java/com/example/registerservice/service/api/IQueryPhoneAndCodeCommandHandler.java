@@ -10,5 +10,14 @@ import com.example.registerservice.service.query.queryphoneandcode.QueryPhoneAnd
  * @Description: 用户登入验证接口
  */
 public interface IQueryPhoneAndCodeCommandHandler {
-    boolean action(QueryPhoneAndCodeCommand command);
+    void action(QueryPhoneAndCodeCommand command);
+
+    /**
+     * 自定义业务异常 - 患者未发现
+     **/
+    class QueryPhoneAndCodeException extends RuntimeException {
+        public QueryPhoneAndCodeException() {
+            super("验证码有误");
+        }
+    }
 }

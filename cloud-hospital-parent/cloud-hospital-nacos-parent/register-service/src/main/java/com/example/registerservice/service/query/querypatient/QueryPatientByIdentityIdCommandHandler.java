@@ -21,7 +21,12 @@ public class QueryPatientByIdentityIdCommandHandler implements IQueryPatientById
 
     @Override
     public Patient action(QueryPatientByIdentityIdCommand command) {
-        Patient patient = adepter.selectGetPatientByIdentityId(command);
+        Patient patient = null;
+        try {
+            patient = adepter.selectGetPatientByIdentityId(command);
+        } catch (NullPointerException e) {
+            throw new PatientByIdentityIdNotFoundException();
+        }
         return patient;
     }
 }

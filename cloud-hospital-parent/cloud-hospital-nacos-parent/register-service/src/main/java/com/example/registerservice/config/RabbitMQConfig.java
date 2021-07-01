@@ -42,21 +42,25 @@ public class RabbitMQConfig {
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             // 这里的 correlationData 来源于 convertAndSend 方法。
             log.debug("消息唯一标识 ： {}", correlationData);
+            /*不是消息表的不进入下面*/
+            if (correlationData.getId().equals("no")) {
+                return;
+            }
             if (ack) {
                 log.debug("消息已发送至 RabbitMQ（的Exchange），修改 id 为 {} 的状态。", correlationData.getId());
-                MessageMysqlPo po=new MessageMysqlPo();
+                MessageMysqlPo po = new MessageMysqlPo();
                 po.setStatus("1");
                 po.setId(Long.valueOf(correlationData.getId()));
                 mysqlDao.updateByPrimaryKeySelective(po);
-                log.debug("修改消息表id为{}状态成功",correlationData.getId());
+                log.debug("修改消息表id为{}状态成功", correlationData.getId());
             } else {
                 log.debug("消息未能发送到 Exchange。失败原因 {}", cause);
                 MessageMysqlPo mysqlPo = mysqlDao.selectByPrimaryKey(Long.valueOf(correlationData.getId()));
-                MessageMysqlPo po=new MessageMysqlPo();
-                if(mysqlPo.getRetryCount()==0){
+                MessageMysqlPo po = new MessageMysqlPo();
+                if (mysqlPo.getRetryCount() == 0) {
                     po.setStatus("2");
-                }else {
-                    po.setRetryCount(mysqlPo.getRetryCount()-1);
+                } else {
+                    po.setRetryCount(mysqlPo.getRetryCount() - 1);
                 }
                 po.setId(Long.valueOf(correlationData.getId()));
                 mysqlDao.updateByPrimaryKeySelective(po);

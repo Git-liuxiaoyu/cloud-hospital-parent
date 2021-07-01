@@ -32,6 +32,7 @@ public class RegisterServiceConverter {
         po.setType(command.getType());
         po.setStatus(command.getStatus());
         po.setVisittime(command.getVisitTime());
+        po.setRoomid(command.getRoomId());
         po.setPhone(command.getPhone());
         return po;
     }

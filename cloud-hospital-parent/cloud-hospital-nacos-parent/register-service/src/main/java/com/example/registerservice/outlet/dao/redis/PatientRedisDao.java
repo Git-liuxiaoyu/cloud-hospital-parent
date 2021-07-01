@@ -11,4 +11,6 @@ import org.springframework.data.repository.CrudRepository;
  * @Description: 存患者的redis
  */
 public interface PatientRedisDao extends CrudRepository<PatientRedisPo, Long> {
+
+//    void deleteById(Long id);
 }

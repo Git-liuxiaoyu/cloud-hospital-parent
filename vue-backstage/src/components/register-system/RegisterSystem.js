@@ -10,7 +10,7 @@ export default {
       },//表单对象
       redisterTime: [{value: '上午', id: 1}, {value: '下午', id: 2}, {value: '晚上', id: 3}],//挂号时间的下拉框
       patient: {},//患者表单信息
-
+      doctor: {},/*查询医生的对象参数*/
       identityId: {
         identityId: '',//身份证Id
       },
@@ -125,10 +125,36 @@ export default {
           })
         }
       })
+    },
+    /*查询今天的时间*/
+    queryDoctor() {
+      /*获取今天的信息*/
+      var date = new Date();
+      date.setTime(date.getTime());
+      var s2 = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+      this.doctor.date = s2;/*查询医生的时间*/
+    },
+    /*查询医生信息*/
+    getDoctor() {
+      console.log(this.form)
+      if (this.form.doctorTypeValue != "" && this.form.redisterTimeValue != "" && this.form.subjectValue != "") {
+        this.$axios.post("worker-service/rota/doctor/reg/back", this.form).then(r => {
+          console.log(r)
+        })
+      }
+    },
+    /*添加挂号信息*/
+    doRegister() {
+      if (this.patientId != "") {
+
+      } else {
+        alert(1)
+      }
     }
   },
   created() {
     this.querySubject();
+    this.queryDoctor();
   }
 }
 

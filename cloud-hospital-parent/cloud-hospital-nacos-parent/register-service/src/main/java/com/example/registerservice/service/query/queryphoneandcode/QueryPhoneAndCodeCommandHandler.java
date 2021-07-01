@@ -21,16 +21,13 @@ public class QueryPhoneAndCodeCommandHandler implements IQueryPhoneAndCodeComman
     private RegisterAdapter daoAdapter;
 
     @Override
-    public boolean action(QueryPhoneAndCodeCommand command) {
+    public void action(QueryPhoneAndCodeCommand command) {
         try {
-            String code = daoAdapter.select(command);
-            log.debug("验证码{}",code);
-            if(!code.equals(command.getCode())){//说明输入的验证码不正确
-                return false;
-            }
-        } catch (Exception e) {
-            return false;
+            daoAdapter.select(command);
+            log.debug("验证码{}可以匹配", command.getCode());
+        } catch (NullPointerException e) {
+            throw new QueryPhoneAndCodeException();
         }
-        return true;
+
     }
 }

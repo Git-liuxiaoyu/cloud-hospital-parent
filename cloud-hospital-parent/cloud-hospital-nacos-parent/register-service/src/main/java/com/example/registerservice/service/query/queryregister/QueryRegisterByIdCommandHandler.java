@@ -20,8 +20,13 @@ public class QueryRegisterByIdCommandHandler implements IQueryRegisterByIdComman
     private RegisterAdapter adapter;
 
     @Override
-    public Register action(QueryRegisterByIdCommand command) {
-        Register register = adapter.selectById(command);
+    public Register.ById action(QueryRegisterByIdCommand command) {
+        Register.ById register = null;
+        try {
+            register = adapter.selectById(command);
+        } catch (NullPointerException e) {
+            throw new QueryRegisterByIdException();
+        }
         return register;
     }
 }

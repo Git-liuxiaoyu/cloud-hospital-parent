@@ -12,4 +12,13 @@ import com.example.registerservice.service.command.updateregister.UpdateRegister
  */
 public interface IUpdatePatientCommandHandler {
     void action(UpdatePatientCommand command);
+
+    /**
+     * 自定义业务异常 - 修改患者信息失败
+     **/
+    class UpdatePatientException extends RuntimeException {
+        public UpdatePatientException() {
+            super("修改患者信息失败");
+        }
+    }
 }

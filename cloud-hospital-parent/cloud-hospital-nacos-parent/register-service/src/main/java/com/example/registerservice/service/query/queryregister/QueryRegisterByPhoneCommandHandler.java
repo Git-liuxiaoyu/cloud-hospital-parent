@@ -1,6 +1,7 @@
 package com.example.registerservice.service.query.queryregister;
 
 import com.example.registerservice.adapter.RegisterAdapter;
+import com.example.registerservice.adapter.exception.AdapterException;
 import com.example.registerservice.service.api.IQueryRegisterByPhoneCommandHandler;
 import com.example.registerservice.service.query.queryregister.po.RegisterServicePo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,12 @@ public class QueryRegisterByPhoneCommandHandler implements IQueryRegisterByPhone
 
     @Override
     public List<RegisterServicePo> action(QueryRegisterByPhoneCommand command) {
-        List<RegisterServicePo> select = adapter.select(command);
+        List<RegisterServicePo> select = null;
+        try {
+            select = adapter.select(command);
+        } catch (AdapterException e) {
+            throw new QueryRegisterByPhoneException();
+        }
         return select;
     }
 }

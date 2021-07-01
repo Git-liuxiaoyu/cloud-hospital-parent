@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @Description:
  */
 @Data
-public class UpdateRegisterCommand implements Serializable {
+public class UpdateRegisterCommand{
 
     private Long id;
     private String status;

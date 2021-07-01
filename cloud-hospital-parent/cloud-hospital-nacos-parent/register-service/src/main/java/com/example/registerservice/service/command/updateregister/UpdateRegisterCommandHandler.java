@@ -1,6 +1,7 @@
 package com.example.registerservice.service.command.updateregister;
 
 import com.example.registerservice.adapter.RegisterAdapter;
+import com.example.registerservice.adapter.exception.AdapterException;
 import com.example.registerservice.service.api.IUpdateRegisterCommandHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,10 @@ public class UpdateRegisterCommandHandler implements IUpdateRegisterCommandHandl
 
     @Override
     public void action(UpdateRegisterCommand command) {
-        adapter.update(command);
+        try {
+            adapter.update(command);
+        } catch (AdapterException e) {
+            throw new UpdateRegisterException();
+        }
     }
 }

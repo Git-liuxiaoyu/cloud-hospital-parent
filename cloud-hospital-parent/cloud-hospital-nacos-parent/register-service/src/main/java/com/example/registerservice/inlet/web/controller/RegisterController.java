@@ -1,10 +1,8 @@
 package com.example.registerservice.inlet.web.controller;
 
 
-import com.example.registerservice.adapter.converter.RegisterConverter;
-import com.example.registerservice.inlet.web.vo.RegisterVo;
 import com.example.registerservice.service.command.addRegister.AddRegisterCommand;
-import com.example.registerservice.service.command.addphone.PushPhoneGoQueueCommand;
+import com.example.registerservice.service.command.addphone.AddPhoneGoQueueCommand;
 import com.example.registerservice.service.command.updateregister.UpdateRegisterCommand;
 import com.example.registerservice.service.query.queryphoneandcode.QueryPhoneAndCodeCommand;
 import com.example.registerservice.service.query.queryregister.QueryRegisterByIdCommand;
@@ -14,10 +12,7 @@ import com.example.registerservice.service.query.queryregister.po.Register;
 import com.example.registerservice.service.query.queryregister.po.RegisterServicePo;
 import com.example.registerservice.util.ResponseResult;
 import io.swagger.annotations.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,10 +26,6 @@ import java.util.List;
 @Api(value = "挂号服务", description = "用户操作 API")
 @ApiModel
 public class RegisterController {
-
-    @Autowired
-    private RegisterConverter converter;
-
     /**
      * @param phone
      * @return 给验证码队列发消息
@@ -47,11 +38,8 @@ public class RegisterController {
     })
     @PostMapping("Register/getCode/{phone}")
     public ResponseResult pushPhoneGoQueue(@PathVariable String phone) {
-        PushPhoneGoQueueCommand command = new PushPhoneGoQueueCommand(phone);
-        boolean execute = command.execute();
-        if (execute) {
-            return new ResponseResult(7001, "今天已获取验证码，无法发送");
-        }
+        /*执行发送手机号到队列的方法*/
+        new AddPhoneGoQueueCommand(phone).execute();
         return ResponseResult.SUCCESS;
     }
 
@@ -65,11 +53,9 @@ public class RegisterController {
             produces = "application/json", response = ResponseResult.class)
     @PostMapping("Register/doLogin")
     public ResponseResult doLogin(@RequestBody QueryPhoneAndCodeCommand command) {
-        boolean execute = command.execute();
-        if (execute) {
-            return ResponseResult.SUCCESS;
-        }
-        return new ResponseResult(7002, "验证码有误");
+        /*执行判断验证码是否可以匹配*/
+        command.execute();
+        return ResponseResult.SUCCESS;
     }
 
     /**
@@ -85,15 +71,8 @@ public class RegisterController {
                     example = "GH20210622102208869988203", required = true, dataType = "String", paramType = "path")
     })
     @GetMapping("Register/queryRegister/getByNo/{no}")
-    public ResponseResult<RegisterVo> queryRegisterGetByNo(@PathVariable("no") String no) {
-        QueryRegisterGetByNoCommand command = new QueryRegisterGetByNoCommand(no);
-        RegisterVo execute = null;
-        try {
-            execute = command.execute();
-        } catch (Exception e) {
-            return new ResponseResult<>(444, "");
-        }
-        return new ResponseResult(execute);
+    public ResponseResult<Register.ByNo> queryRegisterGetByNo(@PathVariable("no") String no) {
+        return new ResponseResult(new QueryRegisterGetByNoCommand(no).execute());
     }
 
     /**
@@ -113,31 +92,21 @@ public class RegisterController {
     })
     @PostMapping("/Register/update/status/{id}/{status}")
     public ResponseResult updateStatus(@PathVariable("id") Long id, @PathVariable("status") String status) {
-        UpdateRegisterCommand command = new UpdateRegisterCommand(id, status);
-        try {
-            command.execute();
-        } catch (Exception e) {
-            return new ResponseResult(444, "");
-        }
+        new UpdateRegisterCommand(id, status).execute();
         return ResponseResult.SUCCESS;
     }
 
     /**
      * 添加挂号订单
      *
-     * @param vo
+     * @param command
      * @return
      */
     @ApiOperation(value = "添加挂号订单", notes = "添加挂号订单",
             produces = "application/json", response = ResponseResult.class)
     @PostMapping("/Register/add")
-    public ResponseResult registerAdd(@RequestBody RegisterVo.AddRegisterVo vo) {
-        AddRegisterCommand command = new AddRegisterCommand(vo);
-        try {
-            command.execute();
-        } catch (Exception e) {
-            return new ResponseResult(444, "");
-        }
+    public ResponseResult registerAdd(@RequestBody AddRegisterCommand command) {
+        command.execute();
         return ResponseResult.SUCCESS;
     }
 
@@ -155,9 +124,7 @@ public class RegisterController {
     })
     @GetMapping("/Register/query/phone/{phone}")
     public ResponseResult<RegisterServicePo> findAll(@PathVariable("phone") String phone) {
-        QueryRegisterByPhoneCommand command = new QueryRegisterByPhoneCommand(phone);
-        List<RegisterServicePo> execute = command.execute();
-        return new ResponseResult(execute);
+        return new ResponseResult(new QueryRegisterByPhoneCommand(phone).execute());
     }
 
     /**
@@ -173,15 +140,7 @@ public class RegisterController {
                     example = "11", required = true, dataType = "Long", paramType = "path")
     })
     @GetMapping("/Register/query/byId/{id}")
-    public ResponseResult<RegisterVo.QueryGetByIdVo> getByIdVoResponseResult(@PathVariable("id") Long id) {
-        QueryRegisterByIdCommand command = new QueryRegisterByIdCommand(id);
-        Register execute = null;
-        try {
-            execute = command.execute();
-        } catch (Exception e) {
-            return new ResponseResult<>(444, "");
-        }
-        RegisterVo.QueryGetByIdVo converter = this.converter.converter(execute);
-        return new ResponseResult(converter);
+    public ResponseResult<Register.ById> getByIdVoResponseResult(@PathVariable("id") Long id) {
+        return new ResponseResult(new QueryRegisterByIdCommand(id).execute());
     }
 }

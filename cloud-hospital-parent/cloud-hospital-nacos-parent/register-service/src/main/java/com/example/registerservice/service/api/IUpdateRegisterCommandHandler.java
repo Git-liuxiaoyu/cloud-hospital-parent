@@ -11,4 +11,13 @@ import com.example.registerservice.service.command.updateregister.UpdateRegister
  */
 public interface IUpdateRegisterCommandHandler {
     void action(UpdateRegisterCommand command);
+
+    /**
+     * 自定义业务异常 - 修改挂号状态失败异常
+     **/
+    class UpdateRegisterException extends RuntimeException {
+        public UpdateRegisterException() {
+            super("修改挂号状态失败异常");
+        }
+    }
 }

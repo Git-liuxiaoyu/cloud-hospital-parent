@@ -1,7 +1,7 @@
 package com.example.registerservice.service.query.queryregister;
 
-import com.example.registerservice.inlet.web.vo.RegisterVo;
 import com.example.registerservice.service.api.IQueryRegisterGetByNoCommandHandler;
+import com.example.registerservice.service.query.queryregister.po.Register;
 import com.example.registerservice.util.ApplicationContextHolder;
 import lombok.Data;
 
@@ -32,8 +32,8 @@ public class QueryRegisterGetByNoCommand implements Serializable {
                 .getBean(IQueryRegisterGetByNoCommandHandler.class);
     }
 
-    public RegisterVo execute() {
-        RegisterVo action = handler.action(this);
+    public Register.ByNo execute() {
+        Register.ByNo action = handler.action(this);
         return action;
     }
 }

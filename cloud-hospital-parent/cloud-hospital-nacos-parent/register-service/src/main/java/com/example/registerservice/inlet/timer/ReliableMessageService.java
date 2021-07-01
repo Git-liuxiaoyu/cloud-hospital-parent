@@ -30,15 +30,15 @@ public class ReliableMessageService {
         this.template = template;
     }
 
-//    @Scheduled(fixedDelay = 3 * 1000)
-    @Scheduled(fixedDelay = 1000*60)
+    //    @Scheduled(fixedDelay = 3 * 1000)
+    @Scheduled(fixedDelay = 1000 * 60 * 10)
     private void autoSend() {
         MessageMysqlPoExample example = new MessageMysqlPoExample();
         example.createCriteria().andStatusEqualTo("0");
         List<MessageMysqlPo> mysqlPoList = mysqlDao.selectByExample(example);
         log.debug("定时查询消息表");
         mysqlPoList.forEach(item -> {
-            template.convertAndSend(item.getExchange(),item.getRoutingKey(),item.getMessageContent(),new CorrelationData(item.getId().toString()));
+            template.convertAndSend(item.getExchange(), item.getRoutingKey(), item.getMessageContent(), new CorrelationData(item.getId().toString()));
         });
     }
 }

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageConverter {
 
-    public MessageMysqlPo Converter(AddMessageCommand command) {
+    public MessageMysqlPo converter(AddMessageCommand command) {
         MessageMysqlPo po = new MessageMysqlPo();
         po.setExchange(command.getExchange());
         po.setRoutingKey(command.getRoutingKey());
@@ -24,4 +24,5 @@ public class MessageConverter {
         po.setVersion(command.getVersion());
         return po;
     }
+
 }

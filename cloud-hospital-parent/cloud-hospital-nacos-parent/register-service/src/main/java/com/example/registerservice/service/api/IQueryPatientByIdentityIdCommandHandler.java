@@ -14,4 +14,13 @@ import com.example.registerservice.service.query.querypatient.domain.Patient;
  */
 public interface IQueryPatientByIdentityIdCommandHandler {
     Patient action(QueryPatientByIdentityIdCommand command);
+
+    /**
+     * 自定义业务异常 - 患者未发现
+     **/
+    class PatientByIdentityIdNotFoundException extends RuntimeException {
+        public PatientByIdentityIdNotFoundException() {
+            super("找不到该患者");
+        }
+    }
 }

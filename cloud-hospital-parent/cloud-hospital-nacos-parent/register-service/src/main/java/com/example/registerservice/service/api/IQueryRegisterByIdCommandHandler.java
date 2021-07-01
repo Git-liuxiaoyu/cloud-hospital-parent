@@ -12,5 +12,14 @@ import com.example.registerservice.service.query.queryregister.po.Register;
  * @Description: 新增病人接口
  */
 public interface IQueryRegisterByIdCommandHandler {
-    Register action(QueryRegisterByIdCommand command);
+    Register.ById action(QueryRegisterByIdCommand command);
+
+    /**
+     * 自定义业务异常 - 根据挂号id查询挂号订单
+     **/
+    class QueryRegisterByIdException extends RuntimeException {
+        public QueryRegisterByIdException() {
+            super("根据挂号id没有查询到挂号订单");
+        }
+    }
 }

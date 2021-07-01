@@ -4,7 +4,6 @@ import com.example.registerservice.adapter.converter.RegisterConverter;
 import com.example.registerservice.adapter.converter.RegisterServiceConverter;
 import com.example.registerservice.adapter.converter.RegisterVoConverter;
 import com.example.registerservice.adapter.exception.AdapterException;
-import com.example.registerservice.inlet.web.vo.RegisterVo;
 import com.example.registerservice.outlet.client.po.DoctorRotaClientPo;
 import com.example.registerservice.outlet.client.worker.IWorkerServiceClient;
 import com.example.registerservice.outlet.dao.mysql.RegisterMysqlDao;
@@ -14,7 +13,7 @@ import com.example.registerservice.outlet.dao.mysql.po.RegisterOrderMysqlPo;
 import com.example.registerservice.outlet.dao.redis.PhoneRedisDao;
 import com.example.registerservice.outlet.dao.redis.po.PhoneRedisPo;
 import com.example.registerservice.service.command.addRegister.AddRegisterCommand;
-import com.example.registerservice.service.command.addphone.PushPhoneGoQueueCommand;
+import com.example.registerservice.service.command.addphone.AddPhoneGoQueueCommand;
 import com.example.registerservice.service.command.updateregister.UpdateRegisterCommand;
 import com.example.registerservice.service.query.queryphoneandcode.QueryPhoneAndCodeCommand;
 import com.example.registerservice.service.query.queryregister.QueryRegisterByIdCommand;
@@ -71,7 +70,7 @@ public class RegisterAdapter {
      *
      * @param command
      */
-    public void addPhoneGoRedis(PushPhoneGoQueueCommand command) {
+    public void addPhoneGoRedis(AddPhoneGoQueueCommand command) {
         PhoneRedisPo redisPo = new PhoneRedisPo(command.getPhone());
         redisDao.save(redisPo);
     }
@@ -82,7 +81,7 @@ public class RegisterAdapter {
      * @param command
      * @return
      */
-    public PhoneRedisPo select(PushPhoneGoQueueCommand command) {
+    public PhoneRedisPo select(AddPhoneGoQueueCommand command) {
         Optional<PhoneRedisPo> redisPo = redisDao.findById(command.getPhone());
         return redisPo.orElseThrow(NullPointerException::new);
     }
@@ -108,8 +107,8 @@ public class RegisterAdapter {
      * @param no
      * @return
      */
-    public RegisterVo getByNo(String no) {
-        RegisterVo convert = null;
+    public Register.ByNo getByNo(String no) {
+        Register.ByNo convert = null;
         RegisterMysqlPoExample example = new RegisterMysqlPoExample();
         example.createCriteria().andNoEqualTo(no);
         List<RegisterMysqlPo> mysqlPoList = mysqlDao.selectByExample(example);
@@ -159,6 +158,11 @@ public class RegisterAdapter {
      */
     public List<RegisterServicePo> select(QueryRegisterByPhoneCommand command) {
         List<RegisterOrderMysqlPo> all = mysqlDao.findAll(command.getPhone());
+
+        if(all.isEmpty()){
+           throw new AdapterException();
+        }
+
         List<RegisterServicePo> converter = serviceConverter.converter(all);
         //所有挂号订单所有的排班id
         List<String> rotaIdList = new ArrayList<>();
@@ -182,12 +186,12 @@ public class RegisterAdapter {
      * @param command
      * @return
      */
-    public Register selectById(QueryRegisterByIdCommand command) {
+    public Register.ById selectById(QueryRegisterByIdCommand command) {
         RegisterMysqlPo registerMysqlPo = mysqlDao.selectByPrimaryKey(command.getId());
         if (registerMysqlPo == null) {
             throw new NullPointerException();
         }
-        Register converter = registerConverter.converter(registerMysqlPo);
+        Register.ById converter = registerConverter.converter(registerMysqlPo);
         return converter;
     }
 }
