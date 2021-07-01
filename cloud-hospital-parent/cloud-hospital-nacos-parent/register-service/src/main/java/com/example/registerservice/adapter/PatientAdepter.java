@@ -82,7 +82,6 @@ public class PatientAdepter {
             redisPo = redisDao.findById(command.getId()).orElseThrow(NullPointerException::new);
             /*如果没有抛异常说明查到数据,就进行对象转换*/
             patient = patientConverter.converter(redisPo);
-            log.debug("根据id{}查询redis的数据{}", command.getId(), patient);
         } catch (NullPointerException e) {
             try {
                 log.debug("根据id{}查询redis没有查到数据", command.getId());
@@ -97,7 +96,6 @@ public class PatientAdepter {
                     log.debug("消息表不存在h_patient-redis-{}的数据,执行添加消息", command.getId());
                     new AddMessageCommand("news_exchange", "news.add", "h_patient-redis-" + command.getId()).execute();
                     log.debug("添加信息表成功，消息为{}", "h_patient-redis-" + command.getId());
-                    log.debug("根据id{}查询es的数据{}", command.getId(), patient);
                 } catch (AdapterException adapterException) {
                     log.debug("消息表存在h_patient-redis-{}的数据", command.getId());
                 }
@@ -118,7 +116,6 @@ public class PatientAdepter {
                     log.debug("消息表不存在h_patient-redis-{}的数据,执行添加消息", command.getId());
                     new AddMessageCommand("news_exchange", "news.add", "h_patient-redis-" + command.getId()).execute();
                     log.debug("添加信息表成功，消息为{}", "h_patient-redis-" + command.getId());
-                    log.debug("根据id{}查询es的数据{}", command.getId(), patient);
                 } catch (AdapterException adapterException) {
                     log.debug("消息表存在h_patient-redis-{}的数据", command.getId());
                 }
@@ -127,8 +124,6 @@ public class PatientAdepter {
                     new QueryMessageCommand("h_patient-es-" + command.getId()).execute();
                     log.debug("消息表不存在h_patient-redis-{}的数据,执行添加消息", command.getId());
                     new AddMessageCommand("news_exchange", "news.add", "h_patient-es-" + command.getId()).execute();
-                    log.debug("添加信息表成功，消息为{}", "h_patient-es-" + command.getId());
-                    log.debug("根据id{}查询es的数据{}", command.getId(), patient);
                 } catch (AdapterException adapterException) {
                     log.debug("消息表存在h_patient-redis-{}的数据", command.getId());
                 }
