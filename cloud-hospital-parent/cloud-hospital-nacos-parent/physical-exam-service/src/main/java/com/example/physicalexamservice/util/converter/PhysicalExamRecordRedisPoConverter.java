@@ -1,6 +1,7 @@
 package com.example.physicalexamservice.util.converter;
 
 import com.example.physicalexamservice.outlet.dao.es.po.PhysicalExamRecordEsPo;
+import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordMysqlPo;
 import com.example.physicalexamservice.outlet.dao.redis.po.PhysicalExamRecordRedisPo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -16,6 +17,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class PhysicalExamRecordRedisPoConverter {
 
+    /**
+     * PhysicalExamRecordEsPo -> PhysicalExamRecordRedisPo
+     *
+     * @param physicalExamRecordEsPo
+     * @return
+     */
     public PhysicalExamRecordRedisPo convert(PhysicalExamRecordEsPo physicalExamRecordEsPo) {
         /* 实例化 PhysicalExamRecordRedisPo */
         PhysicalExamRecordRedisPo physicalExamRecordRedisPo = new PhysicalExamRecordRedisPo();
@@ -28,5 +35,25 @@ public class PhysicalExamRecordRedisPoConverter {
         /* 返回 */
         return physicalExamRecordRedisPo;
     }
+
+    /**
+     * PhysicalExamRecordMysqlPo -> PhysicalExamRecordRedisPo
+     *
+     * @param physicalExamRecordMysqlPo
+     * @return
+     */
+    public PhysicalExamRecordRedisPo convert(PhysicalExamRecordMysqlPo physicalExamRecordMysqlPo) {
+        /* 实例化 PhysicalExamRecordRedisPo */
+        PhysicalExamRecordRedisPo physicalExamRecordRedisPo = new PhysicalExamRecordRedisPo();
+        /* 判断传值有无 */
+        if (physicalExamRecordMysqlPo == null) {
+            throw new NullPointerException();
+        }
+        /* 赋值 */
+        BeanUtils.copyProperties(physicalExamRecordMysqlPo, physicalExamRecordRedisPo);
+        /* 返回 */
+        return physicalExamRecordRedisPo;
+    }
+
 
 }

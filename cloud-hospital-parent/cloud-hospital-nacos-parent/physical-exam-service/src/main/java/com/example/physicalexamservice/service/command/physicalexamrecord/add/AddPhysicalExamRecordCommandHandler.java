@@ -47,21 +47,32 @@ public class AddPhysicalExamRecordCommandHandler implements IAddPhysicalExamReco
     @Override
     public String action(AddPhysicalExamRecordCommand command) {
         /* 完善数据 */
-        command.setCreateTime(new Date());
-        command.setNo("EXAMNO" + CreateRandomUtil.createRandomVerifyCode(true, 19));
-        /* 调用 Record 添加方法,返回返回值 */
+        command.setCreateTime(new Date());  /* 补充下检查单日期 */
+        command.setNo("EXAMNO" + CreateRandomUtil.createRandomVerifyCode(true, 19)); /* 补充编号No */
+
+        /* 调用 MySQL 添加方法,返回返回值 */
         Long recordId = physicalExamRecordDaoAdapter.addFromTreat(command.getTreatrecordid(), command.getDoctorid(), command.getPatientid(), PhysicalExamRecordVo.STATUS_NOTPAY, command.getNo(), command.getCreateTime());
+
         /* 赋值主键 */
         command.setId(recordId);
         /* 取出集合 */
         List<AddPhysicalExamRecordCommand.InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList = command.getInnerAddPhysicalExamRecordDetailPoList();
-        /* 补充价格,减少库存,添加项目名 */
-        physicalExamDaoAdapter.setListPriceAndUpdateStockAndExamInfo(innerAddPhysicalExamRecordDetailPoList);
+
+        try {
+            /* 补充价格,减少库存,添加项目名 */
+            physicalExamDaoAdapter.setListPriceAndUpdateStockAndExamInfo(innerAddPhysicalExamRecordDetailPoList);
+        } catch (NullPointerException e) {
+            /* 捕获 NullPointerException , 抛 NotFoundPhysicalExamException */
+            throw new NotFoundPhysicalExamException();
+        } catch (IllegalStateException e) {
+            /* 捕获 IllegalStateException , 抛 NotFoundPhysicalExamException */
+            throw new PhysicalExamStockIsNotEnoughException();
+        }
         /* 补充类型信息 */
-        physicalExamTypeDaoAdapter.setListTypeInfo(innerAddPhysicalExamRecordDetailPoList);
-        /* 调用 RecordDetail 添加方法 */
+        /* physicalExamTypeDaoAdapter.setListTypeInfo(innerAddPhysicalExamRecordDetailPoList); */
+        /* 调用 MySQL 的 RecordDetail 添加方法 */
         physicalExamRecordDetailDaoAdapter.addFromTreat(innerAddPhysicalExamRecordDetailPoList, recordId, PhysicalExamRecordDetailVo.STATUS_NOTEXAM);
-        log.debug("添加到MySQL,{}",innerAddPhysicalExamRecordDetailPoList);
+        log.debug("添加到MySQL,{}", innerAddPhysicalExamRecordDetailPoList);
         /* 返回主键 */
         return recordId + "-" + command.getNo();
     }

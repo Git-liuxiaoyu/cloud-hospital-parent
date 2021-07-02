@@ -21,7 +21,8 @@ public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
     @Override
     public RestHighLevelClient elasticsearchClient() {
         RestClientBuilder builder = RestClient.builder(
-                new HttpHost("192.172.0.163",9200,"http")
+//                new HttpHost("192.172.0.163",9200,"http")
+                new HttpHost("localhost",9200,"http")
         );
 
         return new RestHighLevelClient(builder);

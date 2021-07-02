@@ -3,10 +3,11 @@ package com.example.physicalexamservice.adapter;
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamTreatVo;
 import com.example.physicalexamservice.outlet.dao.es.PhysicalExamEsPoDao;
 import com.example.physicalexamservice.outlet.dao.es.po.PhysicalExamEsPo;
+import com.example.physicalexamservice.outlet.dao.mysql.MessageMysqlPoDao;
 import com.example.physicalexamservice.outlet.dao.mysql.PhysicalExamMysqlPoDao;
+import com.example.physicalexamservice.outlet.dao.mysql.po.MessageMysqlPo;
 import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamMysqlPo;
 import com.example.physicalexamservice.outlet.dao.redis.PhysicalExamRedisPoDao;
-import com.example.physicalexamservice.outlet.dao.redis.po.PhysicalExamRedisPo;
 import com.example.physicalexamservice.service.command.physicalexamrecord.add.AddPhysicalExamRecordCommand;
 import com.example.physicalexamservice.util.converter.PhysicalExamRedisPoConverter;
 import com.example.physicalexamservice.util.converter.PhysicalExamTreatVoConverter;
@@ -37,12 +38,15 @@ public class PhysicalExamDaoAdapter {
 
     private final PhysicalExamRedisPoConverter physicalExamRedisPoConverter;
 
-    public PhysicalExamDaoAdapter(PhysicalExamMysqlPoDao physicalExamMysqlPoDao, PhysicalExamRedisPoDao physicalExamRedisPoDao, PhysicalExamTreatVoConverter physicalExamTreatVoConverter, PhysicalExamRedisPoConverter physicalExamRedisPoConverter, PhysicalExamEsPoDao physicalExamEsPoDao) {
+    private final MessageMysqlPoDao messageMysqlPoDao;
+
+    public PhysicalExamDaoAdapter(PhysicalExamMysqlPoDao physicalExamMysqlPoDao, PhysicalExamRedisPoDao physicalExamRedisPoDao, PhysicalExamTreatVoConverter physicalExamTreatVoConverter, PhysicalExamRedisPoConverter physicalExamRedisPoConverter, PhysicalExamEsPoDao physicalExamEsPoDao, MessageMysqlPoDao messageMysqlPoDao) {
         this.physicalExamMysqlPoDao = physicalExamMysqlPoDao;
         this.physicalExamRedisPoDao = physicalExamRedisPoDao;
         this.physicalExamTreatVoConverter = physicalExamTreatVoConverter;
         this.physicalExamRedisPoConverter = physicalExamRedisPoConverter;
         this.physicalExamEsPoDao = physicalExamEsPoDao;
+        this.messageMysqlPoDao = messageMysqlPoDao;
     }
     /* 构造注入 - 结束 */
 
@@ -91,25 +95,30 @@ public class PhysicalExamDaoAdapter {
      * @param innerAddPhysicalExamRecordDetailPoList
      */
     public void setListPriceAndUpdateStockAndExamInfo(List<AddPhysicalExamRecordCommand.InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList) {
-
         /* 遍历赋值 */
         innerAddPhysicalExamRecordDetailPoList.forEach(i -> {
             /*  MySQL中查 */
             PhysicalExamMysqlPo physicalExamMysqlPo = physicalExamMysqlPoDao.selectByPrimaryKey(i.getExamid());
             /* 判断为 null 时 , return */
             if (physicalExamMysqlPo == null)
-                return;
-            /* 赋值 */
-            log.debug("库存 {}", physicalExamMysqlPo.getLeftstock());
-            i.setExamName(physicalExamMysqlPo.getName());
-            i.setPrice(physicalExamMysqlPo.getPrice());
-            physicalExamMysqlPo.setLeftstock(physicalExamMysqlPo.getLeftstock() - 1);
-            log.debug("库存 {}", physicalExamMysqlPo.getLeftstock());
+                throw new NullPointerException();
+            /* 赋值剩余个数 */
+            Long newLeftStock = physicalExamMysqlPo.getLeftstock() - i.getCount();
+            /* 判断剩余是否小于0 */
+            if (newLeftStock < 0) {
+                throw new IllegalStateException();
+            }
+            physicalExamMysqlPo.setLeftstock(newLeftStock);
             /* 存入 MySQL */
             physicalExamMysqlPoDao.updateByPrimaryKeySelective(physicalExamMysqlPo);
-            /* 转RedisPo 存入Redis */
-            PhysicalExamRedisPo physicalExamRedisPo = physicalExamRedisPoConverter.convert(physicalExamMysqlPo);
-            physicalExamRedisPoDao.save(physicalExamRedisPo);
+            /* 删除 Redis MQ 消息 */
+            /* insert 进入 Message表 */
+            MessageMysqlPo messageMysqlPo = new MessageMysqlPo();
+            messageMysqlPo.setMessageContent("DELETE-" + i.getExamid());
+            messageMysqlPo.setExchange("physical_exam_redis_cache_ex");
+            messageMysqlPo.setRoutingKey("physical.exam.redis.cache");
+            messageMysqlPo.setStatus(MessageMysqlPo.NOT_SEND);
+            messageMysqlPoDao.insertSelective(messageMysqlPo);
         });
     }
 }

@@ -78,15 +78,15 @@
 <!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
 <!--        </table>-->
 
-        <table tableName="h_physical_exam_record" catalog="h_physical_exam"
-               domainObjectName="PhysicalExamRecordMysqlPo"
-               mapperName="PhysicalExamRecordMysqlPoDao"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true">
-            <property name="ignoreQualifiersAtRuntime" value="true"/>
-        </table>
+<!--        <table tableName="h_physical_exam_record" catalog="h_physical_exam"-->
+<!--               domainObjectName="PhysicalExamRecordMysqlPo"-->
+<!--               mapperName="PhysicalExamRecordMysqlPoDao"-->
+<!--               enableCountByExample="true"-->
+<!--               enableUpdateByExample="true"-->
+<!--               enableDeleteByExample="true"-->
+<!--               enableSelectByExample="true">-->
+<!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
+<!--        </table>-->
 
 <!--        <table tableName="h_physical_exam_record_detail" catalog="h_physical_exam"-->
 <!--               domainObjectName="PhysicalExamRecordDetailMysqlPo"-->
@@ -97,6 +97,26 @@
 <!--               enableSelectByExample="true">-->
 <!--            <property name="ignoreQualifiersAtRuntime" value="true"/>-->
 <!--        </table>-->
+
+        <table tableName="h_received" catalog="h_physical_exam"
+               domainObjectName="ReceivedMysqlPo"
+               mapperName="ReceivedMysqlPoDao"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true">
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+
+        <table tableName="h_message" catalog="h_physical_exam"
+               domainObjectName="MessageMysqlPo"
+               mapperName="MessageMysqlPoDao"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true">
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
 
     </context>
 </generatorConfiguration>

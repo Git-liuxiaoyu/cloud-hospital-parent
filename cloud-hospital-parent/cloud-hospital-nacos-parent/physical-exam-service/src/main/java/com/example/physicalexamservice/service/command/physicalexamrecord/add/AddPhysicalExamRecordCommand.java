@@ -1,6 +1,5 @@
 package com.example.physicalexamservice.service.command.physicalexamrecord.add;
 
-import com.example.physicalexamservice.outlet.publisher.api.IPhysicalExamRecordEsEventPublisher;
 import com.example.physicalexamservice.service.api.physicalexamrecord.IAddPhysicalExamRecordCommandHandler;
 import com.example.physicalexamservice.util.ApplicationContextHolder;
 import io.swagger.annotations.ApiModel;
@@ -25,13 +24,13 @@ import java.util.List;
 @ApiModel
 public class AddPhysicalExamRecordCommand {
 
-    @ApiModelProperty(value = "体检记录主键ID", example = "1",hidden = true)
+    @ApiModelProperty(value = "体检记录主键ID", example = "1", hidden = true)
     private Long id;
 
-    @ApiModelProperty(value = "体检记录编号No",hidden = true)
+    @ApiModelProperty(value = "体检记录编号No", hidden = true)
     private String no;
 
-    @ApiModelProperty(value = "体检记录创建时间",hidden = true)
+    @ApiModelProperty(value = "体检记录创建时间", hidden = true)
     private Date createTime;
 
     @NotNull
@@ -47,7 +46,7 @@ public class AddPhysicalExamRecordCommand {
     private Long patientid;
 
     @NotNull
-    @ApiModelProperty(value = "体检项目详情信息",required = true)
+    @ApiModelProperty(value = "体检项目详情信息", required = true)
     private List<InnerAddPhysicalExamRecordDetailPo> innerAddPhysicalExamRecordDetailPoList;
 
     @ApiModelProperty(hidden = true)
@@ -66,21 +65,21 @@ public class AddPhysicalExamRecordCommand {
         @ApiModelProperty(value = "体检记录详情主键ID", example = "1")
         private Long id;
 
-        @ApiModelProperty(value = "体检记录详情得体检类型主键ID(体检的项目是哪个类型)", example = "1",required = true)
+        @ApiModelProperty(value = "体检记录详情得体检类型主键ID(体检的项目是哪个类型)", example = "1", required = true)
         @NotNull
         private Integer typeid;
 
         @ApiModelProperty(hidden = true)
         private String typeName;
 
-        @ApiModelProperty(value = "体检记录详情得体检的是哪个项目(体检项目主键ID)", example = "1",required = true)
+        @ApiModelProperty(value = "体检记录详情得体检的是哪个项目(体检项目主键ID)", example = "1", required = true)
         @NotNull
         private Integer examid;
 
         @ApiModelProperty(hidden = true)
         private String examName;
 
-        @ApiModelProperty(value = "体检记录详情得体检项目检查次数", example = "1",required = true)
+        @ApiModelProperty(value = "体检记录详情得体检项目检查次数", example = "1", required = true)
         @NotNull
         private Integer count;
 
@@ -105,15 +104,14 @@ public class AddPhysicalExamRecordCommand {
     }
 
     public String execute() {
-        /* 执行方法 */
-        String recordIdAndRecordNo = this.addPhysicalExamRecordCommandHandler.action(this);
 
+        /* 不通过 EventBus 而是通过 */
         /* Event Bus 通知 添加到 ElasticSearch */
         /* 添加 Record */
-        ApplicationContextHolder.getApplicationContext().publishEvent(new IPhysicalExamRecordEsEventPublisher.AddPhysicalExamRecordEsEvent(this));
+        /*ApplicationContextHolder.getApplicationContext().publishEvent(new IPhysicalExamRecordEsEventPublisher.AddPhysicalExamRecordEsEvent(this));*/
 
-        /* 返回 */
-        return recordIdAndRecordNo;
+        /* 执行方法并返回 */
+        return this.addPhysicalExamRecordCommandHandler.action(this);
     }
 
 

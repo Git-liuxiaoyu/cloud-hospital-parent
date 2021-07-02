@@ -1,6 +1,7 @@
 package com.example.physicalexamservice.util.converter;
 
 import com.example.physicalexamservice.outlet.dao.es.po.PhysicalExamRecordDetailEsPo;
+import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordDetailMysqlPo;
 import com.example.physicalexamservice.service.command.physicalexamrecord.add.AddPhysicalExamRecordCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -50,4 +51,6 @@ public class PhysicalExamRecordDetailEsPoConverter {
         /* 返回 */
         return physicalExamRecordDetailEsPo;
     }
+
+
 }

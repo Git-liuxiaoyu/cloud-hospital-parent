@@ -1,5 +1,6 @@
 package com.example.physicalexamservice.util.converter;
 
+import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordDetailVo;
 import com.example.physicalexamservice.outlet.dao.es.po.PhysicalExamRecordDetailEsPo;
 import com.example.physicalexamservice.outlet.dao.redis.po.PhysicalExamRecordDetailRedisPo;
 import lombok.extern.slf4j.Slf4j;

@@ -54,4 +54,6 @@ public class PhysicalExamRecordDetailVo {
 
     public static final String STATUS_NOTEXAM = "0";
 
+    public static final String STATUS_EXAMED = "1";
+
 }

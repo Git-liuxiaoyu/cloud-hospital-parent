@@ -26,6 +26,7 @@ public class ElasticSearchConfig extends AbstractElasticsearchConfiguration {
 //        return RestClients.create(clientConfiguration).rest();
 
         RestClientBuilder builder = RestClient.builder(
+//                                new HttpHost("192.172.0.163",9200,"http")
                 new HttpHost("localhost",9200,"http")
         );
 

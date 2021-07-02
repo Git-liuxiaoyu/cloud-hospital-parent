@@ -41,6 +41,7 @@ public class PhysicalExamRecordEsEventPublisher implements IPhysicalExamRecordEs
      * @param event
      */
     @Override
+    @EventListener(UpdateStatusPhysicalExamRecordEsEvent.class)
     public void updateStatus(UpdateStatusPhysicalExamRecordEsEvent event) {
         /* 获得 Source */
         PhysicalExamRecordMysqlPo physicalExamRecordMysqlPo = (PhysicalExamRecordMysqlPo) event.getSource();

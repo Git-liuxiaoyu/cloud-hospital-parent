@@ -2,6 +2,7 @@ package com.example.physicalexamservice.util.converter;
 
 import com.example.physicalexamservice.inlet.web.vo.PhysicalExamRecordVo;
 import com.example.physicalexamservice.outlet.dao.es.po.PhysicalExamRecordEsPo;
+import com.example.physicalexamservice.outlet.dao.mysql.po.PhysicalExamRecordMysqlPo;
 import com.example.physicalexamservice.outlet.dao.redis.po.PhysicalExamRecordRedisPo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -55,4 +56,22 @@ public class PhysicalExamRecordVoConverter {
         return physicalExamRecordVo;
     }
 
+    /**
+     * PhysicalExamRecordMysqlPo -> PhysicalExamRecordVo
+     *
+     * @param physicalExamRecordMysqlPo
+     * @return
+     */
+    public PhysicalExamRecordVo convert(PhysicalExamRecordMysqlPo physicalExamRecordMysqlPo) {
+        /* 实例化 PhysicalExamRecordVo */
+        PhysicalExamRecordVo physicalExamRecordVo = new PhysicalExamRecordVo();
+        /* 判断是否为 null */
+        if (physicalExamRecordMysqlPo == null) {
+            throw new NullPointerException();
+        }
+        /* 赋值 */
+        BeanUtils.copyProperties(physicalExamRecordMysqlPo, physicalExamRecordVo);
+        /* 返回 */
+        return physicalExamRecordVo;
+    }
 }
