@@ -19,6 +19,7 @@ public class ExampleQueryDrugOddCommand {
         //表单提交查询条件
         private String no;
 
+
         private Long drugOddId;
 
         //分页参数
@@ -40,9 +41,10 @@ public class ExampleQueryDrugOddCommand {
             this.drugOddId=drugOddId;
         }
 
-    public ExampleQueryDrugOddCommand(String no, String name, Integer typeId, Integer id, String location) {
+    public ExampleQueryDrugOddCommand(String no) {
             this();
         this.no = no;
+
 
     }
     //查集合
@@ -61,6 +63,14 @@ public class ExampleQueryDrugOddCommand {
     public void updateById(){
          handle.updateById(this.drugOddId);
          log.info("修改成功");
+    }
+
+    //根据编号,状态查询集合
+    public DrugOddVo findByNoAndStatus(){
+        DrugOddVo drugOdd = handle.findByNoAndStatus(this);
+
+        return drugOdd;
+
     }
 
 

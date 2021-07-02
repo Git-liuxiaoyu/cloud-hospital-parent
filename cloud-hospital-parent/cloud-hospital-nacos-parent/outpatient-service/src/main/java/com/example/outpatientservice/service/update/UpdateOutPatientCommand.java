@@ -2,6 +2,7 @@ package com.example.outpatientservice.service.update;
 
 import com.example.outpatientservice.outlet.publisher.api.IUpdateOutPatientStatusEventPublisher;
 import com.example.outpatientservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,7 @@ public class UpdateOutPatientCommand {
     private String status;
 
     private Long registerid;
-
+    @ApiModelProperty(hidden = true)
     private IUpdateOutPatientCommandHandle handle;
 
     public UpdateOutPatientCommand(){

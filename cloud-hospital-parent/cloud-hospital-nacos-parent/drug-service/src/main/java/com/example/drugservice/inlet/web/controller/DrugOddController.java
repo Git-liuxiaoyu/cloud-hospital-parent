@@ -35,6 +35,7 @@ public class DrugOddController {
     //修改药品单状态
     @RequestMapping(value = "/drugodd/update/byId",method = RequestMethod.POST)
     @ApiOperation(value = "根据药品单id修改状态",notes = "传一个药品单id,修改状态,表示通过审核")
+    @ApiOperationSupport(ignoreParameters = "handle")
     public ResponseResult<String> updateStatusById(@RequestBody UpdateDrugOddCommand command){
         command.execute();
         return new ResponseResult<>(200,"success","成功哦");
@@ -42,6 +43,7 @@ public class DrugOddController {
 
     //添加药品单
     @RequestMapping(value = "/drugodd/add",method = RequestMethod.POST)
+    @ApiOperationSupport(ignoreParameters = "handle")
     @ApiOperation(value = "添加药品单",notes = "要传一个对象,对象里有添加药品的人,添加时间,对象里面还有个集合里面是添加了哪些药")
     public ResponseResult<Long> addDrugOdd(@RequestBody AddDrugOddCommand command){
         log.info("药房接收到的参数"+command);
@@ -61,6 +63,14 @@ public class DrugOddController {
             return new ResponseResult<>(500,"success",null);
         }
         return new ResponseResult<>(200,"success",null);
+    }
+    //根据编号和状态查询
+    @PostMapping("/drugodd/ByNo")
+    @ApiOperationSupport(ignoreParameters = "handle")
+    public ResponseResult<DrugOddVo> findByNoAndStatus(@RequestBody ExampleQueryDrugOddCommand command){
+
+        DrugOddVo drugOddVos = command.findByNoAndStatus();
+        return new ResponseResult<>(200,"success",drugOddVos);
     }
 
 

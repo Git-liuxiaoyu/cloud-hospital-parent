@@ -9,6 +9,7 @@ import com.example.outpatientservice.service.update.UpdateOutPatientCommand;
 import com.example.outpatientservice.util.PageUtils;
 import com.example.outpatientservice.util.ResponseResult;
 import com.github.pagehelper.PageInfo;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,6 +26,8 @@ public class OutPatientRecordController {
 
     //添加检查 检查的就诊记录
     @PostMapping("/outPatientRecord/add")
+    @ApiOperationSupport(ignoreParameters = {"handle","updateHandle","recordHandle"}
+                            )
     @ApiOperation(value = "添加门诊患者就诊纪录",notes = "把就诊记录添加到就诊记录表里")
     public ResponseResult<Long> addRecord(@RequestBody AddOutPatientRecordCommand command){
         log.info("command为{}",command);
@@ -34,6 +37,7 @@ public class OutPatientRecordController {
 
     //添加开药 医嘱的就诊记录
     @PostMapping("/outPatientRecord/add/openDrug")
+    @ApiOperationSupport(ignoreParameters = {"handle","updateHandle","recordHandle"})
     public ResponseResult<Long> addDrugRecord(@RequestBody AddOutPatientDrugRecordCommand command){
         log.info("医生开药的参数{}",command);
         Long drugOddId = command.execute();

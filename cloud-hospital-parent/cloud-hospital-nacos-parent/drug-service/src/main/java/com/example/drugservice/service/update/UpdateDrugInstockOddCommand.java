@@ -1,6 +1,7 @@
 package com.example.drugservice.service.update;
 
 import com.example.drugservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -14,6 +15,7 @@ public class UpdateDrugInstockOddCommand {
     private Long id;
 
 
+    @ApiModelProperty(hidden = true)
     private IUpdateDrugInstockOddCommandHandle handle;
 
     public UpdateDrugInstockOddCommand(){

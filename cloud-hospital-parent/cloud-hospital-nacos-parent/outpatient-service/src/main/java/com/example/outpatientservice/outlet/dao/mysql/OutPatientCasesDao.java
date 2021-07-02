@@ -29,4 +29,6 @@ public interface OutPatientCasesDao {
     int updateByPrimaryKeySelective(OutPatientCasesPo record);
 
     int updateByPrimaryKey(OutPatientCasesPo record);
+
+    OutPatientCasesPo selectByPatientId(Long patientid);
 }

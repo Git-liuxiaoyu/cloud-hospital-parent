@@ -36,4 +36,6 @@ public interface DrugOddDao {
     List<DrugOddPo> selectByCon(DrugOddPo po) ;
 
     DrugOddPo selectByNo(String no);
+
+    DrugOddPo selectByNoAndStatus( String no);
 }

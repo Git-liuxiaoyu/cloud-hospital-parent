@@ -20,7 +20,7 @@ public class ExampleQueryDrugCommand {
         //表单提交查询条件
         @ApiModelProperty(value = "药品编号", example = "1")
         private String no;
-    @ApiModelProperty(value = "药品名")
+        @ApiModelProperty(value = "药品名")
         private String name;
         @ApiModelProperty(value = "药品类型id", example = "1")
         private Integer typeId;
@@ -35,6 +35,7 @@ public class ExampleQueryDrugCommand {
          @ApiModelProperty(value = "每页几条数据", example = "3",required = true)
         private Integer pageSize;
 
+         @ApiModelProperty(hidden = true)
         private IExampleQueryDrugCommandHandle handle ;
 
         public ExampleQueryDrugCommand(){

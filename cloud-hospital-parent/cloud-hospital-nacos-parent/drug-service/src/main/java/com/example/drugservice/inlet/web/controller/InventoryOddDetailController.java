@@ -5,6 +5,7 @@ import com.example.drugservice.inlet.web.vo.InventoryOddDetailVo;
 import com.example.drugservice.service.query.ExampleQueryDrugOddDetailCommand;
 import com.example.drugservice.service.query.ExampleQueryInventoryOddDetailCommand;
 import com.example.drugservice.util.ResponseResult;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ public class InventoryOddDetailController {
 
     @RequestMapping(value = "/inventoryOddDetail/list/byId",method = RequestMethod.POST)
     @ApiOperation(value = "查询盘点表的详情",notes = "根据盘点表id 查询盘点详情表",produces = "application/json",response = ResponseResult.class)
+    @ApiOperationSupport(ignoreParameters = "handle")
     public ResponseResult<List<InventoryOddDetailVo>> list(@RequestBody ExampleQueryInventoryOddDetailCommand command){
         List<InventoryOddDetailVo> vos = command.execute();
         System.out.println(vos);

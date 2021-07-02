@@ -3,6 +3,7 @@ package com.example.drugservice.service.queryinstockodddetail;
 import com.example.drugservice.inlet.web.vo.DrugInstockOddDetailVo;
 import com.example.drugservice.inlet.web.vo.DrugInstockOddVo;
 import com.example.drugservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class ExampleQueryDrugInstockOddDetailCommand {
     //表单提交查询条件
     private Long instockOddId;
-
+    @ApiModelProperty(hidden = true)
     private IExampleQueryDrugInstockOddDetailCommandHanle handle;
 
     public ExampleQueryDrugInstockOddDetailCommand(){

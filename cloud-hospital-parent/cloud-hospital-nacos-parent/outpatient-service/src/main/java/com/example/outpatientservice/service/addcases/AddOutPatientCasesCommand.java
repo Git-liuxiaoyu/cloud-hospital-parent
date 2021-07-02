@@ -1,6 +1,7 @@
 package com.example.outpatientservice.service.addcases;
 
 import com.example.outpatientservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -23,6 +24,7 @@ public class AddOutPatientCasesCommand {
     private Long checkoddid;
     private Long hospitalid;
 
+    @ApiModelProperty(hidden = true)
     private IAddOutPatientCasesCommandHandle handle;
 
     public AddOutPatientCasesCommand(){

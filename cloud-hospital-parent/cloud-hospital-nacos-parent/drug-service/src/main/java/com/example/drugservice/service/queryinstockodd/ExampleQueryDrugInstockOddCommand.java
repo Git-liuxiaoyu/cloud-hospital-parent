@@ -2,6 +2,7 @@ package com.example.drugservice.service.queryinstockodd;
 
 import com.example.drugservice.inlet.web.vo.DrugInstockOddVo;
 import com.example.drugservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -15,7 +16,7 @@ public class ExampleQueryDrugInstockOddCommand {
     //分页参数
     private Integer pageIndex;
     private Integer pageSize;
-
+    @ApiModelProperty(hidden = true)
     private IExampleQueryDrugInstockOddCommandHandle handle;
 
     public ExampleQueryDrugInstockOddCommand(){

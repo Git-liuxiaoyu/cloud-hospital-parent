@@ -41,10 +41,13 @@ public class AddOutPatientRecordCommand {
     private List<AddOutPatientRecordCommand> purPeoList;
 
     //修改的方法
+    @ApiModelProperty(hidden = true)
     private IUpdateOutPatientCommandHandle updateHandle;
 
+    @ApiModelProperty(hidden = true)
     private IAddOutPatientRecordCommandHandle handle;
 
+    @ApiModelProperty(hidden = true)
     private IUpdateOutPatientRecordCommandHandle recordHandle;
 
     public AddOutPatientRecordCommand(){

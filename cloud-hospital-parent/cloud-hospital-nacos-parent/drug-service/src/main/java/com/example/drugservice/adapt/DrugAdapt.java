@@ -39,6 +39,7 @@ public class DrugAdapt {
 
     //动态查询 分页列表
     public List<DrugVo> findDrugListByExample(ExampleQueryDrugCommand command){
+
         //查es
         List<DrugEsPo> poList =new ArrayList<>();
         if (command.getNo()!=null){
@@ -52,9 +53,12 @@ public class DrugAdapt {
            poList= drugEsDao.findAll();
         }
         //es po 转换为vo
+//        drugEsDao.deleteAll();
+        log.info("添加es成功");
+
         List<DrugVo> vos = converter.convert2(poList);
 
-        //drugEsDao.deleteAll();
+
 //        if (poList.size()==0){
 //            log.info("走mysql 查询列表");
 //
@@ -70,7 +74,7 @@ public class DrugAdapt {
 //                po1.setStock(drugPo.getStock());
 //                po1.setTypeId(drugPo.getTypeid());
 //                System.out.println(drugPo.getId().toString());
-//                po1.setId(drugPo.getId().toString());
+//                po1.setId(drugPo.getId());
 //                BeanUtils.copyProperties(drugPo,po1);
 //                drugEsDao.save(po1);
 //            }
@@ -78,6 +82,7 @@ public class DrugAdapt {
 //       }
         log.info("走es 查询列表");
         return vos;
+
     }
 
 

@@ -6,13 +6,14 @@ import com.example.drugservice.adapt.converter.DrugOddVoConverter;
 import com.example.drugservice.adapt.converter.DrugVoConverter;
 import com.example.drugservice.inlet.web.vo.DrugOddVo;
 import com.example.drugservice.inlet.web.vo.DrugVo;
+import com.example.drugservice.outlet.dao.es.DrugEsDao;
+import com.example.drugservice.outlet.dao.es.po.DrugEsPo;
 import com.example.drugservice.outlet.dao.mysql.*;
-import com.example.drugservice.outlet.dao.mysql.po.DrugOddDetailPo;
-import com.example.drugservice.outlet.dao.mysql.po.DrugOddPo;
-import com.example.drugservice.outlet.dao.mysql.po.DrugPo;
-import com.example.drugservice.outlet.dao.mysql.po.MessagePo;
+import com.example.drugservice.outlet.dao.mysql.po.*;
 import com.example.drugservice.outlet.dao.redis.DrugOddRedisDao;
+import com.example.drugservice.outlet.dao.redis.DrugRedisDao;
 import com.example.drugservice.outlet.dao.redis.po.DrugOddRedisPo;
+import com.example.drugservice.outlet.dao.redis.po.DrugRedisPo;
 import com.example.drugservice.service.add.AddDrugOddCommand;
 import com.example.drugservice.service.add.AddDrugOddDetailCommand;
 import com.example.drugservice.service.instock.InStockDrugCommand;
@@ -53,6 +54,14 @@ public class DrugOddAdapt {
     @Autowired
     private MessageDao messageMysqlDao;
 
+    @Autowired
+    private DrugEsDao drugEsDao;
+
+    @Autowired
+    private DrugRedisDao drugRedisDao;
+
+
+
     //条件查询集合
     public List<DrugOddVo> findDrugListByExample( ExampleQueryDrugOddCommand command){
 
@@ -77,7 +86,7 @@ public class DrugOddAdapt {
     public void updateDrugById(UpdateDrugOddCommand command){
         DrugOddPo po = new DrugOddPo();
         po.setId(command.getId());
-        po.setStatus("2");
+        po.setStatus(command.getStatus());
         //动态修改
         drugOddDao.updateByPrimaryKeySelective(po);
 
@@ -135,6 +144,19 @@ public class DrugOddAdapt {
                     log.info("库存大于或等于购买数量 可以执行减少库存操作");
                     po1.setStock(po1.getStock()-detailCommand.getDrugNum());
                     drugDao.updateByPrimaryKeySelective(po1);
+
+                    //然后修改es数据
+                    DrugEsPo esPo = new DrugEsPo();
+                    esPo.setTypeId(po1.getTypeid());
+                    esPo.setStock(po1.getStock()-detailCommand.getDrugNum());
+                    BeanUtils.copyProperties(po1,esPo);
+                    drugEsDao.save(esPo);
+                    log.info("修改es库存成功");
+
+                    //删除redis
+                    drugRedisDao.deleteById(po1.getId());
+                    log.info("删除Redis库存成功");
+
                 }else {
                     log.info("库存小于购买数量 无法执行减少库存操作 库存不足");
                 }
@@ -197,6 +219,17 @@ public class DrugOddAdapt {
             log.info("超时为付款状态修改成功 超时付款状态为[{}]",drugOddPo.getStatus());
         }
     }
+
+    public DrugOddVo findByNoAndStatus(ExampleQueryDrugOddCommand command){
+        log.info("command等于{}",command);
+        DrugOddPo drugOdd= drugOddDao.selectByNoAndStatus(command.getNo());
+            DrugOddVo vo = new DrugOddVo();
+            //po转换为vo
+            BeanUtils.copyProperties(drugOdd,vo);
+        return vo;
+
+    }
+
 
 
 

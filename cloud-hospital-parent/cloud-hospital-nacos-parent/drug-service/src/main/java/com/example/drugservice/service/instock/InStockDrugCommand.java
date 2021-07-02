@@ -1,6 +1,7 @@
 package com.example.drugservice.service.instock;
 
 import com.example.drugservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -22,7 +23,7 @@ public class InStockDrugCommand {
     private String location;
     private Date productiontime;
     private Date expirationtime;
-
+    @ApiModelProperty(hidden = true)
     private IInStockDrugCommandHandle handle;
 
     public InStockDrugCommand(){

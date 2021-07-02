@@ -3,6 +3,7 @@ package com.example.drugservice.service.addinstockodd;
 import com.example.drugservice.service.addinstockodddetail.AddInstockOddDetailCommand;
 import com.example.drugservice.service.addinventory.AddInventoryDetailCommand;
 import com.example.drugservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,7 +15,7 @@ public class AddInstockOddCommand {
     private String inStockPerson;
 
     private List<AddInstockOddDetailCommand> purPeoList;
-
+    @ApiModelProperty(hidden = true)
     private IAddInstockOddCommandHandle handle;
 
     public AddInstockOddCommand(){

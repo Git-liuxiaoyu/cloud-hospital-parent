@@ -17,7 +17,8 @@ import java.util.Date;
 @Document(indexName = "drug", replicas = 0, shards = 1)
 public class DrugEsPo {
     @Id
-    private String id;
+    @Field(name = "id",type = FieldType.Long)
+    private Long id;
     @Field(name = "name",type = FieldType.Text,analyzer = "ik_smart")
     private String name;
 

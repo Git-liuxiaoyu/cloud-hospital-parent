@@ -367,4 +367,8 @@
       createtime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByPatientId" resultType="com.example.outpatientservice.outlet.dao.mysql.po.OutPatientCasesPo" parameterType="java.lang.Long">
+    select * from h_outpatient_cases where outpatientid=#{patientid}
+  </select>
 </mapper>

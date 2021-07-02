@@ -240,13 +240,15 @@
       <if test="no!=null and no!=''" >
         and no=#{no}
       </if>
-
         and status!=2
     </where>
-
   </select>
 
   <select id="selectByNo" resultType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo">
+    select * from h_drugodd where no=#{no}
+  </select>
+
+  <select id="selectByNoAndStatus" resultType="com.example.drugservice.outlet.dao.mysql.po.DrugOddPo">
     select * from h_drugodd where no=#{no}
   </select>
 </mapper>

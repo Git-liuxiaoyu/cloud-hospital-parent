@@ -1,6 +1,7 @@
 package com.example.drugservice.service.outstock;
 
 import com.example.drugservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -11,7 +12,7 @@ import lombok.ToString;
 public class OutStockDrugCommand {
     private String no;
     private Integer num;
-
+    @ApiModelProperty(hidden = true)
     private IOutStockDrugCommandHandle handle;
 
     public OutStockDrugCommand(){

@@ -1,6 +1,7 @@
 package com.example.drugservice.service.update;
 
 import com.example.drugservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -12,8 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UpdateDrugOddCommand {
     private Long id;
+    private String status;
 
-
+    @ApiModelProperty(hidden = true)
     private IUpdateDrugOddCommandHandle handle;
 
     public UpdateDrugOddCommand(){
@@ -21,9 +23,10 @@ public class UpdateDrugOddCommand {
                     .getApplicationContext()
                     .getBean(IUpdateDrugOddCommandHandle.class);
     }
-    public UpdateDrugOddCommand(Long id){
+    public UpdateDrugOddCommand(Long id,String status){
         this();
         this.id=id;
+        this.status=status;
     }
 
     public void execute(){

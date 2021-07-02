@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -131,6 +132,7 @@ public class OutPatientAdapt {
 
 
     //发送openfen请求 把药品参数发到药房微服务 返回一个药品单id
+    @Transactional
     public ResponseResult<Long> openfenDrug(AddOutPatientDrugRecordCommand command){
         AddDrugOddCommand command1 = new AddDrugOddCommand();
         command1.setPatientid(command.getOutPatientId().intValue());

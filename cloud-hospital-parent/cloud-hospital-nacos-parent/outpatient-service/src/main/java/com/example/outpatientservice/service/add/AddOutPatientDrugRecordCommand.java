@@ -6,6 +6,7 @@ import com.example.outpatientservice.service.update.IUpdateOutPatientCommandHand
 import com.example.outpatientservice.service.update.IUpdateOutPatientRecordCommandHandle;
 import com.example.outpatientservice.util.ApplicationContextHolder;
 import com.example.outpatientservice.util.ResponseResult;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -33,10 +34,11 @@ public class AddOutPatientDrugRecordCommand {
 
     private List<AddOutPatientDrugRecordCommand> detailCommands;
     //修改功能的接口
+    @ApiModelProperty(hidden = true)
     private IUpdateOutPatientCommandHandle updateHandle;
-
+    @ApiModelProperty(hidden = true)
     private IAddOutPatientDrugRecordCommandHandle handle;
-
+    @ApiModelProperty(hidden = true)
     private IUpdateOutPatientRecordCommandHandle recordHandle;
 
     public AddOutPatientDrugRecordCommand(){

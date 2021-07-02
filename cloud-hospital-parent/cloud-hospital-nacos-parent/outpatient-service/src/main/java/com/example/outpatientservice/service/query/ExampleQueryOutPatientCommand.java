@@ -3,6 +3,7 @@ package com.example.outpatientservice.service.query;
 import com.example.outpatientservice.inlet.web.vo.OutPatientVo;
 import com.example.outpatientservice.outlet.client.DrugServiceClient;
 import com.example.outpatientservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -26,6 +27,7 @@ public class ExampleQueryOutPatientCommand {
     private Integer pageIndex;
     private Integer pageSize;
 
+    @ApiModelProperty(hidden = true)
     private IExampleQueryOutPatientCommandHandle handle;
 
     public ExampleQueryOutPatientCommand(){

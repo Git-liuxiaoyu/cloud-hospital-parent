@@ -2,6 +2,7 @@ package com.example.drugservice.service.add;
 
 import com.example.drugservice.outlet.publisher.po.AddDrugOddCommandEvent;
 import com.example.drugservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class AddDrugOddCommand {
 
     private List<AddDrugOddDetailCommand> detailCommands;
 
+    @ApiModelProperty(hidden = true)
     private IAddDrugOddCommandHandle handle;
 
     public AddDrugOddCommand(){

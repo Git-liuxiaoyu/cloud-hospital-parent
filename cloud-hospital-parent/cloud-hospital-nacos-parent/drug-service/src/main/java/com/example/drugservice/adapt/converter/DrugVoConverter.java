@@ -2,9 +2,11 @@ package com.example.drugservice.adapt.converter;
 
 
 import com.example.drugservice.inlet.web.vo.DrugVo;
+import com.example.drugservice.outlet.dao.es.DrugEsDao;
 import com.example.drugservice.outlet.dao.es.po.DrugEsPo;
 import com.example.drugservice.outlet.dao.mysql.po.DrugPo;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -75,10 +77,13 @@ public class DrugVoConverter {
         }
         return voList;
     }
+    @Autowired
+    private DrugEsDao drugEsDao;
     //po对象转换为vo对象
     public DrugVo convert(DrugEsPo po) {
+        //drugEsDao.deleteById("z1XZYHoBOCN-ApHjN8be");
         DrugVo vo = new DrugVo();
-        vo.setId(Long.parseLong(po.getId()));
+        vo.setId(po.getId());
         BeanUtils.copyProperties(po,vo);
         return vo;
     }

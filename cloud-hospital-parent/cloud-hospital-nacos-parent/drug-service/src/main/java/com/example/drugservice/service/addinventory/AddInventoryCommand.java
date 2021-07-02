@@ -1,6 +1,7 @@
 package com.example.drugservice.service.addinventory;
 
 import com.example.drugservice.util.ApplicationContextHolder;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ public class AddInventoryCommand {
    private String name;
 
     private List<AddInventoryDetailCommand> purPeoList;
-
+    @ApiModelProperty(hidden = true)
     private IAddInventoryCommandHandle handle;
 
     public AddInventoryCommand (){
