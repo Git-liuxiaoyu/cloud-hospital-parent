@@ -52,8 +52,8 @@ public class ProofCommandHandle implements com.example.takenumberservice.service
                 return new ResponseResult<>(400,"还未到上午取票时间，请稍后重试",null);
             }
         }else{//反之，就诊时间段为下午
-            String pmstart = "14:00:00";
-            String pmend = "20:00:00";
+            String pmstart = "12:00:00";
+            String pmend = "18:00:00";
             Integer i=thistime.compareTo(pmend);//如果是正数则代表当前系统时间大于下午12点,不让取票
             Integer k=pmstart.compareTo(thistime);//如果是正数则代表当前系统时间小于下午14点，不让取票
             if(i>0){

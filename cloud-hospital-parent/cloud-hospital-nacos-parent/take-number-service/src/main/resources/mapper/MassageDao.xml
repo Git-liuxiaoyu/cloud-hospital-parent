@@ -30,5 +30,12 @@
         SELECT * FROM message where id = #{id};
     </select>
     
+    
+    <!--每晚12点清空整张表的数据-->
+    <delete id="dele" parameterType="java.lang.Integer">
+        delete
+        from message where status = 1
+    </delete>
+    
 
 </mapper>

@@ -99,13 +99,15 @@ public class ProofDaoAdapter {
      */
     public ResponseResult<DoctorRotaVo>getDoctorRotaById(Long id){
 
-        //ResponseResult<DoctorRotaVo> doctorRotaById = workerServiceClient.getDoctorRotaById(id);
-        /*========================测试======================================*/
+        System.out.println("排班id ==============="+id);
+        ResponseResult<DoctorRotaVo> doctorRotaById = workerServiceClient.getDoctorRotaById(id);
+        /*========================测试======================================
         DoctorRotaVo dvo = new DoctorRotaVo();
         dvo.setDoctorid(1);
         dvo.setDoctorName("小黑");
         return new ResponseResult<DoctorRotaVo>(200,"ok",dvo);
-        //=======================测试=====================================//
+        =======================测试=====================================*/
+        return doctorRotaById;
     }
 
 

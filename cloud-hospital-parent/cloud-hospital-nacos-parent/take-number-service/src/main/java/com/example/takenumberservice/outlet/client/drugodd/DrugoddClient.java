@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface DrugoddClient {
 
     //接收挂号信息
-    @PostMapping ("drugOdd/byNo/{no}")
+    @GetMapping ("drugOdd/byNo/{no}")
     ResponseResultD<Void> findByYFNo(@PathVariable("no") String no);
 
 

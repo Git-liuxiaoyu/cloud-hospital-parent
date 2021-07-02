@@ -35,5 +35,10 @@ public interface MassageDao {
      */
     List<MassagePo> findbystatus();
 
+    /**
+     * 每晚12点清除状态为1的已发送消息
+     */
+    void dele();
+
 
 }
