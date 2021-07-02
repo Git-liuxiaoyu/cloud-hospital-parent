@@ -40,11 +40,11 @@ public class PharmacyProofPayAdapter {
      * @return
      */
     public DrugOddVo findByNo(String no){
-        ExampleQueryDrugOddCommand ex = new ExampleQueryDrugOddCommand();
-        ex.setNo(no);
-        ResponseResult<DrugOddVo> byNo = pharmacyServiceClient.findByNo(ex);//获得要拼单信息
+//        ExampleQueryDrugOddCommand ex = new ExampleQueryDrugOddCommand();
+//        ex.setNo(no);
+//        ResponseResult<DrugOddVo> byNo = pharmacyServiceClient.findByNo(ex);//获得要拼单信息
 
-        /*===============================测试=====================================
+        /*===============================测试=====================================*/
         DrugOddVo drugOddVo = new DrugOddVo();
         drugOddVo.setNo("YF0001");
         drugOddVo.setPatientid(1L);
@@ -52,11 +52,11 @@ public class PharmacyProofPayAdapter {
         drugOddVo.setId(1L);
         drugOddVo.setTotalmoney(new BigDecimal(500));
         return drugOddVo;
-        ===============================测试=====================================*/
-        if(byNo.getCode() != 200){
-            return null;
-        }
-        return byNo.getData();
+        /*===============================测试=====================================*/
+//        if(byNo.getCode() != 200){
+//            return null;
+//        }
+//        return byNo.getData();
     }
 
     /**

@@ -128,6 +128,7 @@ public class PharmacyProofPay {
         ResponseResult<AddPharmacyOrderCommand> execute = apo.execute();
         if(execute.getCode() !=200){
             log.info("存入数据库失败");
+            lose();
         }else{
             log.info("成功");
         }

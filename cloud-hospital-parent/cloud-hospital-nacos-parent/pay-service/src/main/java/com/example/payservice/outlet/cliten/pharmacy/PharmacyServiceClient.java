@@ -6,6 +6,7 @@ import com.example.payservice.outlet.cliten.pharmacy.pojo.ExampleQueryDrugOddCom
 import com.example.payservice.outlet.cliten.pharmacy.pojo.UpdateDrugOddCommand;
 import com.example.payservice.util.ResponseResult;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 

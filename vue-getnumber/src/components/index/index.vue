@@ -9,6 +9,7 @@
                         <td class="td1"><el-button @click="goregistration()">挂号取票</el-button></td>
                         <td class="td1"><el-button  @click="gopharmacy()">药房取票</el-button></td>
                         <td class="td1"><el-button @click="goexamine() ">检查取票</el-button></td>
+                         
                     </tr>
                 </table>      
             </el-main>
